@@ -2,7 +2,6 @@
 
 import { redirect } from "next/navigation";
 import { storeCv } from "@/lib/cvStorage";
-import { prisma } from "@/lib/db";
 import { sendApplicationNotification } from "@/lib/email";
 import { offers } from "@/lib/offers";
 
@@ -27,6 +26,7 @@ function optionalText(formData: FormData, key: string) {
 }
 
 export async function submitApplication(formData: FormData) {
+  const { prisma } = await import("@/lib/db");
   const jobSlug = requiredText(formData, "jobSlug");
   const offer = offers[jobSlug];
 
