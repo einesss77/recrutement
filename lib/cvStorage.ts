@@ -37,10 +37,15 @@ export async function storeCv(file: File): Promise<StoredCv> {
   const storedName = `cvs/${Date.now()}-${randomUUID()}-${safeFileName(originalName)}`;
   const mimeType = file.type || "application/pdf";
 
-  if (process.env.BLOB_READ_WRITE_TOKEN || process.env.VERCEL) {
+  if (process.env.VERCEL && !process.env.BLOB_READ_WRITE_TOKEN) {
+    throw new Error("BLOB_READ_WRITE_TOKEN doit être configuré dans Vercel pour stocker les CV.");
+  }
+
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
     const blob = await put(storedName, file, {
       access: "private",
       contentType: mimeType,
+      token: process.env.BLOB_READ_WRITE_TOKEN,
     });
 
     return {
@@ -72,7 +77,11 @@ export async function storeCv(file: File): Promise<StoredCv> {
 
 export async function readStoredCv(storageType: string, cvPath: string): Promise<CvDownload> {
   if (storageType === "blob") {
-    const result = await get(cvPath, { access: "private", useCache: false });
+    const result = await get(cvPath, {
+      access: "private",
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      useCache: false,
+    });
     if (!result || result.statusCode !== 200) {
       throw new Error("CV introuvable.");
     }
@@ -91,7 +100,7 @@ export async function readStoredCv(storageType: string, cvPath: string): Promise
 
 export async function deleteStoredCv(storageType: string, cvPath: string) {
   if (storageType === "blob") {
-    await del(cvPath).catch(() => undefined);
+    await del(cvPath, { token: process.env.BLOB_READ_WRITE_TOKEN }).catch(() => undefined);
     return;
   }
 
