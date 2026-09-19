@@ -16,12 +16,41 @@ enum ApplicationStatus {
   REFUSE
 }
 
+enum CandidateCategory {
+  UNCLASSIFIED
+  COMMERCIAL
+  FULL_STACK
+  IA_DATA
+  MOTION_DESIGN
+  ACCOUNT_PROJECT
+  JUNIOR_HORS_SUJET
+  OTHER
+}
+
+enum CandidateSeniority {
+  UNKNOWN
+  SORTIE_ECOLE
+  JUNIOR
+  CONFIRME
+  SENIOR
+}
+
+enum CandidateRelevance {
+  NON_EVALUE
+  HORS_SUJET
+  FAIBLE
+  MOYEN
+  FORT
+  TRES_INTERESSANT
+}
+
 model Application {
   id                 String            @id @default(cuid())
   jobSlug            String
   jobTitle           String
   fullName           String
   email              String
+  emailNormalized    String            @default("")
   phone              String
   collaborationType  String
   salaryExpectation  Int
@@ -36,10 +65,20 @@ model Application {
   cvMimeType         String
   cvSize             Int
   status             ApplicationStatus @default(NOUVEAU)
+  candidateCategory  CandidateCategory @default(UNCLASSIFIED)
+  candidateSeniority CandidateSeniority @default(UNKNOWN)
+  candidateRelevance CandidateRelevance @default(NON_EVALUE)
+  candidateTags      String            @default("")
+  adminNotes         String            @default("")
+  duplicateCount     Int               @default(1)
+  lastSubmittedAt    DateTime          @default(now())
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt
 
   @@index([jobSlug])
+  @@index([emailNormalized])
   @@index([status])
+  @@index([candidateCategory])
+  @@index([candidateRelevance])
   @@index([createdAt])
 }

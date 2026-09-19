@@ -496,6 +496,16 @@ button:hover {
   gap: 12px;
 }
 
+.candidate-toolbar {
+  align-items: stretch;
+}
+
+.candidate-toolbar form {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(130px, 1fr)) auto;
+  width: 100%;
+}
+
 .admin-count {
   color: var(--ink-soft);
   font-weight: 800;
@@ -555,6 +565,24 @@ button:hover {
   font-weight: 850;
 }
 
+.candidate-badges {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.duplicate-pill {
+  white-space: nowrap;
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: var(--white);
+  background: #8b2f2f;
+  font-size: 0.88rem;
+  font-weight: 850;
+}
+
 .application-meta {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -604,6 +632,35 @@ button:hover {
   margin: 12px 0 0;
   color: #31556d;
   white-space: pre-wrap;
+}
+
+.candidate-history + .candidate-history {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.candidate-history strong {
+  color: var(--ink);
+}
+
+.candidate-review-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid rgba(77, 106, 126, 0.14);
+  border-radius: 8px;
+  background: rgba(197, 204, 215, 0.14);
+}
+
+.candidate-review-form .wide-field {
+  grid-column: span 2;
+}
+
+.candidate-review-form button {
+  grid-column: 1 / -1;
 }
 
 .application-actions {
@@ -682,11 +739,25 @@ button:hover {
 
   .admin-toolbar,
   .admin-toolbar form,
+  .candidate-toolbar form,
   .application-main,
   .application-actions,
   .application-actions form {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .candidate-toolbar form,
+  .candidate-review-form {
+    grid-template-columns: 1fr;
+  }
+
+  .candidate-review-form .wide-field {
+    grid-column: auto;
+  }
+
+  .candidate-badges {
+    justify-content: flex-start;
   }
 
   .application-meta {

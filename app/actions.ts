@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { normalizeEmail } from "@/lib/candidateReview";
 import { storeCv } from "@/lib/cvStorage";
 import { sendApplicationNotification } from "@/lib/email";
 import { offers } from "@/lib/offers";
@@ -59,13 +60,22 @@ export async function submitApplication(formData: FormData) {
   }
 
   const storedCv = await storeCv(cv);
+  const email = requiredText(formData, "email");
+  const emailNormalized = normalizeEmail(email);
+  const existingApplication = await prisma.application.findFirst({
+    where: {
+      jobSlug,
+      OR: [{ emailNormalized }, { email: { equals: email, mode: "insensitive" } }],
+    },
+    orderBy: { createdAt: "asc" },
+  });
 
-  const application = await prisma.application.create({
-    data: {
+  const applicationData = {
       jobSlug,
       jobTitle: offer.title,
       fullName: requiredText(formData, "fullName"),
-      email: requiredText(formData, "email"),
+      email,
+      emailNormalized,
       phone: requiredText(formData, "phone"),
       collaborationType: requiredText(formData, "collaborationType"),
       salaryExpectation,
@@ -79,8 +89,20 @@ export async function submitApplication(formData: FormData) {
       cvStorageType: storedCv.storageType,
       cvMimeType: storedCv.mimeType,
       cvSize: storedCv.size,
-    },
-  });
+      lastSubmittedAt: new Date(),
+  };
+
+  const application = existingApplication
+    ? await prisma.application.update({
+        where: { id: existingApplication.id },
+        data: {
+          ...applicationData,
+          duplicateCount: { increment: 1 },
+        },
+      })
+    : await prisma.application.create({
+        data: applicationData,
+      });
 
   await sendApplicationNotification({
     id: application.id,
