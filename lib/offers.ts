@@ -7,6 +7,7 @@ export type Offer = {
   skills: string[];
   profile: string[];
   specificQuestion: string;
+  specificQuestions?: string[];
 };
 
 export const offers: Record<string, Offer> = {
@@ -36,7 +37,16 @@ export const offers: Record<string, Offer> = {
       "Communication claire, autonomie et forte orientation résultat.",
       "Capacité à travailler avec des interlocuteurs en France, en Tunisie ou à l’international.",
     ],
-    specificQuestion: "Combien de consultants IT avez-vous déjà placés et sur quels marchés ?",
+    specificQuestion: "Quel type de produits ou services B2B avez-vous déjà vendu ?",
+    specificQuestions: [
+      "Quel type de produits ou services B2B avez-vous déjà vendu ?",
+      "Faisiez-vous principalement de la chasse ou de la gestion de comptes existants ?",
+      "Combien de nouveaux clients avez-vous personnellement signés au cours des 12 derniers mois ?",
+      "Quel chiffre d’affaires ou volume d’affaires avez-vous personnellement généré ?",
+      "Sur quels marchés/pays avez-vous déjà prospecté ?",
+      "Quels canaux utilisez-vous pour obtenir vos rendez-vous : téléphone, email, LinkedIn, événements, réseau… ?",
+      "Avez-vous déjà vendu des prestations IT, du staffing, de l’outsourcing ou des équipes techniques ?",
+    ],
   },
   "growth-manager": {
     slug: "growth-manager",

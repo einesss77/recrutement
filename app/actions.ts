@@ -26,6 +26,18 @@ function optionalText(formData: FormData, key: string) {
   return value.trim();
 }
 
+function requiredSpecificAnswer(formData: FormData, questions: string[]) {
+  const answers = formData.getAll("specificAnswer").map((value) =>
+    typeof value === "string" ? value.trim() : "",
+  );
+
+  if (answers.length < questions.length || answers.some((answer) => answer === "")) {
+    throw new Error("Toutes les questions spécifiques sont obligatoires.");
+  }
+
+  return questions.map((question, index) => `${question}\n${answers[index]}`).join("\n\n");
+}
+
 export async function submitApplication(formData: FormData) {
   const { prisma } = await import("@/lib/db");
   const jobSlug = requiredText(formData, "jobSlug");
@@ -82,7 +94,10 @@ export async function submitApplication(formData: FormData) {
       availability: requiredText(formData, "availability"),
       workOrganization: requiredText(formData, "workOrganization"),
       professionalLink: optionalText(formData, "professionalLink"),
-      specificAnswer: requiredText(formData, "specificAnswer"),
+      specificAnswer: requiredSpecificAnswer(
+        formData,
+        offer.specificQuestions ?? [offer.specificQuestion],
+      ),
       cvOriginalName: storedCv.originalName,
       cvStoredName: storedCv.storedName,
       cvPath: storedCv.path,

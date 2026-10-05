@@ -7,6 +7,8 @@ type ApplicationFormProps = {
 };
 
 export function ApplicationForm({ offer }: ApplicationFormProps) {
+  const specificQuestions = offer.specificQuestions ?? [offer.specificQuestion];
+
   return (
     <form className="application-form" action={submitApplication}>
       <input name="jobSlug" type="hidden" value={offer.slug} />
@@ -92,10 +94,14 @@ export function ApplicationForm({ offer }: ApplicationFormProps) {
         </div>
       </label>
 
-      <label>
-        <span>{offer.specificQuestion}</span>
-        <textarea name="specificAnswer" rows={5} required />
-      </label>
+      <div className="specific-questions">
+        {specificQuestions.map((question, index) => (
+          <label key={question}>
+            <span>{question}</span>
+            <textarea name="specificAnswer" rows={index === 0 ? 4 : 3} required />
+          </label>
+        ))}
+      </div>
 
       <label className="consent">
         <input name="consent" type="checkbox" required />

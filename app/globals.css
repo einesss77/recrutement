@@ -240,6 +240,11 @@ label small {
   font-weight: 650;
 }
 
+.specific-questions {
+  display: grid;
+  gap: 14px;
+}
+
 input,
 select,
 textarea {
