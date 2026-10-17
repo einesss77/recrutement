@@ -38,10 +38,19 @@
     mode.value = link.dataset.need;
     updateMode();
   }));
-  const form = document.querySelector('#demo-form');
+  const form = document.querySelector('#brief-form');
+  let briefUrl;
   form.addEventListener('submit', event => {
     event.preventDefault();
-    result.textContent = 'Parcours testé : les champs sont valides. Aucun message n’a été envoyé, aucune donnée n’a été sauvegardée. Ce prototype ne permet pas de contacter B&M.';
+    if (briefUrl) URL.revokeObjectURL(briefUrl);
+    const context = document.querySelector('#context').value.trim();
+    const content = `B&M Digital Consulting — Brief\n\nAccompagnement : ${mode.selectedOptions[0].textContent}\n\nContexte :\n${context}\n`;
+    briefUrl = URL.createObjectURL(new Blob([content], { type: 'text/plain;charset=utf-8' }));
+    const download = document.createElement('a');
+    download.href = briefUrl;
+    download.download = 'brief-bm-consulting.txt';
+    download.textContent = 'Télécharger mon brief';
+    result.replaceChildren(document.createTextNode('Votre brief est prêt. '), download);
     result.hidden = false;
   });
   form.addEventListener('input', () => { result.hidden = true; });
