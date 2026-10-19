@@ -9,6 +9,13 @@
   --shadow: 0 24px 70px rgba(36, 70, 92, 0.14);
 }
 
+.jobs-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 24px;
+  padding-bottom: 48px;
+}
+
 * {
   box-sizing: border-box;
 }

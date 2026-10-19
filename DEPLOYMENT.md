@@ -1,5 +1,21 @@
 # Déploiement
 
+## Site B&M et recrutement sur le même domaine
+
+Le projet Vercel utilise Next.js. `/` sert la home B&M de `docs/`, `/offres`
+liste les postes, `/<slug>` affiche chaque offre et `/admin` ouvre l'administration
+protégée par mot de passe. Les candidatures et les CV utilisent les services
+configurés ci-dessous.
+
+`npm run dev` et `npm run build` copient automatiquement la home dans
+`public/consulting/` via `scripts/prepare-home.mjs`. Ce dossier généré est ignoré
+par Git ; modifier la home dans `docs/`. La réécriture de `/` dans
+`next.config.ts` conserve l'adresse racine sans redirection vers le recrutement.
+
+`main` est la branche de référence. Le projet Vercel historique suit encore
+`master` pour la production : synchroniser sans forcer avec
+`git push origin main:master` après publication et validation de `main`.
+
 Stack recommandée pour la mise en ligne :
 
 - Vercel pour l’application Next.js.

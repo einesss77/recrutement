@@ -11,7 +11,7 @@ export function OfferChrome({ offer, children }: OfferChromeProps) {
   return (
     <main className="site-shell">
       <header className="header">
-        <a className="brand" href={`/${offer.slug}`} aria-label="B&M Digital Consulting">
+        <a className="brand" href="/" aria-label="B&M Digital Consulting — accueil">
           <Image
             src="/brand/bm-digital-consulting-logo.png"
             alt="B&M Digital Consulting"
@@ -82,7 +82,7 @@ export function OfferChrome({ offer, children }: OfferChromeProps) {
 
       <footer className="footer">
         <span>B&M Digital Consulting</span>
-        <span>Recrutement</span>
+        <a href="/offres">Toutes les offres</a>
       </footer>
     </main>
   );
