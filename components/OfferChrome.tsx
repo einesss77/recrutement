@@ -1,4 +1,6 @@
+/* eslint-disable @next/next/no-html-link-for-pages -- The standalone HTML homepage requires full document navigation. */
 import Image from "next/image";
+import Link from "next/link";
 import { BriefcaseBusiness, MapPin } from "lucide-react";
 import type { Offer } from "@/lib/offers";
 
@@ -82,7 +84,7 @@ export function OfferChrome({ offer, children }: OfferChromeProps) {
 
       <footer className="footer">
         <span>B&M Digital Consulting</span>
-        <a href="/offres">Toutes les offres</a>
+        <Link href="/offres">Toutes les offres</Link>
       </footer>
     </main>
   );

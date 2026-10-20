@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages -- The standalone HTML homepage requires full document navigation. */
 import type { Metadata } from "next";
 import Link from "next/link";
 import { offers } from "@/lib/offers";
