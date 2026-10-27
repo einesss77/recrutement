@@ -18,7 +18,7 @@
     "postinstall": "prisma generate",
     "check:seo": "node --test consulting-site/signature/tests/seo.test.mjs && node scripts/check-seo.mjs",
     "motion:prepare": "node scripts/prepare-motion.mjs",
-    "motion:check": "npm --prefix studio-social/motion-project run check && npm --prefix studio-social/motion-kinetic run check",
+    "motion:check": "npm --prefix studio-social/motion-project run check && npm --prefix studio-social/motion-kinetic run check && npm --prefix studio-social/motion-mockups run check",
     "motion:render": "node scripts/render-social-motion.mjs"
   },
   "private": true,

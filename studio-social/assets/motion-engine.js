@@ -19,10 +19,15 @@ export async function prepareMotion(config){
  await document.fonts.ready;
  await Promise.all([document.fonts.load('500 48px Bricolage'),document.fonts.load('400 28px Manrope')]);
  const image=new Image();image.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(character(config.kind||'cat').replace('<svg ','<svg width="480" height="540" '));await image.decode();
- return{image,config};
+ const resources={image,config};if(config.style==='mockups')await prepareMockups(resources);return resources;
+}
+export async function prepareMockups(resources){
+ const load=async name=>{const image=new Image();image.src=new URL(name,import.meta.url).href;await image.decode();return image;};
+ resources.web??=await load('./mockup-web.svg');resources.mobile??=await load('./mockup-mobile.svg');return resources;
 }
 export function drawMotion(canvas,time,resources){
  if(resources.config.style==='kinetic'){drawKinetic(canvas,time);return;}
+ if(resources.config.style==='mockups'){drawMockups(canvas,time,resources);return;}
  const c=canvas.getContext('2d'),t=clamp(time,0,14.999),{image,config}=resources;canvas.width===VIDEO_WIDTH||(canvas.width=VIDEO_WIDTH);canvas.height===VIDEO_HEIGHT||(canvas.height=VIDEO_HEIGHT);
  c.clearRect(0,0,720,1280);c.fillStyle=C.navy;c.fillRect(0,0,720,1280);
  // The quarter-ring is B&M's existing visual signature.
@@ -62,6 +67,25 @@ export function drawMotion(canvas,time,resources){
   rounded(c,54,658,332,76,38,C.teal);text(c,'Parlons de votre projet  ↗',79,705,285,{size:21,min:19,maxLines:1,color:C.white,face:'Manrope'});
   mascot(352,760,280,.5);text(c,'bandmdigitalconsulting.com',54,872,600,{size:21,face:'Manrope',color:C.teal,maxLines:1});c.restore();}
  label(c,'SCÉNARIO ILLUSTRATIF · SANS VOIX OFF',54,1208,close>.9?'#377b79':'#91afa3');
+}
+function drawMockups(canvas,time,resources){
+ const c=canvas.getContext('2d'),t=clamp(time,0,14.999);c.fillStyle=C.navy;c.fillRect(0,0,720,1280);
+ c.strokeStyle='#23483f';c.lineWidth=115;c.beginPath();c.arc(800,1330,300,0,Math.PI*2);c.stroke();
+ const laptop=(x,y,w,zoom=1)=>{
+  const h=w*.625+34;
+  c.save();c.shadowColor='#0007';c.shadowBlur=30;c.shadowOffsetY=23;rounded(c,x,y,w,h,15,'#243532');c.restore();
+  rounded(c,x+3,y+3,w-6,h-6,13,'#112322');c.fillStyle='#94bca8';c.beginPath();c.arc(x+w/2,y+8,2.5,0,Math.PI*2);c.fill();
+  const sx=x+12,sy=y+18,sw=w-24,sh=sw*.625;c.save();c.beginPath();c.roundRect(sx,sy,sw,sh,4);c.clip();c.fillStyle='#f1f5f1';c.fillRect(sx,sy,sw,sh);if(resources.web){const cropW=resources.web.naturalWidth/zoom,cropH=resources.web.naturalHeight/zoom;c.drawImage(resources.web,resources.web.naturalWidth-cropW,0,cropW,cropH,sx,sy,sw,sh);}c.restore();
+  const gradient=c.createLinearGradient(0,y+h,0,y+h+17);gradient.addColorStop(0,'#d4e0d6');gradient.addColorStop(.45,'#839c8e');gradient.addColorStop(1,'#3c574a');c.fillStyle=gradient;c.beginPath();c.moveTo(x-28,y+h-1);c.lineTo(x+w+28,y+h-1);c.quadraticCurveTo(x+w+20,y+h+17,x+w-12,y+h+18);c.lineTo(x+12,y+h+18);c.quadraticCurveTo(x-20,y+h+16,x-28,y+h-1);c.fill();rounded(c,x+w*.39,y+h,w*.22,5,3,'#617e6d');
+ };
+ const phone=(x,y,w)=>{const h=w*844/390;c.save();c.shadowColor='#0008';c.shadowBlur=35;c.shadowOffsetY=18;rounded(c,x,y,w,h,36,'#a4b6aa');c.restore();rounded(c,x+2,y+2,w-4,h-4,34,'#122722');c.save();c.beginPath();c.roundRect(x+8,y+8,w-16,h-16,28);c.clip();c.fillStyle='#f5f2eb';c.fillRect(x+8,y+8,w-16,h-16);if(resources.mobile)c.drawImage(resources.mobile,x+8,y+8,w-16,h-16);c.restore();rounded(c,x+w*.34,y+13,w*.32,14,8,'#10221d');rounded(c,x+w*.33,y+h-14,w*.34,4,3,'#526f62');c.fillStyle='#38574a';c.fillRect(x-2,y+93,3,33);c.fillRect(x+w-1,y+110,3,49);};
+ const stamp=(title,body,x,y,w=320)=>{rounded(c,x,y,w,103,17,C.white);label(c,title,x+20,y+32,'#377b79');text(c,body,x+20,y+70,w-40,{size:26,min:22,maxLines:2,color:C.teal});};
+ frame(c,t,-.28,3,local=>{label(c,'APPLICATIONS SUR MESURE',54,180);text(c,'VOTRE IDÉE.',54,300,610,{size:73,maxLines:2,weight:700});text(c,'À L’ÉCRAN.',54,400,610,{size:82,maxLines:2,color:C.mint,weight:700});const a=enter(local,.1,.75);c.save();c.translate(360,745+90*(1-a));c.scale(.8+.2*a,.8+.2*a);laptop(-298,-175,596);c.restore();text(c,'Du besoin au premier écran.',54,1030,600,{size:29,face:'Manrope',color:C.muted,maxLines:2});});
+ frame(c,t,3,6.3,local=>{label(c,'DANS LE NAVIGATEUR',54,180);text(c,'UNE APP WEB.',54,285,612,{size:69,weight:700,maxLines:2});text(c,'Pensée pour vos usages.',54,346,600,{size:30,face:'Manrope',color:C.muted,maxLines:2});const a=enter(local,0,.65);laptop(44-70*(1-a),460,632,1+.42*enter(local,.35,1.1));stamp('UN PARCOURS CONCRET','Créer une demande.',316,860,350);const click=enter(local,1,.5);c.save();c.translate(550,538);c.fillStyle=C.white;c.beginPath();c.moveTo(0,0);c.lineTo(0,28);c.lineTo(7,21);c.lineTo(14,34);c.lineTo(20,31);c.lineTo(13,18);c.lineTo(24,18);c.closePath();c.fill();c.strokeStyle=C.mint;c.lineWidth=3;c.globalAlpha=1-click;c.beginPath();c.arc(0,0,10+click*35,0,Math.PI*2);c.stroke();c.restore();});
+ frame(c,t,6.3,9.4,local=>{c.fillStyle=C.mint;c.fillRect(0,0,720,1280);label(c,'AU PLUS PRÈS DU TERRAIN',54,180,C.teal);text(c,'ET SUR MOBILE.',54,282,612,{size:63,color:C.teal,maxLines:2,weight:700});const a=enter(local,0,.7);phone(208+150*(1-a),362,294);stamp('LE BON ÉCRAN','Au bon moment.',36,769,255);});
+ frame(c,t,9.4,12,local=>{label(c,'UNE EXPÉRIENCE COHÉRENTE',54,180);text(c,'UN PRODUIT.',54,285,615,{size:66,maxLines:2,weight:700});text(c,'PLUSIEURS ÉCRANS.',54,375,615,{size:61,maxLines:2,color:C.mint,weight:700});const a=enter(local,0,.6);laptop(45,572+60*(1-a),520);phone(470,655+100*(1-a),179);text(c,'Web · mobile · logiciel métier',54,1085,610,{size:28,face:'Manrope',color:C.muted,maxLines:2});});
+ const a=enter(t,12,.25);if(a>0){c.save();c.globalAlpha=a;c.fillStyle=C.teal;c.fillRect(0,0,720,1280);label(c,'VOTRE PROJET, AVEC B&M',54,235);text(c,'Du besoin',54,380,615,{size:77,maxLines:2});text(c,'au produit.',54,489,615,{size:82,color:C.mint,face:'Instrument',maxLines:2});text(c,'B&M.',54,680,615,{size:132,weight:700,maxLines:1});rounded(c,54,781,435,78,15,C.mint);text(c,'PARLONS DE VOTRE PROJET  ↗',77,830,390,{size:23,min:21,maxLines:1,color:C.teal,weight:700});text(c,'bandmdigitalconsulting.com',54,944,600,{size:22,face:'Manrope',color:C.muted,maxLines:1});c.restore();}
+ label(c,'INTERFACES ILLUSTRATIVES · DÉMONSTRATION B&M',54,1208,'#91afa3');
 }
 function drawKinetic(canvas,time){
  const c=canvas.getContext('2d'),t=clamp(time,0,14.999);c.fillStyle=C.navy;c.fillRect(0,0,720,1280);

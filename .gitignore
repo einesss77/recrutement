@@ -43,3 +43,8 @@ prisma/dev.db-journal
 /studio-social/motion-kinetic/node_modules/
 /studio-social/motion-kinetic/assets/
 /studio-social/motion-*/.thumbnails/
+/studio-social/motion-mockups/.hyperframes/
+/studio-social/motion-mockups/.media/
+/studio-social/motion-mockups/renders/
+/studio-social/motion-mockups/node_modules/
+/studio-social/motion-mockups/assets/
