@@ -1,8 +1,9 @@
-# Vérification du modèle texte et mockups
+# Révision 2 — démonstration produit
 
-- Images inspectées à 0, 2, 4,8, 7,8, 10,5 et 13,5 s, puis aperçu des cinq scènes extrait du MP4 final. Laptop et iPhone reconnaissables, proportions conservées, appareils droits à la fin de leurs entrées.
-- Contrôle HyperFrames : aucun défaut de lint, runtime ou audio. Le contenu du canvas est vérifié par les images plutôt que par l’analyse des boîtes DOM.
-- MP4 vérifié par FFprobe : H.264, 720 × 1280, 30 fps, 15 secondes, piste audio AAC. Export personnalisé également exécuté dans Chromium ; aperçu, changement de temps et remplacement des captures testés dans WebKit.
-- Voix française locale : cinq phrases alignées sur les cinq scènes. Son mesuré, pas écouté ; la voix reste une démonstration de synthèse, pas une prestation de comédien.
-- Les interfaces Atelier sont illustratives. La lisibilité des petites étiquettes d’interface est secondaire ; les gros titres portent le message.
-- Aucun appel IA nécessaire à l’animation, à l’encodage ou à la voix de démonstration. Les captures importées pour la vidéo restent dans le navigateur.
+- Référence PipelineX examinée sur ses 31,146 secondes, transitions d’ouverture et d’interface décomposées à 4 images/seconde. Aucune bande-son de référence reprise.
+- Recomposition complète : texte construit, cartes successives, formulaire saisi, confirmation, suivi sur iPhone, changement de fond et signature par anneau.
+- Correction des chevauchements repérés sur les premières images : cartes d’ouverture espacées ; notification mobile au-dessus de l’appareil. Curseur dirigé vers les deux vrais boutons aux instants d’action.
+- Images inspectées à 1,3 ; 3,3 ; 4,7 ; 5,6 ; 6,8 ; 8,9 ; 9,7 ; 11,5 et 13,8 secondes. Planche du MP4 inspectée sur toute la durée. L’analyse automatique du DOM ne couvre pas les textes peints dans le canvas.
+- HyperFrames check : zéro erreur, zéro avertissement. Rendu local H.264/AAC, 720 × 1280, 30 fps, exactement 15 secondes. Aperçu WebKit et export personnalisé Chromium testés, captures laptop/mobile remplaçables, médias privés avec requêtes Range.
+- Six phrases synthétisées localement avec Windows, alignées aux séquences. Niveau audio mesuré ; aucune écoute humaine de contrôle. Narration désactivable dans le studio.
+- Pas d’API générative, pas de frais par rendu. Écrans fictifs indiqués, aucun résultat client inventé.

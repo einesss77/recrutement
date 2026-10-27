@@ -48,3 +48,6 @@ prisma/dev.db-journal
 /studio-social/motion-mockups/renders/
 /studio-social/motion-mockups/node_modules/
 /studio-social/motion-mockups/assets/
+
+# Generated local video waveform caches
+**/.waveform-cache/

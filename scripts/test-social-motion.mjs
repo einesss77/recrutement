@@ -19,7 +19,7 @@ try{
   await page.locator('#motion-seek').fill('9');const b=await page.locator('.motion-dialog canvas').evaluate(c=>c.toDataURL());assert.notEqual(a,b);
   await page.locator('.motion-dialog canvas').screenshot({path:`output/social/motion/${safari?'safari':'chrome'}-${style}.png`});
   if(!safari){const download=page.waitForEvent('download',{timeout:35000});await page.locator('#motion-export').click();const file=await download;await file.saveAs(`output/social/motion/${style}-${file.suggestedFilename()}`);assert.match(await page.locator('#motion-status').textContent(),/Vidéo prête/);}
-  if(style==='mockups')for(const [slot,at,label]of [['web',4.8,'laptop'],['mobile',7.8,'iPhone']]){
+  if(style==='mockups')for(const [slot,at,label]of [['web',4.8,'laptop'],['mobile',8.9,'iPhone']]){
    await page.locator('#motion-seek').fill(String(at));const before=await page.locator('.motion-dialog canvas').evaluate(c=>c.toDataURL());
    const png=await page.evaluate(slot=>{const c=document.createElement('canvas');c.width=slot==='web'?1440:390;c.height=slot==='web'?900:844;const x=c.getContext('2d');x.fillStyle='#377b79';x.fillRect(0,0,c.width,c.height);x.fillStyle='white';x.font='40px sans-serif';x.fillText('Capture de test',25,100);return c.toDataURL().split(',')[1];},slot);
    await page.locator('#motion-'+slot+'-shot').setInputFiles({name:'capture.png',mimeType:'image/png',buffer:Buffer.from(png,'base64')});await page.getByText('Capture '+label+' chargée.',{exact:true}).waitFor();assert.notEqual(await page.locator('.motion-dialog canvas').evaluate(c=>c.toDataURL()),before);
