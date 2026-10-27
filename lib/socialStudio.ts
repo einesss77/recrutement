@@ -1,4 +1,4 @@
-import { get, put, BlobNotFoundError } from '@vercel/blob';
+import { get, put, BlobNotFoundError, BlobPreconditionFailedError } from '@vercel/blob';
 import { prisma } from '@/lib/db';
 import initialPosts from '@/studio-social/content/posts.json';
 import strategy from '@/studio-social/content/strategy.json';
@@ -10,6 +10,11 @@ const slideSchema=z.object({label:z.string().max(100),title:z.string().max(140),
 export const postsSchema=z.array(z.object({id:z.string().min(1).max(80),title:z.string().max(180),category:z.string().max(100),template:z.enum(['editorial','steps','squad','checklist','case','focus','chatbot','document','automation','advisor','cat']),theme:z.enum(['dark','light']),status:z.enum(['draft','ready']),date:z.string().max(10),image:z.string().max(3_500_000).refine(s=>!s||/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(s)),caption:z.string().max(15000),slides:z.array(slideSchema).min(1).max(10)})).max(500).refine(posts=>new Set(posts.map(p=>p.id)).size===posts.length);
 export type SocialPost=z.infer<typeof postsSchema>[number];
 type Document={posts:SocialPost[];appliedPacks?:string[];revision:number;usage:{month:string;reservedUsd:number;calls:number}};
+export function isStudioConflict(error:unknown){
+ const e=error as {name?:string;message?:string;code?:string};
+ return error instanceof BlobPreconditionFailedError||e?.code==='STUDIO_CONFLICT'||e?.message==='CONFLICT'||/precondition failed|etag mismatch|blob.*already exists/i.test(e?.message||'');
+}
+function conflict(){return Object.assign(new Error('Une sauvegarde concurrente a été détectée.'),{code:'STUDIO_CONFLICT'});}
 const pathname='bm-social-studio/document-v1.json';
 const token=()=>process.env.BLOB_READ_WRITE_TOKEN??process.env.BLOB_READ_WRITE_TOKEN_READ_WRITE_TOKEN;
 const initial=():Document=>({posts:postsSchema.parse(initialPosts),revision:0,usage:{month:new Date().toISOString().slice(0,7),reservedUsd:0,calls:0}});
@@ -18,7 +23,7 @@ async function ensureTable(){
 }
 export async function readStudio():Promise<{document:Document;etag?:string;backend:string}>{
  if(token()){
-  try{const result=await get(pathname,{access:'private',token:token(),useCache:false});if(result?.statusCode===200){return{document:JSON.parse(await new Response(result.stream).text()),etag:result.blob.etag,backend:'cloud'};}}catch(e){if(!(e instanceof BlobNotFoundError))throw e;}
+  try{const result=await get(pathname,{access:'private',token:token(),useCache:false,headers:{'Accept-Encoding':'identity'}});if(result?.statusCode===200){return{document:JSON.parse(await new Response(result.stream).text()),etag:result.blob.etag,backend:'cloud'};}}catch(e){if(!(e instanceof BlobNotFoundError))throw e;}
   return{document:initial(),backend:'cloud'};
  }
  if(!process.env.DATABASE_URL)throw Error('Aucun stockage persistant configuré.');
@@ -36,6 +41,17 @@ export async function writeStudio(document:Document,revision:number,etag?:string
   if(count!==1)throw Error('CONFLICT');
  }
  return document.revision;
+}
+export async function saveStudioPosts(posts:SocialPost[],revision:number,appliedPacks?:string[]){
+ for(let attempt=0;attempt<3;attempt++){
+  const current=await readStudio();
+  // Replaying the same save (including startup packs) is already successful.
+  if(JSON.stringify(current.document.posts)===JSON.stringify(posts)&&(appliedPacks||[]).every(id=>current.document.appliedPacks?.includes(id)))return current.document.revision;
+  if(current.document.revision!==revision)throw conflict();
+  try{return await writeStudio({...current.document,posts,appliedPacks:[...new Set([...current.document.appliedPacks||[],...appliedPacks||[]])]},revision,current.etag);}
+  catch(error){if(!isStudioConflict(error))throw error;if(attempt===2)throw conflict();}
+ }
+ throw conflict();
 }
 export async function studioState(){
  let document:Document,backend:string;

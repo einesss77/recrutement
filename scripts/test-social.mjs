@@ -21,8 +21,9 @@ try{
  let persisted=false;
  if(state.backend==='cloud'){
   const saved=await context.request.put(base+'/studio-social/api/posts',{headers:{Origin:base},data:{posts:state.posts,revision:state.revision}});assert.equal(saved.status(),200);
-  const stale=await context.request.put(base+'/studio-social/api/posts',{headers:{Origin:base},data:{posts:state.posts,revision:state.revision}});assert.equal(stale.status(),409);
-  const other=await browser.newContext();await other.addCookies(await context.cookies());const synced=await(await other.request.get(base+'/studio-social/api/state')).json();assert.equal(synced.revision,state.revision+1);persisted=true;await other.close();await page.reload();await page.locator('.thumb').first().waitFor();
+  const stale=await context.request.put(base+'/studio-social/api/posts',{headers:{Origin:base},data:{posts:state.posts,revision:state.revision}});assert.equal(stale.status(),200);
+  const different=structuredClone(state.posts);different[0].caption+=' test de conflit';const conflict=await context.request.put(base+'/studio-social/api/posts',{headers:{Origin:base},data:{posts:different,revision:state.revision+100}});assert.equal(conflict.status(),409);
+  const other=await browser.newContext();await other.addCookies(await context.cookies());const synced=await(await other.request.get(base+'/studio-social/api/state')).json();assert.equal(synced.revision,state.revision);persisted=true;await other.close();await page.reload();await page.locator('.thumb').first().waitFor();
  }
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  await mkdir('output/social',{recursive:true});await page.screenshot({path:'output/social/mobile.png',fullPage:false});

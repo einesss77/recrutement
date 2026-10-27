@@ -166,3 +166,18 @@ Après publication, déclarer la propriété dans Google Search Console et soume
 soumission externe ou déploiement n’a été effectué par ce travail local.
 
 Voir [SEO.md](SEO.md) pour l’audit et les validations.
+
+## Sauvegarde du studio social
+
+Les écritures conservent le contrôle de version Blob (`ifMatch`) ou PostgreSQL.
+Les sauvegardes identiques sont idempotentes. Les erreurs ETag sont reconnues
+comme des conflits ; les reprises sont limitées et les changements indépendants
+sont fusionnés côté navigateur. Deux changements incompatibles sur le même champ
+ne sont pas écrasés automatiquement. Une copie IndexedDB permet de récupérer
+les modifications locales après rechargement et de les télécharger en JSON.
+Les exports restent disponibles en cas de conflit de synchronisation.
+
+Validation : `node --test scripts/test-studio-sync.mjs`,
+`node scripts/test-studio-storage.mjs` et `node scripts/test-studio-sync-browser.mjs`.
+Les tests de conflits utilisent un stockage isolé ou une API interceptée ;
+ils ne modifient pas les publications du stockage de production.

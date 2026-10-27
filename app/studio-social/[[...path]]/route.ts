@@ -3,7 +3,7 @@ import path from 'node:path';
 import {timingSafeEqual} from 'node:crypto';
 import {NextRequest,NextResponse} from 'next/server';
 import {isAdminAuthenticated,setAdminSession,clearAdminSession} from '@/lib/adminAuth';
-import {postsSchema,readStudio,writeStudio,studioState,generateStudio} from '@/lib/socialStudio';
+import {postsSchema,saveStudioPosts,isStudioConflict,studioState,generateStudio} from '@/lib/socialStudio';
 
 export const runtime='nodejs';
 export const dynamic='force-dynamic';
@@ -33,9 +33,8 @@ async function handle(req:NextRequest,context:Context){
    if(Number(req.headers.get('content-length')||0)>4_000_000)return json({error:'Lot trop volumineux. Réduisez la taille des images.'},413);
    const input=await req.json(),posts=postsSchema.parse(input.posts),revision=input.revision;
    if(!Number.isSafeInteger(revision)||revision<0)return json({error:'Version du document invalide.'},400);
-   const current=await readStudio();if(current.document.revision!==revision)return json({error:'Le studio a été modifié sur un autre appareil. Exportez votre sauvegarde JSON puis rechargez la page avant de réimporter vos changements.'},409);
-   const appliedPacks=Array.isArray(input.appliedPacks)?input.appliedPacks.filter((id:unknown)=>typeof id==='string'&&id.length<100).slice(0,100):current.document.appliedPacks;
-   const nextRevision=await writeStudio({...current.document,posts,appliedPacks},revision,current.etag);return json({ok:true,revision:nextRevision});
+   const appliedPacks=Array.isArray(input.appliedPacks)?input.appliedPacks.filter((id:unknown)=>typeof id==='string'&&id.length<100).slice(0,100):undefined;
+   const nextRevision=await saveStudioPosts(posts,revision,appliedPacks);return json({ok:true,revision:nextRevision});
   }
   if(route==='api/generate'&&req.method==='POST'){
    const input=await req.json(),topic=String(input.topic||'').trim();if(!topic||topic.length>1500)return json({error:'Sujet requis : 1 500 caractères maximum.'},400);
@@ -60,7 +59,7 @@ async function handle(req:NextRequest,context:Context){
    return new NextResponse(new Uint8Array(bytes),{headers:{...mediaHeaders,'Content-Length':String(bytes.length)}});
   }
   return new NextResponse(bytes,{headers:{...headers,'Content-Type':mime[path.extname(file)]||'application/octet-stream'}});
- }catch(e){const error=e as {name?:string;code?:string;message?:string};if(error.name?.includes('Precondition')||error.message==='CONFLICT')return json({error:'Une modification concurrente a été détectée. Sauvegardez votre JSON avant de recharger le studio.'},409);if(error.code==='ENOENT')return json({error:'Introuvable.'},404);console.error('Studio social:',error.name);return json({error:error.name==='ZodError'?'Publication invalide ou texte trop long.':error.message||'Le studio est indisponible.'},400);}
+ }catch(e){const error=e as {name?:string;code?:string;message?:string};if(isStudioConflict(e))return json({code:'STUDIO_CONFLICT',error:'Une sauvegarde concurrente a été détectée. Votre copie locale peut être synchronisée.'},409);if(error.code==='ENOENT')return json({error:'Introuvable.'},404);console.error('Studio social:',error.name);return json({error:route==='api/generate'&&/^(Budget mensuel du studio atteint\.|La rédaction IA attend une clé GEMINI_API_KEY\.|Erreur du fournisseur IA \(\d{3}\)\. Aucun nouvel essai automatique\.|Réponse IA incomplète\.)$/.test(error.message||'')?error.message:error.name==='ZodError'?'Publication invalide ou texte trop long.':'La sauvegarde en ligne est indisponible. Vos modifications restent sur cet appareil.'},400);}
 }
 export const GET=handle;
 export const POST=handle;
