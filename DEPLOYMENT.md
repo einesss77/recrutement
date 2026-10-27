@@ -10,6 +10,18 @@ Le lot `practical-pack.json` ajoute huit exemples IA illustratifs (chatbot, extr
 
 `companion-pack.json` ajoute deux carrousels avec personnages : conseiller illustré et chat assistant. Les illustrations originales sont vectorielles et réutilisables (`studio-social/assets/characters.js`), sans service ni génération d'image payante. Les compositions `advisor` et `cat` acceptent une image importée en remplacement du personnage. Le contrôle des lots inclut ces deux modèles et vérifie leurs deux pages aux deux formats, la conservation des modifications et des suppressions.
 
+### Vidéos motion design
+
+Le bouton « Vidéo · 15 s » est disponible sur les modèles chat, conseiller et chatbot. Le dialogue propose deux styles : personnage en conversation et typographie animée inspirée de la référence vidéo fournie. Le premier reprend les textes du post ; le second utilise pour cette version un script fixe et une voix de démonstration locale facultative.
+
+L'aperçu et l'export personnalisé utilisent le même moteur Canvas. Le navigateur enregistre le canvas via MediaRecorder, en MP4 quand il est supporté, sinon en WebM ; l'export dure environ 15 s et nécessite de garder l'onglet visible. Un passage en arrière-plan annule le rendu plutôt que livrer une vidéo incomplète. Les deux MP4 de démonstration sont téléchargeables même quand l'encodage personnalisé est indisponible. Les médias restent authentifiés et acceptent les requêtes Range pour les lecteurs mobiles.
+
+Sources HyperFrames : `studio-social/motion-project/` et `studio-social/motion-kinetic/`. Préparer leurs ressources avec `npm run motion:prepare`. `npm run motion:render` vérifie puis régénère les deux MP4 localement ; FFmpeg et FFprobe sont nécessaires dans PATH, via `HYPERFRAMES_FFMPEG_PATH` / `HYPERFRAMES_FFPROBE_PATH`, ou dans `.local/motion-bin/`. Les binaires ne sont pas ajoutés aux dépendances de déploiement Vercel. Les deux petits MP4 et le WAV sont versionnés avec le studio.
+
+La voix fournie est générée par Windows Speech via `create-local-voice.ps1`, pas par une API. Elle illustre le script fixe, et n'est pas une voix naturelle enregistrée. Le studio ne fournit pas de génération de voix libre à partir de n'importe quel texte. Le modèle typographique accepte la voix fixe ou un export muet ; le personnage est muet. Aucun coût de génération d'image, de voix ou de texte n'est requis pour ces exports. La création et les modifications du code via Codex restent consommatrices de tokens.
+
+Vérification du studio : `node scripts/test-social-motion.mjs` (serveur local 3010), puis `SOCIAL_TEST_BROWSER=webkit node scripts/test-social-motion.mjs`. Vérifie aperçus, différences entre instants, fermeture, accès aux médias et Range. Les exports personnalisés sont effectivement encodés et téléchargés dans le test Chromium ; le test WebKit porte sur l'aperçu et les médias de démonstration. Contrôler ensuite les fichiers par FFprobe.
+
 Sauvegarde partagée : le studio utilise d'abord le Blob Store privé existant si son jeton est configuré, sinon Postgres via `DATABASE_URL`. Postgres initialise une table indépendante `SocialStudioDocument` sans modifier les tables de recrutement. Les écritures utilisent une version / ETag pour refuser les écrasements concurrents.
 
 Si le stockage serveur est absent ou indisponible, la consultation et l'édition restent utilisables avec sauvegarde IndexedDB sur l'appareil. Le bandeau indique alors « Sauvegarde sur cet appareil ». Dans ce mode, le JSON permet le transfert entre appareils, et la rédaction IA reste désactivée.

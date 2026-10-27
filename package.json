@@ -16,7 +16,10 @@
     "db:deploy": "prisma db push",
     "prisma:generate": "prisma generate",
     "postinstall": "prisma generate",
-    "check:seo": "node --test consulting-site/signature/tests/seo.test.mjs && node scripts/check-seo.mjs"
+    "check:seo": "node --test consulting-site/signature/tests/seo.test.mjs && node scripts/check-seo.mjs",
+    "motion:prepare": "node scripts/prepare-motion.mjs",
+    "motion:check": "npm --prefix studio-social/motion-project run check && npm --prefix studio-social/motion-kinetic run check",
+    "motion:render": "node scripts/render-social-motion.mjs"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +46,7 @@
     "esbuild": "^0.28.2",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.8",
+    "gsap": "^3.15.0",
     "prisma": "^6.16.3",
     "typescript": "^6.0.3"
   }

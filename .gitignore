@@ -32,3 +32,14 @@ prisma/dev.db-journal
 /consulting-site/signature/review/*.jpg
 /consulting-site/signature/review/*.webp
 /studio-social/assets/exporter.bundle.js*
+/studio-social/motion-project/.hyperframes/
+/studio-social/motion-project/.media/
+/studio-social/motion-project/renders/
+/studio-social/motion-project/node_modules/
+/studio-social/motion-project/assets/
+/studio-social/motion-kinetic/.hyperframes/
+/studio-social/motion-kinetic/.media/
+/studio-social/motion-kinetic/renders/
+/studio-social/motion-kinetic/node_modules/
+/studio-social/motion-kinetic/assets/
+/studio-social/motion-*/.thumbnails/

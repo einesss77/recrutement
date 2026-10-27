@@ -46,7 +46,19 @@ async function handle(req:NextRequest,context:Context){
   if(!/^[a-zA-Z0-9_./-]+$/.test(asset)||asset.split('/').some(p=>p==='..'))return json({error:'Chemin invalide.'},400);
   const root=path.join(process.cwd(),'studio-social','assets'),file=path.join(root,asset);
   if(!file.startsWith(root+path.sep))return json({error:'Chemin invalide.'},400);
-  const bytes=await readFile(file),mime:Record<string,string>={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8'};
+  const bytes=await readFile(file),mime:Record<string,string>={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8','.mp4':'video/mp4','.wav':'audio/wav'};
+  if(/\.(mp4|wav)$/.test(asset)){
+   const mediaHeaders={...headers,'Content-Type':mime[path.extname(file)],'Accept-Ranges':'bytes'};
+   const range=req.headers.get('range');
+   if(range){
+    const match=/^bytes=(\d*)-(\d*)$/.exec(range);
+    if(!match||(!match[1]&&!match[2]))return new NextResponse(null,{status:416,headers:{...mediaHeaders,'Content-Range':`bytes */${bytes.length}`}});
+    const start=match[1]?Number(match[1]):Math.max(0,bytes.length-Number(match[2])),end=match[1]?(match[2]?Math.min(Number(match[2]),bytes.length-1):bytes.length-1):bytes.length-1;
+    if(start>end||start>=bytes.length)return new NextResponse(null,{status:416,headers:{...mediaHeaders,'Content-Range':`bytes */${bytes.length}`}});
+    return new NextResponse(new Uint8Array(bytes.subarray(start,end+1)),{status:206,headers:{...mediaHeaders,'Content-Range':`bytes ${start}-${end}/${bytes.length}`,'Content-Length':String(end-start+1)}});
+   }
+   return new NextResponse(new Uint8Array(bytes),{headers:{...mediaHeaders,'Content-Length':String(bytes.length)}});
+  }
   return new NextResponse(bytes,{headers:{...headers,'Content-Type':mime[path.extname(file)]||'application/octet-stream'}});
  }catch(e){const error=e as {name?:string;code?:string;message?:string};if(error.name?.includes('Precondition')||error.message==='CONFLICT')return json({error:'Une modification concurrente a été détectée. Sauvegardez votre JSON avant de recharger le studio.'},409);if(error.code==='ENOENT')return json({error:'Introuvable.'},404);console.error('Studio social:',error.name);return json({error:error.name==='ZodError'?'Publication invalide ou texte trop long.':error.message||'Le studio est indisponible.'},400);}
 }
