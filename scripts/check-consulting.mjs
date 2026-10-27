@@ -20,3 +20,5 @@ async function check(directory) {
 }
 await check(root);
 console.log("Integrated public assets resolve; private data and PHP runtime excluded from Next.js static files.");
+
+await import("./check-seo.mjs");

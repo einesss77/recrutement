@@ -15,7 +15,8 @@
     "db:push": "prisma db push",
     "db:deploy": "prisma db push",
     "prisma:generate": "prisma generate",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "check:seo": "node --test consulting-site/signature/tests/seo.test.mjs && node scripts/check-seo.mjs"
   },
   "private": true,
   "dependencies": {

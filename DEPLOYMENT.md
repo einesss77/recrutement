@@ -19,7 +19,7 @@ ressources après intégration, en français et en anglais. Les pages publiques 
 de gestion B&M sont générées ; les fichiers PHP et les données privées sont exclus de
 `public/consulting/`. `.local/` est ignoré à tous les niveaux et ne doit jamais être publié.
 Les exemples sont explicitement fictifs, le formulaire de contact prépare un message
-sans l’envoyer et l’indexation reste désactivée.
+sans l’envoyer. L’indexation est pilotée par l’environnement : voir la section SEO.
 
 ### CMS des réalisations et version anglaise
 
@@ -95,3 +95,42 @@ Ajouter le domaine dans Vercel depuis Project Settings > Domains. Vercel indique
 - sous-domaine `www` : record `CNAME`
 
 Ne pas changer les nameservers sans recopier les records e-mail existants.
+
+## SEO et indexation FR/EN
+
+Le domaine canonique par défaut est `https://www.bandmdigitalconsulting.com`,
+repris du catalogue B&M. Pour un autre domaine, définir `BM_SITE_URL` (origine HTTPS,
+sans sous-chemin). `SITE_URL` sert de repli si `BM_SITE_URL` n’est pas défini.
+
+En production, configurer avant le build :
+
+```env
+BM_SITE_URL=https://www.bandmdigitalconsulting.com
+BM_INDEXING=true
+```
+
+Sur Vercel Production, l’indexation est activée automatiquement si `BM_INDEXING`
+n’est pas explicitement à `false`. Les previews Vercel sont toujours non indexables.
+En local, l’indexation est désactivée par défaut. Refaire le build après un changement
+de domaine ou de politique d’indexation. Le build PHP/Apache utilise les mêmes règles.
+
+- `/sitemap.xml` référence `/sitemap-pages.xml` (22 URL commerciales FR/EN)
+  et `/sitemap-projects.xml` (réalisations réellement publiées via le CMS).
+- Admin, aperçus, erreurs, pages légales provisoires et réalisations fictives restent
+  en `noindex` et hors sitemap. Les pages privées conservent leur authentification.
+- Les réalisations publiées et non marquées test reçoivent leurs propres titres,
+  descriptions, canonicals et contenu initial côté PHP. Une variante anglaise n’est
+  indexable que si `translations.en` contient au moins summary, need et response ;
+  la traduction de nouveaux cas nécessite donc un travail éditorial.
+- Les canonicals et les liens hreflang utilisent des URL sans slash final, cohérentes
+  avec la normalisation Next.js, sauf la racine.
+- Sur Next.js, configurer `BM_CMS_ORIGIN` pour que le sitemap éditorial reflète les
+  réalisations publiées. Si le CMS est indisponible, ce sitemap reste vide ; le sitemap
+  des pages commerciales reste disponible.
+
+Contrôles : `npm run check`, `npm run check:seo`, `npm run build`.
+Après publication, déclarer la propriété dans Google Search Console et soumettre
+`https://www.bandmdigitalconsulting.com/sitemap.xml`. Aucun compte Search Console,
+soumission externe ou déploiement n’a été effectué par ce travail local.
+
+Voir [SEO.md](SEO.md) pour l’audit et les validations.

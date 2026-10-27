@@ -1,3 +1,4 @@
+import {sitemap,sitemapPages,robots,seoConfig,commercialPages,canonicalPath} from '../src/seo.mjs';
 import {localiseHTML} from '../src/localization.mjs';
 import {readFile,readdir} from 'node:fs/promises';
 import {services,servicePage} from '../src/services.mjs';
@@ -37,5 +38,8 @@ await mkdir(resolve(root,'dist/assets/en'),{recursive:true});
 for(const entry of await readdir(resolve(root,'dist/assets'))){if(entry.endsWith('.svg')){const svg=await readFile(resolve(root,'dist/assets',entry),'utf8');await writeFile(resolve(root,'dist/assets/en',entry),localiseHTML(svg,dictionary,'/'))}}
 for(const [path] of pages){if(path.startsWith('/gestion-realisations'))continue;const original=await readFile(resolve(root,'dist',path.slice(1),'index.html'),'utf8');const dest=resolve(root,'dist/en',path.slice(1));await mkdir(dest,{recursive:true});await writeFile(resolve(dest,'index.html'),localiseHTML(original,dictionary,path))}
 const notFound=await readFile(resolve(root,'dist/404.html'),'utf8');await writeFile(resolve(root,'dist/en/404.html'),localiseHTML(notFound,dictionary,'/404/'));
-await writeFile(resolve(root,'dist/robots.txt'),'User-agent: *\nDisallow: /\n');
+await writeFile(resolve(root,'dist/robots.txt'),robots());
+await writeFile(resolve(root,'dist/sitemap.xml'),sitemap());
+await writeFile(resolve(root,'dist/sitemap-pages.xml'),sitemapPages());
+await writeFile(resolve(root,'dist/assets/seo-settings.json'),JSON.stringify({...seoConfig(),commercialPaths:Object.keys(commercialPages),version:1}));
 console.log(`Built ${pages.length} pages + 404 in ${resolve(root,'dist')}`);

@@ -1,3 +1,4 @@
+import {renderSEO} from './seo.mjs';
 export const normalise = value => value.replace(/\s+/g,' ').trim();
 const entities={amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",nbsp:' '};
 export const decode=value=>value.replace(/&(#x[\da-f]+|#\d+|\w+);/gi,(whole,key)=>key[0]==='#'?String.fromCodePoint(key[1].toLowerCase()==='x'?parseInt(key.slice(2),16):parseInt(key.slice(1),10)):entities[key]??whole);
@@ -6,6 +7,8 @@ const escapeAttribute=value=>escapeText(value).replaceAll('"','&quot;');
 export function translate(value,dictionary){const key=normalise(decode(value));return Object.hasOwn(dictionary,key)?dictionary[key]:null}
 export function englishURL(value){if(!value.startsWith('/')||value.startsWith('//')||/^\/(?:en(?:\/|$)|assets\/|consulting\/|api\/|gestion-realisations)/.test(value))return value;return '/en'+value}
 export function localiseHTML(html,dictionary,path='/'){
+ const originalTitle=decode(html.match(/<title>(.*?)<\/title>/s)?.[1]||'').replace(/ \| B&M Digital Consulting$/,'');
+ const originalDescription=decode(html.match(/<meta name="description" content="([^"]*)"/)?.[1]||'');
  let skipped=0;
  // Preserve markup, IDs, data contracts and scripts; translate only text and human-facing attributes.
  html=html.replace('<em>Pour faire avancer<br>les bonnes idées.</em>','<em>To bring<br>the right ideas to life.</em>').replace('<h3>Un besoin <em>sur mesure ?</em></h3>','<h3>Looking for <em>specific expertise?</em></h3>');
@@ -30,5 +33,6 @@ export function localiseHTML(html,dictionary,path='/'){
   if(tag==='img')token=token.replace(/\bsrc="(\/assets\/[^"?]+\.svg)"/,(_,url)=>`src="${url.replace('/assets/','/assets/en/')}"`);
   return token;
  }).join('');
- return result.replace('</head>','<script src="/assets/en-translations.js" defer></script><script src="/assets/i18n.js" defer></script></head>');
+ const withSEO=result.replace(/<!--seo:start-->[\s\S]*?<!--seo:end-->/,()=>renderSEO({path,title:dictionary[originalTitle]||originalTitle,description:dictionary[originalDescription]||originalDescription,locale:'en'}));
+ return withSEO.replace('</head>','<script src="/assets/en-translations.js" defer></script><script src="/assets/i18n.js" defer></script></head>');
 }

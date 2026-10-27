@@ -34,7 +34,7 @@ Ouvrir http://127.0.0.1:4348/ (serveur PHP ; configurer PHP_BINARY si nécessair
 
 ## Avant une publication
 
-Le site reste volontairement en noindex et interdit l'indexation dans robots.txt. Aucune publication n'est effectuée.
+En local et en preview, le site reste en noindex. En production, l’indexation, les canonicals, les langues et les sitemaps sont gérés par `src/seo.mjs`. Configurer `BM_SITE_URL` et `BM_INDEXING` avant le build ; voir `../../DEPLOYMENT.md`. Les démonstrations, les aperçus et l’administration restent exclus de l’indexation.
 
 Le formulaire permet de préparer et valider un message mais ne l'envoie pas. Aucune donnée saisie n'est transmise ou stockée durablement. Activer une vraie réception persistante, avec validation serveur et protection anti-abus, avant de proposer un envoi commercial.
 
