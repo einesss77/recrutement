@@ -3,10 +3,11 @@ import { prisma } from '@/lib/db';
 import initialPosts from '@/studio-social/content/posts.json';
 import strategy from '@/studio-social/content/strategy.json';
 import practicalPack from '@/studio-social/content/practical-pack.json';
+import companionPack from '@/studio-social/content/companion-pack.json';
 import { z } from 'zod';
 
 const slideSchema=z.object({label:z.string().max(100),title:z.string().max(140),body:z.string().max(350),points:z.array(z.string().max(240)).max(4)});
-export const postsSchema=z.array(z.object({id:z.string().min(1).max(80),title:z.string().max(180),category:z.string().max(100),template:z.enum(['editorial','steps','squad','checklist','case','focus','chatbot','document','automation']),theme:z.enum(['dark','light']),status:z.enum(['draft','ready']),date:z.string().max(10),image:z.string().max(3_500_000).refine(s=>!s||/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(s)),caption:z.string().max(15000),slides:z.array(slideSchema).min(1).max(10)})).max(500).refine(posts=>new Set(posts.map(p=>p.id)).size===posts.length);
+export const postsSchema=z.array(z.object({id:z.string().min(1).max(80),title:z.string().max(180),category:z.string().max(100),template:z.enum(['editorial','steps','squad','checklist','case','focus','chatbot','document','automation','advisor','cat']),theme:z.enum(['dark','light']),status:z.enum(['draft','ready']),date:z.string().max(10),image:z.string().max(3_500_000).refine(s=>!s||/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(s)),caption:z.string().max(15000),slides:z.array(slideSchema).min(1).max(10)})).max(500).refine(posts=>new Set(posts.map(p=>p.id)).size===posts.length);
 export type SocialPost=z.infer<typeof postsSchema>[number];
 type Document={posts:SocialPost[];appliedPacks?:string[];revision:number;usage:{month:string;reservedUsd:number;calls:number}};
 const pathname='bm-social-studio/document-v1.json';
@@ -40,7 +41,7 @@ export async function studioState(){
  let document:Document,backend:string;
  try{({document,backend}=await readStudio());}catch{document=initial();backend='readonly';}
  if(document.usage.month!==new Date().toISOString().slice(0,7))document.usage={month:new Date().toISOString().slice(0,7),reservedUsd:0,calls:0};
- return{...document,availablePacks:[practicalPack],strategy,backend,aiEnabled:!!process.env.GEMINI_API_KEY&&backend==='cloud',budget:Number(process.env.AI_MONTHLY_BUDGET_USD||2)};
+ return{...document,availablePacks:[practicalPack,companionPack],strategy,backend,aiEnabled:!!process.env.GEMINI_API_KEY&&backend==='cloud',budget:Number(process.env.AI_MONTHLY_BUDGET_USD||2)};
 }
 export async function generateStudio(topic:string){
  if(!process.env.GEMINI_API_KEY)throw Error('La rédaction IA attend une clé GEMINI_API_KEY.');

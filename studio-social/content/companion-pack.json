@@ -1,0 +1,21 @@
+{
+ "id":"companions-2026-01",
+ "posts":[
+  {
+   "id":"bm-companion-2026-advisor","title":"Un visage pour votre assistant.","category":"L’IA côté humain","template":"advisor","theme":"light","status":"draft","date":"","image":"",
+   "caption":"Et si votre assistant avait un visage ?\n\nUne identité reconnaissable, une conversation claire et des réponses reliées à vos usages : on peut concevoir un assistant métier qui accueille, guide et aide à retrouver la bonne information.\n\nExemple : accompagner l’arrivée d’un collaborateur en l’orientant dans la documentation d’accueil, avec un interlocuteur humain identifié pour la suite.\n\nLe personnage présenté ici est une illustration et le dialogue est un scénario de démonstration.\n\nQuel premier usage imagineriez-vous dans votre équipe ?\nhttps://www.bandmdigitalconsulting.com\n\n#AssistantIA #ExperienceUtilisateur #BMDigitalConsulting",
+   "slides":[
+    {"label":"FAITES CONNAISSANCE","title":"Un visage pour votre assistant.","body":"Un accueil, une question, un premier pas.","points":["Tu peux m’aider à m’y retrouver ?","Avec plaisir. Dites-moi ce que vous cherchez : une procédure, un document ou une prochaine étape.","Concept d’assistant métier"]},
+    {"label":"UN USAGE, CONCRÈTEMENT","title":"Bienvenue dans l’équipe.","body":"Un exemple : guider les nouveaux collaborateurs.","points":["Où retrouver les documents d’accueil ?","Je peux vous orienter dans le guide d’accueil et vous indiquer l’interlocuteur à contacter pour la suite.","Exemple fictif · documentation d’accueil"]}
+   ]
+  },
+  {
+   "id":"bm-companion-2026-cat","title":"Le chat qui fait le lien.","category":"Assistant & mascotte","template":"cat","theme":"dark","status":"draft","date":"","image":"",
+   "caption":"Le chat qui fait le lien.\n\nUne mascotte peut donner une personnalité à un assistant : un visage que l’on reconnaît, un ton cohérent et une façon simple d’entrer dans la conversation.\n\nDerrière ce petit chat, un usage très concret : aider les collaborateurs à retrouver un document et à identifier la source à consulter. Le périmètre, les accès et les réponses à vérifier restent à définir dans le projet.\n\nIllustration originale B&M. Dialogue fictif de démonstration.\n\nVous lui confieriez quelle première question ?\nhttps://www.bandmdigitalconsulting.com\n\n#Chatbot #DesignConversationnel #BMDigitalConsulting",
+   "slides":[
+    {"label":"UN PEU DE PERSONNALITÉ","title":"Le chat qui fait le lien.","body":"Votre prochain assistant pourrait avoir cette tête.","points":["Tu retrouves les infos pour moi ?","Dites-moi ce que vous cherchez. On commence par les documents auxquels vous avez accès.","Concept de mascotte · assistant IA"]},
+    {"label":"LA MASCOTTE, EN SITUATION","title":"La bonne porte d’entrée.","body":"Poser une question, puis ouvrir la bonne source.","points":["Où est la checklist de mise en service ?","Je peux vous aider à retrouver la checklist dans votre documentation. Vérifiez ensuite la version applicable à votre projet.","Exemple fictif · recherche documentaire"]}
+   ]
+  }
+ ]
+}

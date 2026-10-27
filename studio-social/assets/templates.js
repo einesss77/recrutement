@@ -1,12 +1,18 @@
-export const templates = { editorial:'Le point de vue', steps:'La méthode', squad:'Le collectif', checklist:'Le mémo', case:'Le cas concret', focus:'L’expertise',chatbot:'Le chatbot',document:'Le document IA',automation:'Le flux automatisé' };
+import {character} from './characters.js';
+export const templates = { editorial:'Le point de vue', steps:'La méthode', squad:'Le collectif', checklist:'Le mémo', case:'Le cas concret', focus:'L’expertise',chatbot:'Le chatbot',document:'Le document IA',automation:'Le flux automatisé',advisor:'Le conseiller illustré',cat:'Le chat assistant' };
 export const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const icons={editorial:'↗',steps:'↳',squad:'◌',checklist:'✓',case:'↗',focus:'✳'};
 export function artwork(post, index=0){
  const s=post.slides[index]||post.slides[0];
+ if(['advisor','cat'].includes(post.template))return personifiedArtwork(post,s,index);
  if(['chatbot','document','automation'].includes(post.template))return practicalArtwork(post,s,index);
  const list=(s.points||[]).map((p,i)=>`<li><span>${String(i+1).padStart(2,'0')}</span>${esc(p)}</li>`).join('');
  const visual=post.template==='squad'?'<div class="people"><i></i><i></i><i></i><i></i></div>':`<div class="symbol">${icons[post.template]||'↗'}</div>`;
  return `<article class="art ${esc(post.template)} ${post.theme==='light'?'light':'dark'}"><header><b>B&M<span>Digital<br>Consulting</span></b><span>${esc(post.category)}</span></header><div class="art-body"><div class="eyebrow">${esc(s.label||'LE REGARD B&M')}</div><h1>${esc(s.title)}</h1><p>${esc(s.body)}</p>${list?`<ul>${list}</ul>`:''}${post.image?`<img class="post-image" src="${esc(post.image)}" alt="Visuel du post">`:visual}</div><div class="arc"></div><footer><span>Conseil. Produit. Ingénierie.</span><span>${String(index+1).padStart(2,'0')} / ${String(post.slides.length).padStart(2,'0')}</span></footer></article>`;
+}
+function personifiedArtwork(post,s,index){
+ const p=s.points||[],cat=post.template==='cat';
+ return `<article class="art personified ${cat?'cat-post':'advisor-post'} ${post.theme==='light'?'light':'dark'}"><header><b>B&M<span>Digital<br>Consulting</span></b><span>${esc(post.category)}</span></header><div class="art-body"><div class="eyebrow">${esc(s.label||'L’IA, AVEC UN VISAGE')}</div><h1>${esc(s.title)}</h1><p>${esc(s.body)}</p><div class="character-stage"><div class="character-portrait">${post.image?`<img class="custom-character" src="${esc(post.image)}" alt="Personnage du post">`:character(cat?'cat':'advisor')}<div class="character-tag"><i></i>${cat?'Votre chat assistant':'Votre assistant métier'}</div></div><div class="character-dialog"><div class="mini-user"><span>VOUS</span>${esc(p[0]||'On commence par quoi ?')}</div><div class="character-answer"><div class="character-answer-label">${cat?'LE CHAT VOUS RÉPOND':'ON REGARDE ÇA ENSEMBLE'}</div><div>${esc(p[1]||'Dites-moi ce que vous cherchez. Je vous aide à retrouver les informations utiles.')}</div><div class="character-source">↗ ${esc(p[2]||'Scénario illustratif')}</div></div></div><div class="stage-spark">✧</div></div><div class="demo-note">PERSONNAGE ILLUSTRÉ · SCÉNARIO DE DÉMONSTRATION</div></div><div class="arc"></div><footer><span>Conseil. Produit. Ingénierie.</span><span>${String(index+1).padStart(2,'0')} / ${String(post.slides.length).padStart(2,'0')}</span></footer></article>`;
 }
 const aiIcon='<svg class="ai-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2v20M2 12h20M5 5l14 14M19 5 5 19"/></svg>';
 function practicalArtwork(post,s,index){
