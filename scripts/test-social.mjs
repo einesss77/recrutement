@@ -16,7 +16,7 @@ try{
   const cookies=await context.cookies();await context.clearCookies();await context.addCookies(cookies.map(cookie=>({...cookie,secure:false})));await page.goto(base+'/studio-social');
  }
  await page.locator('.thumb').first().waitFor();
- const response=await context.request.get(base+'/studio-social/api/state'),state=await response.json();assert.equal(state.posts.length,20);assert.equal(response.headers()['x-robots-tag'],'noindex, nofollow');console.log('Backend:',state.backend);
+ const response=await context.request.get(base+'/studio-social/api/state'),state=await response.json();assert.ok(state.posts.length>=20);assert.equal(response.headers()['x-robots-tag'],'noindex, nofollow');console.log('Backend:',state.backend);
  const crossOrigin=await context.request.put(base+'/studio-social/api/posts',{headers:{Origin:'https://example.com'},data:{posts:state.posts,revision:state.revision}});assert.equal(crossOrigin.status(),403);
  let persisted=false;
  if(state.backend==='cloud'){

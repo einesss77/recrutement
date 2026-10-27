@@ -34,7 +34,8 @@ async function handle(req:NextRequest,context:Context){
    const input=await req.json(),posts=postsSchema.parse(input.posts),revision=input.revision;
    if(!Number.isSafeInteger(revision)||revision<0)return json({error:'Version du document invalide.'},400);
    const current=await readStudio();if(current.document.revision!==revision)return json({error:'Le studio a été modifié sur un autre appareil. Exportez votre sauvegarde JSON puis rechargez la page avant de réimporter vos changements.'},409);
-   const nextRevision=await writeStudio({...current.document,posts},revision,current.etag);return json({ok:true,revision:nextRevision});
+   const appliedPacks=Array.isArray(input.appliedPacks)?input.appliedPacks.filter((id:unknown)=>typeof id==='string'&&id.length<100).slice(0,100):current.document.appliedPacks;
+   const nextRevision=await writeStudio({...current.document,posts,appliedPacks},revision,current.etag);return json({ok:true,revision:nextRevision});
   }
   if(route==='api/generate'&&req.method==='POST'){
    const input=await req.json(),topic=String(input.topic||'').trim();if(!topic||topic.length>1500)return json({error:'Sujet requis : 1 500 caractères maximum.'},400);

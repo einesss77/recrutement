@@ -1,0 +1,269 @@
+{
+  "id": "practical-ai-2026-01",
+  "posts": [
+    {
+      "id": "bm-practical-2026-01-1",
+      "title": "Un assistant qui connaît vos procédures.",
+      "category": "Assistant interne",
+      "template": "chatbot",
+      "theme": "dark",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Un assistant qui connaît vos procédures.\n\nUn chatbot interne peut aider les collaborateurs à retrouver une procédure. Son intérêt repose sur des sources à jour et sur la possibilité de vérifier chaque réponse.\n\nScénario illustratif : ce post présente un usage possible, pas une réalisation client ni un résultat mesuré.\n\nVous avez un processus à simplifier ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#IntelligenceArtificielle #Automatisation #BMDigitalConsulting",
+      "slides": [
+        {
+          "label": "L’IA EN PRATIQUE",
+          "title": "Un assistant qui connaît vos procédures.",
+          "body": "Retrouver une information sans parcourir dix documents.",
+          "points": [
+            "Comment poser une demande de congé ?",
+            "Le guide RH indique de passer par votre espace salarié. Vérifiez les étapes et délais dans le document source.",
+            "Guide RH · procédure congés"
+          ]
+        },
+        {
+          "label": "CE QU’IL FAUT CADRER",
+          "title": "Des sources. Et des limites.",
+          "body": "Des sources autorisées · Des réponses vérifiables · Un relais humain prévu",
+          "points": [
+            "Et si la réponse n’est pas dans les sources ?",
+            "L’assistant doit signaler ses limites et permettre de passer le relais à une personne.",
+            "Comportement à définir et à tester"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bm-practical-2026-01-2",
+      "title": "Le SAV, sans repartir de zéro.",
+      "category": "Relation client",
+      "template": "chatbot",
+      "theme": "light",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Le SAV, sans repartir de zéro.\n\nUn assistant SAV peut guider sur des questions documentées et préparer le passage à un conseiller. Le périmètre, les cas sensibles et les règles de relais se définissent avant le lancement.\n\nScénario illustratif : ce post présente un usage possible, pas une réalisation client ni un résultat mesuré.\n\nVous avez un processus à simplifier ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#IntelligenceArtificielle #Automatisation #BMDigitalConsulting",
+      "slides": [
+        {
+          "label": "L’IA EN PRATIQUE",
+          "title": "Le SAV, sans repartir de zéro.",
+          "body": "Préparer une réponse utile, puis passer le relais au bon moment.",
+          "points": [
+            "Mon produit ne s’allume plus. Que faire ?",
+            "Commençons par les vérifications du guide. Si elles ne suffisent pas, je peux préparer un récapitulatif pour un conseiller.",
+            "Guide d’assistance · premier démarrage"
+          ]
+        },
+        {
+          "label": "CE QU’IL FAUT CADRER",
+          "title": "Préparer le relais humain.",
+          "body": "Une demande comprise · Un contexte conservé · Un conseiller peut reprendre",
+          "points": [
+            "Et si la réponse n’est pas dans les sources ?",
+            "L’assistant doit signaler ses limites et permettre de passer le relais à une personne.",
+            "Comportement à définir et à tester"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bm-practical-2026-01-3",
+      "title": "Une réponse. Et sa source.",
+      "category": "Recherche documentaire",
+      "template": "chatbot",
+      "theme": "dark",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Une réponse. Et sa source.\n\nUne recherche documentaire assistée par IA doit respecter les droits d’accès. Afficher une source aide à vérifier la réponse ; cela ne dispense pas de tester sa justesse.\n\nScénario illustratif : ce post présente un usage possible, pas une réalisation client ni un résultat mesuré.\n\nVous avez un processus à simplifier ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#IntelligenceArtificielle #Automatisation #BMDigitalConsulting",
+      "slides": [
+        {
+          "label": "L’IA EN PRATIQUE",
+          "title": "Une réponse. Et sa source.",
+          "body": "Un point d’entrée pour interroger votre documentation.",
+          "points": [
+            "Où retrouver la procédure de mise en service ?",
+            "La documentation contient une checklist de mise en service. Consultez la version applicable à votre environnement.",
+            "Documentation technique · mise en service"
+          ]
+        },
+        {
+          "label": "CE QU’IL FAUT CADRER",
+          "title": "Retrouver, puis vérifier.",
+          "body": "Des accès respectés · La version du document visible · Une réponse qu’on peut contrôler",
+          "points": [
+            "Et si la réponse n’est pas dans les sources ?",
+            "L’assistant doit signaler ses limites et permettre de passer le relais à une personne.",
+            "Comportement à définir et à tester"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bm-practical-2026-01-4",
+      "title": "Du PDF aux informations utiles.",
+      "category": "Lecture documentaire",
+      "template": "document",
+      "theme": "light",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Du PDF aux informations utiles.\n\nLire une facture peut devenir un flux structuré : document reçu, champs proposés, vérification, puis intégration. Les formats difficiles et les données manquantes doivent faire partie des tests.\n\nScénario illustratif : ce post présente un usage possible, pas une réalisation client ni un résultat mesuré.\n\nVous avez un processus à simplifier ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#IntelligenceArtificielle #Automatisation #BMDigitalConsulting",
+      "slides": [
+        {
+          "label": "L’IA EN PRATIQUE",
+          "title": "Du PDF aux informations utiles.",
+          "body": "L’IA propose une extraction. Votre équipe vérifie.",
+          "points": [
+            "Facture fournisseur",
+            "Fournisseur, référence, date et montant identifiés",
+            "Contrôle humain avant intégration"
+          ]
+        },
+        {
+          "label": "CE QU’IL FAUT CADRER",
+          "title": "Extraire ne veut pas dire valider.",
+          "body": "Choisir les champs utiles · Tester plusieurs formats · Prévoir les informations manquantes",
+          "points": [
+            "Les conditions de réussite",
+            "Choisir les champs utiles",
+            "Prévoir les informations manquantes"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bm-practical-2026-01-5",
+      "title": "Une réunion. Des actions à confirmer.",
+      "category": "Compte rendu",
+      "template": "document",
+      "theme": "dark",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Une réunion. Des actions à confirmer.\n\nUne synthèse IA peut préparer un compte rendu à partir de notes ou d’une transcription autorisée. Les décisions, responsables et échéances restent à confirmer par les participants.\n\nScénario illustratif : ce post présente un usage possible, pas une réalisation client ni un résultat mesuré.\n\nVous avez un processus à simplifier ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#IntelligenceArtificielle #Automatisation #BMDigitalConsulting",
+      "slides": [
+        {
+          "label": "L’IA EN PRATIQUE",
+          "title": "Une réunion. Des actions à confirmer.",
+          "body": "Transformer des notes en une première synthèse exploitable.",
+          "points": [
+            "Notes de réunion",
+            "Décisions, actions et responsables proposés",
+            "Les participants confirment la synthèse"
+          ]
+        },
+        {
+          "label": "CE QU’IL FAUT CADRER",
+          "title": "Une synthèse à confirmer.",
+          "body": "Vérifier les décisions · Confirmer les responsables · Partager après validation",
+          "points": [
+            "Les conditions de réussite",
+            "Vérifier les décisions",
+            "Partager après validation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bm-practical-2026-01-6",
+      "title": "Une demande entre. Le suivi commence.",
+      "category": "Qualification commerciale",
+      "template": "automation",
+      "theme": "light",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Une demande entre. Le suivi commence.\n\nAutomatiser une partie de la qualification permet de préparer les informations pour l’équipe commerciale. L’IA peut proposer une synthèse, sans inventer le besoin ni décider seule d’un engagement.\n\nScénario illustratif : ce post présente un usage possible, pas une réalisation client ni un résultat mesuré.\n\nVous avez un processus à simplifier ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#IntelligenceArtificielle #Automatisation #BMDigitalConsulting",
+      "slides": [
+        {
+          "label": "L’IA EN PRATIQUE",
+          "title": "Une demande entre. Le suivi commence.",
+          "body": "Un exemple de parcours entre formulaire et CRM.",
+          "points": [
+            "Une demande arrive par formulaire",
+            "Les informations sont structurées",
+            "Un commercial valide la qualification"
+          ]
+        },
+        {
+          "label": "CE QU’IL FAUT CADRER",
+          "title": "Des règles avant le flux.",
+          "body": "Un formulaire bien cadré · Des règles de qualification explicites · Une validation avant l’action",
+          "points": [
+            "Un formulaire bien cadré",
+            "Des règles de qualification explicites",
+            "Une validation avant l’action"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bm-practical-2026-01-7",
+      "title": "Un mail devient une demande suivie.",
+      "category": "Support interne",
+      "template": "automation",
+      "theme": "dark",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Un mail devient une demande suivie.\n\nUne automatisation peut transformer un mail en brouillon de ticket : catégorie proposée, résumé et contexte d’origine. L’équipe garde la main sur la prise en charge et les priorités.\n\nScénario illustratif : ce post présente un usage possible, pas une réalisation client ni un résultat mesuré.\n\nVous avez un processus à simplifier ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#IntelligenceArtificielle #Automatisation #BMDigitalConsulting",
+      "slides": [
+        {
+          "label": "L’IA EN PRATIQUE",
+          "title": "Un mail devient une demande suivie.",
+          "body": "Relier les messages aux outils de travail.",
+          "points": [
+            "Un message de support est reçu",
+            "Un ticket est préparé et catégorisé",
+            "L’équipe vérifie puis prend en charge"
+          ]
+        },
+        {
+          "label": "CE QU’IL FAUT CADRER",
+          "title": "Garder le contexte du message.",
+          "body": "Conserver le message d’origine · Gérer les demandes ambiguës · Suivre les erreurs de classement",
+          "points": [
+            "Conserver le message d’origine",
+            "Gérer les demandes ambiguës",
+            "Suivre les erreurs de classement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bm-practical-2026-01-8",
+      "title": "L’IA prépare. Vous décidez.",
+      "category": "Validation humaine",
+      "template": "automation",
+      "theme": "light",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "L’IA prépare. Vous décidez.\n\nUn bon cas d’usage IA précise ce que le système prépare, ce que l’humain valide et ce qui se passe quand les informations sont insuffisantes. C’est une décision de conception, pas une option ajoutée à la fin.\n\nScénario illustratif : ce post présente un usage possible, pas une réalisation client ni un résultat mesuré.\n\nVous avez un processus à simplifier ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#IntelligenceArtificielle #Automatisation #BMDigitalConsulting",
+      "slides": [
+        {
+          "label": "L’IA EN PRATIQUE",
+          "title": "L’IA prépare. Vous décidez.",
+          "body": "Un flux utile prévoit aussi les cas où il faut s’arrêter.",
+          "points": [
+            "Un document ou une demande arrive",
+            "Une proposition est préparée",
+            "Une personne confirme ou corrige"
+          ]
+        },
+        {
+          "label": "CE QU’IL FAUT CADRER",
+          "title": "Qui valide, et à quel moment ?",
+          "body": "Définir les limites de l’outil · Prévoir le traitement des exceptions · Mesurer la qualité sur des cas réels",
+          "points": [
+            "Définir les limites de l’outil",
+            "Prévoir le traitement des exceptions",
+            "Mesurer la qualité sur des cas réels"
+          ]
+        }
+      ]
+    }
+  ]
+}

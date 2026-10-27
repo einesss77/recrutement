@@ -6,6 +6,8 @@
 
 Les vingt brouillons et la stratégie initiale sont dans `studio-social/content/`. Les ressources sont sous `studio-social/assets/`, servies par une route authentifiée et incluses explicitement dans le traçage Vercel. `scripts/prepare-social.mjs` prépare les exports PNG/PDF/ZIP dans le navigateur ; aucun Chromium serveur nécessaire.
 
+Le lot `practical-pack.json` ajoute huit exemples IA illustratifs (chatbot, extraction de document, automatisation), avec deux pages chacun. Il est intégré une seule fois grâce à `appliedPacks`, enregistré dans le document partagé ou IndexedDB. Les identifiants existants et les modifications utilisateur sont conservés ; supprimer un exemple après intégration ne le fait pas réapparaître. Le générateur éditorial de ce lot est `scripts/create-social-practical-pack.mjs`, sans appel IA. Les trois champs du visuel sont éditables dans « Conversation », « Document » ou « Flux ». Contrôle dédié : `SOCIAL_TEST_BROWSER=webkit node scripts/test-social-practical.mjs` (serveur local port 3007 par défaut).
+
 Sauvegarde partagée : le studio utilise d'abord le Blob Store privé existant si son jeton est configuré, sinon Postgres via `DATABASE_URL`. Postgres initialise une table indépendante `SocialStudioDocument` sans modifier les tables de recrutement. Les écritures utilisent une version / ETag pour refuser les écrasements concurrents.
 
 Si le stockage serveur est absent ou indisponible, la consultation et l'édition restent utilisables avec sauvegarde IndexedDB sur l'appareil. Le bandeau indique alors « Sauvegarde sur cet appareil ». Dans ce mode, le JSON permet le transfert entre appareils, et la rédaction IA reste désactivée.
