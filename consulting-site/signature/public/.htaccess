@@ -1,0 +1,9 @@
+Options -Indexes
+DirectoryIndex index.html
+RewriteEngine On
+RewriteRule (^|/)\. - [F,L]
+RewriteRule ^(?:api/|router\.php$) - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ router.php [L,QSA]
+ErrorDocument 404 /404.html

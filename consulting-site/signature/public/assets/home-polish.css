@@ -1,0 +1,139 @@
+/* Final home hierarchy: major sections, compact explanations, then the closing invitation. */
+.home-page{--home-space:70px;--home-heading:clamp(38px,4vw,55px);--home-accent:#377b79;--home-night:#111e2c;--home-mint:#b9efde}.home-page main>section[id],.home-page #methode-projet{scroll-margin-top:85px}.home-page main :is(h1,h2,h3){text-wrap:balance}.home-page main :is(a,button){touch-action:manipulation}.home-page main a:focus-visible,.home-page main button:focus-visible{outline:2px solid #479c8d;outline-offset:5px}.home-page .home-intro{background:#fff}.home-page main :is(.home-intro,.talent-section,.home-formats){padding-block:var(--home-space)}.home-page :is(.intro-story,.talent-heading,.format-heading) h2{font-size:var(--home-heading);line-height:1.1;letter-spacing:-.045em}.home-page :is(.intro-story,.talent-heading,.format-heading) h2 em{color:var(--home-accent);font-size:1.12em;line-height:1.1}.home-page :is(.home-followup,.home-project-path) h2{font-size:clamp(34px,3.2vw,46px);line-height:1.1;letter-spacing:-.04em}.home-page .portfolio-heading h2{font-size:clamp(30px,2.8vw,39px);letter-spacing:-.035em}.home-page .home-closing h2{font-size:clamp(32px,3vw,42px)}.home-page main .eyebrow{font-size:9px;line-height:1.7;letter-spacing:.11em;margin-bottom:21px}.home-page .intro-story .eyebrow,.home-page .talent-heading .eyebrow,.home-page .format-heading .eyebrow{color:#477d77}.home-page :is(.home-followup,.home-closing) .eyebrow{color:#a5d6ca}.home-page .intro-story>p{font-size:14px;line-height:1.85;margin:23px 0;max-width:42ch}.home-page .intro-directions{margin:24px 0}.home-page .intro-directions>a{padding-block:17px;min-height:58px}.home-page .intro-directions strong{font-size:18px}.home-page .collective-image img,.home-page .intro-image-window{height:490px}.home-page .collective-image img{object-fit:cover}.home-page .collective-image figcaption{font-size:9px;line-height:1.75}.home-page .talent-heading{align-items:end;margin-bottom:30px}.home-page .talent-heading>p{font-size:14px;line-height:1.85;max-width:40ch}.home-page .talent-watermark{opacity:.5}.home-page .talent-studio{min-width:0}.home-page .talent-deck{min-height:450px}.home-page .talent-hook{font-size:19px;line-height:1.4}.home-page .talent-scope{font-size:14px;line-height:1.85}.home-page .talent-outputs li{font-size:10px;line-height:1.6}.home-page .talent-tailored h3{font-size:26px}.home-page .talent-section-footer.talent-tailored{padding-top:24px;margin-top:22px}.home-page .format-heading{margin-bottom:32px}.home-page .format-duo{gap:24px}.home-page .format-tile{padding:29px 32px;border-radius:6px}.home-page .format-tile-title h3{font-size:61px}.home-page .format-tile-title>span{font-size:9px;max-width:145px;line-height:1.65}.home-page :is(.solo-sculpture,.squad-sculpture){height:250px}.home-page .squad-tile .format-tile-title{margin-bottom:17px}.home-page .format-tile>p,.home-page .squad-tile>p{font-size:14px;line-height:1.8;padding-bottom:20px}.home-page .format-tile>.text-link{min-height:48px;padding-top:18px;font-size:12px}.home-page .assembly-caption{font-size:9px;letter-spacing:.07em;line-height:1.6}.home-page :is(.solo-team-label,.solo-signature,.sculpture-note){font-size:8px;line-height:1.7}.home-page .squad-example{font-size:10px;line-height:1.7}.home-page .formats-detail{margin-top:18px}.home-page .formats-detail>.text-link{font-size:11px;min-height:40px}.home-page .home-followup-heading>.text-link,.home-page .home-path-link>.text-link,.home-page .intro-story>.text-link{font-size:12px;min-height:40px}.home-page .home-path-heading>p{font-size:13px;line-height:1.7}.home-page .workshop-stage-label{font-size:9px}.home-page .workshop-canvas-label{font-size:8px;letter-spacing:.06em}.home-page .home-closing{border-bottom:1px solid #b9efde18}.home-page .home-closing-inner{gap:35px}.home-page .folio-choices button{max-width:230px}.home-page .folio-arrows button{height:40px;width:40px}.home-page .footer-top{border-top:0}
+@media(max-width:1100px){.home-page{--home-space:60px;--home-heading:clamp(36px,4.3vw,49px)}.home-page .collective-image img,.home-page .intro-image-window{height:430px}.home-page .talent-deck{min-height:420px}.home-page .talent-heading>p{font-size:13px}.home-page .format-tile{padding:27px}.home-page .format-tile-title h3{font-size:56px}.home-page .format-tile-title>span{font-size:8px;max-width:115px}.home-page .squad-contributions strong{font-size:12px}.home-page .squad-contributions li>span{font-size:10px}.home-page .assembly-caption{font-size:8px}}
+@media(max-width:700px){.home-page{--home-space:43px;--home-heading:clamp(34px,8.5vw,42px)}.home-page main>section[id],.home-page #methode-projet{scroll-margin-top:65px}.home-page :is(.intro-story,.talent-heading,.format-heading) h2{line-height:1.1}.home-page .collective-image img,.home-page .intro-image-window{height:320px}.home-page .editorial-intro{gap:31px}.home-page main .eyebrow{font-size:9px;margin-bottom:18px}.home-page .intro-story>p{font-size:14px;margin:19px 0}.home-page .collective-image figcaption{font-size:8px;letter-spacing:.05em}.home-page .talent-heading{margin-bottom:25px}.home-page .talent-heading>p{font-size:13px;line-height:1.8}.home-page .talent-deck{min-height:310px}.home-page .talent-hook{font-size:18px}.home-page .talent-scope{font-size:13px}.home-page .talent-tabs button{min-height:46px}.home-page .talent-outputs li{font-size:10px}.home-page .talent-section-footer.talent-tailored{gap:15px;margin-top:24px;padding-top:22px}.home-page .talent-tailored h3{font-size:24px}.home-page .format-heading{margin-bottom:25px}.home-page .format-tile{padding:25px 24px}.home-page .format-tile-title h3{font-size:58px}.home-page .format-tile-title>span{font-size:8px;max-width:130px}.home-page :is(.solo-sculpture,.squad-sculpture){height:235px}.home-page .solo-integration li{font-size:10px}.home-page .squad-contributions strong{font-size:12px}.home-page .assembly-caption{font-size:8px}.home-page .squad-example{font-size:9px}.home-page .format-tile>p,.home-page .squad-tile>p{font-size:13px;line-height:1.85;padding-bottom:16px}.home-page .format-duo{gap:20px}.home-page .formats-detail>.text-link{font-size:11px}.home-page :is(.home-followup,.home-project-path) h2{font-size:33px}.home-page .portfolio-heading h2{font-size:30px}.home-page .home-closing h2{font-size:33px}.home-page .home-animation-toggle{height:40px;width:40px}.home-page .folio-arrows button{height:44px;width:44px}.home-page .method-visual-step{min-height:65px}.home-page .workshop-stage-label{font-size:8px}.home-page .workshop-canvas-label{font-size:7px;letter-spacing:.03em}.home-page .footer-links a{min-height:36px;display:flex;align-items:center}}
+@media(max-width:370px){.home-page .collective-image img,.home-page .intro-image-window{height:280px}.home-page .talent-deck{min-height:290px}.home-page .format-tile{padding:23px 20px}.home-page .format-tile-title>span{max-width:105px}.home-page .squad-contributions strong{font-size:10px}.home-page .squad-contributions li>span{font-size:9px}.home-page .squad-example{font-size:8px}.home-page :is(.home-followup,.home-project-path) h2{font-size:30px}.home-page .home-closing h2{font-size:31px}}
+@media(pointer:coarse){.home-page .home-animation-toggle{height:44px;width:44px}.home-page .folio-arrows button{height:44px;width:44px}}
+/* Keep the small follow-up loops on transform/opacity rather than layout/paint. */
+.home-page .mission-link{height:9px;overflow:hidden;background:linear-gradient(#acd7cb40,#acd7cb40) center/100% 1px no-repeat}.home-page .mission-link i{top:1px;left:0;width:100%;height:7px;background:transparent;box-shadow:none}.home-page .mission-link i:before{content:'';display:block;width:7px;height:7px;border-radius:50%;background:#b9efde;box-shadow:0 0 10px #b9efde55}.home-page .mission-animation .mission-referent>span{animation:none!important}.home-page .mission-referent>span:after{content:'';position:absolute;inset:-9px;border:1px solid #b9efde33;border-radius:50%;opacity:.3;pointer-events:none}.home-page .mission-animation[data-running=true] .mission-referent>span:after{animation:home-presence 3.4s ease-in-out infinite}.home-page .mission-animation[data-paused=true] .mission-referent>span:after{animation-play-state:paused!important}@keyframes mission-send{0%{transform:translateX(-7px);opacity:0}12%{opacity:1}85%{opacity:1}100%{transform:translateX(100%);opacity:0}}@keyframes home-presence{0%,100%{transform:scale(.98);opacity:.4}50%{transform:scale(1.12);opacity:.08}}@media(prefers-reduced-motion:reduce){.home-page .mission-referent>span:after{animation:none!important}}
+
+/* Whole-page composition: one surface palette, balanced formats and an inset support note. */
+.home-page{--home-space:64px;--home-heading:clamp(36px,3.7vw,51px);--home-soft:#edf3ef}
+.home-page .talent-section{background:var(--home-soft)}
+.home-page .talent-watermark{display:none}
+.home-page :is(.talent-heading,.format-heading) h2{font-size:clamp(34px,3.25vw,46px)}
+.home-page .talent-heading{margin-bottom:24px;gap:40px}
+.home-page .talent-heading>p{max-width:34ch}
+.home-page .talent-tabs{padding-block:7px}
+.home-page .talent-tabs button{min-height:54px;font-size:22px}
+.home-page .talent-deck{min-height:420px;margin-top:12px}
+.home-page .talent-details{padding-block:20px}
+.home-page .talent-panel h3{font-size:clamp(31px,3vw,42px);margin:17px 0 14px}
+.home-page .talent-hook{font-size:18px;line-height:1.5}
+.home-page .talent-scope{font-size:13px;max-width:44ch}
+.home-page .talent-outputs{margin:19px 0 23px}
+.home-page .talent-section-footer.talent-tailored{padding-top:20px;margin-top:20px;align-items:center}
+.home-page .talent-tailored h3{font-size:23px}
+.home-page .talent-tailored p{max-width:56ch;font-size:12px;line-height:1.7}
+.home-page .home-formats{padding-bottom:0}
+.home-page .format-heading{margin-bottom:30px}
+.home-page .format-heading h2{display:flex;flex-wrap:wrap;column-gap:.25em;row-gap:.08em;align-items:baseline}
+.home-page .format-heading h2 br{display:none}
+.home-page .format-heading h2 em:before{content:none}
+.home-page .format-duo{grid-template-columns:1fr 1fr;gap:24px}
+.home-page .format-tile{padding:28px;--format-ink:#294c48;--format-accent:#548c7d;background:#e8f0eb;color:var(--format-ink);border:1px solid #24465c0d;border-radius:12px}
+.home-page .squad-tile{background:#eaf0f1;--format-ink:#24465c;--format-accent:#548c7d}
+.home-page .format-tile-title{margin-bottom:14px}
+.home-page .format-tile-title h3{font-size:49px}
+.home-page :is(.solo-assembly,.squad-assembly){margin-bottom:17px}
+.home-page :is(.solo-sculpture,.squad-sculpture){height:235px}
+.home-page .assembly-caption{font-size:8px;letter-spacing:.06em}
+.home-page .squad-example{font-size:9px;margin-top:12px}
+.home-page .squad-contributions{padding-top:12px;margin-top:6px}
+.home-page .solo-integration{padding-top:12px;margin-top:6px}
+.home-page .format-tile>p{font-size:13px;line-height:1.8;padding-bottom:16px}
+.home-page .format-tile>.text-link{padding-top:15px;min-height:43px}
+.home-page .formats-detail{margin-top:12px}
+.home-page .home-followup{max-width:1248px;width:calc(100% - 96px);margin:27px auto 64px;padding:32px 0;border-radius:12px;background:radial-gradient(ellipse at 90% 50%,#24465c70,transparent 70%),var(--home-night)}
+.home-page .home-followup>.wrap{padding-inline:36px}
+.home-page .home-followup-layout{grid-template-columns:1fr 1fr;gap:6%}
+.home-page .home-followup h2{font-size:35px}
+.home-page .home-followup h2 br{display:none}
+.home-page .home-followup h2 em:before{content:' '}
+.home-page .home-followup-heading>p{font-size:13px;margin-top:14px}
+.home-page .home-followup-heading>.text-link{margin-top:13px}
+.home-page .home-followup .eyebrow{margin-bottom:15px}
+.home-page .mission-animation{padding:5px 25px 25px}
+.home-page .mission-person>span{width:68px;height:68px}
+.home-page .mission-person>span>svg{width:34px;height:34px}
+.home-page .mission-person{gap:10px}
+.home-page .mission-person strong{font-size:12px}
+.home-page .mission-shared-line{height:14px;margin-top:10px}
+.home-page .mission-conversation{margin-top:24px;padding:7px 13px;font-size:10px}
+.home-page .mission-milestones{margin-top:12px}
+.home-page .mission-milestones>span{padding:6px 10px;font-size:9px}
+.home-page .home-project-path{background:#fff;padding:64px 0}
+.home-page .workshop-canvas{height:360px;background:#dfeae3;border-radius:64px 12px 12px 12px}
+.home-page .home-project-path h2{font-size:clamp(34px,3.25vw,46px)}
+.home-page .home-path-heading>p{max-width:35ch}
+.home-page .portfolio-section:not(.portfolio-on-index){padding:48px 0;background:#fff}
+.home-page .portfolio-heading h2{font-size:clamp(30px,2.8vw,39px)}
+.home-page .home-intro>.bm-signature-arc{width:90px}
+.js-motion .home-page [data-reveal]{transition-duration:.65s;transition-delay:min(var(--reveal-delay,0ms),120ms)}
+.js-motion .home-page [data-reveal].awaiting{transform:translateY(20px)}
+@media(min-width:1441px){.home-page .home-followup{width:calc(100% - 192px)}}
+@media(min-width:701px) and (max-width:1050px){.home-page .format-tile{padding:24px}.home-page .format-tile-title>span{max-width:100px;font-size:8px}.home-page .format-tile-title h3{font-size:43px}.home-page .home-followup>.wrap{padding-inline:28px}.home-page .home-followup h2{font-size:31px}.home-page .home-followup h2 em{display:block}.home-page .mission-animation{padding-inline:10px}.home-page .mission-people{gap:15px}.home-page .mission-milestones{gap:5px}.home-page .mission-milestones>span{padding:6px 8px;font-size:8px}}
+@media(max-width:700px){
+.home-page{--home-space:42px;--home-heading:clamp(34px,8.5vw,42px)}
+.home-page :is(.talent-heading,.format-heading) h2{font-size:34px}
+.home-page .talent-heading{margin-bottom:21px}
+.home-page .talent-heading>p{font-size:13px;margin-top:17px;max-width:36ch}
+.home-page .talent-tabs button{font-size:14px;min-height:49px}
+.home-page .talent-deck{min-height:325px;margin-top:10px}
+.home-page .talent-details{padding:23px 0 0}
+.home-page .talent-panel h3{font-size:33px;margin:12px 0}
+.home-page .talent-hook{font-size:17px}
+.home-page .talent-scope{font-size:13px;line-height:1.8}
+.home-page .talent-tailored h3{font-size:23px}
+.home-page .talent-tailored p{font-size:12px}
+.home-page .format-heading{margin-bottom:24px}
+.home-page .format-duo{grid-template-columns:1fr;gap:18px}
+.home-page .format-tile{padding:24px 22px}
+.home-page .format-tile-title h3{font-size:46px}
+.home-page .format-tile-title>span{max-width:112px;font-size:8px}
+.home-page :is(.solo-sculpture,.squad-sculpture){height:210px}
+.home-page .format-tile>p{font-size:13px}
+.home-page .format-tile>.text-link{min-height:44px}
+.home-page .formats-detail>.text-link{font-size:10px}
+.home-page .home-followup{width:calc(100% - 48px);margin:22px auto 42px;padding:27px 0}
+.home-page .home-followup>.wrap{padding-inline:23px}
+.home-page .home-followup-layout{grid-template-columns:1fr;gap:23px}
+.home-page .home-followup h2{font-size:30px;max-width:15ch}
+.home-page .home-followup h2 em{display:block}
+.home-page .home-followup-heading>p{font-size:12px}
+.home-page .home-followup-heading>.text-link{font-size:11px}
+.home-page .mission-animation{padding:0 0 35px}
+.home-page .mission-person>span{width:62px;height:62px}
+.home-page .mission-person strong{font-size:10px}
+.home-page .mission-people{gap:16px}
+.home-page .mission-shared-line{margin-inline:25px}
+.home-page .mission-milestones{gap:5px}
+.home-page .mission-milestones>span{font-size:8px;padding:6px 8px}
+.home-page .home-project-path{padding:42px 0}
+.home-page .home-project-path h2{font-size:34px}
+.home-page .workshop-canvas{height:270px;border-top-left-radius:54px}
+.home-page .home-path-heading>p{font-size:13px;line-height:1.8}
+.home-page .portfolio-section:not(.portfolio-on-index){padding:36px 0}
+.home-page .home-intro>.bm-signature-arc{width:60px}
+}
+@media(max-width:370px){.home-page .format-tile{padding:22px 18px}.home-page .format-tile-title h3{font-size:43px}.home-page .home-followup>.wrap{padding-inline:18px}.home-page .mission-milestones>span{font-size:7px;padding:6px}.home-page .mission-person strong{font-size:9px}.home-page .talent-tabs button{font-size:12px}.home-page .home-project-path h2{font-size:31px}}
+
+.home-page .format-tile{box-shadow:none}.home-page .format-tile:hover{box-shadow:0 12px 28px #24465c0a}
+
+/* Small labels remain readable on the shared light surfaces. */
+.home-page .collective-image figcaption{color:#526f6a}
+.home-page :is(.talent-heading,.home-path-heading) .eyebrow{color:#386c63}
+.home-page .talent-tabs button>span{color:inherit;opacity:1}
+.home-page .talent-counter{color:#526b5e}
+.home-page .art-front>p{color:#526b5e}
+.home-page .art-back>p{color:#bed7c7}
+.home-page .talent-pass.peach .pass-top{color:#514b37;opacity:1}
+.home-page .assembly-caption,.home-page .squad-example,.home-page .squad-contributions li>span{color:#48655e}
+.home-page .home-path-heading>p{color:#526970}
+.home-page .method-step-number,.home-page .method-step-label small{color:#526c65;opacity:1}
+.home-page .method-step-label strong{color:#365d53}
+.home-page .folio-slide-brand{color:#48675c}
+.home-page .art-front>p,.home-page .art-back>p,.home-page .folio-slide-brand{opacity:1}
+.home-page .art-front>span{color:#526b5e;opacity:1}
+
+.home-page .service-catalog{padding-top:12px}.home-page .service-catalog-heading{border-top:1px solid #24465c20;padding-top:35px}

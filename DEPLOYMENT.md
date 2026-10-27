@@ -2,15 +2,41 @@
 
 ## Site B&M et recrutement sur le même domaine
 
-Le projet Vercel utilise Next.js. `/` sert la home B&M de `docs/`, `/offres`
+Le projet Vercel utilise Next.js. `/` sert le site B&M Signature de `consulting-site/signature/`, `/offres`
 liste les postes, `/<slug>` affiche chaque offre et `/admin` ouvre l'administration
 protégée par mot de passe. Les candidatures et les CV utilisent les services
 configurés ci-dessous.
 
-`npm run dev` et `npm run build` copient automatiquement la home dans
+`npm run dev` et `npm run build` génèrent les pages publiques Signature dans
 `public/consulting/` via `scripts/prepare-home.mjs`. Ce dossier généré est ignoré
-par Git ; modifier la home dans `docs/`. La réécriture de `/` dans
-`next.config.ts` conserve l'adresse racine sans redirection vers le recrutement.
+par Git ; modifier les sources dans `consulting-site/signature/src/` et ses ressources
+dans `consulting-site/signature/public/assets/`. `docs/` conserve la version précédente
+et ses modifications locales. Les réécritures de `next.config.ts` exposent les pages
+Signature à la racine sans modifier `/offres`, les offres individuelles ni l’admin recrutement.
+
+Validation : `npm run build` puis `npm run check`. Le contrôle couvre également les
+ressources après intégration, en français et en anglais. Les pages publiques et l’interface
+de gestion B&M sont générées ; les fichiers PHP et les données privées sont exclus de
+`public/consulting/`. `.local/` est ignoré à tous les niveaux et ne doit jamais être publié.
+Les exemples sont explicitement fictifs, le formulaire de contact prépare un message
+sans l’envoyer et l’indexation reste désactivée.
+
+### CMS des réalisations et version anglaise
+
+- Les pages anglaises sont générées sous `/en/`. Le catalogue de traductions se trouve
+  dans `consulting-site/signature/src/locales/en.json`. Les nouveaux contenus éditoriaux
+  doivent recevoir leur traduction ; aucun service de traduction externe n’est utilisé.
+- En local : `npm run cms:setup` initialise un code privé, puis `npm run cms` démarre
+  le serveur PHP sur le port 4348. Configurer `PHP_BINARY` si nécessaire.
+- Next.js sert les pages publiques et relaie le CMS via `BM_CMS_ORIGIN`
+  (valeur locale par défaut : `http://127.0.0.1:4348`).
+- En production Next.js, définir `BM_CMS_ORIGIN` vers un hébergement PHP joignable
+  pour les réalisations publiées et leur gestion. Un déploiement Next.js seul
+  n’exécute pas le CMS PHP. Les données et médias privés sont à installer séparément,
+  hors de Git, avec un code d’accès propre à la production.
+- Pour un hébergement PHP/Apache direct, utiliser `consulting-site/signature/dist/`
+  avec son routeur et son `.htaccess`. Cette option concerne le site vitrine et
+  le CMS ; les routes de recrutement Next.js nécessitent toujours leur runtime.
 
 `main` est la branche de référence. Le projet Vercel historique suit encore
 `master` pour la production : synchroniser sans forcer avec

@@ -13,3 +13,21 @@ prisma/dev.db-journal
 
 /generated/prisma
 /public/consulting/
+
+# Local frontend tooling artifacts
+/tmp/
+/output/playwright/
+/.playwright-cli/
+/.agents/skills/impeccable/scripts/bin/
+
+# Private local data, including the unfinished B&M CMS
+.local/
+
+# Local assistant configuration and review artifacts
+.codex/
+.agents/
+/output/
+# Local visual review captures
+/consulting-site/signature/review/*.png
+/consulting-site/signature/review/*.jpg
+/consulting-site/signature/review/*.webp
