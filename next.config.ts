@@ -2,9 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   agentRules: false,
+  outputFileTracingIncludes: {
+    '/studio-social/[[...path]]': ['./studio-social/assets/**/*'],
+  },
   async headers() {
     return [
       { source: "/admin/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
+      { source: "/studio-social/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
       { source: "/gestion-realisations/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
       { source: "/api/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
       { source: "/consulting/:path*.html", headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }] },

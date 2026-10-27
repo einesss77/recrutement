@@ -1,0 +1,518 @@
+[
+  {
+    "id": "21937e81-5c9f-4022-bbea-510a0c480c68",
+    "title": "Solo ou squad : partir du besoin.",
+    "template": "squad",
+    "category": "Renfort",
+    "theme": "light",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Solo ou squad : partir du besoin.\n\nUne compétence précise ou plusieurs expertises à coordonner : le format suit le travail à accomplir.\n\nUne mission ciblée → consultant solo\nUn périmètre partagé → squad\nUn cadre clair dans les deux cas\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "RENFORT",
+        "title": "Solo ou squad : partir du besoin.",
+        "body": "Une compétence précise ou plusieurs expertises à coordonner : le format suit le travail à accomplir.",
+        "points": [
+          "Une mission ciblée → consultant solo",
+          "Un périmètre partagé → squad",
+          "Un cadre clair dans les deux cas"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "e31356ab-59d1-4a78-87ac-0c0093441cdb",
+    "title": "Un consultant ne devrait pas avancer seul.",
+    "template": "editorial",
+    "category": "Accompagnement",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Un consultant ne devrait pas avancer seul.\n\nLe référent projet accompagne le consultant tout au long de sa mission.\n\nFaciliter l’intégration\nÉchanger sur les difficultés\nSuivre les ajustements\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "ACCOMPAGNEMENT",
+        "title": "Un consultant ne devrait pas avancer seul.",
+        "body": "Le référent projet accompagne le consultant tout au long de sa mission.",
+        "points": []
+      },
+      {
+        "label": "Accompagnement / 1",
+        "title": "Faciliter l’intégration",
+        "body": "Un démarrage se prépare : contexte, interlocuteurs et place dans l’équipe.",
+        "points": []
+      },
+      {
+        "label": "Accompagnement / 2",
+        "title": "Échanger sur les difficultés",
+        "body": "Les points de suivi permettent de parler du travail, des obstacles et des besoins.",
+        "points": []
+      },
+      {
+        "label": "Accompagnement / 3",
+        "title": "Suivre les ajustements",
+        "body": "Le suivi sert aussi à ajuster les conditions de mission en échangeant avec le client.",
+        "points": []
+      }
+    ]
+  },
+  {
+    "id": "86ba6c99-00fc-48c2-a55e-1f03ad5c274d",
+    "title": "Avant de coder, clarifier.",
+    "template": "steps",
+    "category": "Conseil",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Avant de coder, clarifier.\n\nLe cadrage transforme une intention en décisions de travail.\n\nQui utilisera le produit ?\nQuel problème faut-il résoudre ?\nQuelles priorités pour une première version ?\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "CONSEIL",
+        "title": "Avant de coder, clarifier.",
+        "body": "Le cadrage transforme une intention en décisions de travail.",
+        "points": [
+          "Qui utilisera le produit ?",
+          "Quel problème faut-il résoudre ?",
+          "Quelles priorités pour une première version ?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ff121e91-7302-4006-81fe-41a650a1563c",
+    "title": "Agile, concrètement.",
+    "template": "steps",
+    "category": "Méthode agile",
+    "theme": "light",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Agile, concrètement.\n\nConstruire par étapes et confronter régulièrement le produit aux usages.\n\nPrioriser ensemble\nMontrer une version utilisable\nIntégrer les retours\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "MÉTHODE AGILE",
+        "title": "Agile, concrètement.",
+        "body": "Construire par étapes et confronter régulièrement le produit aux usages.",
+        "points": []
+      },
+      {
+        "label": "Méthode agile / 1",
+        "title": "Prioriser ensemble",
+        "body": "Une première version commence par des priorités partagées.",
+        "points": []
+      },
+      {
+        "label": "Méthode agile / 2",
+        "title": "Montrer une version utilisable",
+        "body": "Une démonstration rend les avancées concrètes et ouvre la discussion.",
+        "points": []
+      },
+      {
+        "label": "Méthode agile / 3",
+        "title": "Intégrer les retours",
+        "body": "Les retours nourrissent les prochaines décisions de produit.",
+        "points": []
+      }
+    ]
+  },
+  {
+    "id": "dc60912b-843a-4961-a027-d1fcf1f88242",
+    "title": "Une IA utile commence par un usage.",
+    "template": "focus",
+    "category": "Intelligence artificielle",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Une IA utile commence par un usage.\n\nChoisir un cas concret avant de choisir un modèle.\n\nDéfinir la tâche\nVérifier les données disponibles\nÉvaluer la qualité obtenue\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "INTELLIGENCE ARTIFICIELLE",
+        "title": "Une IA utile commence par un usage.",
+        "body": "Choisir un cas concret avant de choisir un modèle.",
+        "points": []
+      },
+      {
+        "label": "Intelligence artificielle / 1",
+        "title": "Définir la tâche",
+        "body": "Préciser ce que l’outil doit aider à accomplir et comment sa réponse sera vérifiée.",
+        "points": []
+      },
+      {
+        "label": "Intelligence artificielle / 2",
+        "title": "Vérifier les données disponibles",
+        "body": "Identifier les sources disponibles et les conditions de leur utilisation.",
+        "points": []
+      },
+      {
+        "label": "Intelligence artificielle / 3",
+        "title": "Évaluer la qualité obtenue",
+        "body": "Tester sur des situations représentatives avant d’élargir l’usage.",
+        "points": []
+      }
+    ]
+  },
+  {
+    "id": "ea0ee828-4394-450a-bbe5-da88ca8a9ca3",
+    "title": "Votre outil doit suivre votre métier.",
+    "template": "editorial",
+    "category": "Logiciel métier",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Votre outil doit suivre votre métier.\n\nQuand les outils existants créent des contournements, commencer par comprendre le travail réel.\n\nObserver les usages\nRepérer les doubles saisies\nPrioriser les points de friction\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "LOGICIEL MÉTIER",
+        "title": "Votre outil doit suivre votre métier.",
+        "body": "Quand les outils existants créent des contournements, commencer par comprendre le travail réel.",
+        "points": [
+          "Observer les usages",
+          "Repérer les doubles saisies",
+          "Prioriser les points de friction"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c6c6fec3-0606-40fc-a60f-ae22b91707dc",
+    "title": "Une application mobile, pour quel usage ?",
+    "template": "checklist",
+    "category": "Mobile",
+    "theme": "light",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Une application mobile, pour quel usage ?\n\nLa mobilité doit répondre à une situation concrète.\n\nUn usage sur le terrain ?\nUn accès hors connexion nécessaire ?\nDes fonctions propres au téléphone ?\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "MOBILE",
+        "title": "Une application mobile, pour quel usage ?",
+        "body": "La mobilité doit répondre à une situation concrète.",
+        "points": [
+          "Un usage sur le terrain ?",
+          "Un accès hors connexion nécessaire ?",
+          "Des fonctions propres au téléphone ?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "6ed14329-1779-453c-9a85-f2785f9319d5",
+    "title": "Une API, c’est un point de rencontre.",
+    "template": "focus",
+    "category": "Web & SaaS",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Une API, c’est un point de rencontre.\n\nRelier les outils demande des règles explicites et un périmètre maîtrisé.\n\nQuelles informations circulent ?\nQui peut y accéder ?\nQue se passe-t-il en cas d’erreur ?\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "WEB & SAAS",
+        "title": "Une API, c’est un point de rencontre.",
+        "body": "Relier les outils demande des règles explicites et un périmètre maîtrisé.",
+        "points": [
+          "Quelles informations circulent ?",
+          "Qui peut y accéder ?",
+          "Que se passe-t-il en cas d’erreur ?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "133aeeb0-983a-475d-acb4-39d81044b04d",
+    "title": "Cloud : choisir avant de multiplier.",
+    "template": "checklist",
+    "category": "Architecture cloud",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Cloud : choisir avant de multiplier.\n\nUne architecture se décide selon les contraintes du produit et de son exploitation.\n\nCharge attendue\nExigences de disponibilité\nCoûts et compétences d’exploitation\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "ARCHITECTURE CLOUD",
+        "title": "Cloud : choisir avant de multiplier.",
+        "body": "Une architecture se décide selon les contraintes du produit et de son exploitation.",
+        "points": [
+          "Charge attendue",
+          "Exigences de disponibilité",
+          "Coûts et compétences d’exploitation"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "d85b4897-e658-4597-bcdc-5d6bbabc4bbc",
+    "title": "Les données ont besoin d’un chemin clair.",
+    "template": "steps",
+    "category": "Data",
+    "theme": "light",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Les données ont besoin d’un chemin clair.\n\nDe la source à l’usage, chaque étape doit être compréhensible.\n\nIdentifier les sources\nContrôler la qualité\nDocumenter les transformations\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "DATA",
+        "title": "Les données ont besoin d’un chemin clair.",
+        "body": "De la source à l’usage, chaque étape doit être compréhensible.",
+        "points": [
+          "Identifier les sources",
+          "Contrôler la qualité",
+          "Documenter les transformations"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "795c347c-abdc-4389-a5ee-cdc7e4f80628",
+    "title": "Product Owner : garder le cap.",
+    "template": "focus",
+    "category": "Product Ownership",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Product Owner : garder le cap.\n\nRelier les besoins des utilisateurs aux décisions de l’équipe.\n\nRendre les priorités visibles\nClarifier les attentes\nValider ce qui est livré\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "PRODUCT OWNERSHIP",
+        "title": "Product Owner : garder le cap.",
+        "body": "Relier les besoins des utilisateurs aux décisions de l’équipe.",
+        "points": [
+          "Rendre les priorités visibles",
+          "Clarifier les attentes",
+          "Valider ce qui est livré"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "e62efaa7-84c5-4544-83d1-7c9bbb04c22b",
+    "title": "Une squad, des rôles complémentaires.",
+    "template": "squad",
+    "category": "Collectif",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Une squad, des rôles complémentaires.\n\nComposer une équipe autour du périmètre, plutôt qu’empiler des profils.\n\nProduit et priorités\nConception et développement\nQualité et mise en service\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "COLLECTIF",
+        "title": "Une squad, des rôles complémentaires.",
+        "body": "Composer une équipe autour du périmètre, plutôt qu’empiler des profils.",
+        "points": []
+      },
+      {
+        "label": "Collectif / 1",
+        "title": "Produit et priorités",
+        "body": "Clarifier les usages et ordonner les priorités.",
+        "points": []
+      },
+      {
+        "label": "Collectif / 2",
+        "title": "Conception et développement",
+        "body": "Faire travailler ensemble les expertises nécessaires au périmètre.",
+        "points": []
+      },
+      {
+        "label": "Collectif / 3",
+        "title": "Qualité et mise en service",
+        "body": "Préparer les vérifications et les conditions de mise en service.",
+        "points": []
+      }
+    ]
+  },
+  {
+    "id": "c2186a57-d81c-4daa-a7af-458730b6a211",
+    "title": "Une reprise de projet se prépare.",
+    "template": "checklist",
+    "category": "Conseil",
+    "theme": "light",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Une reprise de projet se prépare.\n\nAvant de faire évoluer un produit existant, comprendre ce qui est déjà en place.\n\nAccès et documentation\nDépendances techniques\nRisques et priorités\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "CONSEIL",
+        "title": "Une reprise de projet se prépare.",
+        "body": "Avant de faire évoluer un produit existant, comprendre ce qui est déjà en place.",
+        "points": [
+          "Accès et documentation",
+          "Dépendances techniques",
+          "Risques et priorités"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fe779d59-50d0-42de-a137-6af4cf948066",
+    "title": "Une démo doit permettre de décider.",
+    "template": "editorial",
+    "category": "Méthode agile",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Une démo doit permettre de décider.\n\nMontrer le travail réalisé pour obtenir des retours exploitables.\n\nUn parcours concret\nDes questions précises\nDes décisions pour la suite\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "MÉTHODE AGILE",
+        "title": "Une démo doit permettre de décider.",
+        "body": "Montrer le travail réalisé pour obtenir des retours exploitables.",
+        "points": [
+          "Un parcours concret",
+          "Des questions précises",
+          "Des décisions pour la suite"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "6f26aa2f-8809-42b7-af35-f00505cf1215",
+    "title": "Le sur-mesure commence par l’existant.",
+    "template": "steps",
+    "category": "Conseil",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Le sur-mesure commence par l’existant.\n\nUn nouveau développement n’est pas toujours le premier levier.\n\nCartographier les outils\nIdentifier les écarts\nChoisir ce qui mérite d’être construit\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "CONSEIL",
+        "title": "Le sur-mesure commence par l’existant.",
+        "body": "Un nouveau développement n’est pas toujours le premier levier.",
+        "points": [
+          "Cartographier les outils",
+          "Identifier les écarts",
+          "Choisir ce qui mérite d’être construit"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2a1a91f4-1a8e-48ca-96e9-a4f26030fd6f",
+    "title": "Livrer, c’est aussi transmettre.",
+    "template": "checklist",
+    "category": "Mise en service",
+    "theme": "light",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Livrer, c’est aussi transmettre.\n\nPréparer la suite fait partie du projet.\n\nDocumenter les éléments convenus\nOrganiser la prise en main\nPréparer les conditions de reprise\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "MISE EN SERVICE",
+        "title": "Livrer, c’est aussi transmettre.",
+        "body": "Préparer la suite fait partie du projet.",
+        "points": [
+          "Documenter les éléments convenus",
+          "Organiser la prise en main",
+          "Préparer les conditions de reprise"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "48250941-c0ad-411c-a100-a51c03cd1df5",
+    "title": "ERP, CRM : partir de votre contexte.",
+    "template": "focus",
+    "category": "Besoins spécifiques",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "ERP, CRM : partir de votre contexte.\n\nLe besoin peut porter sur un environnement ou une compétence précise.\n\nComprendre l’écosystème\nDéfinir le rôle attendu\nCadrer les interfaces avec l’équipe\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "BESOINS SPÉCIFIQUES",
+        "title": "ERP, CRM : partir de votre contexte.",
+        "body": "Le besoin peut porter sur un environnement ou une compétence précise.",
+        "points": [
+          "Comprendre l’écosystème",
+          "Définir le rôle attendu",
+          "Cadrer les interfaces avec l’équipe"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "68909bcb-a126-4462-8416-947e59b47a94",
+    "title": "Le problème avant la solution.",
+    "template": "case",
+    "category": "Exemple de démarche",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Le problème avant la solution.\n\nExemple fictif : une équipe ressaisit les mêmes informations dans plusieurs outils.\n\nBesoin : réduire les doubles saisies\nPiste : relier les outils existants\nRésultat : à mesurer après mise en service\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "EXEMPLE DE DÉMARCHE",
+        "title": "Le problème avant la solution.",
+        "body": "Exemple fictif : une équipe ressaisit les mêmes informations dans plusieurs outils.",
+        "points": [
+          "Besoin : réduire les doubles saisies",
+          "Piste : relier les outils existants",
+          "Résultat : à mesurer après mise en service"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bf2f80fa-db25-48a3-89a5-7b43c4666859",
+    "title": "Un bon brief pose les bonnes questions.",
+    "template": "checklist",
+    "category": "Cadrage",
+    "theme": "light",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Un bon brief pose les bonnes questions.\n\nAvant un premier échange, quelques repères suffisent pour ouvrir la discussion.\n\nLe contexte\nLe besoin prioritaire\nLes contraintes connues\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "CADRAGE",
+        "title": "Un bon brief pose les bonnes questions.",
+        "body": "Avant un premier échange, quelques repères suffisent pour ouvrir la discussion.",
+        "points": [
+          "Le contexte",
+          "Le besoin prioritaire",
+          "Les contraintes connues"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "5b9bd6b0-4abc-448e-a7c3-2c0cbf18d8ac",
+    "title": "Le bon renfort, au bon endroit.",
+    "template": "squad",
+    "category": "Consultants",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Le bon renfort, au bon endroit.\n\nDéfinir le rôle, les responsabilités et les interfaces avant le démarrage.\n\nUne expertise adaptée\nUne intégration préparée\nUn suivi pendant la mission\n\nQuel est votre contexte ? Parlons-en : https://www.bandmdigitalconsulting.com\n\n#Conseil #ProduitNumerique #BMDigitalConsulting",
+    "slides": [
+      {
+        "label": "CONSULTANTS",
+        "title": "Le bon renfort, au bon endroit.",
+        "body": "Définir le rôle, les responsabilités et les interfaces avant le démarrage.",
+        "points": [
+          "Une expertise adaptée",
+          "Une intégration préparée",
+          "Un suivi pendant la mission"
+        ]
+      }
+    ]
+  }
+]

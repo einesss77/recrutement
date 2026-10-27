@@ -31,3 +31,4 @@ prisma/dev.db-journal
 /consulting-site/signature/review/*.png
 /consulting-site/signature/review/*.jpg
 /consulting-site/signature/review/*.webp
+/studio-social/assets/exporter.bundle.js*

@@ -1,0 +1,12 @@
+{
+ "brand":"B&M Digital Consulting",
+ "audience":"Dirigeants de PME, DSI, responsables produit et équipes qui ont besoin de renfort ou d'un produit numérique sur mesure.",
+ "objective":"Faire comprendre notre expertise, rendre notre accompagnement concret et susciter des conversations qualifiées.",
+ "voice":"Clair, factuel, humain. Une idée par publication. Expliquer un choix, un usage ou une méthode plutôt que promettre une révolution.",
+ "facts":["Consultants individuels ou squads selon le besoin.","Expertises fullstack, cloud, data, IA et Product Ownership.","Un référent projet accompagne le consultant durant sa mission.","Conseil, cadrage et développement sur mesure dans une démarche agile."],
+ "rules":["Ne jamais inventer de clients, résultats, témoignages, certifications, disponibilités ou chiffres.","Un exemple hypothétique doit être présenté comme tel.","Les cas clients restent des brouillons jusqu'à validation des faits et des droits de diffusion.","Pas de publication automatique : export puis validation humaine."],
+ "pillars":["Conseil et décisions produit","Consultant solo et squad","Méthode agile et suivi de mission","Web, mobile, data et IA"],
+ "rhythm":"Point de départ : 3 publications par semaine sur LinkedIn, ajustées selon les retours. Alterner point de vue, méthode et expertise. Réutiliser les visuels adaptés sur Instagram si pertinent.",
+ "measurement":"Suivre les échanges qualifiés, visites du site et demandes de contact. Comparer les thèmes et formats après quatre semaines avant d'augmenter la cadence.",
+ "colors":{"navy":"#111e2c","mint":"#b9efde","teal":"#377b79","white":"#ffffff"}
+}

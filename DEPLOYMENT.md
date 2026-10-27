@@ -1,5 +1,19 @@
 # Déploiement
 
+## Studio social privé
+
+`/studio-social` ouvre le studio B&M, protégé par la session administrateur existante (`ADMIN_PASSWORD`). Les routes HTML, ressources et API vérifient l'authentification. Les écritures vérifient l'origine. Le studio est en `noindex` et absent du sitemap.
+
+Les vingt brouillons et la stratégie initiale sont dans `studio-social/content/`. Les ressources sont sous `studio-social/assets/`, servies par une route authentifiée et incluses explicitement dans le traçage Vercel. `scripts/prepare-social.mjs` prépare les exports PNG/PDF/ZIP dans le navigateur ; aucun Chromium serveur nécessaire.
+
+Sauvegarde partagée : le studio utilise d'abord le Blob Store privé existant si son jeton est configuré, sinon Postgres via `DATABASE_URL`. Postgres initialise une table indépendante `SocialStudioDocument` sans modifier les tables de recrutement. Les écritures utilisent une version / ETag pour refuser les écrasements concurrents.
+
+Si le stockage serveur est absent ou indisponible, la consultation et l'édition restent utilisables avec sauvegarde IndexedDB sur l'appareil. Le bandeau indique alors « Sauvegarde sur cet appareil ». Dans ce mode, le JSON permet le transfert entre appareils, et la rédaction IA reste désactivée.
+
+Rédaction facultative : définir `GEMINI_API_KEY` et, au besoin, `AI_MONTHLY_BUDGET_USD` (défaut 2 dollars) dans Vercel. Les appels réservent 0,02 dollar chacun avant la requête ; ce compteur prudent n'est pas un relevé de facture ni une limite globale de la clé. Aucun appel automatique à l'ouverture ou aux exports. Aucune publication sur les réseaux.
+
+Contrôle : `node scripts/test-social.mjs` avec le serveur de build local sur le port 3006. Vérifie connexion, refus des accès anonymes et origines externes, affichage mobile et exports navigateur. Quand le stockage partagé est disponible, vérifie aussi la sauvegarde entre sessions et le refus des versions obsolètes. Le contrôle ne dépense aucun crédit API.
+
 ## Site B&M et recrutement sur le même domaine
 
 Le projet Vercel utilise Next.js. `/` sert le site B&M Signature de `consulting-site/signature/`, `/offres`

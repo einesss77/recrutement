@@ -1,4 +1,5 @@
 import { cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+await import('./prepare-social.mjs');
 
 // Signature is the public consulting site; preserve docs/ as the previous version.
 await import("../consulting-site/signature/scripts/build.mjs");
