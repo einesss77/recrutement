@@ -181,3 +181,20 @@ Validation : `node --test scripts/test-studio-sync.mjs`,
 `node scripts/test-studio-storage.mjs` et `node scripts/test-studio-sync-browser.mjs`.
 Les tests de conflits utilisent un stockage isolé ou une API interceptée ;
 ils ne modifient pas les publications du stockage de production.
+
+## Classement privé des candidatures Marketing & Ads
+
+Page `/admin/classement-marketing`, réservée à la session admin existante, en noindex.
+Les noms, prétentions, disponibilités et réponses proviennent de la base candidatures.
+Les analyses et identifiants sont enregistrés dans un document Vercel Blob privé
+`bm-recruitment/marketing-ranking-v1.json`, hors dépôt Git et hors fichiers publics.
+Le chargement passe par POST `/admin/classement-marketing/donnees` : authentification,
+origine identique, validation du schéma et correspondance des dossiers au poste.
+Le stockage nécessite le même token Blob privé que le studio social. Les écritures
+utilisent une précondition ETag ; aucun statut, note ou CV existant n’est modifié.
+
+Les nouveaux dossiers ou nouvelles soumissions postérieurs à la capture sont indiqués
+comme non analysés / à actualiser ; ils ne réutilisent pas automatiquement un ancien score.
+La grille et ses limites sont visibles dans la page. Le CSV porte sur les filtres actifs.
+Tests : `node scripts/test-marketing-ranking.mjs` (données fictives uniquement), puis
+`npm run build` et `npm run check`. CV et données de travail restent sous `output/` ignoré.

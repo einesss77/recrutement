@@ -139,6 +139,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           <p className="eyebrow">Administration</p>
           <h1>Gestion des candidatures</h1>
           <Link href="/studio-social">Ouvrir le studio social B&M ↗</Link>
+          <br />
+          <Link href="/admin/classement-marketing">Classement Marketing Digital & Ads ↗</Link>
         </div>
         <form action={logoutAdmin}>
           <button className="icon-button" type="submit" title="Se déconnecter" aria-label="Se déconnecter">
