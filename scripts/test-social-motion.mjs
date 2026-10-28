@@ -9,7 +9,7 @@ try{
  const context=await browser.newContext(safari?devices['iPhone 13']:{viewport:{width:1360,height:1000}});
  await context.addCookies([{name:'bm_admin_session',value:createHmac('sha256',process.env.ADMIN_PASSWORD).update('bm-digital-consulting-admin').digest('hex'),url:base,httpOnly:true,sameSite:'Lax'}]);
  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto(base+'/studio-social');await page.locator('[data-id="bm-companion-2026-cat"]').click();await page.locator('#motion-open').click();await page.locator('.motion-dialog canvas').waitFor();
+ await page.goto(base+'/studio-social');await page.locator('[data-id="bm-companion-2026-cat"]').click();await page.locator('#motion-open').click();await page.locator('.motion-dialog canvas').waitFor();await page.waitForFunction(()=>document.querySelector('#motion-style')?.disabled===false);
  await page.waitForFunction(()=>document.querySelector('.motion-dialog canvas')?.getContext('2d').getImageData(0,0,1,1).data[3]>0);
  await mkdir('output/social/motion',{recursive:true});
  const testedStyles=process.env.SOCIAL_TEST_STYLE?[process.env.SOCIAL_TEST_STYLE]:['character','kinetic','mockups'];

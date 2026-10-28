@@ -1,0 +1,19 @@
+export const PALETTE={bg:'#111e2c',ink:'#153a35',mint:'#b9efde',paper:'#f8fbf4',muted:'#b6cbc2'};
+export const SCENES=[
+ ['Identité & écran de fin',13.7,[['brand','Marque','B&M.',24],['strap','Signature','DU BESOIN AU PRODUIT',48],['close1','Titre final · ligne 1','VOTRE MÉTIER.',42],['close2','Titre final · ligne 2','VOTRE OUTIL.',42],['cta','Appel à l’action','Parlons de votre projet  ↗',48],['domain','Adresse affichée','bandmdigitalconsulting.com',60]]],
+ ['01 · Le problème',1.4,[['hook1','Titre · ligne 1','VOS OUTILS.',42],['hook2','Titre · ligne 2','DISPERSÉS ?',42],['card1','Carte 1 · titre','Un fichier.',40],['body1','Carte 1 · détail','Version finale_v3.xlsx',60],['card2','Carte 2 · titre','Un message.',40],['body2','Carte 2 · détail','« Qui s’en occupe ? »',60],['card3','Carte 3 · titre','Une urgence.',40],['body3','Carte 3 · détail','Retrouver la bonne info.',60]]],
+ ['02 · La solution',3.4,[['intro','Introduction','ET SI TOUT SE RETROUVAIT',60],['solution1','Titre · ligne 1','AU MÊME',42],['solution2','Titre · ligne 2','ENDROIT.',42],['list1','Point 1','Vos demandes',50],['list2','Point 2','Votre équipe',50],['list3','Point 3','Vos documents',50]]],
+ ['03 · La démo laptop',6.1,[['web1','Titre · ligne 1','ON PASSE',42],['web2','Titre · ligne 2','À L’ACTION.',42],['badge','Conclusion de la démo','Une demande. Un suivi.',48],['form','Titre du formulaire','Nouvelle demande',40],['object','Libellé du premier champ','Objet',32],['request','Texte saisi','Préparer l’atelier',50],['teamLabel','Libellé du second champ','Équipe projet',32],['team','Équipe affichée','Produit & développement',48],['create','Bouton','Créer la demande',36],['created','Confirmation','Demande créée.',36],['createdBody','Détail de la confirmation','L’équipe peut prendre le relais.',58]]],
+ ['04 · La démo mobile',9.7,[['mobile1','Titre · ligne 1','MÊME SUR',42],['mobile2','Titre · ligne 2','LE TERRAIN.',42],['mobileTag','Surtitre de la carte','VOTRE ÉQUIPE',32],['mobileTitle','Titre de la carte','Atelier à préparer',40],['mobileBody','Description','La demande est bien arrivée.',58],['mobileAction','Bouton initial','Prendre en charge',36],['mobileDone','Bouton après validation','Pris en charge ✓',36],['notification','Notification','Équipe informée.',40]]],
+ ['05 · Le bénéfice',11.6,[['result1','Titre · ligne 1','MOINS DE FLOU.',42],['result2','Titre · ligne 2','PLUS DE SUIVI.',42],['benefit1','Bénéfice 1','Un point d’entrée.',50],['benefit2','Bénéfice 2','Des rôles clairs.',50],['benefit3','Bénéfice 3','Des actions visibles.',50]]]
+];
+export const TEXT=Object.fromEntries(SCENES.flatMap(([, ,fields])=>fields.map(([key,,value])=>[key,value])));
+export const PRESETS={bm:{label:'B&M',colors:PALETTE},ocean:{label:'Océan',colors:{bg:'#101b32',ink:'#152d52',mint:'#98dafa',paper:'#f5f9ff',muted:'#c4d1e5'}},sunset:{label:'Terracotta',colors:{bg:'#281c22',ink:'#4b2832',mint:'#ffc3a2',paper:'#fff7ef',muted:'#decbc8'}},sage:{label:'Sauge',colors:{bg:'#19241d',ink:'#2b4535',mint:'#d5e7ab',paper:'#f8faef',muted:'#c4d1ba'}}};
+export function normalizeSettings(input={}){
+ const source=input&&typeof input==='object'?input:{},text={...TEXT},colors={...PALETTE};
+ for(const [, ,fields]of SCENES)for(const [key,,,limit]of fields)if(typeof source.text?.[key]==='string')text[key]=source.text[key].replace(/[\r\n\t]/g,' ').slice(0,limit);
+ for(const key of Object.keys(colors))if(/^#[0-9a-f]{6}$/i.test(source.colors?.[key]||''))colors[key]=source.colors[key];
+ return{version:1,text,colors,interactions:source.interactions!==false};
+}
+export function customScript(settings){return Object.keys(TEXT).some(key=>settings.text[key]!==TEXT[key]);}
+export function contrast(a,b){const lum=hex=>{const rgb=hex.slice(1).match(/../g).map(n=>parseInt(n,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return rgb[0]*.2126+rgb[1]*.7152+rgb[2]*.0722;};const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05);}
