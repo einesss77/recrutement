@@ -8,7 +8,8 @@
  let queued=0,stopped=false;
  const active=new Set();
  const targets=[...document.querySelectorAll('.intro-image-window img,.talent-deck,.solo-sculpture,.squad-sculpture,.support-map')];
- const enabled=()=>!reduced.matches&&!stopped;
+ const homeMobile=matchMedia('(max-width:700px)');
+ const enabled=()=>!reduced.matches&&!stopped&&!(document.body.classList.contains('home-page')&&homeMobile.matches);
  function render(){
   queued=0;
   const scroll=window.scrollY;
@@ -46,5 +47,5 @@
  });
  const pause=document.querySelector('.hero>.motion-pause');
  if(pause){pause.textContent='Ⅱ';pause.setAttribute('aria-label','Mettre les animations en pause');pause.addEventListener('click',()=>{stopped=pause.getAttribute('aria-pressed')==='true';root.classList.toggle('motion-stopped',stopped);pause.textContent=stopped?'▶':'Ⅱ';pause.setAttribute('aria-label',stopped?'Reprendre les animations':'Mettre les animations en pause');configure()})}
- window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule,{passive:true});window.addEventListener('pageshow',schedule);reduced.addEventListener('change',configure);fine.addEventListener('change',configure);configure();
+ window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule,{passive:true});window.addEventListener('pageshow',schedule);reduced.addEventListener('change',configure);fine.addEventListener('change',configure);homeMobile.addEventListener('change',configure);configure();
 })();

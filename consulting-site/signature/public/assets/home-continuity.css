@@ -10,3 +10,6 @@ main:has(.home-followup) .portfolio-section:not(.portfolio-on-index){background:
 @media(prefers-reduced-motion:reduce){[data-home-animation] *{animation:none!important;transition:none!important}.home-animation-toggle{display:none}}
 .workshop-brief:before{display:none}.workshop-brief{box-shadow:10px 7px 0 #d2e3d6,11px 8px 0 #a9c6b6,15px 22px 30px #355d3620}
 @media(max-width:700px){.workshop-product strong{display:block;line-height:1.2}.workshop-product-stats{margin:8px 0}.workshop-tasks{gap:5px}.workshop-tasks>span{line-height:1.25;padding:4px 5px}}
+
+/* The concise method is reserved for the mobile home. */
+.home-mobile-method{display:none}

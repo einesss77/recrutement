@@ -1,0 +1,96 @@
+/* A quieter mobile home. Desktop keeps its illustrated composition. */
+@media(max-width:700px){
+ .home-page{--home-space:38px;--home-heading:32px}
+ .home-page main>section[id],.home-page #methode-projet{scroll-margin-top:90px}
+ .home-page main :is([data-reveal],.fx-ready,.scroll-fade-waiting){opacity:1!important;transform:none!important;translate:none!important;transition:none!important;animation:none!important}
+ .home-page main :is(.atmosphere,.hero-baseline,.motion-pause,.home-animation-toggle,.talent-watermark,.talent-deck,.talent-counter,.talent-hook,.talent-outputs,.solo-assembly,.squad-assembly,.mission-people,.mission-shared-line,.mission-conversation,.workshop-canvas,.method-visuals,.service-mark,.page-progress){display:none!important}
+ .home-page :is(.atmosphere,.talent-deck,.solo-assembly,.squad-assembly,.mission-animation,.workshop-canvas) *{animation:none!important;transition:none!important;will-change:auto!important}
+ .home-page .hero{min-height:0;height:auto;padding:115px 0 38px;background:radial-gradient(ellipse at 0 100%,#25473f55,transparent 70%),#111e2c}
+ .home-page .hero-inner{padding-block:0}
+ .home-page .hero .eyebrow{font-size:8px;margin-bottom:24px;animation:none}
+ .home-page .hero h1{font-size:30px;line-height:1.16;letter-spacing:-1.2px}
+ .home-page .hero h1 em{font-size:1.26em;line-height:1.2}
+ .home-page .hero-line{padding-bottom:0;animation:none}
+ .home-page .hero-line+.hero-line{margin-top:16px}
+ .home-page .hero-description{font-size:14px;line-height:1.75;margin-top:24px;animation:none}
+ .home-page .hero-actions{margin-top:25px;gap:8px;animation:none}
+ .home-page .hero-actions .button{min-height:52px}
+ .home-page .hero-actions .button-text{min-height:44px}
+ .home-page main .eyebrow{font-size:9px;margin-bottom:15px}
+ .home-page .editorial-intro{gap:24px}
+ .home-page :is(.collective-image img,.intro-image-window){height:185px}
+ .home-page .intro-image-window{border-radius:55px 12px 12px 12px}
+ .home-page .collective-image img{object-position:50% 55%;transform:none!important}
+ .home-page .collective-image figcaption,.home-page .intro-directions{display:none}
+ .home-page .intro-story>p{margin-block:18px;font-size:14px;line-height:1.75}
+ .home-page .intro-story>.text-link{margin-top:0;min-height:44px}
+ .home-page .talent-heading{gap:16px;margin-bottom:22px}
+ .home-page .talent-heading>p{font-size:14px;line-height:1.7}
+ .home-page .talent-studio{display:block;min-height:0;border:0;background:none;box-shadow:none;padding:0}
+ .home-page .talent-tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:5px;padding:0 0 12px;border-bottom:1px solid #284f4430;scrollbar-width:thin}
+ .home-page .talent-tabs button{flex:1 0 auto;min-height:44px;padding:10px 9px;font-size:12px}
+ .home-page .talent-tabs button>span{display:none}
+ .home-page .talent-details{padding:23px 0 0;min-height:0}
+ .home-page .talent-panel{padding:0;min-height:0}
+ .home-page .talent-panel h3{font-size:26px;line-height:1.2;margin:0 0 13px}
+ .home-page .talent-scope{font-size:14px;line-height:1.75;margin:0 0 18px}
+ .home-page .talent-panel>.button{margin-top:0;min-height:48px;font-size:12px}
+ .home-page .talent-section-footer.talent-tailored{margin-top:25px;padding-top:22px;gap:12px}
+ .home-page .talent-tailored h3{font-size:24px}
+ .home-page .talent-tailored p{font-size:13px;line-height:1.75}
+ .home-page .talent-tailored .text-link{min-height:44px}
+ .home-page .format-heading{margin-bottom:22px}
+ .home-page .format-duo{gap:16px}
+ .home-page .format-tile{padding:23px;min-height:0;height:auto;border-radius:12px;gap:0}
+ .home-page .format-tile-title{margin:0 0 15px!important;align-items:center}
+ .home-page .format-tile-title h3{font-size:36px;line-height:1}
+ .home-page .format-tile-title>span{font-size:9px;line-height:1.6;max-width:140px}
+ .home-page :is(.format-tile,.squad-tile)>p{font-size:14px;line-height:1.75;padding:0;margin:0 0 16px;min-height:0;flex:none}
+ .home-page .format-tile>.text-link{font-size:12px;min-height:44px;padding-top:13px;margin:0}
+ .home-page .formats-detail{margin-top:14px}
+ .home-page .formats-detail>.text-link{min-height:44px;line-height:1.6}
+ .home-page .home-followup{padding-block:38px}
+ .home-page .home-followup-layout{gap:20px}
+ .home-page .home-followup h2,.home-page .home-project-path h2{font-size:32px;line-height:1.13}
+ .home-page .home-followup-heading>p{font-size:14px;line-height:1.75}
+ .home-page .home-followup-heading>.text-link{margin-top:13px;min-height:44px}
+ .home-page .mission-animation{padding:0;min-height:0;background:none;border:0}
+ .home-page .mission-milestones{margin:0;display:flex;justify-content:space-between;gap:8px;border-top:1px solid #b9efde30;padding-top:16px}
+ .home-page .mission-milestones>span{padding:0;background:none!important;border:0;border-radius:0;color:#b9efde!important;font-size:11px;opacity:1!important;transform:none!important;animation:none!important}
+ .home-page .home-project-path{padding:38px 0}
+ .home-page .workshop-layout{display:flex;flex-direction:column;align-items:stretch;gap:22px;padding:0}
+ .home-page .workshop-copy{display:block}
+ .home-page .home-path-heading{margin:0}
+ .home-page .home-path-heading h2 br{display:initial}
+ .home-page .home-path-heading h2 em:before{content:none}
+ .home-page .home-path-heading>p{font-size:14px;line-height:1.75;margin:17px 0 0}
+ .home-page .home-mobile-method{list-style:none;display:grid;padding:0;margin:22px 0 18px;counter-reset:mobile-step}
+ .home-page .home-mobile-method li{counter-increment:mobile-step;display:grid;grid-template-columns:25px 1fr;column-gap:12px;border-top:1px solid #25473f25;padding:15px 0;align-items:baseline}
+ .home-page .home-mobile-method li:before{content:'0' counter(mobile-step);grid-row:1/3;font-size:10px;color:#377b79}
+ .home-page .home-mobile-method strong{font-size:17px;line-height:1.3;font-weight:500}
+ .home-page .home-mobile-method small{font-size:12px;line-height:1.6;color:#627d77;margin-top:4px}
+ .home-page .home-path-link{margin:0}
+ .home-page .home-path-link>.text-link{min-height:44px;font-size:12px}
+ .home-page .service-catalog{padding:38px 0}
+ .home-page .service-catalog-heading{margin-bottom:19px}
+ .home-page .service-catalog h2{font-size:32px}
+ .home-page .service-catalog-heading>p{font-size:14px;line-height:1.75;margin-top:14px}
+ .home-page .service-catalog-grid{display:block;border-top:1px solid #25473f25}
+ .home-page .service-card{display:block;position:relative;padding:20px 30px 20px 0;border:0;border-bottom:1px solid #25473f25;border-radius:0;background:transparent;box-shadow:none;min-height:0}
+ .home-page .service-card h3{margin:0 0 8px;font-size:20px;line-height:1.3}
+ .home-page .service-card>p{margin:0;font-size:14px;line-height:1.7}
+ .home-page .service-card-link{position:absolute;right:0;top:23px;font-size:0;line-height:0;padding:0;margin:0;border:0}
+ .home-page .service-card-link .icon{width:17px;height:17px}
+ .home-page .home-faq{padding:38px 0}
+ .home-page .home-faq>.wrap{gap:23px}
+ .home-page .home-faq h2{font-size:32px}
+ .home-page .home-faq header>p{font-size:14px;line-height:1.75;margin-top:16px}
+ .home-page .home-faq summary{font-size:15px;line-height:1.5;min-height:52px;padding-block:17px}
+ .home-page .home-closing{padding-block:30px;background:radial-gradient(ellipse at 0 100%,#25473f55,transparent 70%),#111e2c}
+ .home-page .home-closing-inner{gap:22px}
+ .home-page .home-closing h2{font-size:29px;line-height:1.18}
+ .home-page .home-closing .button{min-height:50px}
+ .home-page .footer-top{padding-block:30px;gap:25px}
+ .home-page .footer-statement{display:none}
+ .home-page .page-progress{display:none}
+}
