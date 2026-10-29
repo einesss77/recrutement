@@ -1,8 +1,9 @@
+import {serviceGallery,bindServiceGallery} from './services.js';
 import {artwork,templates,esc} from './templates.js';
 import {equal,mergePosts,reconcile,syncSnapshot} from './sync.js';
 const app=document.querySelector('#app');
 window.renderPost=(post,index,format,ratio)=>{document.body.className='render';app.innerHTML=(format==='pdf'?post.slides.map((_,i)=>artwork(post,i)).join(''):artwork(post,index));if(ratio==='portrait')document.querySelectorAll('.art').forEach(a=>a.classList.add('portrait-art'));};
-let state,view='library',selected=null,slide=0,filter='',query='',ratio='square',saveTimer,dirty=false,saving=Promise.resolve();
+let state,view=location.hash==='#services'?'services':'library',selected=null,slide=0,filter='',query='',ratio='square',saveTimer,dirty=false,saving=Promise.resolve();
 let syncedPosts=[],localRecovery=null,draftSaving=Promise.resolve(),draftTimer;
 async function deviceDocument(value,key='main'){
  const db=await new Promise((resolve,reject)=>{const r=indexedDB.open('bm-social-studio',1);r.onupgradeneeded=()=>r.result.createObjectStore('documents');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});
@@ -72,12 +73,12 @@ async function persist(){
  try{await saving;document.querySelector('#save-state')?.replaceChildren(dirty?'Modifications à synchroniser':state.backend==='device'?'Enregistré sur cet appareil':'Enregistré en ligne');}
  catch(e){dirty=true;localRecovery={posts:structuredClone(state.posts)};await cacheDraft(true).catch(()=>{});recoveryBanner();notice('Copie locale conservée. '+e.message);throw e;}
 }
-function shell(content){app.innerHTML=`<div class="shell"><aside class="sidebar"><div class="wordmark">B&M.<small>Le studio social</small></div><nav>${[['library','↗ Publications'],['calendar','◷ Calendrier'],['strategy','◌ Ligne éditoriale'],['generate','✳ Rédaction IA']].map(([v,t])=>`<button data-view="${v}" class="${view===v?'active':''}">${t}</button>`).join('')}</nav><div class="bottom"><span class="dot"></span>STUDIO PRIVÉ<br>Vos contenus restent privés.<br>Export visuel sans appel IA.<br><br>B&M Digital Consulting<br>Conseil. Produit. Ingénierie.</div></aside><main class="main"><div class="topline"><span>ESPACE PRIVÉ / B&M</span><span class="muted" id="save-state">${dirty?'Modifications à enregistrer':state.backend==='device'?'Sauvegarde sur cet appareil':'Enregistré en ligne'}</span></div>${content}</main></div>`;
+function shell(content){app.innerHTML=`<div class="shell"><aside class="sidebar"><div class="wordmark">B&M.<small>Le studio social</small></div><nav>${[['library','↗ Publications'],['services','Visuels services'],['calendar','◷ Calendrier'],['strategy','◌ Ligne éditoriale'],['generate','✳ Rédaction IA']].map(([v,t])=>`<button data-view="${v}" class="${view===v?'active':''}">${t}</button>`).join('')}</nav><div class="bottom"><span class="dot"></span>STUDIO PRIVÉ<br>Vos contenus restent privés.<br>Export visuel sans appel IA.<br><br>B&M Digital Consulting<br>Conseil. Produit. Ingénierie.</div></aside><main class="main"><div class="topline"><span>ESPACE PRIVÉ / B&M</span><span class="muted" id="save-state">${dirty?'Modifications à enregistrer':state.backend==='device'?'Sauvegarde sur cet appareil':'Enregistré en ligne'}</span></div>${content}</main></div>`;
  document.querySelector('.topline').insertAdjacentHTML('beforeend','<form method="post" action="/studio-social/logout"><button type="submit" aria-label="Se déconnecter du studio">Quitter</button></form>');
  recoveryBanner();
- app.querySelectorAll('[data-view]').forEach(b=>b.onclick=async()=>{if(dirty)try{await persist();}catch{}view=b.dataset.view;selected=null;render();});}
+ app.querySelectorAll('[data-view]').forEach(b=>b.onclick=async()=>{if(dirty)try{await persist();}catch{}view=b.dataset.view;history.replaceState(null,'',view==='services'?'#services':location.pathname);selected=null;render();});}
 function intro(eyebrow,title,desc,action=''){return `<div class="intro"><div><div class="overline">${eyebrow}</div><h1>${title}</h1><p>${desc}</p></div>${action}</div>`;}
-function render(){if(selected){editor();return;}if(view==='strategy'){strategy();return;}if(view==='generate'){generate();return;}if(view==='calendar'){calendar();return;}library();}
+function render(){if(view==='services'){shell(intro('CATALOGUE B&M','Nos services. <em>En images.</em>','Les dix visuels de présentation de l’agence, réunis dans un espace dédié.')+serviceGallery());bindServiceGallery(app);return;}if(selected){editor();return;}if(view==='strategy'){strategy();return;}if(view==='generate'){generate();return;}if(view==='calendar'){calendar();return;}library();}
 function fit(){document.querySelectorAll('.scaled').forEach(el=>{el.style.transform=`scale(${el.parentElement.clientWidth/1080})`;});}
 new ResizeObserver(fit).observe(document.body);
 function library(){const posts=state.posts.filter(p=>(!filter||p.template===filter)&&`${p.title} ${p.category}`.toLowerCase().includes(query.toLowerCase()));

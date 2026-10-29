@@ -45,7 +45,7 @@ async function handle(req:NextRequest,context:Context){
   if(!/^[a-zA-Z0-9_./-]+$/.test(asset)||asset.split('/').some(p=>p==='..'))return json({error:'Chemin invalide.'},400);
   const root=path.join(process.cwd(),'studio-social','assets'),file=path.join(root,asset);
   if(!file.startsWith(root+path.sep))return json({error:'Chemin invalide.'},400);
-  const bytes=await readFile(file),mime:Record<string,string>={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8','.mp4':'video/mp4','.wav':'audio/wav','.svg':'image/svg+xml'};
+  const bytes=await readFile(file),mime:Record<string,string>={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8','.mp4':'video/mp4','.wav':'audio/wav','.svg':'image/svg+xml','.png':'image/png','.zip':'application/zip'};
   if(/\.(mp4|wav)$/.test(asset)){
    const mediaHeaders={...headers,'Content-Type':mime[path.extname(file)],'Accept-Ranges':'bytes'};
    const range=req.headers.get('range');
