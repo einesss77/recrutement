@@ -185,6 +185,51 @@ export const offers: Record<string, Offer> = {
     ],
     specificQuestion: "Quel projet en production représente le mieux votre niveau technique ?",
   },
+  "web-developer-full-stack-frontend": {
+    slug: "web-developer-full-stack-frontend",
+    title: "Développeur web full stack — dominante frontend",
+    summary:
+      "Créer des interfaces soignées et développer les fonctionnalités qui les font vivre, du frontend au backend jusqu’au déploiement cloud.",
+    description: [
+      "B&M Digital Consulting accompagne ses clients dans la conception et le développement de sites, d’applications web et d’outils métier sur mesure.",
+      "Nous recherchons un développeur web full stack avec une forte appétence pour le frontend. Vous aimez autant construire une application fiable que travailler la qualité de ses interfaces : mise en page, responsive, interactions, animations et détails de finition.",
+      "Votre rôle : transformer un besoin en une expérience claire et agréable, puis relier cette interface à un backend solide. Vous participez aux choix techniques et à la mise en production, avec une attention constante à la performance, à l’accessibilité et à la maintenabilité.",
+      "Vous travaillerez sur des projets variés, en lien avec les interlocuteurs produit, design et métier, avec des livraisons régulières et des retours concrets des utilisateurs.",
+      "Poste en télétravail ou depuis nos locaux à Tunis. Pour postuler, partagez votre CV et un ou deux projets accessibles en ligne, en précisant ce que vous avez personnellement conçu, développé et déployé. Les exemples peuvent être anonymisés ; ne transmettez aucun code ni accès confidentiel.",
+    ],
+    missions: [
+      "Concevoir et intégrer des interfaces web soignées, responsive et accessibles, à partir de maquettes ou d’un besoin à clarifier.",
+      "Développer des composants réutilisables, des interactions et des animations utiles, avec un rendu fluide sur mobile comme sur ordinateur.",
+      "Implémenter les fonctionnalités backend : API, authentification, règles métier et accès aux données.",
+      "Connecter les applications à des services tiers et organiser les échanges de données.",
+      "Préparer et suivre les déploiements : environnements, intégration continue, configuration cloud, logs et résolution des incidents.",
+      "Tester les parcours, améliorer les performances et documenter les choix techniques pour faciliter la maintenance.",
+      "Participer au cadrage, proposer des améliorations et faire évoluer le produit par itérations avec l’équipe et les clients.",
+    ],
+    skills: [
+      "Bonne maîtrise de HTML, CSS, JavaScript et TypeScript, ainsi que de React / Next.js ou d’un framework frontend moderne équivalent.",
+      "Sens visuel affirmé : hiérarchie, typographie, espacements, responsive et cohérence des composants. Capacité à travailler avec Figma ou un outil équivalent.",
+      "Expérience backend avec Node.js ou une stack comparable, conception d’API et gestion de l’authentification et des autorisations.",
+      "Pratique d’une base de données relationnelle, par exemple PostgreSQL, et compréhension de la modélisation des données.",
+      "Connaissances concrètes du cloud et de l’hébergement sur au moins un environnement : AWS, Azure, Google Cloud, Vercel ou équivalent. Compréhension des variables d’environnement, du stockage, du DNS et du HTTPS.",
+      "Utilisation de Git, des tests et des outils de diagnostic navigateur ; attention à la sécurité, à l’accessibilité et aux performances web.",
+      "Un plus : Docker, CI/CD, animations avec GSAP ou Motion, intégration de services IA. Nous ne demandons pas de maîtriser tous ces outils.",
+    ],
+    profile: [
+      "Des réalisations concrètes qui montrent votre niveau frontend et votre contribution full stack, au-delà d’une simple liste de technologies.",
+      "Une vraie exigence sur le rendu final : vous testez sur plusieurs écrans et repérez les détails qui nuisent à l’expérience.",
+      "Autonomie, curiosité technique et capacité à expliquer vos choix, à recevoir des retours et à collaborer.",
+      "Français professionnel pour les échanges avec l’équipe et les clients ; anglais technique pour la documentation et les outils.",
+    ],
+    specificQuestion:
+      "Partagez un ou deux projets web représentatifs de votre travail (liens accessibles). Précisez votre contribution frontend, backend et déploiement, ainsi que les technologies utilisées.",
+    specificQuestions: [
+      "Partagez un ou deux projets web représentatifs de votre travail (liens accessibles). Précisez votre contribution frontend, backend et déploiement, ainsi que les technologies utilisées.",
+      "Sur un de ces projets, comment avez-vous travaillé le rendu frontend : responsive, interactions, animations, accessibilité et performances ? Décrivez une amélioration concrète.",
+      "Décrivez une fonctionnalité full stack que vous avez livrée : interface, API, base de données, authentification et difficultés rencontrées.",
+      "Quels environnements cloud ou d’hébergement avez-vous déjà utilisés ? Expliquez un déploiement que vous avez réalisé et votre rôle dans la configuration, les logs et le suivi en production.",
+    ],
+  },
   "data-analyst-data-scientist": {
     slug: "data-analyst-data-scientist",
     title: "Data Analyst / Data Scientist",
