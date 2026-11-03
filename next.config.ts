@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   agentRules: false,
   outputFileTracingIncludes: {
+    '/admin/organisation/presentation/export': ['./docs/organisation/BM-synthese-90-jours.pdf', './docs/organisation/BM-synthese-90-jours.html'],
     '/studio-social/[[...path]]': ['./studio-social/assets/**/*'],
   },
   async headers() {

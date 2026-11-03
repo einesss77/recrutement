@@ -1,7 +1,7 @@
 # B&M DIGITAL CONSULTING
 
 Plan directeur d’organisation, d’acquisition et de développement commercial
-Version 2.0 — Novembre 2026
+Version 2.1 — Novembre 2026
 Document de travail collectif — B&M Agency & B&M Digital Consulting IT
 Horizon stratégique : 90 jours
 Destinataires : Direction, Soheyl, Syrine, Sabrina, Manar, Lorry et Mohamed (pôle IT).
@@ -23,23 +23,23 @@ La différenciation repose sur la combinaison de ces compétences : un partenair
 ### Deux structures, deux pilotages commerciaux
 | Branche | Activité | Pilotage et objectif |
 | B&M Agency | Marketing digital, communication, acquisition, création et solutions digitales. Abonnements, projets ponctuels et compléments. | 8 à 10 clients signés à 90 jours. |
-| B&M Digital Consulting — IT | Conseil informatique, outsourcing, placement de consultants, développement logiciel et solutions IA. | Fondateur ; Mohamed au développement commercial dès janvier 2027. Moteur de cash-flow, placements et prestations IT. |
+| B&M Digital Consulting — IT | Conseil informatique, outsourcing, placement de consultants, développement logiciel et solutions IA. | Eines ; Mohamed au développement commercial dès janvier 2027. Moteur de cash-flow, placements et prestations IT. |
 Les pipelines Agency et IT restent séparés. Les outils, ressources techniques et certaines opportunités peuvent être partagés.
 
 ## II — Organisation humaine
 
 ### Gouvernance et organigramme
-Le fondateur conserve la responsabilité finale de l’écosystème, fixe les orientations, les objectifs et les budgets. Soheyl et Syrine participent aux décisions Agency : offres, tarifs, investissements et orientations. Les modalités juridiques et financières de leurs participations restent à formaliser.
+Eines conserve la responsabilité finale de l’écosystème, fixe les orientations, les objectifs et les budgets. Soheyl et Syrine participent aux décisions Agency : offres, tarifs, investissements et orientations. Les modalités juridiques et financières de leurs participations restent à formaliser.
 - Agency : Soheyl (coordination opérationnelle et commercial), Syrine (création, réseau et partenariats), Sabrina (marketing et acquisition digitale), Manar (vidéo et motion), Lorry (closing externe).
-- IT : fondateur (direction et développement stratégique), Mohamed (Business Developer IT dès janvier 2027), Soheyl (appui transversal ponctuel).
+- IT : Eines (direction et développement stratégique), Mohamed (Business Developer IT dès janvier 2027), Soheyl (appui transversal ponctuel).
 
-### Fondateur — Direction générale et architecture de l’écosystème
+### Eines — Direction générale et architecture de l’écosystème
 Position : CEO / direction générale.
 - Stratégie : vision, objectifs commerciaux et financiers, arbitrages, tarifs, budgets, investissements, performance des deux branches, partenariats stratégiques, rémunérations et commissions.
 - Technologie : écosystème numérique, architecture CRM, workflows, agents IA internes, moteur d’audit IA, exigences fonctionnelles des sites, dashboards, qualité et sécurité des systèmes.
 - Commercial : négociations stratégiques, partenariats importants, pilotage IT et accompagnement des décisions complexes.
 - Indicateurs : CA, marge, trésorerie, clients actifs, coût d’acquisition, revenus récurrents, productivité et performance commerciale.
-Principe : le fondateur construit la machine, fixe ses règles et supervise son fonctionnement ; il ne doit pas devenir l’exécutant quotidien de chaque tâche.
+Principe : Eines construit la machine, fixe ses règles et supervise son fonctionnement ; il ne doit pas devenir l’exécutant quotidien de chaque tâche.
 
 ### Soheyl — Coordinateur opérationnel et développement commercial
 Associé impliqué dans l’agence ; temps plein ; rémunération à définir. Cœur de l’exécution commerciale et opérationnelle Agency.
@@ -64,7 +64,7 @@ Partenaire impliquée dans la construction ; rémunération / participation à f
 Tunisie ; 7 à 8 ans d’expérience avec expériences en France, au Canada et en Tunisie ; rémunération indiquée : 2 400 TND/mois.
 - Stratégie : études de marché, segments, stratégies, audiences, messages, tunnels d’acquisition, packages et mesure de performance.
 - Acquisition : Meta Ads, Google Ads, TikTok Ads, remarketing, landing pages, conversion, tests de campagnes et messages, canaux pour B&M elle-même.
-- Audit IA : critères avec le fondateur, indicateurs marketing, recommandations types, pertinence commerciale et correspondance des résultats avec les offres.
+- Audit IA : critères avec Eines, indicateurs marketing, recommandations types, pertinence commerciale et correspondance des résultats avec les offres.
 - Collaboration : Soheyl remonte les observations terrain ; Sabrina les transforme en stratégies, campagnes, supports et améliorations du ciblage.
 - KPI : leads qualifiés, coût par lead, conversion, performances publicitaires, qualité des audits et contribution aux ventes.
 Sabrina est la référente marketing ; l’acquisition reste une responsabilité partagée entre plusieurs canaux et collaborateurs.
@@ -85,7 +85,7 @@ Prestataire externe, rémunéré à la commission sur les ventes conclues ; moda
 ### Mohamed — Business Developer IT
 Tunisie ; démarrage janvier 2027 ; rémunération indiquée : 1 100 €/mois.
 - Identifier les besoins de recrutement et renfort IT ; prospecter PME, ESN, agences et entreprises.
-- Repérer les besoins urgents en développeurs / consultants, qualifier les projets, présenter les ressources et organiser les RDV avec le fondateur.
+- Repérer les besoins urgents en développeurs / consultants, qualifier les projets, présenter les ressources et organiser les RDV avec Eines.
 - Développer la sous-traitance et suivre négociations et opportunités.
 Priorité : cycles courts, besoins concrets et placements rapides. L’IT reste distinct du pilotage quotidien Agency.
 
@@ -173,18 +173,114 @@ Priorisation proposée au lancement : commerces locaux, PME de services et agenc
 
 ## V — Catalogue et modèle économique
 
-### Trois packages à discuter — tarifs non validés
-| Package | Hypothèse mensuelle | Prestations envisageables et limites |
-| VISIBILITY | 490 à 690 € | Calendrier, 1 ou 2 réseaux, graphisme, publications, reporting simplifié et réunion. Limiter précisément publications et vidéo. |
-| GROWTH | 890 à 1 290 € | Stratégie, community management, contenus, montage, 1 plateforme publicitaire, optimisation, reporting et recommandations. Budget média séparé. |
-| PERFORMANCE | 1 490 à 2 490 € | Acquisition multicanale, photo / vidéo, publicité, conversion, reporting approfondi, automatisations simples et suivi stratégique. |
-Sites, applications et développements IA complexes restent des projets distincts sauf chiffrage spécifique. Les prix sont des hypothèses de travail, pas une grille commerciale validée.
+### Packs définis dans le catalogue commercial
+Ces formules remplacent les anciennes hypothèses VISIBILITY / GROWTH / PERFORMANCE. Les tarifs sont des prix indicatifs de départ, pas des forfaits sans limite.
+
+### Digital Start — à partir de 590 €/mois
+Construisez une présence digitale professionnelle.
+Commerces, restaurants, instituts, indépendants et petites entreprises.
+
+Identité & présence :
+- Création ou optimisation Instagram, Facebook et TikTok
+- Création ou optimisation Google Business Profile
+- Harmonisation graphique et biographies
+- Stories à la une et templates graphiques
+Production mensuelle :
+- 1 session de shooting photo et vidéo
+- 4 vidéos courtes montées
+- 6 à 8 visuels, photos ou carrousels
+- Stories et retouches photo
+- Sous-titrage et adaptation aux plateformes
+Community management :
+- Calendrier éditorial mensuel
+- Rédaction, programmation et publication
+- Optimisation des hashtags et veille des tendances
+Reporting :
+- Rapport mensuel
+- Analyse de l’engagement et de la visibilité
+- Recommandations d’amélioration
+
+### Digital Growth — à partir de 890 €/mois
+Transformez votre visibilité en opportunités.
+Entreprises souhaitant développer leur audience et acquérir davantage de clients.
+Toutes les prestations Digital Start, avec une production renforcée et l’acquisition publicitaire.
+Production renforcée / mois :
+- 6 à 8 vidéos courtes
+- 8 à 12 visuels ou carrousels
+- Shooting photo et vidéo orienté marketing
+- Contenus publicitaires et production UGC
+- Shooting produit assisté par IA
+- Variantes publicitaires
+Community management avancé :
+- Animation de la communauté
+- Commentaires simples et orientation des messages
+- Suivi des avis clients et veille concurrentielle
+Meta Ads & TikTok Ads :
+- Facebook Ads et Instagram Ads
+- Ciblage, retargeting et optimisation
+- Campagnes TikTok et contenus adaptés
+- Tests publicitaires et suivi des performances
+Analyse :
+- Suivi et analyse des campagnes
+- Tests de créations et recommandations
+- Reporting mensuel
+- Budget publicitaire non inclus
+
+### Digital 360 — à partir de 1 290 €/mois
+Votre département marketing externalisé.
+Entreprises souhaitant externaliser leur marketing et structurer leur acquisition.
+Toutes les prestations Digital Growth, avec une gestion marketing complète et un accompagnement stratégique.
+Production premium / mois :
+- 10 à 16 vidéos courtes
+- Shooting régulier, publicités et campagnes saisonnières
+- Motion design et créations assistées par IA
+- Contenus événementiels et stories régulières
+Marketing & acquisition :
+- Réseaux sociaux, community management et stratégie éditoriale
+- Réputation, analyse concurrentielle et stratégie mensuelle
+- Meta Ads, TikTok Ads, Google Ads lorsque pertinent
+- Retargeting, tests A/B, conversions et promotions
+Influence & conversion :
+- Micro-influenceurs et créateurs UGC : recherche, contact, coordination, suivi
+- Site vitrine ou refonte selon périmètre
+- Landing pages et formulaires de leads
+- UX, SEO local de base, tracking et analytics
+Accompagnement stratégique :
+- Chef de projet et réunion mensuelle
+- Reporting détaillé
+- Recommandations stratégiques et plan d’action
+
+### Conditions commerciales du catalogue
+- Les volumes renforcés remplacent ceux du pack inférieur : ils ne s’additionnent pas.
+- Budget publicitaire, rémunérations des influenceurs, déplacements exceptionnels, hébergement, noms de domaine et abonnements tiers non inclus, sauf accord spécifique.
+- Rushs et fichiers sources conservés par l’agence dans les abonnements standards, sauf disposition contractuelle contraire.
+- Web du Digital 360 défini selon périmètre. Google Ads lorsque pertinent. Options et droits d’utilisation chiffrés séparément.
+- Aucun engagement minimum ni mention HT / TTC ajouté. Les modalités finales figurent dans la proposition commerciale.
 
 ### Prestations complémentaires
-Shooting, tournage, UGC, influence, site, landing page, e-commerce, application mobile, SaaS métier, bot WhatsApp, agent vocal IA, devis automatisés, rendez-vous automatisés, CRM personnalisé, agent métier, RAG documentaire, intégration API, formation et accompagnement.
+- Shooting supplémentaire : Session photo ou vidéo additionnelle
+- Content Boost : Lot de vidéos ou visuels supplémentaires
+- Motion Design : Animations graphiques et publicitaires
+- UGC Campaign : Production avec créateurs UGC
+- Influence Campaign : Recherche et coordination d’influenceurs
+- Google Review Booster : Collecte et gestion des avis
+- Local SEO Boost : Optimisation de la visibilité locale
+- Landing Page : Page de conversion dédiée
+- CRM Integration : Centralisation des prospects
+- WhatsApp Automation : Automatisation des conversations
+- Booking Automation : Automatisation des réservations
+- Lost Lead Recovery : Relance des prospects
+- Email Marketing : Campagnes email et fidélisation
+- AI Creative Studio : Création de contenus assistée par IA
+- Web Maintenance : Maintenance et évolution de sites
+- App Maintenance : Maintenance et évolution d’applications
+- SaaS Maintenance : Maintenance et évolution de logiciels métier
 
-### Arbitrages du catalogue
-Nombre de contenus, vidéos et shootings ; provenance des rushs ; révisions ; délais ; engagement minimum ; mise en place ; hors forfait ; marge minimum. Chiffrer les livrables et la capacité avant de promettre les prestations.
+### Projets sur mesure
+Sites, e-commerce, applications, SaaS, CRM, agents IA, RAG et intégrations API sont cadrés selon le besoin. Les solutions IA sont un catalogue cible : disponibilité, compatibilité et périmètre à confirmer.
+
+### Arbitrages encore nécessaires
+Confirmer capacité de production, validations, délais, révisions, marges et modalités contractuelles. Les noms, prix de départ et volumes des trois packs reprennent le catalogue existant.
 
 ## VI — Processus opérationnels
 
@@ -208,17 +304,17 @@ Nombre de contenus, vidéos et shootings ; provenance des rushs ; révisions ; d
 | Prospection terrain | Soheyl | Syrine |
 | Prospection réseau | Syrine | Soheyl |
 | Acquisition digitale | Sabrina | Soheyl |
-| Audit IA technique | Fondateur | Sabrina |
+| Audit IA technique | Eines | Sabrina |
 | Qualification | Soheyl | Sabrina |
 | Découverte | Soheyl | Lorry |
-| Proposition | Soheyl | Sabrina, fondateur |
+| Proposition | Soheyl | Sabrina, Eines |
 | Closing confié à Lorry | Lorry | Soheyl |
 | Onboarding | Soheyl | Équipe |
 | Stratégie client | Sabrina | Soheyl |
 | Direction créative | Syrine | Sabrina |
 | Montage | Manar | Syrine |
 | Reporting client | Sabrina | Soheyl |
-| Finance | Fondateur | Soheyl |
+| Finance | Eines | Soheyl |
 
 ## VII — Écosystème technologique
 
@@ -245,10 +341,10 @@ Définir catalogue et prix avant la finalisation du site. Analyser l’architect
 
 Modèle cible : 4,5 jours de production / gestion clients et 0,5 journée de développement interne. Au lancement, acquisition et construction de l’agence constituent l’activité principale.
 | Rythme proposé | Participants / pilote | Objet |
-| Lundi, 30 à 45 min | Fondateur, Soheyl, Sabrina, Syrine selon sujets | Leads, RDV, opportunités, audits, propositions, signatures, priorités. |
+| Lundi, 30 à 45 min | Eines, Soheyl, Sabrina, Syrine selon sujets | Leads, RDV, opportunités, audits, propositions, signatures, priorités. |
 | Point court, 2 fois / semaine | Soheyl | Projets et blocages, sans multiplier les réunions. |
 | Vendredi, demi-journée B&M | Équipe concernée | Acquisition, offres, automatisation, contenus B&M, résultats, partenariats. |
-| Fin de mois, comité stratégique | Fondateur, Soheyl, Syrine, Sabrina selon sujets | Commercial, investissements, tarifs, recrutement, performance. |
+| Fin de mois, comité stratégique | Eines, Soheyl, Syrine, Sabrina selon sujets | Commercial, investissements, tarifs, recrutement, performance. |
 
 ## IX — Projections financières
 
@@ -318,7 +414,7 @@ Chaque décision doit avoir un responsable, une échéance, un livrable et un in
 | Organigramme validé | À décider |
 | Responsabilités individuelles clarifiées | À décider |
 | Trois segments prioritaires | À décider |
-| Trois packages provisoires | À décider |
+| Périmètre et capacité des trois packs du catalogue | À décider |
 | Grille tarifaire de travail | À décider |
 | Cinq canaux prioritaires | À décider |
 | Qualification et closing | À décider |
@@ -334,14 +430,14 @@ La réunion doit aboutir à des décisions concrètes, pas uniquement à un éch
 Référence initiale pour comprendre les branches, rôles, circuits commerciaux, responsabilités, offres, objectifs, outils et automatisations. Les propositions restent préparatoires.
 - Ne pas confondre Agency et IT ; séparer leurs pipelines.
 - Respecter les noms Soheyl, Syrine, Sabrina, Manar, Lorry et Mohamed.
-- Préserver le rôle central du fondateur dans la gouvernance.
+- Préserver le rôle central d’Eines dans la gouvernance.
 - Soheyl est le cœur de l’exécution commerciale et opérationnelle Agency.
 - Ne pas attribuer toute l’acquisition à Sabrina ; exploiter le réseau de Syrine comme véritable canal.
 - Lorry est un prestataire externe de closing.
 - Concevoir un audit IA fortement automatisé.
 - Privilégier l’open source et limiter les abonnements.
-- Ne pas considérer prix et hypothèses financières comme validés.
+- Reprendre les prix de départ du catalogue existant ; ne pas présenter les hypothèses financières comme des résultats acquis.
 - Permettre un pilotage centralisé et des outils modulaires et évolutifs.
 - Analyser l’architecture avant toute modification des systèmes existants.
 - Permettre l’évolution des responsabilités et de l’équipe.
-Objectif final : une organisation commerciale et opérationnelle structurée, mesurable, automatisée et rentable, capable de se développer sans intervention quotidienne du fondateur dans chaque opération.
+Objectif final : une organisation commerciale et opérationnelle structurée, mesurable, automatisée et rentable, capable de se développer sans intervention quotidienne d’Eines dans chaque opération.
