@@ -47,4 +47,4 @@ export function renderAuditSlide(slide: StrategySlide, index: number) {
   return html.replace('class="bv-flow "','class="bv-flow ba-pipeline"');
 }
 
-export const auditCss = `.ba-pipeline{grid-template-columns:repeat(4,1fr);gap:2.8cqw 2cqw;margin-top:0}.ba-pipeline>li{background:#e4ece1;padding:1.2cqw;border-top:2px solid #6b9476}.ba-pipeline>li:nth-child(n+5){background:#d7e9da}.ba-pipeline>li:before,.ba-pipeline>li:after{display:none}.ba-pipeline h3{margin:.6cqw 0;font-size:1.65cqw}.ba-pipeline p{font-size:1.1cqw}.bv-present-top button.bv-button{color:#173e32}`;
+export const auditCss = `.ba-pipeline{grid-template-columns:repeat(4,1fr);gap:2.8cqw 2cqw;margin-top:0}.ba-pipeline>li{background:#e4ece1;padding:1.2cqw;border-top:2px solid #6b9476}.ba-pipeline>li:nth-child(n+5){background:#d7e9da}.ba-pipeline>li:before,.ba-pipeline>li:after{display:none}.ba-pipeline h3{margin:.6cqw 0;font-size:1.65cqw}.ba-pipeline p{font-size:1.1cqw}.bv-present-top .bv-button{color:#173e32}`;
