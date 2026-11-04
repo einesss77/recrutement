@@ -74,6 +74,7 @@ export default async function OrganizationPage({ searchParams }: {
       <Link href="/admin/organisation" aria-current={!full ? "page" : undefined}>Vue d’ensemble</Link>
       <Link href="/admin/organisation?vue=document" aria-current={full ? "page" : undefined}>Document complet · 13 parties</Link>
       <Link href="/admin/organisation/presentation">Présenter les 14 slides ↗</Link>
+      <Link href="/admin/organisation/audit">Comprendre le process audit ↗</Link>
     </nav>
     {!full ? <div className="bv bv-overview" id="synthese">
       <div className="bv-overview-intro"><div><h2>La synthèse pour toute l’équipe</h2><p>Huit vues visuelles pour comprendre l’essentiel. Les objectifs restent à valider ; les tarifs et volumes reprennent les packs déjà définis.</p></div><div className="bv-actions"><Link className="bv-button bv-button-primary" href="/admin/organisation/presentation">Lancer la présentation ↗</Link><a download className="bv-button" href="/admin/organisation/presentation/export?format=pdf">Télécharger le PDF ↓</a><a download className="bv-button" href="/admin/organisation/presentation/export?format=html">Slides hors ligne ↓</a></div></div>
