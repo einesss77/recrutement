@@ -1,0 +1,441 @@
+/* Editorial surfaces for the public pages beyond the homepage. */
+.premium-site:not(.home-page) {
+  --pi-ink: #132420;
+  --pi-muted: #4b5d54;
+  --pi-paper: #f6f4ed;
+  --pi-sheet: #fffef9;
+  --pi-sage: #e7eee3;
+  --pi-mint: #bddec7;
+  --pi-green: #35644f;
+  --pi-rule: #cbd3c7;
+  --pi-dark-rule: #ffffff36;
+  --pi-space: clamp(54px, 8vw, 110px);
+  --pi-title: clamp(2.5rem, 6vw, 5.8rem);
+  --pi-heading: clamp(2rem, 4.15vw, 4rem);
+}
+
+.premium-site:not(.home-page) main:not(:has(.contact-page)) {
+  color: var(--pi-ink);
+  background: var(--pi-paper);
+}
+
+.premium-site:not(.home-page) main :is(.page-hero, .about-hero, .mp-hero, .service-hero, .portfolio-page-heading, .cs-hero, .legal-page) {
+  padding-block: clamp(118px, 14vw, 185px) clamp(52px, 7vw, 96px);
+}
+
+.premium-site:not(.home-page) main :is(.page-hero, .service-hero, .about-hero, .mp-hero, .portfolio-page-heading, .cs-hero, .legal-page) h1 {
+  color: inherit;
+  font-size: var(--pi-title);
+  line-height: .99;
+  letter-spacing: -.065em;
+  text-wrap: balance;
+}
+
+.premium-site:not(.home-page) main :is(.page-hero, .service-hero, .about-hero, .mp-hero, .portfolio-page-heading, .cs-hero, .legal-page) h1 em {
+  font-weight: 400;
+  letter-spacing: -.045em;
+}
+
+.premium-site:not(.home-page) main :is(.page-hero, .service-hero, .about-hero, .mp-hero, .portfolio-page-heading, .legal-page) .eyebrow {
+  color: var(--pi-green);
+  margin-block-end: 1.3rem;
+}
+
+.premium-site:not(.home-page) main :is(.service-hero, .about-hero, .mp-hero, .portfolio-page-heading, .cs-hero, .legal-page) {
+  color: var(--pi-ink);
+  background: var(--pi-paper);
+  border-bottom: 1px solid var(--pi-rule);
+}
+
+.premium-site:not(.home-page) main :is(.service-hero, .about-hero, .mp-hero, .portfolio-page-heading, .cs-hero, .legal-page) h1 em,
+.premium-site:not(.home-page) main :is(.service-page, .about-page, .mp-page, .portfolio-section) h2 em {
+  color: var(--pi-green);
+}
+
+.premium-site:not(.home-page) main :is(.service-hero-grid > div:first-child > p:not(.eyebrow), .about-hero-copy > p:not(.eyebrow), .mp-hero-copy > p:not(.eyebrow), .cs-summary, .folio-index-aside > p) {
+  max-width: 50ch;
+  color: var(--pi-muted);
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  line-height: 1.7;
+}
+
+.premium-site:not(.home-page) main .page-hero.dark {
+  color: var(--pi-paper);
+  background: var(--pi-ink);
+  border-bottom: 1px solid var(--pi-dark-rule);
+}
+
+.premium-site:not(.home-page) main .page-hero.dark .atmosphere {
+  opacity: .38;
+}
+
+.premium-site:not(.home-page) main .page-hero.dark :is(h1 em, .eyebrow) {
+  color: var(--pi-mint);
+}
+
+.premium-site:not(.home-page) main .page-hero.dark p:not(.eyebrow) {
+  max-width: 50ch;
+  color: #d9e4d8;
+  font-size: clamp(1rem, 1.35vw, 1.18rem);
+  line-height: 1.72;
+}
+
+.premium-site:not(.home-page) main .page-hero-actions {
+  margin-top: clamp(25px, 4vw, 42px);
+  gap: 18px 28px;
+}
+
+.premium-site:not(.home-page) main :is(.service-usages, .service-system, .service-brief, .service-delivery, .service-handover-section, .service-questions, .service-catalog, .delivery-method, .about-approach, .about-services, .mp-section, .mission-support, .talent-section, .bm-advisory, .bm-expertise, .folio-collection) {
+  padding-block: var(--pi-space);
+}
+
+.premium-site:not(.home-page) main :is(.service-page, .about-page, .mp-page, .mission-support, .talent-section, .portfolio-section, .delivery-method, .legal-page) h2 {
+  font-size: var(--pi-heading);
+  letter-spacing: -.052em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.premium-site:not(.home-page) main :is(.service-usages, .service-brief, .service-handover-section, .about-services, .mp-framing, .mp-formats, .mission-support, .delivery-method, .bm-expertise, .legal-page) {
+  background: var(--pi-sheet);
+  border-bottom: 1px solid var(--pi-rule);
+}
+
+.premium-site:not(.home-page) main :is(.service-system, .service-delivery, .service-questions, .service-catalog, .about-approach, .mp-roles, .mp-visibility, .mp-faq, .folio-collection) {
+  background: var(--pi-paper);
+}
+
+.premium-site:not(.home-page) main :is(.service-hero-grid, .about-hero-grid, .mp-hero-grid) {
+  gap: clamp(32px, 6vw, 92px);
+}
+
+.premium-site:not(.home-page) main .service-back {
+  color: var(--pi-green);
+  margin-bottom: clamp(23px, 3vw, 36px);
+}
+
+.premium-site:not(.home-page) main .service-hero .eyebrow {
+  margin-top: 0;
+}
+
+.premium-site:not(.home-page) main .service-hero h1 {
+  font-size: clamp(2.35rem, 4.9vw, 4.45rem);
+}
+
+.premium-site:not(.home-page) main :is(.service-visual, .about-panel-art, .mp-hero-board, .mp-artifact-art) {
+  background-color: var(--pi-sage);
+  border: 1px solid var(--pi-rule);
+  border-radius: 3px;
+  box-shadow: none;
+}
+
+.premium-site:not(.home-page) main .service-visual {
+  background-image: repeating-linear-gradient(90deg, #526f5711 0 1px, transparent 1px 26px), repeating-linear-gradient(#526f5711 0 1px, transparent 1px 26px), radial-gradient(ellipse at 58% 35%, #f7faf0, transparent 70%);
+}
+
+.premium-site:not(.home-page) main :is(.service-visual-label, .service-visual-note, .service-visual-caption) {
+  color: var(--pi-muted);
+}
+
+.premium-site:not(.home-page) main :is(.service-phone, .service-browser) {
+  box-shadow: 13px 19px 0 #16332312, 0 18px 35px #17342720;
+}
+
+.premium-site:not(.home-page) main :is(.service-usages-grid article, .service-steps li, .delivery-step, .mp-framing-card, .mp-role, .mp-delivery-grid article, .mp-format-grid article) {
+  border-color: var(--pi-rule);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.premium-site:not(.home-page) main :is(.service-usages-grid article, .service-steps li, .mp-framing-card, .mp-role, .mp-delivery-grid article, .mp-format-grid article) h3 {
+  color: var(--pi-ink);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  letter-spacing: -.035em;
+}
+
+.premium-site:not(.home-page) main :is(.service-usages-grid article, .service-steps li, .mp-framing-card, .mp-role, .mp-delivery-grid article, .mp-format-grid article) p {
+  color: var(--pi-muted);
+  line-height: 1.7;
+}
+
+.premium-site:not(.home-page) main .service-catalog-grid {
+  gap: 0;
+  border-top: 1px solid var(--pi-rule);
+  border-left: 1px solid var(--pi-rule);
+}
+
+.premium-site:not(.home-page) main .service-card {
+  min-width: 0;
+  padding: clamp(22px, 3vw, 42px);
+  border: 0;
+  border-right: 1px solid var(--pi-rule);
+  border-bottom: 1px solid var(--pi-rule);
+  border-radius: 0;
+  color: var(--pi-ink);
+  background: var(--pi-sheet);
+  box-shadow: none;
+}
+
+.premium-site:not(.home-page) main .service-card:hover {
+  background: var(--pi-sage);
+  transform: none;
+}
+
+.premium-site:not(.home-page) main .service-card h3 {
+  font-size: clamp(1.35rem, 2.4vw, 2.08rem);
+  line-height: 1.06;
+}
+
+.premium-site:not(.home-page) main .service-card :is(p, .service-card-link) {
+  color: var(--pi-muted);
+}
+
+.premium-site:not(.home-page) main .service-card .service-mark {
+  width: 39px;
+  height: 39px;
+  color: var(--pi-green);
+}
+
+.premium-site:not(.home-page) main :is(.service-focus, .service-handover, .service-brief-sheet, .mp-framing-result, .mp-handover, .mission-format, .about-service) {
+  border-radius: 3px;
+  border-color: var(--pi-rule);
+  box-shadow: none;
+}
+
+.premium-site:not(.home-page) main :is(.service-focus, .service-handover, .service-brief-sheet, .mp-framing-result, .mp-handover, .mission-format, .about-service) {
+  background-color: var(--pi-sage);
+}
+
+.premium-site:not(.home-page) main .service-focus p,
+.premium-site:not(.home-page) main .service-handover p {
+  color: var(--pi-muted);
+}
+
+.premium-site:not(.home-page) main :is(.service-contact, .about-contact, .mp-contact, .portfolio-contact, .compact-closing, .referent-block) {
+  background: var(--pi-ink);
+  color: var(--pi-paper);
+  border-radius: 0;
+}
+
+.premium-site:not(.home-page) main :is(.service-contact, .about-contact, .mp-contact, .portfolio-contact, .compact-closing, .referent-block) :is(h2, h3) em {
+  color: var(--pi-mint);
+}
+
+.premium-site:not(.home-page) main :is(.service-contact, .about-contact, .mp-contact, .portfolio-contact, .compact-closing) .wrap {
+  padding-block: clamp(42px, 6.25vw, 90px);
+}
+
+.premium-site:not(.home-page) main :is(.service-contact, .about-contact, .mp-contact, .portfolio-contact, .compact-closing) {
+  padding-block: 0;
+}
+
+.premium-site:not(.home-page) main :is(.about-contact, .mp-contact, .portfolio-contact) .wrap > a:not(.button) {
+  color: var(--pi-ink);
+  background: var(--pi-paper);
+}
+
+.premium-site:not(.home-page) main :is(.about-contact, .mp-contact, .portfolio-contact) .wrap > a:not(.button) > span {
+  background: var(--pi-mint);
+}
+
+.premium-site:not(.home-page) main .talent-section {
+  background: var(--pi-sage);
+  border-block: 1px solid var(--pi-rule);
+}
+
+.premium-site:not(.home-page) main .demo {
+  color: var(--pi-ink);
+  background: var(--pi-sheet);
+  border: 1px solid var(--pi-rule);
+  border-radius: 3px;
+  box-shadow: none;
+}
+
+.premium-site:not(.home-page) main .demo-tabs {
+  background: var(--pi-paper);
+}
+
+.premium-site:not(.home-page) main .demo-tabs button[aria-current] {
+  color: var(--pi-paper);
+  background: var(--pi-ink);
+}
+
+.premium-site:not(.home-page) main .demo-workspace {
+  background: var(--pi-sage);
+}
+
+.premium-site:not(.home-page) main .demo-next {
+  background: var(--pi-ink);
+}
+
+.premium-site:not(.home-page) main .talent-tabs {
+  border-color: var(--pi-rule);
+}
+
+.premium-site:not(.home-page) main :is(.talent-tabs, .about-tabs, .mp-artifact-tabs) button {
+  min-height: 44px;
+  border-radius: 0;
+}
+
+.premium-site:not(.home-page) main :is(.talent-tabs, .about-tabs, .mp-artifact-tabs) button[aria-selected="true"] {
+  color: var(--pi-paper);
+  background: var(--pi-ink);
+}
+
+.premium-site:not(.home-page) main :is(.mission-formats, .service-usages-grid, .service-steps, .mp-framing-grid, .mp-role-grid) {
+  gap: clamp(16px, 2.6vw, 35px);
+}
+
+.premium-site:not(.home-page) main .about-hero-image img {
+  border-radius: 2px 2px 38% 2px;
+}
+
+.premium-site:not(.home-page) main .about-signature {
+  border-color: var(--pi-rule);
+  color: var(--pi-green);
+}
+
+.premium-site:not(.home-page) main .about-panel-copy :is(h3, p) {
+  color: var(--pi-ink);
+}
+
+.premium-site:not(.home-page) main .about-scroll {
+  color: var(--pi-green);
+  border-color: var(--pi-rule);
+}
+
+.premium-site:not(.home-page) main .mp-section .mp-heading {
+  margin-bottom: clamp(28px, 4vw, 58px);
+}
+
+.premium-site:not(.home-page) main :is(.mp-board-feature, .mp-cycle-center, .mp-cycle-controls .is-active, .mp-cycle-output) {
+  background-color: var(--pi-ink);
+  color: var(--pi-paper);
+}
+
+.premium-site:not(.home-page) main :is(.mp-board-feature, .mp-cycle-center, .mp-cycle-controls .is-active, .mp-cycle-output) :is(p, strong, span, small) {
+  color: inherit;
+}
+
+.premium-site:not(.home-page) main .mp-agile {
+  background: var(--pi-sage);
+}
+
+.premium-site:not(.home-page) main :is(.mp-cycle-panels, .mp-artifact-body, .mp-artifact-panel) {
+  border-radius: 3px;
+  border-color: var(--pi-rule);
+  box-shadow: none;
+}
+
+.premium-site:not(.home-page) main .portfolio-on-index {
+  padding-block: 0;
+  background: var(--pi-paper);
+}
+
+.premium-site:not(.home-page) main .portfolio-page-heading > .wrap {
+  gap: clamp(20px, 4vw, 62px);
+}
+
+.premium-site:not(.home-page) main .folio-index-aside {
+  color: var(--pi-muted);
+  border-color: var(--pi-rule);
+}
+
+.premium-site:not(.home-page) main .portfolio-on-index .folio-slide {
+  border-radius: 3px;
+  border: 1px solid var(--pi-rule);
+}
+
+.premium-site:not(.home-page) main :is(.folio-collection-picture, .cs-cover, .cs-browser, .cs-shot) {
+  border-radius: 3px;
+  border-color: var(--pi-rule);
+}
+
+.premium-site:not(.home-page) main .folio-collection-link {
+  border-color: var(--pi-rule);
+}
+
+.premium-site:not(.home-page) main .cs-page {
+  --cs-ink: var(--pi-ink);
+  --cs-muted: var(--pi-muted);
+  --cs-line: var(--pi-rule);
+  --cs-tint: var(--pi-sage);
+  --cs-dark: var(--pi-ink);
+}
+
+.premium-site:not(.home-page) main .cs-cover {
+  background-color: var(--pi-sage);
+}
+
+.premium-site:not(.home-page) main :is(.cs-contact, .cs-next) {
+  border-color: var(--pi-rule);
+}
+
+.premium-site:not(.home-page) main .legal-page .reading {
+  max-width: 860px;
+}
+
+.premium-site:not(.home-page) main .legal-page .large-copy {
+  color: var(--pi-ink);
+  max-width: 52ch;
+  margin-block: 1.5rem 2.5rem;
+}
+
+.premium-site:not(.home-page) main .legal-page h2 {
+  border-top: 1px solid var(--pi-rule);
+  padding-top: 1.6rem;
+  margin-bottom: 1rem;
+  font-size: clamp(1.65rem, 3.1vw, 2.8rem);
+}
+
+.premium-site:not(.home-page) main :is(.service-questions, .mp-faq, .questions-grid) .faq-list summary {
+  min-height: 48px;
+  border-color: var(--pi-rule);
+  color: var(--pi-ink);
+}
+
+@media (max-width: 700px) {
+  .premium-site:not(.home-page) {
+    --pi-title: clamp(2.38rem, 10.2vw, 4rem);
+    --pi-heading: clamp(2rem, 7.6vw, 3rem);
+  }
+
+  .premium-site:not(.home-page) main :is(.page-hero, .about-hero, .mp-hero, .service-hero, .portfolio-page-heading, .cs-hero, .legal-page) {
+    padding-block: clamp(104px, 24vw, 128px) 45px;
+  }
+
+  .premium-site:not(.home-page) main .service-hero h1 {
+    font-size: var(--pi-title);
+  }
+
+  .premium-site:not(.home-page) main :is(.service-hero-grid, .about-hero-grid, .mp-hero-grid) {
+    gap: 28px;
+  }
+
+  .premium-site:not(.home-page) main .service-card {
+    padding: 21px;
+  }
+
+  .premium-site:not(.home-page) main :is(.service-back, .about-scroll, .cs-back, .mp-primary-link, .page-hero-actions a) {
+    min-height: 44px;
+    align-content: center;
+  }
+
+  .premium-site:not(.home-page) main .folio-index-aside {
+    max-width: 47ch;
+  }
+
+  .premium-site:not(.home-page) main .service-card-link {
+    gap: 10px;
+  }
+
+  .premium-site:not(.home-page) main .legal-page .reading {
+    padding-inline: clamp(18px, 5vw, 32px);
+  }
+}
+
+@media (max-width: 380px) {
+  .premium-site:not(.home-page) main .service-catalog-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -13,7 +13,11 @@ async function prepareAssets(directory) {
     const target = new URL(entry.name + (entry.isDirectory() ? "/" : ""), directory);
     if (entry.isDirectory()) await prepareAssets(target);
     else if (entry.name.endsWith(".html")) {
-      const html = (await readFile(target, "utf8")).replaceAll('="/assets/', '="/consulting/assets/');
+      let html = (await readFile(target, "utf8")).replaceAll('="/assets/', '="/consulting/assets/');
+      // This Next deployment serves the bundled examples when no editorial origin is configured.
+      if (!process.env.BM_CMS_ORIGIN && html.includes('/consulting/assets/portfolio.js')) {
+        html = html.replace('</head>', '<meta name="bm-portfolio-source" content="examples"></head>');
+      }
       await writeFile(target, html);
     }
   }

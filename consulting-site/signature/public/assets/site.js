@@ -31,10 +31,94 @@
   function activate(tab){const index=tabs.indexOf(tab);root.dataset.active=String(index);tabs.forEach(item=>{const active=item===tab;item.setAttribute('aria-selected',String(active));item.tabIndex=active?0:-1;document.getElementById(item.getAttribute('aria-controls')).hidden=!active});root.querySelectorAll('[data-talent-card]').forEach(card=>card.classList.toggle('is-active',Number(card.dataset.talentCard)===index));}
   tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>activate(tab));tab.addEventListener('keydown',event=>{let next;if(event.key==='ArrowRight')next=(i+1)%tabs.length;if(event.key==='ArrowLeft')next=(i-1+tabs.length)%tabs.length;if(event.key==='Home')next=0;if(event.key==='End')next=tabs.length-1;if(next!==undefined){event.preventDefault();activate(tabs[next]);tabs[next].focus()}})});
  });
- const form=document.querySelector('[data-contact]');
- if(form){const params=new URLSearchParams(location.search),need=params.get('besoin');if(['profil','squad','solution','autre'].includes(need)){form.querySelector(`input[name="besoin"][value="${need}"]`).checked=true}if(params.get('sujet')==='automatisation')form.elements.message.value='Je souhaite explorer une automatisation pour mon équipe. Voici mon contexte : ';
-  const selectedProfile=JSON.parse(form.dataset.profiles||'{}')[params.get('profil')];if(selectedProfile&&!form.elements.message.value){form.elements.message.value=`Je recherche un profil ${selectedProfile} pour renforcer mon équipe. Voici mon contexte : `;}
-  form.querySelectorAll('input[name=besoin]').forEach(el=>el.setAttribute('aria-describedby','error-besoin'));
-  form.addEventListener('submit',event=>{event.preventDefault();const data=new FormData(form),errors={};const name=String(data.get('nom')||'').trim(),email=String(data.get('email')||'').trim(),message=String(data.get('message')||'').trim();if(!data.get('besoin'))errors.besoin='Choisissez un type de besoin.';if(name.length<2)errors.nom='Indiquez votre nom (2 caractères minimum).';if(!email||!form.elements.email.validity.valid)errors.email='Vérifiez votre adresse email.';if(message.length<20)errors.message='Décrivez votre besoin en au moins 20 caractères.';form.querySelectorAll('[data-error]').forEach(el=>el.textContent=errors[el.dataset.error]||'');form.querySelectorAll('[aria-invalid]').forEach(el=>el.removeAttribute('aria-invalid'));const status=form.querySelector('.form-status');if(Object.keys(errors).length){status.textContent='Quelques informations restent à compléter.';for(const key of Object.keys(errors)){const field=form.querySelector(`[name="${key}"]`);field.setAttribute('aria-invalid','true')}form.querySelector(`[name="${Object.keys(errors)[0]}"]`).focus();return}status.textContent='Votre message est prêt. L’envoi sera disponible après activation du canal de réception. Votre saisie reste dans cette page ; rien n’a été transmis.';});
+ const form = document.querySelector('[data-contact]');
+ if (form) {
+  const params = new URLSearchParams(location.search);
+  const profiles = JSON.parse(form.dataset.profiles || '{}');
+  const services = JSON.parse(form.dataset.services || '{}');
+  const requestedProfile = params.get('profil');
+  const requestedService = params.get('service');
+  const profile = Object.hasOwn(profiles, requestedProfile) ? profiles[requestedProfile] : '';
+  const service = Object.hasOwn(services, requestedService) ? services[requestedService] : '';
+  const automation = params.get('sujet') === 'automatisation';
+  const requestedNeed = params.get('besoin');
+  const topic = profile || service || (automation ? 'Automatisation' : '');
+  let need = '';
+  if (service || automation) need = 'solution';
+  if (profile) need = 'profil';
+  if (['profil', 'squad', 'solution', 'autre'].includes(requestedNeed)) need = requestedNeed;
+  const status = form.querySelector('.form-status');
+  const result = form.querySelector('[data-contact-result]');
+  const brief = form.querySelector('[data-contact-brief]');
+  const topicLine = form.querySelector('[data-contact-topic]');
+  const translate = value => window.BMI18N?.t(value) ?? value;
+
+  if (need) form.elements.besoin.value = need;
+  if (topic) {
+   topicLine.textContent = topic;
+   topicLine.hidden = false;
+  }
+  form.hidden = false;
+
+  form.addEventListener('input', () => {
+   result.hidden = true;
+   brief.value = '';
+   topicLine.hidden = !topic || form.elements.besoin.value !== need;
+   status.textContent = '';
+  });
+  form.addEventListener('submit', event => {
+   event.preventDefault();
+   const data = new FormData(form);
+   const message = String(data.get('message') || '').trim();
+   const selected = form.querySelector('input[name="besoin"]:checked');
+   const errors = {};
+   if (!selected) errors.besoin = 'Choisissez un type d’accompagnement.';
+   if (message.length < 20) errors.message = 'Décrivez votre projet en au moins 20 caractères.';
+
+   form.querySelectorAll('[data-error]').forEach(el => {
+    el.textContent = translate(errors[el.dataset.error] || '');
+   });
+   form.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
+   const invalid = Object.keys(errors);
+   if (invalid.length) {
+    status.textContent = translate('Quelques informations restent à compléter.');
+    invalid.forEach(name => {
+     form.querySelectorAll(`[name="${name}"]`).forEach(field => field.setAttribute('aria-invalid', 'true'));
+    });
+    form.querySelector(`[name="${invalid[0]}"]`).focus();
+    return;
+   }
+
+   const name = String(data.get('nom') || '').trim();
+   const company = String(data.get('entreprise') || '').trim();
+   const selectedLabel = selected.nextElementSibling.textContent.trim();
+   const selectedTopic = need === data.get('besoin') ? translate(topic) : '';
+   const details = [selectedLabel, selectedTopic, [name, company].filter(Boolean).join(' · ')].filter(Boolean);
+   brief.value = [translate('Brief projet B&M'), '', ...details, '', message].join('\n');
+   result.hidden = false;
+   status.textContent = translate('Votre brief est prêt à partager.');
+   brief.focus();
+  });
+
+  form.querySelector('[data-contact-copy]').addEventListener('click', async () => {
+   try {
+    await navigator.clipboard.writeText(brief.value);
+    status.textContent = translate('Brief copié.');
+   } catch {
+    brief.focus();
+    brief.select();
+    status.textContent = translate('Le texte est sélectionné. Vous pouvez le copier.');
+   }
+  });
+
+  form.querySelector('[data-contact-download]').addEventListener('click', () => {
+   const url = URL.createObjectURL(new Blob([brief.value], {type: 'text/plain;charset=utf-8'}));
+   const link = document.createElement('a');
+   link.href = url;
+   link.download = 'brief-bm.txt';
+   link.click();
+   setTimeout(() => URL.revokeObjectURL(url), 1000);
+   status.textContent = translate('Téléchargement du brief lancé.');
+  });
  }
 })();
