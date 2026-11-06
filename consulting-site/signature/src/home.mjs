@@ -27,18 +27,20 @@ function stepVisuals() {
 
 export function renderHome({icon,button,arrowLink}) {
   return `
-  <section class="ph-hero" aria-labelledby="ph-title">
-    <div class="wrap ph-hero-grid">
+  <section class="ph-hero ph-signal" aria-labelledby="ph-title">
+    <div class="ph-signal-art" aria-hidden="true">
+      <canvas data-signal-field></canvas>
+      <svg class="ph-signal-fallback" viewBox="0 0 800 660" fill="none" preserveAspectRatio="xMidYMid meet"><defs><linearGradient id="ph-static-ink" x1="130" y1="590" x2="600" y2="50" gradientUnits="userSpaceOnUse"><stop stop-color="#274d42"/><stop offset=".55" stop-color="#84b9a2"/><stop offset="1" stop-color="#e8b584"/></linearGradient></defs><g stroke="url(#ph-static-ink)"><path d="M62 608H180V296a234 234 0 0 1 468 0v312h111"/><path d="M84 584h119V296a211 211 0 0 1 422 0v288h113"/><path d="M103 561h124V296a187 187 0 0 1 374 0v265h115"/><path d="M125 538h126V296a163 163 0 0 1 326 0v242h118"/><path d="M145 515h129V296a140 140 0 0 1 280 0v219h119"/><path d="M168 491h130V296a116 116 0 0 1 232 0v195h121"/><path d="M187 469h134V296a93 93 0 0 1 186 0v173h123"/></g><circle cx="581" cy="228" r="4" fill="#e8b584"/><circle cx="227" cy="438" r="3" fill="#a6d8bf"/><circle cx="625" cy="510" r="3" fill="#a6d8bf"/></svg>
+    </div>
+    <div class="wrap ph-signal-inner">
       <div class="ph-hero-content">
-        <p class="ph-kicker"><i></i> STUDIO PRODUIT & INGÉNIERIE IT</p>
-        <h1 id="ph-title">Produits numériques.<br><em>Équipes renforcées.</em></h1>
+        <p class="ph-kicker ph-signal-kicker"><i></i> STUDIO PRODUIT & INGÉNIERIE IT</p>
+        <h1 id="ph-title"><span class="ph-signal-line">Des talents pour <em>avancer.</em></span><span class="ph-signal-line">Des idées qui <em>prennent vie.</em></span></h1>
         <p class="ph-lead">B&M conçoit vos applications et mobilise les experts IT pour faire avancer vos projets.</p>
-        <div class="ph-actions">${button('Parler de mon projet','/contact/?besoin=solution','dark')}${arrowLink('Renforcer mon équipe','#outsourcing')}</div>
+        <div class="ph-actions">${button('Parler de mon projet','/contact/?besoin=solution')}${arrowLink('Renforcer mon équipe','#outsourcing')}</div>
       </div>
-      <figure class="ph-hero-art">
-        <div class="ph-photo"><img src="/assets/bm-collective-960.webp" srcset="/assets/bm-collective-640.webp 640w, /assets/bm-collective-960.webp 960w, /assets/bm-collective-1536.webp 1536w" sizes="(max-width: 760px) 92vw, (max-width: 1400px) 46vw, 620px" width="1536" height="1024" alt="Une arche et des volumes en pierre et en verre assemblés en équilibre." fetchpriority="high"><span class="ph-art-index" aria-hidden="true">B&M / 01</span><span class="ph-art-plus" aria-hidden="true">＋</span></div>
-        <figcaption><span>FIG. 01 / L’ART D’ASSEMBLER</span><span aria-hidden="true">↓</span></figcaption>
-      </figure>
+      <div class="ph-signal-label" aria-hidden="true"><span>+</span><span>FIG. 01<br> SIGNAL FIELD</span></div>
+      <div class="ph-signal-dock"><a href="#expertises" class="ph-signal-scroll">${icon('down')}<span>Découvrir nos expertises</span></a><button class="ph-signal-pause" type="button" data-signal-toggle aria-pressed="false" aria-label="Pause du fond animé" hidden><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path class="ph-pause-bars" d="M5.5 3.5v9m5-9v9"/><path class="ph-pause-play" d="m6 3.5 6 4.5-6 4.5z"/></svg><span data-signal-playing>Pause</span><span data-signal-paused hidden>Reprendre</span></button></div>
     </div>
   </section>
   <div class="ph-strip" id="accompagnements"><div class="wrap"><span>CONSEIL & CONCEPTION</span><span>INGÉNIERIE LOGICIELLE</span><span>CONSULTANTS & SQUADS</span></div></div>

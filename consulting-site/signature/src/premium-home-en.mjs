@@ -1,4 +1,11 @@
 export default {
+  'Des talents pour': 'Talent to',
+  'avancer.': 'move forward.',
+  'Des idées qui': 'Ideas that',
+  'prennent vie.': 'come to life.',
+  'Découvrir nos expertises': 'Explore our expertise',
+  'Pause du fond animé': 'Pause animated background',
+  'Reprendre': 'Resume',
   'STUDIO PRODUIT & INGÉNIERIE IT': 'PRODUCT & SOFTWARE ENGINEERING STUDIO',
   'Produits numériques.': 'Digital products.',
   'Équipes renforcées.': 'Stronger teams.',

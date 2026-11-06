@@ -15,3 +15,34 @@ document.querySelectorAll('[data-ph-lab]').forEach(lab => {
   }
   triggers.forEach((trigger, i) => trigger.addEventListener('click', () => select(i)));
 });
+
+const signalToggle = document.querySelector('[data-signal-toggle]');
+if (signalToggle) {
+  const field = document.querySelector('[data-signal-field]');
+  function showControl() { signalToggle.hidden = field?.dataset.signalReady !== 'true'; }
+  if (field) {
+    showControl();
+    new MutationObserver(showControl).observe(field, {attributes:true,attributeFilter:['data-signal-ready']});
+  }
+  signalToggle.addEventListener('click', () => {
+    const paused = signalToggle.getAttribute('aria-pressed') !== 'true';
+    signalToggle.setAttribute('aria-pressed', String(paused));
+    signalToggle.querySelector('[data-signal-playing]').hidden = paused;
+    signalToggle.querySelector('[data-signal-paused]').hidden = !paused;
+    window.dispatchEvent(new CustomEvent('bm:signal-motion', {detail:{paused}}));
+  });
+}
+
+if ('IntersectionObserver' in window && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+  const entrance = new IntersectionObserver((entries, observer) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add('ph-in-view');
+      observer.unobserve(entry.target);
+    }
+  }, {threshold:.12});
+  document.querySelectorAll('.ph-section-head,.ph-offer,.ph-project,.ph-lab-visual').forEach((item, i) => {
+    item.style.setProperty('--ph-enter-delay', `${(i % 2) * 75}ms`);
+    entrance.observe(item);
+  });
+}
