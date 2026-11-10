@@ -7,6 +7,8 @@
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&panel&&!panel.hidden)setMenu(false,true)});
  document.addEventListener('click',e=>{if(!e.target.closest('.nav-services'))setMenu(false)});
  document.querySelector('.nav-services')?.addEventListener('focusout',e=>{if(!e.currentTarget.contains(e.relatedTarget))setMenu(false)});
+ // The kinetic homepage owns its choreography; keep the shared navigation above.
+ if(document.body.classList.contains('home-page'))return;
  const targets=[...document.querySelectorAll('.service-card,.service-visual,.service-system-diagram,.service-usages article,.service-steps li,.service-brief-sheet,.home-faq header,.about-service,.method-item')];
  targets.forEach((el,i)=>{el.classList.add('fx-ready');el.style.setProperty('--fx-delay',`${(i%3)*70}ms`);el.querySelectorAll('li,.service-brief-sheet>div,.service-flow>span,.service-ai-flow>span').forEach((node,n)=>node.style.setProperty('--node-index',n))});
  let reveal;if('IntersectionObserver'in window){reveal=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('fx-seen');reveal.unobserve(e.target)}})},{threshold:.12});targets.forEach(e=>reveal.observe(e))}else targets.forEach(e=>e.classList.add('fx-seen'));
@@ -19,7 +21,7 @@
 })();
 /* Full-site scroll choreography: visible fades for editorial content and media. */
 (()=>{
- if(location.pathname.startsWith('/gestion-realisations'))return;
+ if(location.pathname.startsWith('/gestion-realisations')||document.body.classList.contains('home-page'))return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)'),homeMobile=()=>document.body.classList.contains('home-page')&&matchMedia('(max-width:700px)').matches;
  const root=document.documentElement;
  const running=new Set();

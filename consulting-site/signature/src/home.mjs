@@ -1,71 +1,51 @@
-import {projects} from './project-data.mjs';
-
-const services = [
-  ['01','Application web & SaaS','/services/application-web-saas/'],
-  ['02','Application mobile','/services/application-mobile/'],
-  ['03','Logiciel métier','/services/logiciel-metier/'],
-  ['04','Intelligence artificielle','/services/intelligence-artificielle/'],
-];
+const star = '<svg viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M50 0v100M0 50h100M14.6 14.6l70.8 70.8m0-70.8L14.6 85.4" stroke="currentColor" stroke-width="13"/></svg>';
 const steps = [
-  {title:'Cadrer',label:'Le plan',copy:'Définir le problème, les usages et le premier périmètre utile.',output:'Périmètre & priorités'},
-  {title:'Construire',label:'Le prototype',copy:'Voir le produit prendre forme, tester les parcours et ajuster ensemble.',output:'Prototype & démonstrations'},
-  {title:'Livrer',label:'Le produit',copy:'Vérifier la solution, préparer la mise en service et transmettre les clés.',output:'Recette & prise en main'},
+  ['01','On pose les bonnes questions.','Vos usages, vos contraintes, vos priorités. On définit ensemble ce qui mérite d’être construit.','Cadrage & priorités'],
+  ['02','Vous voyez le produit naître.','Des parcours concrets et des démonstrations régulières pour tester, décider et ajuster.','Design & développement'],
+  ['03','On prépare la suite.','Recette, mise en service et transmission. Vous repartez avec les clés de votre solution.','Livraison & prise en main'],
 ];
-
-function stepVisuals() {
-  return `
-    <div class="ph-scene" data-ph-scene="0">
-      <div class="ph-brief"><span>01 / LE CADRAGE</span><strong>Le plan de départ.</strong><ol><li>Usages <b>✓</b></li><li>Priorités <b>✓</b></li><li>Périmètre <b>✓</b></li></ol></div>
-    </div>
-    <div class="ph-scene" data-ph-scene="1" hidden>
-      <div class="ph-window"><div class="ph-window-bar"><i></i><i></i><i></i><span>PROTOTYPE</span></div><div class="ph-wire"><aside></aside><div><b></b><div><i></i><i></i></div><i></i><i></i></div></div></div><span class="ph-scene-chip">↖ À tester</span>
-    </div>
-    <div class="ph-scene" data-ph-scene="2" hidden>
-      <div class="ph-window ph-window-live"><div class="ph-window-bar"><i></i><i></i><i></i><span>VOTRE APPLICATION</span></div><div class="ph-dashboard"><aside></aside><div><strong>Vue d’ensemble</strong><div class="ph-dashboard-chart"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="ph-dashboard-row"><i></i><i></i><i></i></div></div></div></div><span class="ph-scene-chip">✓ Prêt à livrer</span>
-    </div>`;
-}
 
 export function renderHome({icon,button,arrowLink}) {
   return `
-  <section class="ph-hero ph-signal" aria-labelledby="ph-title">
-    <div class="ph-signal-art" aria-hidden="true">
-      <canvas data-signal-field></canvas>
-      <svg class="ph-signal-fallback" viewBox="0 0 800 660" fill="none" preserveAspectRatio="xMidYMid meet"><defs><linearGradient id="ph-static-ink" x1="130" y1="590" x2="600" y2="50" gradientUnits="userSpaceOnUse"><stop stop-color="#274d42"/><stop offset=".55" stop-color="#84b9a2"/><stop offset="1" stop-color="#e8b584"/></linearGradient></defs><g stroke="url(#ph-static-ink)"><path d="M62 608H180V296a234 234 0 0 1 468 0v312h111"/><path d="M84 584h119V296a211 211 0 0 1 422 0v288h113"/><path d="M103 561h124V296a187 187 0 0 1 374 0v265h115"/><path d="M125 538h126V296a163 163 0 0 1 326 0v242h118"/><path d="M145 515h129V296a140 140 0 0 1 280 0v219h119"/><path d="M168 491h130V296a116 116 0 0 1 232 0v195h121"/><path d="M187 469h134V296a93 93 0 0 1 186 0v173h123"/></g><circle cx="581" cy="228" r="4" fill="#e8b584"/><circle cx="227" cy="438" r="3" fill="#a6d8bf"/><circle cx="625" cy="510" r="3" fill="#a6d8bf"/></svg>
-    </div>
-    <div class="wrap ph-signal-inner">
-      <div class="ph-hero-content">
-        <p class="ph-kicker ph-signal-kicker"><i></i> STUDIO PRODUIT & INGÉNIERIE IT</p>
-        <h1 id="ph-title"><span class="ph-signal-line">Des talents pour <em>avancer.</em></span><span class="ph-signal-line">Des idées qui <em>prennent vie.</em></span></h1>
-        <p class="ph-lead">B&M conçoit vos applications et mobilise les experts IT pour faire avancer vos projets.</p>
-        <div class="ph-actions">${button('Parler de mon projet','/contact/?besoin=solution')}${arrowLink('Renforcer mon équipe','#outsourcing')}</div>
-      </div>
-      <div class="ph-signal-label" aria-hidden="true"><span>+</span><span>FIG. 01<br> SIGNAL FIELD</span></div>
-      <div class="ph-signal-dock"><a href="#expertises" class="ph-signal-scroll">${icon('down')}<span>Découvrir nos expertises</span></a><button class="ph-signal-pause" type="button" data-signal-toggle aria-pressed="false" aria-label="Pause du fond animé" hidden><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path class="ph-pause-bars" d="M5.5 3.5v9m5-9v9"/><path class="ph-pause-play" d="m6 3.5 6 4.5-6 4.5z"/></svg><span data-signal-playing>Pause</span><span data-signal-paused hidden>Reprendre</span></button></div>
+  <section class="kh-hero" aria-labelledby="kh-title">
+    <div class="kh-art" aria-hidden="true"><canvas data-kinetic-core></canvas><div class="kh-art-fallback"><i></i><i></i><i></i></div></div>
+    <div class="wrap kh-hero-inner">
+      <p class="kh-eyebrow kh-hero-eyebrow"><span class="kh-dot"></span> STUDIO DIGITAL & INGÉNIERIE IT</p>
+      <h1 id="kh-title"><span>L’idée est là.</span><span>Faisons-la</span><span class="kh-accent">exister<span class="kh-title-dot">.</span></span></h1>
+      <div class="kh-hero-copy"><p>Des applications qui servent votre métier.<br>Des experts qui font avancer votre équipe.</p>${button('Parlons de votre projet','/contact/')}</div>
+      <div class="kh-art-caption" aria-hidden="true"><span class="kh-cross">+</span><span>STRATÉGIE<br>DESIGN<br>CODE</span><span class="kh-art-orbit">${star}</span></div>
+      <div class="kh-hero-bottom"><a href="#expertises">${icon('down')}<span>La suite, c’est ici</span></a><span class="kh-hero-index" aria-hidden="true">B&M — DU POTENTIEL À L’IMPACT</span><button type="button" data-motion-toggle hidden aria-pressed="false" aria-label="Mettre les animations en pause"><span class="kh-motion-symbol" aria-hidden="true">Ⅱ</span><span data-motion-label>Pause</span></button></div>
     </div>
   </section>
-  <div class="ph-strip" id="accompagnements"><div class="wrap"><span>CONSEIL & CONCEPTION</span><span>INGÉNIERIE LOGICIELLE</span><span>CONSULTANTS & SQUADS</span></div></div>
 
-  <section class="ph-section ph-expertise" id="expertises" aria-labelledby="ph-expertise-title"><div class="wrap">
-    <header class="ph-section-head"><div><p class="ph-kicker">01 / EXPERTISES</p><h2 id="ph-expertise-title">Deux façons<br><em>de faire équipe.</em></h2></div><p>Confiez-nous un produit à réaliser ou intégrez les compétences qui manquent à votre équipe.</p></header>
-    <div class="ph-offers">
-      <article class="ph-offer ph-offer-product" id="solutions-concretes"><div class="ph-offer-top"><span>01 / PROJET SUR MESURE</span>${icon('layers')}</div><h3>Construire un produit.</h3><p>De la conception à la mise en service, autour de vos usages.</p><div class="ph-service-list" id="nos-services">${services.map(([n,label,href])=>`<a href="${href}"><span aria-hidden="true">${n}</span><strong>${label}</strong>${icon()}</a>`).join('')}</div>${arrowLink('Explorer les solutions','/solutions-sur-mesure/','ph-offer-link')}</article>
-      <article class="ph-offer ph-offer-team" id="outsourcing"><div class="ph-offer-top"><span>02 / RENFORT IT</span>${icon('people')}</div><h3>Renforcer une équipe.</h3><p>Un consultant ou une squad, selon le périmètre et le pilotage souhaités.</p><div class="ph-team-lines" id="formats"><div><span>SOLO</span><strong>Une expertise ciblée</strong></div><div><span>SQUAD</span><strong>Des rôles complémentaires</strong></div></div><div class="ph-tags"><span>Fullstack</span><span>Cloud</span><span>Data</span><span>IA</span><span>Produit</span></div>${arrowLink('Découvrir les profils & squads','/profils-et-squads/','ph-offer-link')}</article>
-    </div>
+  <div class="kh-ticker" id="accompagnements" role="img" aria-label="Imaginer. Construire. Faire évoluer."><div class="kh-ticker-track" aria-hidden="true">${Array.from({length:4},()=>`<span>IMAGINER ${star} CONSTRUIRE ${star} FAIRE ÉVOLUER ${star}</span>`).join('')}</div></div>
+
+  <section class="kh-expertise kh-section" id="expertises" aria-labelledby="kh-expertise-title"><div class="wrap">
+    <div class="kh-section-heading" data-kh-reveal><p class="kh-eyebrow">01 / NOS EXPERTISES</p><div><h2 id="kh-expertise-title">Le bon regard.<br>La bonne <span class="kh-outline">équipe.</span></h2><p>De l’idée au produit, du besoin à la bonne compétence.<br>Deux façons d’avancer avec B&M.</p></div></div>
+    <article class="kh-offer" id="solutions-concretes" data-kh-reveal>
+      <div class="kh-offer-number">01<span>BUILD</span></div>
+      <div class="kh-offer-main"><h3>Vos idées.<br>Notre terrain de jeu.</h3><p>On conçoit et développe les outils numériques dont votre activité a besoin.</p><div class="kh-service-links" id="nos-services"><a href="/services/application-web-saas/">Web & SaaS ${icon()}</a><a href="/services/application-mobile/">Applications mobiles ${icon()}</a><a href="/services/logiciel-metier/">Logiciels métier ${icon()}</a><a href="/services/intelligence-artificielle/">Intelligence artificielle ${icon()}</a></div>${arrowLink('Explorer les solutions','/solutions-sur-mesure/')}</div>
+      <div class="kh-build-art" aria-hidden="true"><div class="kh-build-grid"></div><div class="kh-build-layer kh-layer-back"><span>01 / STRATÉGIE</span></div><div class="kh-build-layer kh-layer-middle"><span>02 / DESIGN</span><i></i><i></i></div><div class="kh-build-layer kh-layer-front"><span>03 / CODE</span><div>&lt;<b>B&M</b>/&gt;</div><i></i><i></i></div><span class="kh-art-tag">DE L’IDÉE AU PRODUIT ↗</span></div>
+    </article>
+    <article class="kh-offer kh-offer-team" id="outsourcing" data-kh-reveal>
+      <div class="kh-offer-number">02<span>TEAM</span></div>
+      <div class="kh-offer-main"><h3>Du talent.<br>Dans votre équipe.</h3><p>Un expert pour débloquer un sujet. Une squad pour porter une ambition.</p><div class="kh-team-tags" id="formats"><span>Fullstack</span><span>Cloud</span><span>Data & IA</span><span>Produit</span></div>${arrowLink('Trouver les bonnes compétences','/profils-et-squads/')}</div>
+      <div class="kh-team-art" aria-hidden="true"><div class="kh-team-orbit"></div><div class="kh-team-center">B&M<span>LE COLLECTIF</span></div><span class="kh-team-node kh-node-1">DEV</span><span class="kh-team-node kh-node-2">DESIGN</span><span class="kh-team-node kh-node-3">CLOUD</span><span class="kh-team-node kh-node-4">DATA</span><span class="kh-art-tag">LES BONS RÔLES. LE MÊME CAP.</span></div>
+    </article>
   </div></section>
 
-  <section class="ph-section ph-work" id="demonstrations" aria-labelledby="ph-work-title"><div class="wrap">
-    <header class="ph-section-head"><div><p class="ph-kicker">02 / DÉMONSTRATIONS</p><h2 id="ph-work-title">Des usages.<br><em>Des interfaces.</em></h2></div>${arrowLink('Voir les projets et démonstrations','/realisations/')}</header>
-    <div class="ph-projects">${projects.slice(0,2).map((project,i)=>`<article class="ph-project"><a href="/realisations/${project.slug}/"><div class="ph-project-image ph-project-image-${i}"><span class="ph-project-index">0${i+1} / DÉMO</span><img src="${project.cover.url}" alt="${project.cover.alt}" width="${project.cover.width}" height="${project.cover.height}" loading="lazy" decoding="async"></div><div class="ph-project-details"><div><p class="ph-kicker">${project.category}</p><h3>${project.name}</h3><p>${project.summary}</p></div><span class="ph-circle" aria-hidden="true">${icon()}</span></div></a></article>`).join('')}</div>
-    <p class="ph-caption">Concepts illustratifs · données fictives.</p>
+  <section class="kh-work kh-section" id="demonstrations" aria-labelledby="kh-work-title"><div class="wrap">
+    <div class="kh-work-heading" data-kh-reveal><div><p class="kh-eyebrow">02 / LE CHAMP DES POSSIBLES</p><h2 id="kh-work-title">Show.<br><span class="kh-accent">Don’t tell.</span></h2></div><div><p>Un aperçu de ce que vos outils<br>pourraient devenir.</p>${arrowLink('Explorer les démonstrations','/realisations/')}</div></div>
+    <div class="kh-project-grid">
+      <a class="kh-project kh-project-web" href="/realisations/exemple-web/" data-kh-reveal><div class="kh-project-stage"><span class="kh-project-label">CONCEPT 01 / APPLICATION WEB</span><div class="kh-browser" aria-hidden="true"><div class="kh-browser-top"><span><i></i><i></i><i></i></span><b>ATELIER / WORKSPACE</b><span>↗</span></div><div class="kh-app"><aside><strong>a<span>●</span></strong><i></i><i></i><i></i><i></i></aside><div class="kh-app-main"><div class="kh-app-title"><span>Votre activité,<br><strong>en un regard.</strong></span><b>+ Nouveau</b></div><div class="kh-app-stats"><div><span>Projets actifs</span><strong>12<span>↗</span></strong></div><div><span>À valider</span><strong>03<span>●</span></strong></div></div><div class="kh-app-chart"><span>AVANCEMENT DES PROJETS</span><div>${[42,62,49,78,58,89,72,95,84,100].map((height,i)=>`<i style="--bar:${height}%;--i:${i}"></i>`).join('')}</div></div><div class="kh-app-task"><i></i><span>Un espace. Tous vos projets.</span><b>↗</b></div></div></div></div><span class="kh-project-visit" aria-hidden="true">${icon()}</span></div><div class="kh-project-info"><div><p>WEB / SAAS / ESPACE MÉTIER</p><h3>Atelier web</h3></div><span>${icon()}</span></div></a>
+      <a class="kh-project kh-project-mobile" href="/realisations/exemple-mobile/" data-kh-reveal><div class="kh-project-stage"><span class="kh-project-label">CONCEPT 02 / APPLICATION MOBILE</span><div class="kh-mobile-ring" aria-hidden="true"></div><div class="kh-phone" aria-hidden="true"><div class="kh-phone-top"><span>9:41</span><i></i><span>● ▰</span></div><div class="kh-phone-content"><span class="kh-phone-logo">terrain<span>↗</span></span><p>Bonjour, Alex.</p><strong>Sur le terrain.<br>Dans le rythme.</strong><div class="kh-phone-map"><svg viewBox="0 0 220 130"><path d="M0 40h60l30 50h130M25 0v130M120 0v55l100 45M180 0l-50 130" fill="none" stroke="#cdd3d8" stroke-width="13"/><path d="m40 50 40 30 55-30 40 35" fill="none" stroke="#345bff" stroke-width="3" stroke-dasharray="5 4"/><circle cx="135" cy="50" r="9" fill="#345bff" stroke="white" stroke-width="4"/></svg></div><div class="kh-phone-job"><span>PROCHAINE INTERVENTION</span><b>Tout est prêt.<i>↗</i></b><small>Dossier · Accès · Checklist</small></div><div class="kh-phone-nav"><b>⌂</b><b>▦</b><b>◉</b></div></div></div><span class="kh-mobile-chip" aria-hidden="true"><i>✓</i> Synchronisé</span><span class="kh-project-visit" aria-hidden="true">${icon()}</span></div><div class="kh-project-info"><div><p>MOBILE / TERRAIN / OUTIL MÉTIER</p><h3>Compagnon terrain</h3></div><span>${icon()}</span></div></a>
+    </div><p class="kh-project-note">Démonstrations illustratives · données fictives.</p>
   </div></section>
 
-  <section class="ph-section ph-method" id="methode-projet" aria-labelledby="ph-method-title"><div class="wrap">
-    <header class="ph-section-head"><div><p class="ph-kicker">03 / MÉTHODE</p><h2 id="ph-method-title">Du brief<br><em>au premier usage.</em></h2></div><p>Un produit se construit avec vous, par étapes courtes et décisions visibles.</p></header>
-    <div class="ph-lab" data-ph-lab>
-      <div class="ph-lab-visual" aria-hidden="true"><div class="ph-lab-meta"><span>ATELIER B&M</span><span data-ph-number>01 / 03</span></div>${stepVisuals()}<div class="ph-lab-footer"><span data-ph-caption>${steps[0].label}</span><i></i></div></div>
-      <div class="ph-lab-steps">${steps.map((step,i)=>`<div class="ph-step" data-ph-step><button type="button" data-ph-trigger="${i}" aria-expanded="${i===0}" aria-controls="ph-step-${i}"><span class="ph-step-index">0${i+1}</span><strong>${step.title}</strong><span class="ph-step-icon" aria-hidden="true">${icon('plus')}</span></button><div class="ph-step-detail" id="ph-step-${i}" ${i===0?'':'hidden'}><p>${step.copy}</p><span>${icon('check')}${step.output}</span></div><span hidden data-ph-label>${step.label}</span></div>`).join('')}${arrowLink('Découvrir notre méthode','/notre-methode/','ph-method-link')}</div>
-    </div>
-  </div></section>
+  <section class="kh-method kh-section" id="methode-projet" aria-labelledby="kh-method-title"><div class="wrap"><div class="kh-section-heading" data-kh-reveal><p class="kh-eyebrow">03 / EN MOUVEMENT</p><div><h2 id="kh-method-title">Pas de tunnel.<br>Du <span class="kh-outline">concret.</span></h2><p>Vous voyez ce qui avance. Vous décidez de la suite.</p></div></div><div class="kh-method-layout">
+    <div class="kh-method-screen" data-method-screen="0" aria-hidden="true"><div class="kh-screen-top"><span>B&M / WORK IN PROGRESS</span><span data-method-counter>01 — 03</span></div><div class="kh-method-visual"><div class="kh-method-axis"></div><div class="kh-method-shape">${star}</div><div class="kh-method-word" data-method-word>Think.</div></div><div class="kh-screen-bottom"><span data-method-caption>Cadrage & priorités</span><i></i></div></div>
+    <div class="kh-method-steps">${steps.map(([n,title,copy,output],i)=>`<article class="kh-method-step${i===0?' is-active':''}" data-method-step="${i}" data-method-caption-text="${output}"><span class="kh-eyebrow">${n} / ${output}</span><h3>${title}</h3><p>${copy}</p></article>`).join('')}${arrowLink('Découvrir notre méthode','/notre-methode/')}</div>
+  </div></div></section>
 
-  <section class="ph-end" id="parlons-en"><div class="wrap ph-end-inner"><div><p class="ph-kicker"><i></i> LE PREMIER ÉCHANGE</p><h2>Qu’est-ce qu’on<br><em>construit ensemble ?</em></h2></div><div><p>Parlez-nous de votre projet ou du rôle qu’il vous manque.</p>${button('Contacter B&M','/contact/')}</div></div></section>`;
+  <section class="kh-contact" id="parlons-en"><div class="wrap"><div class="kh-contact-top"><p class="kh-eyebrow">LE PROCHAIN MOUVEMENT</p><p>Une idée, un projet,<br>une équipe à compléter.</p></div><a class="kh-contact-link" href="/contact/"><h2>À vous<br>de jouer<span>.</span></h2><span class="kh-contact-arrow" aria-hidden="true">${icon()}</span><span class="kh-contact-label">Parlons-en ${icon()}</span></a></div></section>`;
 }
