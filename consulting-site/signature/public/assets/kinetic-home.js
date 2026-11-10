@@ -23,7 +23,7 @@
   }, {threshold:.1});
   document.querySelectorAll('[data-kh-reveal]').forEach(item => reveal.observe(item));
   const idle = new IntersectionObserver(entries => entries.forEach(entry => entry.target.classList.toggle('kh-offscreen', !entry.isIntersecting)), {rootMargin:'120px'});
-  document.querySelectorAll('.kh-offer,.kh-project,.kh-method-screen,.kh-ticker').forEach(item => idle.observe(item));
+  document.querySelectorAll('.kh-consultants,.kh-offer,.kh-project,.kh-method-screen,.kh-ticker').forEach(item => idle.observe(item));
   const screen = document.querySelector('[data-method-screen]');
   const steps = [...document.querySelectorAll('[data-method-step]')];
   const wide = matchMedia('(min-width: 761px)');

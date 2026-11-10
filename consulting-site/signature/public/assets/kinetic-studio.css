@@ -3,7 +3,7 @@
 .premium-site :is(h1,h2,h3,h4){font-family:var(--display);font-weight:600}
 .premium-site :is(h1,h2,h3,h4) em,.premium-site .footer-top>p em{font-family:var(--display);font-style:normal;font-weight:inherit}
 .premium-site .wrap{max-width:1600px;padding-inline:clamp(22px,5vw,80px)}
-.premium-site :is(.site-header,.site-header.is-scrolled){position:sticky;top:0;z-index:70;background:#080a0bf5;color:#f5f6f7;border-bottom:1px solid #ffffff24;box-shadow:none;backdrop-filter:blur(16px)}
+.premium-site :is(.site-header,.site-header.is-scrolled),.premium-site.starts-dark .site-header.is-scrolled{position:sticky;top:0;z-index:70;background:#080a0bf5;color:#f5f6f7;border-bottom:1px solid #ffffff24;box-shadow:none;backdrop-filter:blur(16px)}
 .premium-site .site-header .header-inner,.premium-site .site-header.is-scrolled .header-inner{height:86px}
 .premium-site .header-inner:after{display:none}.premium-site .wordmark{font-size:39px;color:#fff;letter-spacing:-.09em}.premium-site .wordmark>span{color:#d6ff46}.premium-site .brand-caption{color:#d1d5d8;font-size:8px}
 .premium-site .desktop-nav>a,.premium-site .nav-services-toggle{font-size:12px;color:#d8dcdf;transition:color .2s}.premium-site .desktop-nav>a:hover,.premium-site .nav-services-toggle:hover{color:#d6ff46}.premium-site .desktop-nav>a[aria-current=page]:after{background:#d6ff46}
