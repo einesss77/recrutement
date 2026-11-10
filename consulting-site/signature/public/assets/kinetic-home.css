@@ -42,4 +42,23 @@ body[data-motion-paused=true] .kh-ticker-track,body[data-motion-paused=true] mai
 @media(max-width:1090px){.kh-consultants-grid{grid-template-columns:1.5fr 1fr;gap:32px}.kh-consultants .kh-team-art{min-height:285px}.kh-consultants-copy h2{font-size:clamp(35px,4.5vw,49px)}}
 @media(max-width:760px){.kh-consultants{padding-block:38px 40px;scroll-margin-top:68px}.kh-consultants-grid{grid-template-columns:1fr;gap:0;scroll-margin-top:90px}.kh-consultants-copy h2{font-size:clamp(32px,7.5vw,53px);margin:18px 0 14px}.kh-consultants-copy>p:not(.kh-eyebrow){font-size:12px;max-width:36ch}.kh-consultants-copy>.kh-eyebrow{font-size:8px}.kh-consultants-roles{display:grid;grid-template-columns:max-content max-content;gap:8px 17px;font-size:10px;margin-top:18px}.kh-consultants-actions{gap:10px 18px;margin-top:22px}.kh-consultants-actions .text-link{font-size:10px}.kh-consultants .kh-team-art{display:none}.kh-expertise .kh-section-heading{margin-bottom:30px}}
 @media(max-width:370px){.kh-consultants-copy h2{font-size:29px}.kh-consultants-actions{gap:7px 12px}.kh-consultants-actions .button{font-size:10px;gap:11px;padding-left:13px}.kh-consultants-actions .button-icon{width:29px;height:29px}.kh-consultants-roles{font-size:9px}}
-@media(prefers-reduced-motion:reduce){.kh-art-orbit svg,.kh-ticker-track,.kh-hero-bottom>a>.icon,.kh-layer-front,.kh-team-orbit,.kh-team-node,.kh-app-chart i,.kh-phone,.kh-phone-map circle,.kh-mobile-chip,.kh-method-shape{animation:none}.kh-hero-bottom>button{display:none}.kh-method-step{opacity:1}.kh-reveal-enter{animation:none}}
+.kh-ui-icon{display:inline-block;width:14px;height:14px;vertical-align:middle;flex:none}.kh-ui-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor}
+.kh-cross .icon{width:28px;height:28px}.kh-motion-symbol .kh-ui-icon{width:16px;height:16px}.kh-pause-play{display:none}[data-motion-toggle][aria-pressed=true] .kh-pause-play{display:block}[data-motion-toggle][aria-pressed=true] .kh-pause-bars{display:none}
+.kh-browser-top .icon{width:9px;height:9px}.kh-app-stats strong>span{min-width:23px;min-height:23px;display:grid;place-items:center}.kh-app-stats .icon{width:12px;height:12px}.kh-app-task .icon{width:10px;height:10px}.kh-phone-logo .icon{width:19px;height:19px}.kh-phone-job .icon{width:10px;height:10px}.kh-phone-nav .kh-ui-icon{width:17px;height:17px}.kh-mobile-chip .icon{width:12px;height:12px}
+.kh-mobile-links{display:none}
+.kh-depth{translate:0 var(--kh-depth-y,0px)}
+.kh-reveal-ready{opacity:0;transform:translateY(32px);transition:opacity .85s ease,transform .95s cubic-bezier(.16,1,.3,1)}
+.kh-reveal-ready.kh-revealed{opacity:1;transform:none}
+body[data-motion-paused=true] .kh-reveal-ready{transition:none}
+@media(max-width:760px){
+ .home-page .kh-hero{height:auto;min-height:0}.home-page .kh-hero-inner{min-height:clamp(620px,calc(88svh - 68px),740px);padding-top:35px}
+ .kh-art,.kh-art-caption{display:none}
+ .home-page .kh-hero h1{font-size:clamp(56px,14.6vw,88px);max-width:none;margin-top:26px;margin-bottom:22px}
+ .kh-hero-copy{gap:19px}.kh-hero-copy>p{font-size:13px;line-height:1.75;max-width:34ch}
+ .kh-mobile-links{display:grid;width:100%;margin-block:30px 25px;border-top:1px solid #ffffff30}
+ .kh-mobile-links>a{display:grid;grid-template-columns:24px 1fr 18px;align-items:center;gap:12px;min-height:47px;border-bottom:1px solid #ffffff30;color:#e3e8eb}
+ .kh-mobile-links>a>span{font-size:9px;color:#818e98}.kh-mobile-links strong{font-size:12px;font-weight:500}.kh-mobile-links .icon{width:16px;height:16px;color:#d6ff46}
+ .kh-mobile-links>a:hover{background:#ffffff08}.kh-hero-bottom{min-height:58px}.kh-reveal-ready{transform:translateY(24px)}.kh-reveal-ready.kh-revealed{transform:none}
+}
+@media(max-width:370px){.home-page .kh-hero h1{font-size:51px}.kh-hero-copy>p{font-size:12px}.kh-mobile-links{margin-top:25px}}
+@media(prefers-reduced-motion:reduce){.kh-art-orbit svg,.kh-ticker-track,.kh-hero-bottom>a>.icon,.kh-layer-front,.kh-team-orbit,.kh-team-node,.kh-app-chart i,.kh-phone,.kh-phone-map circle,.kh-mobile-chip,.kh-method-shape{animation:none}.kh-hero-bottom>button{display:none}.kh-method-step{opacity:1}.kh-reveal-enter{animation:none}.kh-reveal-ready{opacity:1;transform:none;transition:none}.kh-depth{translate:none}}

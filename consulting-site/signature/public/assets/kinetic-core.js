@@ -1,6 +1,11 @@
 /* B&M / a continuous metallic ribbon, rendered locally without external assets. */
 (() => {
   'use strict';
+  const desktop = matchMedia('(min-width: 761px)');
+  let initialized = false;
+  function initialize() {
+  if (initialized || !desktop.matches) return;
+  initialized = true;
   const canvas = document.querySelector('[data-kinetic-core]');
   if (!canvas) return;
   const hero = canvas.closest('section') || canvas.parentElement;
@@ -199,7 +204,7 @@
     draw();
   }
   function syncMotion() {
-    const running = visible&&!document.hidden&&!paused&&!reduced.matches&&!lost;
+    const running = desktop.matches&&visible&&!document.hidden&&!paused&&!reduced.matches&&!lost;
     if (running&&!frame) frame=requestAnimationFrame(tick);
     if (!running&&frame) { cancelAnimationFrame(frame);frame=0;lastTime=0; }
   }
@@ -218,6 +223,10 @@
   if('IntersectionObserver'in window)new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;syncMotion();},{rootMargin:'80px'}).observe(hero);
   if('ResizeObserver'in window)new ResizeObserver(resize).observe(canvas);
   else window.addEventListener('resize',resize,{passive:true});
+  desktop.addEventListener('change',()=>{if(desktop.matches)resize();syncMotion();});
   resize();
   syncMotion();
+  }
+  desktop.addEventListener('change',initialize);
+  initialize();
 })();

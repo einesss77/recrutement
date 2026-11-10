@@ -1,0 +1,18 @@
+export default {
+  'B&M / RÉALISATIONS & DÉMONSTRATIONS':'B&M / PROJECTS & DEMONSTRATIONS',
+  'Le travail,':'The work,',
+  'en images.':'in focus.',
+  'Des usages transformés en interfaces.':'Workflows brought to life through interfaces.',
+  'Entrez dans les projets : le contexte, les choix et les écrans.':'Explore each project: the context, the decisions and the screens.',
+  'Explorer la sélection':'Explore the selection',
+  'PROJETS À EXPLORER':'PROJECTS TO EXPLORE',
+  'Les projets présentés sont des démonstrations sur données fictives.':'The projects shown are demonstrations using fictional data.',
+  'Les projets de démonstration sont signalés sur chaque fiche.':'Demonstration projects are labelled on each project page.',
+  'Les démonstrations intégrées restent disponibles.':'Showing the bundled demonstrations.',
+  'ET VOTRE PROJET ?':'WHAT ABOUT YOUR PROJECT?',
+  'Donnons forme':'Let’s shape',
+  'à votre prochain outil.':'your next tool.',
+  'La suite se prépare.':'The next chapter is coming.',
+  'Les prochains projets seront présentés ici.':'New projects will be presented here.',
+  'Projet digital':'Digital project',
+};

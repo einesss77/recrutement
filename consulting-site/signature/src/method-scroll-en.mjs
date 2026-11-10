@@ -1,0 +1,15 @@
+export default {
+  'Découvrir les étapes':'Explore the steps',
+  'LE PROJET, EN CONTINU':'THE PROJECT, MOVING FORWARD',
+  'B&M / MÉTHODE':'B&M / METHOD',
+  'Le besoin':'The need',
+  'Les versions':'The versions',
+  'Vos retours':'Your feedback',
+  'La mise en service':'The launch',
+  'Des décisions à chaque étape.':'Clear decisions at every step.',
+  'UNE ITÉRATION':'ONE ITERATION',
+  '4 ÉTAPES':'4 STEPS',
+  'Commencer':'Start',
+  'Valider':'Validate',
+  'Les retours et les corrections rejoignent les priorités de l’itération suivante.':'Feedback and corrections feed into the priorities for the next iteration.',
+};

@@ -27,7 +27,7 @@
  const running=new Set();
  const disabled=()=>reduced.matches||homeMobile()||root.classList.contains('motion-stopped');
  function play(el,frames,options={}){if(disabled()||!el.animate)return;const animation=el.animate(frames,{duration:850,easing:'cubic-bezier(.16,1,.3,1)',...options});running.add(animation);animation.finished.catch(()=>{}).finally(()=>running.delete(animation));return animation}
- const excluded='[aria-hidden="true"],.service-visual,.workshop-canvas,.talent-deck,.solo-sculpture,.squad-sculpture,.folio-device,.cs-scene,.mp-cycle-visual,.demo';
+ const excluded='.mp-process,.mp-scroll-hero,.pi-index,[aria-hidden="true"],.service-visual,.workshop-canvas,.talent-deck,.solo-sculpture,.squad-sculpture,.folio-device,.cs-scene,.mp-cycle-visual,.demo';
  const candidates=[...document.querySelectorAll('main h1,main h2,main h3,main p,main figure,main .service-card,main .mission-format,main .mp-framing-card,main .cs-content-block,main .folio-collection-link,main .service-handover>div,main .service-handover>aside')];
  const fade=candidates.filter(el=>!el.closest(excluded)&&!el.matches('[data-reveal]')&&!el.closest('.service-card,.mission-format,.mp-framing-card,.folio-collection-link')&&el.getAttribute('role')!=='status'&&!el.matches('[aria-live],.field-error,.form-status'));
  // Whole cards enter as a unit; text within diagrams stays legible as the diagram animates.

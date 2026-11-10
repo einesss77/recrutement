@@ -1,5 +1,6 @@
-import { carouselMarkup, projectMarkup, collectionMarkup } from '../public/assets/portfolio-render.mjs';
+import { carouselMarkup, projectMarkup } from '../public/assets/portfolio-render.mjs';
 import { projects } from './project-data.mjs';
+import { indexCardsMarkup } from '../public/assets/portfolio-index-render.mjs';
 
 export { projects };
 
@@ -25,35 +26,16 @@ export function projectCarousel(_api, { standalone = false } = {}) {
 }
 
 export function portfolioIndex() {
-  return `<header class="portfolio-page-heading">
-    <div class="wrap">
-      <div>
-        <span class="folio-chapter">B&M / ÉTUDES DE CAS</span>
-        <h1>Du besoin<br><em>à l’interface.</em></h1>
-      </div>
-      <div class="folio-index-aside">
-        <span>WEB / MOBILE / OUTILS MÉTIER</span>
-        <p>Le problème de départ, les choix de conception et les écrans. Chaque démonstration est signalée sur sa fiche.</p>
-      </div>
-    </div>
-  </header>
-  ${projectCarousel(null, { standalone: true })}
-  <section class="folio-collection">
-    <div class="wrap">
-      <header class="folio-collection-heading">
-        <span class="folio-chapter">L’INDEX</span>
-        <h2>Projets et <em>démonstrations.</em></h2>
-      </header>
-      <div data-project-collection>${collectionMarkup(projects)}</div>
-    </div>
-  </section>
-  <section class="portfolio-contact has-bm-signature">
-    <span class="bm-signature-arc" aria-hidden="true"></span>
-    <div class="wrap">
-      <h2>Quel usage souhaitez-vous<br><em>simplifier ?</em></h2>
-      <a href="/contact/?besoin=solution">Décrire mon projet <span aria-hidden="true">↗</span></a>
-    </div>
-  </section>`;
+  const arrow='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg>';
+  return `<div class="pi-index">
+    <header class="pi-hero"><div class="wrap">
+      <p class="pi-kicker">B&M / RÉALISATIONS & DÉMONSTRATIONS</p>
+      <div class="pi-hero-grid"><h1>Le travail,<br><span>en images.</span></h1><div><p>Des usages transformés en interfaces.<br>Entrez dans les projets : le contexte, les choix et les écrans.</p><a class="pi-explore" href="#projets">Explorer la sélection ${arrow}</a></div></div>
+      <div class="pi-hero-bottom"><span>WEB / MOBILE / OUTILS MÉTIER</span><span><b data-index-count>${String(projects.length).padStart(2,'0')}</b> PROJETS À EXPLORER</span></div>
+    </div></header>
+    <section class="pi-selection" id="projets" aria-label="Projets et démonstrations"><div class="wrap"><div data-portfolio-index>${indexCardsMarkup(projects)}</div><p class="pi-disclosure" data-index-disclosure>Les projets présentés sont des démonstrations sur données fictives.</p><p class="pi-status" role="status"></p></div></section>
+    <section class="pi-contact"><div class="wrap"><div><p class="pi-kicker">ET VOTRE PROJET ?</p><h2>Donnons forme<br>à votre prochain outil.</h2></div><a href="/contact/?besoin=solution">Parlons de votre projet <span>${arrow}</span></a></div></section>
+  </div>`;
 }
 
 export function projectPage(project) {

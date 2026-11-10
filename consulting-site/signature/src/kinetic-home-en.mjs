@@ -1,4 +1,7 @@
 export default {
+  'Nos accompagnements':'How we can help',
+  'Consultants IT':'IT consultants',
+  'Applications sur mesure':'Custom applications',
   'Des consultants IT pour vos équipes.':'IT consultants for your teams.',
   'Des applications sur mesure pour votre métier.':'Custom applications for your business.',
   '01 / CONSULTANTS & ÉQUIPES IT':'01 / IT CONSULTANTS & TEAMS',

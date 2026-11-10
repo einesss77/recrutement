@@ -1,0 +1,6 @@
+/* Icons keep one visual language across browsers and operating systems. */
+.premium-site svg.bm-symbol{display:inline-block;width:1em;height:1em;min-width:.75em;flex-shrink:0;vertical-align:-.12em;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.premium-site svg.bm-symbol-dot{width:.65em;height:.65em;vertical-align:0}
+.premium-site :is(.folio-arrows,.folio-lightbox-nav,.cs-phone-open) .bm-symbol{width:20px;height:20px}
+.premium-site :is(.about-scroll,.mp-primary-link) .bm-symbol{width:16px;height:16px}
+.premium-site .nav-services-toggle .bm-symbol{width:12px;height:12px}

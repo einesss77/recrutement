@@ -2,6 +2,9 @@ import {sitemap,sitemapPages,robots,seoConfig,commercialPages,canonicalPath} fro
 import {localiseHTML} from '../src/localization.mjs';
 import premiumHomeEn from '../src/premium-home-en.mjs';
 import kineticHomeEn from '../src/kinetic-home-en.mjs';
+import portfolioIndexEn from '../src/portfolio-index-en.mjs';
+import methodScrollEn from '../src/method-scroll-en.mjs';
+import {renderGraphicSymbols} from '../src/site-symbols.mjs';
 import premiumProjectsEn from '../src/premium-projects-en.mjs';
 import {readFile,readdir} from 'node:fs/promises';
 import {services,servicePage} from '../src/services.mjs';
@@ -35,12 +38,24 @@ await cp(resolve(root,'public/.htaccess'),resolve(root,'dist/.htaccess'));
 await writeFile(resolve(root,'dist/assets/project-examples.mjs'),'export const projects='+JSON.stringify(projects)+';');
 for(const [path,title,description,render] of pages){const dest=resolve(root,'dist',path.slice(1));await mkdir(dest,{recursive:true});await writeFile(resolve(dest,'index.html'),layout({path,title,description,body:render(),dark:!path.startsWith('/services/')&&!path.startsWith('/gestion-realisations/')&&!path.startsWith('/realisations/')&&!['/notre-methode/','/a-propos/','/contact/','/mentions-legales/','/confidentialite/','/cookies/'].includes(path)}));}
 await writeFile(resolve(root,'dist/404.html'),layout({path:'/404/',title:'Page introuvable',description:'Retrouvez nos accompagnements.',noindex:true,dark:false,body:'<section class="section paper not-found"><div class="reading"><p class="eyebrow">PETIT DÉTOUR</p><h1>Cette page a pris<br><em>un autre chemin.</em></h1><p>Retrouvez nos accompagnements ou revenez à l’accueil.</p><a class="button button-dark" href="/">Revenir à l’accueil ↗</a></div></section>'}));
-const dictionary={...JSON.parse(await readFile(resolve(root,'src/locales/en.json'),'utf8')),...premiumHomeEn,...premiumProjectsEn,...kineticHomeEn};
+const dictionary={...JSON.parse(await readFile(resolve(root,'src/locales/en.json'),'utf8')),...premiumHomeEn,...premiumProjectsEn,...kineticHomeEn,...portfolioIndexEn,...methodScrollEn};
 await writeFile(resolve(root,'dist/assets/en-translations.js'),'window.BMEnglish='+JSON.stringify(dictionary)+';');
 await mkdir(resolve(root,'dist/assets/en'),{recursive:true});
 for(const entry of await readdir(resolve(root,'dist/assets'))){if(entry.endsWith('.svg')){const svg=await readFile(resolve(root,'dist/assets',entry),'utf8');await writeFile(resolve(root,'dist/assets/en',entry),localiseHTML(svg,dictionary,'/'))}}
 for(const [path] of pages){if(path.startsWith('/gestion-realisations'))continue;const original=await readFile(resolve(root,'dist',path.slice(1),'index.html'),'utf8');const dest=resolve(root,'dist/en',path.slice(1));await mkdir(dest,{recursive:true});await writeFile(resolve(dest,'index.html'),localiseHTML(original,dictionary,path))}
 const notFound=await readFile(resolve(root,'dist/404.html'),'utf8');await writeFile(resolve(root,'dist/en/404.html'),localiseHTML(notFound,dictionary,'/404/'));
+// Normalize decorative text glyphs only after all translations have been applied.
+for(const [path] of pages){
+ if(path.startsWith('/gestion-realisations'))continue;
+ for(const locale of ['', 'en']){
+  const file=resolve(root,'dist',locale,path.slice(1),'index.html');
+  await writeFile(file,renderGraphicSymbols(await readFile(file,'utf8')));
+ }
+}
+for(const path of ['404.html','en/404.html']){
+ const file=resolve(root,'dist',path);
+ await writeFile(file,renderGraphicSymbols(await readFile(file,'utf8')));
+}
 await writeFile(resolve(root,'dist/robots.txt'),robots());
 await writeFile(resolve(root,'dist/sitemap.xml'),sitemap());
 await writeFile(resolve(root,'dist/sitemap-pages.xml'),sitemapPages());
