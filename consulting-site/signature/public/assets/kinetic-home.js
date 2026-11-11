@@ -13,7 +13,7 @@
     window.dispatchEvent(new CustomEvent('bm:motion', {detail:{paused}}));
   });
   if (!('IntersectionObserver' in window)) return;
-  const revealTargets = [...document.querySelectorAll('[data-kh-reveal],.kh-method-step,.kh-contact-top,.kh-contact-link')];
+  const revealTargets = [...document.querySelectorAll('[data-kh-reveal],.kh-method-step')];
   const reveal = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
@@ -27,7 +27,7 @@
   });
   document.addEventListener('focusin',event => event.target.closest('.kh-reveal-ready')?.classList.add('kh-revealed'));
   const idle = new IntersectionObserver(entries => entries.forEach(entry => entry.target.classList.toggle('kh-offscreen', !entry.isIntersecting)), {rootMargin:'120px'});
-  document.querySelectorAll('.kh-consultants,.kh-offer,.kh-project,.kh-method-screen,.kh-ticker').forEach(item => idle.observe(item));
+  document.querySelectorAll('.kh-hero,.kh-consultants,.kh-offer,.kh-project,.kh-method-screen,.kh-ticker').forEach(item => idle.observe(item));
   const screen = document.querySelector('[data-method-screen]');
   const steps = [...document.querySelectorAll('[data-method-step]')];
   const wide = matchMedia('(min-width: 761px)');
@@ -75,7 +75,7 @@
   function updateDepth() {
     depthFrame = 0;
     if (reduced.matches || paused) return;
-    const amount = wide.matches ? 28 : 13;
+    const amount = wide.matches ? 18 : 6;
     const bounds = [...depthActive].map(item=>[item,item.parentElement.getBoundingClientRect()]);
     bounds.forEach(([item,box])=>{
       const phase = Math.max(-1,Math.min(1,(innerHeight*.5-box.top-box.height*.5)/(innerHeight*.5+box.height*.5)));

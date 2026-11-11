@@ -1,4 +1,7 @@
 export default {
+  'ON EN PARLE ?':'LET’S TALK',
+  'À vous de jouer.':'Your next move.',
+  'Une idée, un projet, une équipe à compléter.':'An idea, a project, a team to strengthen.',
   'Nos accompagnements':'How we can help',
   'Consultants IT':'IT consultants',
   'Applications sur mesure':'Custom applications',

@@ -1,0 +1,57 @@
+/* A quiet field of light behind the hero. The desktop sculpture stays independent. */
+.home-page .kh-hero{background-color:#090d15}
+.home-page .kh-hero::before,.home-page .kh-hero::after{content:"";position:absolute;pointer-events:none;z-index:-2}
+.home-page .kh-hero::before{
+  inset:-10% -8%;
+  background:
+    radial-gradient(ellipse at 85% 29%,#345bff66 0, #2346ae24 33%,transparent 62%),
+    radial-gradient(ellipse at 16% 83%,#2c599e2e 0,transparent 51%),
+    radial-gradient(ellipse at 99% 78%,#d6ff461c 0,transparent 36%);
+  opacity:.68;
+  transform:translate3d(0,0,0);
+}
+.home-page .kh-hero::after{
+  inset:-12% -6%;
+  background:
+    radial-gradient(ellipse 84% 76% at 114% 30%,transparent 49.7%,#9caeff35 49.9%,#9caeff35 50%,transparent 50.2%,transparent 60.7%,#9caeff20 60.9%,#9caeff20 61%,transparent 61.2%,transparent 72.7%,#9caeff12 72.9%,#9caeff12 73%,transparent 73.2%),
+    repeating-linear-gradient(90deg,transparent 0,transparent calc(20% - 1px),#aebdea0a calc(20% - 1px),#aebdea0a 20%);
+  mask-image:linear-gradient(90deg,transparent 18%,#000 62%,#000);
+  opacity:.5;
+  transform:translate3d(0,0,0);
+}
+@keyframes kh-light-drift{
+  from{transform:translate3d(-2%,-1%,0) scale(1)}
+  to{transform:translate3d(2%,2%,0) scale(1.04)}
+}
+@keyframes kh-contour-drift{
+  from{transform:translate3d(1%,-1%,0) rotate(-2deg)}
+  to{transform:translate3d(-2%,2%,0) rotate(2deg)}
+}
+@media(prefers-reduced-motion:no-preference){
+  .home-page .kh-hero::before{animation:kh-light-drift 11s ease-in-out infinite alternate}
+  .home-page .kh-hero::after{animation:kh-contour-drift 17s ease-in-out infinite alternate}
+}
+@media(max-width:760px){
+  .home-page .kh-hero::before{
+    inset:-7% -26%;
+    background:
+      radial-gradient(ellipse at 93% 26%,#3a60ff7a 0,#2648a63b 29%,transparent 66%),
+      radial-gradient(ellipse at 14% 84%,#396bac30 0,transparent 55%),
+      radial-gradient(ellipse at 92% 77%,#d6ff4624 0,transparent 40%);
+    opacity:1;
+  }
+  .home-page .kh-hero::after{
+    inset:-6% -17%;
+    background:
+      radial-gradient(ellipse 105% 65% at 115% 33%,transparent 49.6%,#a7bbff3b 49.9%,#a7bbff3b 50%,transparent 50.3%,transparent 65.6%,#a7bbff24 65.9%,#a7bbff24 66%,transparent 66.3%,transparent 81.6%,#a7bbff17 81.9%,#a7bbff17 82%,transparent 82.3%),
+      repeating-linear-gradient(90deg,transparent 0,transparent calc(25% - 1px),#aebdea0b calc(25% - 1px),#aebdea0b 25%);
+    mask-image:linear-gradient(90deg,transparent 9%,#000 62%,#000);
+    opacity:.85;
+  }
+  .home-page .kh-hero-copy>p{color:#c1c9d5}
+  .home-page .kh-mobile-links>a{border-color:#b4c8f338}
+}
+body[data-motion-paused=true].home-page .kh-hero::before,body[data-motion-paused=true].home-page .kh-hero::after,.home-page .kh-hero.kh-offscreen::before,.home-page .kh-hero.kh-offscreen::after{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){
+  .home-page .kh-hero::before,.home-page .kh-hero::after{animation:none;transform:none}
+}
