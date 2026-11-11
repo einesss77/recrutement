@@ -1,0 +1,64 @@
+/* The same field of light as the homepage, kept behind each page's content. */
+.premium-site:not(.home-page) main :is(.page-hero,.page-hero.dark,.service-hero,.about-hero,.mp-scroll-hero,.premium-contact,.pi-hero){
+  position:relative;isolation:isolate;
+  background-color:#090e18;
+  background-image:radial-gradient(ellipse at 88% 12%,#294ba445,transparent 67%);
+}
+.premium-site:not(.home-page) main :is(.page-hero,.page-hero.dark,.service-hero,.about-hero,.mp-scroll-hero,.premium-contact,.pi-hero)::before,
+.premium-site:not(.home-page) main :is(.page-hero,.page-hero.dark,.service-hero,.about-hero,.mp-scroll-hero,.premium-contact,.pi-hero)::after{
+  content:"";position:absolute;inset:0;width:auto;height:auto;z-index:-1;pointer-events:none;
+  border:0;box-shadow:none;filter:none;transform:none;border-radius:0;
+}
+.premium-site:not(.home-page) main :is(.page-hero,.page-hero.dark,.service-hero,.about-hero,.mp-scroll-hero,.premium-contact,.pi-hero)::before{
+  background:
+    radial-gradient(ellipse at 92% 18%,#345bff52 0,transparent 60%),
+    radial-gradient(ellipse at 77% 100%,#d6ff4616 0,transparent 40%);
+  opacity:.7;
+}
+.premium-site:not(.home-page) main :is(.page-hero,.page-hero.dark,.service-hero,.about-hero,.mp-scroll-hero,.premium-contact,.pi-hero)::after{
+  background:
+    radial-gradient(ellipse 72% 145% at 109% 9%,transparent 49.7%,#a9bdff32 49.9%,#a9bdff32 50%,transparent 50.2%,transparent 67.7%,#a9bdff1d 67.9%,#a9bdff1d 68%,transparent 68.2%,transparent 85.7%,#a9bdff10 85.9%,#a9bdff10 86%,transparent 86.2%),
+    repeating-linear-gradient(90deg,transparent 0,transparent calc(20% - 1px),#a9bdff08 calc(20% - 1px),#a9bdff08 20%);
+  mask-image:linear-gradient(90deg,transparent 10%,#000 65%,#000);
+  opacity:.6;
+}
+/* Opacity gives the light a slow breath without moving boxes or clipping focus. */
+@keyframes studio-light-breathe{from{opacity:.48}to{opacity:.95}}
+@keyframes studio-contour-breathe{from{opacity:.36}to{opacity:.7}}
+@media(prefers-reduced-motion:no-preference){
+  .premium-site:not(.home-page) main .studio-ambient::before{animation:studio-light-breathe 9s ease-in-out infinite alternate;animation-play-state:paused}
+  .premium-site:not(.home-page) main .studio-ambient::after{animation:studio-contour-breathe 13s -4s ease-in-out infinite alternate;animation-play-state:paused}
+  .premium-site:not(.home-page) main .studio-ambient.is-ambient-visible::before,
+  .premium-site:not(.home-page) main .studio-ambient.is-ambient-visible::after{animation-play-state:running}
+}
+.premium-site:not(.home-page) main .studio-motion-toggle{
+  position:absolute;z-index:2;right:max(22px,5vw);bottom:10px;
+  width:44px;height:44px;display:grid;place-items:center;padding:0;
+  border:0;border-radius:50%;background:transparent;color:#b5c2d7;cursor:pointer;
+  transition:color .2s,background .2s;
+}
+.premium-site:not(.home-page) main .studio-motion-toggle:hover{color:#d6ff46;background:#ffffff0b}
+.premium-site:not(.home-page) main .studio-motion-toggle:focus-visible{outline:2px solid #d6ff46;outline-offset:0}
+.premium-site:not(.home-page) main .pi-hero .studio-motion-toggle{top:34px;bottom:auto}
+.pi-hero>.wrap>.pi-kicker{padding-right:48px}
+.studio-motion-toggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.studio-motion-toggle[hidden],.studio-motion-toggle [data-studio-play]{display:none!important}
+.studio-motion-toggle[aria-pressed=true] [data-studio-pause]{display:none}
+.studio-motion-toggle[aria-pressed=true] [data-studio-play]{display:block!important}
+.premium-site.studio-ambient-paused main .studio-ambient::before,
+.premium-site.studio-ambient-paused main .studio-ambient::after,
+.premium-site.studio-document-hidden main .studio-ambient::before,
+.premium-site.studio-document-hidden main .studio-ambient::after,
+.motion-stopped .premium-site main .studio-ambient::before,
+.motion-stopped .premium-site main .studio-ambient::after{animation-play-state:paused!important}
+@media(max-width:760px){
+  .premium-site:not(.home-page) main :is(.page-hero,.page-hero.dark,.service-hero,.about-hero,.mp-scroll-hero,.premium-contact,.pi-hero){background-image:radial-gradient(ellipse at 100% 4%,#294ba44d,transparent 76%)}
+  .premium-site:not(.home-page) main :is(.page-hero,.page-hero.dark,.service-hero,.about-hero,.mp-scroll-hero,.premium-contact,.pi-hero)::after{mask-image:linear-gradient(90deg,transparent 5%,#000 78%);background-size:100% 100%,100% 100%}
+  .premium-site:not(.home-page) main .studio-motion-toggle{right:13px;bottom:3px}
+  .premium-site:not(.home-page) main .pi-hero .studio-motion-toggle{top:14px;bottom:auto}
+}
+@media(prefers-reduced-motion:reduce){
+  .premium-site:not(.home-page) main .studio-ambient::before,
+  .premium-site:not(.home-page) main .studio-ambient::after{animation:none!important}
+  .studio-motion-toggle{display:none!important}
+}

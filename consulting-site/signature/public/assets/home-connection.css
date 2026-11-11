@@ -1,0 +1,66 @@
+/* A small working diagram: people and product share the same direction. */
+.hc-connection{background:#edf1f6;color:#111820;border-top:1px solid #dce2e9;padding-block:52px}
+.hc-layout{display:grid;grid-template-columns:minmax(260px,.8fr) minmax(0,1.4fr);gap:clamp(36px,5vw,76px);align-items:center}
+.hc-intro>.kh-eyebrow{font-size:9px;color:#637080;letter-spacing:.1em}
+.home-page .hc-intro h2{font:500 clamp(30px,2.7vw,36px)/1.07 var(--display);letter-spacing:-.05em;margin:18px 0 16px}
+.hc-intro h2>span{color:#3157cc}
+.hc-intro>p:not(.kh-eyebrow){font:400 13px/1.7 var(--body);color:#5b6876;margin:0}
+.hc-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:23px;max-width:370px}
+.hc-controls[hidden]{display:none}
+.hc-controls>button{appearance:none;min-height:47px;padding:8px 10px;border:1px solid #c4ccd7;border-radius:4px;background:transparent;color:#4a5868;font:500 11px/1.4 var(--body);text-align:left;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.hc-controls>button[aria-pressed=true]{background:#152231;color:#fff;border-color:#152231}
+.hc-controls>button:hover:not([aria-pressed=true]){background:#fff;border-color:#889bb6}
+.hc-controls>button:focus-visible,.hc-link:focus-visible{outline:2px solid #345bff;outline-offset:4px}
+.hc-link{display:inline-flex;align-items:center;gap:18px;min-height:44px;font-size:11px;font-weight:500;margin-top:11px;color:#172332}
+.hc-link>svg{width:16px;height:16px;transition:transform .25s}.hc-link:hover>svg{transform:translate(2px,-2px)}
+.hc-board{position:relative;isolation:isolate;overflow:hidden;margin:0;padding:24px 28px 20px;border:1px solid #314158;border-radius:10px;background:radial-gradient(ellipse at 90% 0,#223e79 0,transparent 66%),#101a28;color:#f4f6f8;box-shadow:0 16px 30px #162e4a0b}
+.hc-board:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(#b5caff07 1px,transparent 1px),linear-gradient(90deg,#b5caff07 1px,transparent 1px);background-size:30px 30px;mask-image:linear-gradient(#000,transparent)}
+.hc-board-top{display:flex;align-items:center;justify-content:space-between;gap:15px;font:500 8px/1.5 var(--body);letter-spacing:.11em;color:#a9b9cc;margin-bottom:26px}
+.hc-board-index{font-size:7px;white-space:nowrap;color:#8094ae}
+.hc-inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.hc-input{min-width:0;min-height:48px;display:flex;align-items:center;justify-content:center;gap:9px;border:1px solid #7286a747;border-radius:5px;background:#17263c;color:#e0e7f2;font:500 11px/1.35 var(--body);padding:9px 8px;transition:background .25s,border-color .25s}
+.hc-input>svg{width:18px;height:18px;flex:none;color:#a8bdef}
+.hc-flow{display:block;width:100%;height:45px;overflow:visible;stroke-linecap:round;stroke-width:1.3}
+.hc-flow-track{stroke:#91a7c04d}
+.hc-flow-current{stroke:#d6ff46;stroke-dasharray:13 270;stroke-dashoffset:15;opacity:.8}
+.hc-hub{position:relative;display:flex;gap:13px;align-items:center;width:228px;min-height:67px;margin:0 auto;padding:13px 17px;border-radius:6px;border:1px solid #fff;background:#f2f5fa;color:#131e2c;box-shadow:0 0 35px #4a74de26;transition:box-shadow .3s}
+.hc-hub-symbol{display:grid;place-items:center;width:31px;height:31px;flex:none;border-radius:5px;background:#dee8fb;color:#3157cc}
+.hc-hub-symbol svg{width:19px;height:19px}
+.hc-hub strong{display:block;font:500 20px/1.1 var(--display);letter-spacing:-.04em}
+.hc-hub div>span{display:block;margin-top:5px;font:400 10px/1.3 var(--body);color:#627185}
+.hc-hub>i{position:absolute;right:13px;top:13px;width:5px;height:5px;border-radius:50%;background:#7a9e1f}
+.hc-outcome-line{width:1px;height:23px;background:linear-gradient(#a6be7e99,#a6be7e33);margin:auto}
+.hc-result{position:relative;margin:0;text-align:center;min-height:31px;font:400 12px/1.6 var(--body);color:#bccbdb}
+.hc-result:before{content:"";display:block;width:4px;height:4px;margin:0 auto 10px;background:#d6ff46;border-radius:50%}
+.hc-board[data-mode=team] .hc-input{background:#172d3a;border-color:#6f95a45e}.hc-board[data-mode=product] .hc-input{background:#202a4b;border-color:#879ad45e}
+@keyframes hc-flow-travel{to{stroke-dashoffset:-268}}
+@keyframes hc-result-enter{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:no-preference){
+ .hc-board[data-running=true] .hc-flow-current{animation:hc-flow-travel 5s linear infinite}
+ .hc-board.is-updating .hc-hub,.hc-board.is-updating .hc-result{animation:hc-result-enter .3s ease-out}
+}
+.hc-board[data-running=false] .hc-flow-current,body[data-motion-paused=true] .hc-board .hc-flow-current{animation-play-state:paused!important}
+@media(max-width:1090px){.hc-layout{gap:32px;grid-template-columns:1fr 1.3fr}.hc-board{padding:23px 20px 18px}.hc-inputs{gap:10px}.hc-input{gap:6px;font-size:10px}.hc-input>svg{width:16px;height:16px}.hc-board-top{font-size:7px}.hc-board-index{display:none}}
+@media(max-width:760px){
+ .hc-connection{padding-block:28px}
+ .hc-layout{grid-template-columns:1fr;gap:18px}
+ .hc-intro>.kh-eyebrow{font-size:8px}
+ .home-page .hc-intro h2{font-size:28px;margin:13px 0 11px}
+ .hc-intro>p:not(.kh-eyebrow){font-size:12px;line-height:1.65}
+ .hc-controls{margin-top:15px;max-width:none;gap:7px}
+ .hc-controls>button{font-size:10px;min-height:44px;padding:7px 10px}
+ .hc-link{min-height:38px;margin-top:7px;font-size:10px;gap:13px}
+ .hc-board{padding:18px 16px 16px;border-radius:8px}
+ .hc-board-top{margin-bottom:18px;font-size:7px;letter-spacing:.08em}
+ .hc-inputs{gap:8px}
+ .hc-input{min-height:39px;gap:5px;font-size:9px;padding:7px 5px}
+ .hc-input>svg{width:14px;height:14px}
+ .hc-flow{height:33px}
+ .hc-hub{width:192px;min-height:57px;padding:11px 15px;gap:10px}
+ .hc-hub strong{font-size:18px}.hc-hub div>span{font-size:9px}
+ .hc-hub-symbol{width:27px;height:27px}.hc-hub-symbol svg{width:17px;height:17px}
+ .hc-outcome-line{height:18px}
+ .hc-result{font-size:10px;min-height:29px;line-height:1.5}.hc-result:before{margin-bottom:8px}
+}
+@media(max-width:370px){.hc-input{flex-direction:column;gap:4px;min-height:51px;font-size:9px}.hc-board{padding-inline:13px}.hc-controls>button{padding-inline:8px}.hc-flow{height:28px}.hc-result{max-width:25ch;margin-inline:auto}.home-page .hc-intro h2{font-size:26px}}
+@media(prefers-reduced-motion:reduce){.hc-board *,.hc-link>svg,.hc-controls>button{animation:none!important;transition:none!important}}

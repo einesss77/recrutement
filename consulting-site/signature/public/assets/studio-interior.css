@@ -5,7 +5,7 @@
   --pi-dark-rule:#ffffff29;--pi-title:clamp(3rem,6.2vw,6.4rem);
   --pi-heading:clamp(2.4rem,4.55vw,4.8rem);--pi-space:clamp(65px,8.5vw,128px);
 }
-.premium-site:not(.home-page):not(:has(.cs-page)){--pi-heading:clamp(36px,4vw,60px);--pi-space:clamp(56px,6.5vw,96px)}
+.premium-site:not(.home-page):not(:has(.cs-page)){--pi-heading:clamp(34px,3.4vw,46px);--pi-space:clamp(48px,5.2vw,76px)}
 .premium-site:not(.home-page) main{background:#f4f6f8;color:#080a0b}
 .premium-site:not(.home-page) main :is(.service-page,.about-page,.mp-page,.cs-page){
   --about-ink:#080a0b;--about-teal:#274ddd;--about-line:#d5dbe1;
@@ -19,7 +19,7 @@
 .premium-site:not(.home-page) main .paper{background:#fff}
 .premium-site:not(.home-page) main :is(.page-hero,.service-hero,.about-hero,.mp-hero,.portfolio-page-heading,.cs-hero){
   position:relative;isolation:isolate;background:#080a0b;color:#f4f6f8;border-bottom:1px solid #ffffff26;
-  padding-top:clamp(64px,6vw,88px);padding-bottom:clamp(48px,5vw,72px);
+  padding-top:clamp(48px,4.5vw,64px);padding-bottom:clamp(40px,4.5vw,64px);
 }
 .premium-site:not(.home-page) main .cs-hero{padding-top:clamp(138px,13.5vw,195px);padding-bottom:clamp(55px,6.6vw,100px)}
 .premium-site:not(.home-page) main :is(.page-hero,.service-hero,.about-hero,.mp-hero,.portfolio-page-heading,.cs-hero) .atmosphere{display:none}
@@ -29,7 +29,7 @@
 }
 .premium-site:not(.home-page) main :is(.page-hero,.service-hero,.about-hero,.mp-hero,.portfolio-page-heading,.cs-hero) h1{font-size:var(--pi-title);font-weight:600;line-height:.99;letter-spacing:-.065em}
 .premium-site:not(.home-page) main :is(.page-hero,.service-hero,.about-hero,.mp-hero,.portfolio-page-heading,.cs-hero) h1 em{color:#d6ff46}
-.premium-site:not(.home-page) main :is(.page-hero,.service-hero,.about-hero,.mp-hero) h1{font-size:clamp(44px,5vw,72px)}
+.premium-site:not(.home-page) main :is(.page-hero,.service-hero,.about-hero,.mp-hero) h1{font-size:clamp(40px,4.5vw,64px)}
 .premium-site:not(.home-page) main :is(.page-hero,.service-hero,.about-hero,.mp-hero,.portfolio-page-heading,.cs-hero) .eyebrow{color:#d6ff46}
 .premium-site:not(.home-page) main :is(.page-hero.dark p:not(.eyebrow),.service-hero-grid>div:first-child>p:not(.eyebrow),.about-hero-copy>p:not(.eyebrow),.mp-hero-copy>p:not(.eyebrow),.folio-index-aside>p,.cs-summary){color:#b9c0c7;line-height:1.75}
 .premium-site:not(.home-page) main :is(.service-back,.about-scroll,.mp-primary-link,.cs-back,.page-hero-actions .text-link){color:#f4f6f8}
@@ -39,11 +39,28 @@
 .premium-site:not(.home-page) main :is(.page-hero,.service-hero) .button{background:#d6ff46;color:#080a0b;border-color:#d6ff46}
 .premium-site:not(.home-page) main :is(.page-hero,.service-hero) .button-icon{background:#080a0b;color:#d6ff46}
 
+.premium-site:not(.home-page) main>.section:not(.contact-page):not(.legal-page){padding-block:var(--pi-space)}
+.premium-site:not(.home-page) main>.section :is(.split-heading,.questions-grid,.manifesto-grid) h2{font-size:var(--pi-heading);line-height:1.08}
+.premium-site:not(.home-page) main .service-visual :is(.service-browser,.service-phone,.service-flow,.service-ai-flow){scale:.84;flex-shrink:0}
+.premium-site:not(.home-page) main :is(.service-visual-ai,.service-visual-workflow) .service-visual-note{display:none}
+.premium-site:not(.home-page) main :is(.about-contact,.mp-contact,.portfolio-contact) .wrap>a:not(.button){min-height:48px;padding:6px 6px 6px 18px;font-size:12px;gap:24px}
+.premium-site:not(.home-page) main :is(.about-contact,.mp-contact,.portfolio-contact) .wrap>a:not(.button)>span{width:34px;height:34px}
+.premium-site:not(.home-page) main .talent-deck{min-height:390px;margin-top:10px}
+.premium-site:not(.home-page) main .talent-panel h3{font-size:clamp(28px,2.6vw,36px);line-height:1.12;margin-block:18px 14px}
+.premium-site:not(.home-page) main .talent-hook{font-size:22px;line-height:1.3}
+.premium-site:not(.home-page) main .talent-pass{width:240px;height:310px;padding:18px;top:47%}
+.premium-site:not(.home-page) main .pass-type{font-size:42px;margin-top:16px}
+.premium-site:not(.home-page) main .pass-art{height:132px;transform:scale(.78);transform-origin:left top;width:128%;margin-bottom:-22px}
+.premium-site:not(.home-page) main .deck-orbit{width:310px;height:310px;top:34px}
+.premium-site:not(.home-page) main .demo-workspace{padding:30px;gap:32px}
+.premium-site:not(.home-page) main .demo-document{max-width:230px;justify-self:center;padding:22px}
+.premium-site:not(.home-page) main .demo-result h4{font-size:29px}
+
 /* Product surfaces: blue is an environment, lime marks an action. */
 .premium-site:not(.home-page) main .service-visual{
-  background:#345bff;border:0;border-radius:0;min-height:410px;
+  background:#263f94;border:0;border-radius:6px;height:320px;min-height:320px;display:flex;align-items:center;justify-content:center;
   background-image:linear-gradient(90deg,#ffffff13 1px,transparent 1px),linear-gradient(#ffffff13 1px,transparent 1px);
-  background-size:40px 40px;box-shadow:18px 18px 0 #ffffff0a;
+  background-size:40px 40px;box-shadow:10px 10px 0 #ffffff08;
 }
 .premium-site:not(.home-page) main .service-visual::before{width:340px;height:340px;border-color:#ffffff45;border-width:1px;box-shadow:0 0 0 45px #ffffff08,0 0 0 90px #ffffff05}
 .premium-site:not(.home-page) main :is(.service-visual-label,.service-visual-caption){color:#fff;letter-spacing:.14em}
@@ -93,12 +110,12 @@
 .premium-site:not(.home-page) main :is(.service-contact,.about-contact,.mp-contact,.portfolio-contact,.compact-closing,.referent-block){background:#080a0b;color:#f4f6f8;border-color:#ffffff25}
 .premium-site:not(.home-page) main :is(.service-contact,.about-contact,.mp-contact,.portfolio-contact,.compact-closing) :is(h2,h3) em{color:#d6ff46}
 .premium-site:not(.home-page) main :is(.service-contact,.about-contact,.mp-contact,.portfolio-contact,.compact-closing) .atmosphere{display:none}
-.premium-site:not(.home-page) main :is(.service-contact,.about-contact,.mp-contact,.portfolio-contact,.compact-closing) h2{font-size:clamp(36px,4vw,56px);line-height:1.02}
+.premium-site:not(.home-page) main :is(.service-contact,.about-contact,.mp-contact,.portfolio-contact,.compact-closing) h2{font-size:clamp(30px,2.7vw,36px);line-height:1.08;margin-block:0}
 .premium-site:not(.home-page) main :is(.about-contact,.mp-contact,.portfolio-contact) .wrap>a:not(.button){background:#d6ff46;color:#080a0b;border-radius:0}
 .premium-site:not(.home-page) main :is(.about-contact,.mp-contact,.portfolio-contact) .wrap>a:not(.button)>span{background:#080a0b;color:#d6ff46;border-radius:0}
 
 /* Identity: an editorial portrait and a high-contrast interactive workshop. */
-.premium-site:not(.home-page) main .about-hero-image img{border-radius:0;filter:grayscale(1);height:clamp(300px,30vw,420px)}
+.premium-site:not(.home-page) main .about-hero-image img{border-radius:0;filter:grayscale(1);height:clamp(260px,26vw,360px)}
 .premium-site:not(.home-page) main .about-hero-image figcaption{background:#d6ff46;color:#080a0b;border-radius:0;margin-top:0;padding:18px 20px}
 .premium-site:not(.home-page) main .about-hero-image figcaption>span{color:#080a0b}
 .premium-site:not(.home-page) main .about-signature{color:#b9c0c7;border-color:#ffffff25}
@@ -111,7 +128,7 @@
 .premium-site:not(.home-page) main .about-tabs>button{color:#52575e;border-color:transparent;font-size:clamp(13px,1.7vw,23px)}
 .premium-site:not(.home-page) main .about-tabs>button>span{color:inherit}
 .premium-site:not(.home-page) main .about-tabs>button[aria-selected=true]{color:#080a0b;background:#d6ff46;border-color:#080a0b}
-.premium-site:not(.home-page) main .about-panel-art{background:#080a0b;border:0;border-radius:0;min-height:320px}
+.premium-site:not(.home-page) main .about-panel-art{background:#080a0b;border:0;border-radius:6px;min-height:270px}
 .premium-site:not(.home-page) main .about-panel-copy>span{color:#274ddd}
 .premium-site:not(.home-page) main .about-panel-copy h3{color:#080a0b}
 .premium-site:not(.home-page) main .about-panel-copy p{color:#52575e}
@@ -194,7 +211,7 @@
 .premium-site:not(.home-page) main .talent-heading h2 em{color:#274ddd}
 .premium-site:not(.home-page) main :is(.talent-heading>p,.talent-scope,.talent-counter,.talent-section-footer>div>p,.talent-factual-note){color:#52575e}
 .premium-site:not(.home-page) main .talent-hook{font-family:var(--display);font-style:normal;color:#274ddd;letter-spacing:-.035em}
-.premium-site:not(.home-page) main .talent-watermark{color:#dfe4ea}
+.premium-site:not(.home-page) main .talent-watermark{color:#e7ebef;font-size:clamp(80px,12vw,160px)}
 .premium-site:not(.home-page) main .talent-pass{--pass:#d6ff46;--pass-ink:#080a0b;border-radius:0;box-shadow:12px 18px 0 #080a0b14}
 .premium-site:not(.home-page) main .talent-pass.blue{--pass:#345bff;--pass-ink:#fff}
 .premium-site:not(.home-page) main .talent-pass.lilac{--pass:#e8edf3;--pass-ink:#080a0b}
@@ -260,11 +277,11 @@
 /* The contact page is a single clear split: statement and working brief. */
 .premium-site:not(.home-page) main .premium-contact{
   --contact-paper:#f4f6f8;--contact-ink:#080a0b;--contact-rule:#d5dbe1;--contact-accent:#d6ff46;
-  background:#080a0b;color:#f4f6f8;padding-top:clamp(64px,6vw,88px);padding-bottom:clamp(56px,6vw,88px);position:relative;isolation:isolate;
+  background:#080a0b;color:#f4f6f8;padding-top:clamp(48px,4.5vw,64px);padding-bottom:clamp(44px,5vw,72px);position:relative;isolation:isolate;
 }
 .premium-site:not(.home-page) main .premium-contact::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,#ffffff05 1px,transparent 1px);background-size:12.5% 100%}
 .premium-site:not(.home-page) main .premium-contact .contact-intro{position:sticky;top:130px;padding-bottom:30px}
-.premium-site:not(.home-page) main .premium-contact .contact-intro h1{font-size:clamp(44px,5vw,72px);line-height:.98;font-weight:600;letter-spacing:-.065em}
+.premium-site:not(.home-page) main .premium-contact .contact-intro h1{font-size:clamp(40px,4.5vw,64px);line-height:.98;font-weight:600;letter-spacing:-.065em}
 .premium-site:not(.home-page) main .premium-contact .contact-intro h1 em{color:#d6ff46;font-size:1em}
 .premium-site:not(.home-page) main .premium-contact .contact-intro>.eyebrow{color:#d6ff46}
 .premium-site:not(.home-page) main .premium-contact .contact-intro>p:not(.eyebrow){color:#b9c0c7;max-width:32ch}
@@ -286,7 +303,7 @@
 .premium-site:not(.home-page) main .premium-contact .button-dark .button-icon{background:#d6ff46;color:#080a0b;border-radius:0}
 .premium-site:not(.home-page) main .premium-contact .contact-download{background:#fff;color:#080a0b;border-color:#c8d0da;border-radius:0}
 .premium-site:not(.home-page) main .legal-page{background:#fff;color:#080a0b}
-.premium-site:not(.home-page) main .legal-page h1{font-size:clamp(40px,5vw,72px)}
+.premium-site:not(.home-page) main .legal-page h1{font-size:clamp(38px,4.5vw,64px)}
 .premium-site:not(.home-page) main .legal-page .eyebrow{color:#274ddd}
 
 /* Native interaction is kept intact. Motion is a short entrance, never a gate. */
@@ -298,26 +315,48 @@
   .premium-site:not(.home-page) main .service-visual>:is(.service-browser,.service-phone,.service-ai-flow,.service-flow){animation:studio-visual-float 4.5s cubic-bezier(.4,0,.2,1) both}
   .premium-site:not(.home-page) main .studio-section-enter{animation:studio-section-enter .9s cubic-bezier(.16,1,.3,1) both}
 }
-@media(max-width:1050px){.premium-site:not(.home-page) main .service-visual{min-height:365px}.premium-site:not(.home-page) main .premium-contact .contact-grid{gap:35px}}
+@media(max-width:1050px){.premium-site:not(.home-page) main .service-visual{height:300px;min-height:300px}.premium-site:not(.home-page) main .premium-contact .contact-grid{gap:35px}}
 @media(max-width:820px){.premium-site:not(.home-page) main .premium-contact .contact-intro{position:static}.premium-site:not(.home-page) main .premium-contact .contact-channel{margin-top:30px}}
 @media(max-width:700px){
   .premium-site:not(.home-page){--pi-title:clamp(2.5rem,10.9vw,4.2rem);--pi-heading:clamp(2.2rem,9vw,3.4rem);--pi-space:64px}
-  .premium-site:not(.home-page) main :is(.page-hero,.service-hero,.about-hero,.mp-hero,.portfolio-page-heading,.cs-hero){padding-top:48px;padding-bottom:44px}
-  .premium-site:not(.home-page):not(:has(.cs-page)){--pi-heading:clamp(32px,7.8vw,48px);--pi-space:56px}
+  .premium-site:not(.home-page) main :is(.page-hero,.service-hero,.about-hero,.mp-hero,.portfolio-page-heading,.cs-hero){padding-top:36px;padding-bottom:38px}
+  .premium-site:not(.home-page):not(:has(.cs-page)){--pi-heading:clamp(28px,7.2vw,34px);--pi-space:48px}
   .premium-site:not(.home-page) main .cs-hero{padding-top:116px;padding-bottom:47px}
-  .premium-site:not(.home-page) main :is(.page-hero,.service-hero,.about-hero,.mp-hero) h1{font-size:clamp(40px,9vw,56px)}
-  .premium-site:not(.home-page) main .service-visual{min-height:320px;box-shadow:9px 9px 0 #ffffff0a}
+  .premium-site:not(.home-page) main :is(.page-hero,.service-hero,.about-hero,.mp-hero) h1{font-size:clamp(34px,8.5vw,40px)}
+  .premium-site:not(.home-page) main .service-visual{height:230px;min-height:230px;box-shadow:none}
   .premium-site:not(.home-page) main :is(.service-focus,.mp-framing-result){padding:20px}
-  .premium-site:not(.home-page) main .about-panel-art{min-height:275px}
-  .premium-site:not(.home-page) main .about-hero-image img{height:300px}
+  .premium-site:not(.home-page) main .about-panel-art{min-height:230px}
+  .premium-site:not(.home-page) main .about-hero-image img{height:240px}
   .premium-site:not(.home-page) main .mp-hero-board{box-shadow:9px 9px 0 #ffffff09}
   .premium-site:not(.home-page) main .mp-cycle-center{top:88px;width:142px;height:142px;padding:14px}
   .premium-site:not(.home-page) main .mp-cycle-center strong{font-size:24px;margin-top:8px}
   .premium-site:not(.home-page) main .mp-cycle-center>span{font-size:7px}
-  .premium-site:not(.home-page) main .premium-contact{padding-top:48px}
-  .premium-site:not(.home-page) main .premium-contact .contact-intro h1{font-size:clamp(44px,9vw,56px)}
+  .premium-site:not(.home-page) main .premium-contact{padding-top:36px}
+  .premium-site:not(.home-page) main .premium-contact .contact-intro h1{font-size:clamp(34px,8.5vw,40px)}
   .premium-site:not(.home-page) main .premium-contact .contact-grid{gap:26px}
   .premium-site:not(.home-page) main .premium-contact .contact-intro{padding-bottom:0}
   .premium-site:not(.home-page) main .premium-contact .contact-form-panel{padding:24px 20px}
+  .premium-site:not(.home-page) main :is(.service-contact,.about-contact,.mp-contact,.portfolio-contact,.compact-closing) h2{font-size:28px;line-height:1.12}
+  .premium-site:not(.home-page) main .service-visual :is(.service-browser,.service-phone){scale:.67}
+  .premium-site:not(.home-page) main .service-visual :is(.service-flow,.service-ai-flow){scale:.57}
+  .premium-site:not(.home-page) main :is(.service-visual-label,.service-visual-caption){font-size:7px;letter-spacing:.08em}
+  .premium-site:not(.home-page) main .service-visual-label{top:14px;right:16px}
+  .premium-site:not(.home-page) main .service-visual-caption{bottom:14px;left:16px}
+  .premium-site:not(.home-page) main .service-visual-note{bottom:34px;font-size:8px;padding:6px 10px}
+  .premium-site:not(.home-page) main .talent-deck{min-height:300px;height:300px;margin-top:0}
+  .premium-site:not(.home-page) main .talent-pass{width:190px;height:254px;padding:14px;top:46%}
+  .premium-site:not(.home-page) main .pass-type{font-size:33px;margin-top:12px}
+  .premium-site:not(.home-page) main .pass-art{height:116px;transform:scale(.6);width:167%;margin-top:8px;margin-bottom:-35px}
+  .premium-site:not(.home-page) main .deck-orbit{width:240px;height:240px;top:24px}
+  .premium-site:not(.home-page) main .talent-details{padding-top:20px}
+  .premium-site:not(.home-page) main .talent-panel h3{font-size:27px}
+  .premium-site:not(.home-page) main .talent-hook{font-size:20px}
+  .premium-site:not(.home-page) main .talent-watermark{font-size:76px}
+  .premium-site:not(.home-page) main :is(.solo-sculpture,.squad-sculpture){height:220px}
+  .premium-site:not(.home-page) main :is(.squad-person,.solo-consultant,.solo-teammate){scale:.7}
+  .premium-site:not(.home-page) main .demo-workspace{padding:22px 20px;gap:20px}
+  .premium-site:not(.home-page) main .demo-document{max-width:200px;padding:18px}
+  .premium-site:not(.home-page) main .demo-result h4{font-size:26px}
+
 }
 @media(prefers-reduced-motion:reduce){.premium-site:not(.home-page) main :is(.studio-section-enter,.service-visual,.mp-hero-board,.contact-form-panel,.service-browser,.service-phone,.service-ai-flow,.service-flow){animation:none!important}.premium-site:not(.home-page) main :is(.service-card,.about-service){transition:none}}

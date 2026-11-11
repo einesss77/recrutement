@@ -1,3 +1,4 @@
+import {renderHomeConnection} from './home-connection.mjs';
 const star = '<svg viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M50 0v100M0 50h100M14.6 14.6l70.8 70.8m0-70.8L14.6 85.4" stroke="currentColor" stroke-width="13"/></svg>';
 const uiIcon = paths => `<svg class="kh-ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
 const phoneIcons = [
@@ -41,6 +42,8 @@ export function renderHome({icon,button,arrowLink}) {
     </article>
 
   </div></section>
+
+  ${renderHomeConnection({icon,button,arrowLink})}
 
   <section class="kh-work kh-section" id="demonstrations" aria-labelledby="kh-work-title"><div class="wrap">
     <div class="kh-work-heading" data-kh-reveal><div><p class="kh-eyebrow">03 / LE CHAMP DES POSSIBLES</p><h2 id="kh-work-title">Show.<br><span class="kh-accent">Don’t tell.</span></h2></div><div><p>Un aperçu de ce que vos outils<br>pourraient devenir.</p>${arrowLink('Explorer les démonstrations','/realisations/')}</div></div>
