@@ -1,0 +1,369 @@
+{
+  "id": "signature-v1-2026",
+  "posts": [
+    {
+      "id": "signature-v1-offre",
+      "title": "Ce que fait B&M, concrètement.",
+      "category": "B&M / Notre offre",
+      "template": "editorial",
+      "theme": "dark",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Des consultants IT pour vos équipes. Des applications sur mesure pour votre métier.\n\nChez B&M, nous intervenons de deux façons : renforcer une équipe avec un consultant ou une squad, et concevoir une solution numérique autour d’un usage précis.\n\nLe point de départ reste le même : comprendre ce que votre équipe doit réussir, puis définir les compétences, le périmètre et les étapes utiles.\n\nUn rôle à pourvoir ou un produit à construire ? Parlons de votre besoin.\nhttps://www.bandmdigitalconsulting.com/contact/",
+      "slides": [
+        {
+          "label": "NOTRE MÉTIER",
+          "title": "Les personnes.\nLes projets.\nLe lien entre les deux.",
+          "body": "Des consultants IT pour vos équipes.\nDes applications sur mesure pour votre métier.",
+          "points": []
+        }
+      ]
+    },
+    {
+      "id": "signature-v1-consultants",
+      "title": "Un consultant ou une squad ?",
+      "category": "Consultants & squads",
+      "template": "squad",
+      "theme": "light",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Un consultant ou une squad ? Le choix part du travail à accomplir.\n\nUn consultant rejoint votre organisation pour occuper un rôle défini. Une squad rassemble plusieurs compétences autour d’un chantier commun.\n\nDans les deux cas, les responsabilités, les interfaces avec vos équipes et les objectifs sont précisés avant le démarrage. Un référent projet B&M accompagne les consultants pendant leur mission.\n\nLa composition et les disponibilités sont confirmées selon votre besoin.\nhttps://www.bandmdigitalconsulting.com/profils-et-squads/",
+      "slides": [
+        {
+          "label": "LE BON DISPOSITIF",
+          "title": "Un rôle précis.\nOu un chantier commun.",
+          "body": "Le format se choisit selon votre besoin.",
+          "points": [
+            "Un consultant intégré à votre équipe",
+            "Une squad de compétences complémentaires"
+          ]
+        },
+        {
+          "label": "CONSULTANT SOLO",
+          "title": "Une expertise.\nDans votre équipe.",
+          "body": "Un rôle défini, vos priorités opérationnelles, un référent B&M.",
+          "points": [
+            "Développement fullstack",
+            "Cloud, data ou IA",
+            "Product Ownership"
+          ]
+        },
+        {
+          "label": "SQUAD",
+          "title": "Des compétences.\nUn objectif partagé.",
+          "body": "Un collectif composé selon le périmètre à réaliser.",
+          "points": [
+            "Des responsabilités explicites",
+            "Des interfaces avec vos équipes",
+            "Un suivi de mission convenu"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signature-v1-produit",
+      "title": "L’application part de votre métier.",
+      "category": "Applications sur mesure",
+      "template": "focus",
+      "theme": "dark",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Une application utile commence par une situation concrète : un dossier à suivre, une information à retrouver, une action à réaliser sur le terrain.\n\nAvant de dessiner les écrans, nous travaillons le parcours, les règles métier et les outils à connecter. Le choix du web ou du mobile vient de l’usage, des contraintes et des utilisateurs.\n\nPuis nous définissons un premier périmètre à construire, à montrer et à tester avec vous.\n\nQuel processus mérite un meilleur outil dans votre équipe ?\nhttps://www.bandmdigitalconsulting.com/contact/",
+      "slides": [
+        {
+          "label": "DE L’USAGE AU PRODUIT",
+          "title": "Votre métier.\nPuis l’application.",
+          "body": "Nous concevons et développons des applications sur mesure.",
+          "points": []
+        },
+        {
+          "label": "LE BON SUPPORT",
+          "title": "Web ou mobile ?\nPartons de l’usage.",
+          "body": "Le choix dépend du contexte réel de vos utilisateurs.",
+          "points": [
+            "Où et comment utilisent-ils l’outil ?",
+            "Quelles données doivent-ils retrouver ?",
+            "Quelles actions doivent-ils réaliser ?"
+          ]
+        },
+        {
+          "label": "LE PREMIER PÉRIMÈTRE",
+          "title": "Construire.\nMontrer.\nAjuster.",
+          "body": "Des étapes de validation définies avec votre équipe.",
+          "points": [
+            "Un parcours utile",
+            "Des règles explicites",
+            "Des retours d’utilisateurs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signature-v1-audit",
+      "title": "Un audit qui aide à décider.",
+      "category": "Audit & stratégie",
+      "template": "steps",
+      "theme": "light",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Un audit doit permettre de choisir la suite.\n\nNotre point de départ : le périmètre, les objectifs et les sources accessibles. Nous distinguons ensuite les constats vérifiables, les hypothèses et les données manquantes.\n\nLa restitution relie chaque priorité à une preuve et à une action. Les accès absents, les informations incertaines et les arbitrages attendus restent visibles.\n\nC’est cette traçabilité qui rend le diagnostic utile à la décision.",
+      "slides": [
+        {
+          "label": "LA MÉTHODE D’AUDIT",
+          "title": "Observer.\nComprendre.\nPrioriser.",
+          "body": "Chaque recommandation doit pouvoir être expliquée.",
+          "points": [
+            "Un périmètre clair",
+            "Des preuves datées",
+            "Des actions hiérarchisées"
+          ]
+        },
+        {
+          "label": "LE DIAGNOSTIC",
+          "title": "Ce que l’on sait.\nCe qu’il faut vérifier.",
+          "body": "Une information absente ne devient pas une supposition.",
+          "points": [
+            "Sources accessibles",
+            "Constats vérifiables",
+            "Données manquantes signalées"
+          ]
+        },
+        {
+          "label": "LA RESTITUTION",
+          "title": "Une preuve.\nUne priorité.\nUne action.",
+          "body": "Vous arbitrez la suite avec les éléments utiles.",
+          "points": [
+            "Le constat et sa source",
+            "L’effet attendu, à confirmer",
+            "L’action et ses prérequis"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signature-v1-humain",
+      "title": "Quand l’IA passe le relais.",
+      "category": "IA & validation",
+      "template": "editorial",
+      "theme": "dark",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Un agent ne doit pas transformer une incertitude en certitude.\n\nPrenons un scénario d’audit : l’agent cherche le compte Instagram d’une entreprise, mais ne parvient pas à l’identifier avec confiance. Il indique ce qu’il a recherché et demande à l’utilisateur de confirmer le lien, de signaler l’absence de compte ou de laisser le point à vérifier.\n\nLa réponse humaine est enregistrée, puis le processus reprend avec cette information.\n\nCe scénario illustre un principe de conception : rendre les limites visibles et prévoir le relais humain dès le départ.",
+      "slides": [
+        {
+          "label": "CONCEVOIR LE RELAIS",
+          "title": "L’IA avance.\nVous arbitrez.",
+          "body": "Un scénario d’audit : le compte Instagram reste introuvable.",
+          "points": []
+        },
+        {
+          "label": "LE POINT DE DÉCISION",
+          "title": "Une question claire.\nTrois issues possibles.",
+          "body": "L’agent expose le blocage au lieu d’inventer une réponse.",
+          "points": [
+            "Saisir le lien du compte",
+            "Confirmer l’absence de compte",
+            "Laisser le point à vérifier"
+          ]
+        },
+        {
+          "label": "LA REPRISE",
+          "title": "Votre décision.\nUne suite traçable.",
+          "body": "Le processus reprend selon l’information confirmée.",
+          "points": [
+            "La réponse humaine est conservée",
+            "La source ou l’absence est indiquée",
+            "L’incertitude restante reste visible"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signature-v1-cadrage",
+      "title": "Avant de lancer le développement.",
+      "category": "Mémo produit",
+      "template": "checklist",
+      "theme": "light",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Avant de lancer le développement, quatre questions méritent une réponse partagée.\n\nQui utilise le produit ? Quelle tâche doit-il faciliter ? Quelles règles doit-il respecter ? Comment vérifierons-nous que le premier périmètre fonctionne ?\n\nCes réponses n’ont pas besoin d’être longues. Elles doivent être compréhensibles par le métier, le produit et la technique.\n\nGardez ce mémo pour votre prochain atelier de cadrage.",
+      "slides": [
+        {
+          "label": "LE MÉMO À GARDER",
+          "title": "Un premier périmètre.\nQuatre questions.",
+          "body": "À aligner avant de construire.",
+          "points": [
+            "Pour quels utilisateurs ?",
+            "Pour quelle tâche concrète ?",
+            "Avec quelles règles et contraintes ?",
+            "Comment valider le résultat ?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signature-v1-atelier",
+      "title": "Atelier : un espace pour suivre les projets.",
+      "category": "Concept / Atelier",
+      "template": "case",
+      "theme": "dark",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Atelier est un concept de démonstration : un espace métier pour suivre des projets, les éléments à valider et les prochaines actions.\n\nCe scénario fictif illustre la façon dont un outil peut rendre un processus plus lisible. Il ne présente ni une réalisation client ni un résultat mesuré.\n\nL’idée à retenir : concevoir les écrans autour de décisions concrètes, puis tester le parcours avec les personnes qui l’utiliseront.\n\nQuel suivi aimeriez-vous rendre plus simple dans votre équipe ?",
+      "slides": [
+        {
+          "label": "CONCEPT DE DÉMONSTRATION",
+          "title": "Atelier.\nLe projet, au même endroit.",
+          "body": "Un scénario fictif d’espace métier, sans résultat client revendiqué.",
+          "points": [
+            "Les projets en cours",
+            "Les éléments à valider",
+            "La prochaine action"
+          ]
+        },
+        {
+          "label": "LE PARCOURS IMAGINÉ",
+          "title": "Voir ce qui avance.\nSavoir quoi valider.",
+          "body": "Un exemple de parcours, à confronter au terrain.",
+          "points": [
+            "Ouvrir un projet",
+            "Retrouver le contexte et les pièces",
+            "Valider ou demander un complément"
+          ]
+        },
+        {
+          "label": "CE QU’IL FAUT TESTER",
+          "title": "Un écran clair.\nUne décision comprise.",
+          "body": "La démonstration ouvre la discussion avec les utilisateurs.",
+          "points": [
+            "Les informations réellement utiles",
+            "Les droits de chaque rôle",
+            "Les situations d’exception"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signature-v1-assistant",
+      "title": "Vos documents, comme point de départ.",
+      "category": "Assistant métier",
+      "template": "chatbot",
+      "theme": "light",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Un assistant interne peut aider à retrouver une information dans des documents autorisés.\n\nSa valeur dépend de la qualité des sources, des droits d’accès et de sa capacité à indiquer ce qui fonde sa réponse. Quand une information manque, il doit le dire et proposer le relais prévu.\n\nScénario illustratif : cette interface est une démonstration, pas un outil client en production.\n\nQuel ensemble de documents votre équipe consulte-t-elle chaque semaine ?",
+      "slides": [
+        {
+          "label": "L’IA EN PRATIQUE",
+          "title": "Une question.\nUne source à vérifier.",
+          "body": "Un assistant interne, sur un périmètre documenté.",
+          "points": [
+            "Où trouver la procédure d’arrivée ?",
+            "Le guide d’accueil décrit les étapes. Ouvrez la source pour vérifier la version applicable.",
+            "Guide d’accueil · document d’exemple"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signature-v1-documents",
+      "title": "Lire, extraire, faire vérifier.",
+      "category": "Documents & IA",
+      "template": "document",
+      "theme": "dark",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "L’extraction documentaire peut préparer le travail de lecture : repérer des champs, structurer une information et signaler les éléments à vérifier.\n\nLe document d’origine doit rester accessible. Les champs ambigus ou absents doivent être identifiés, et la validation doit rester attribuée à une personne lorsque le processus l’exige.\n\nScénario illustratif : cet exemple de bon de commande ne représente aucune donnée client ni aucun gain mesuré.",
+      "slides": [
+        {
+          "label": "UN DOCUMENT, UN USAGE",
+          "title": "Les informations utiles.\nPrêtes à vérifier.",
+          "body": "L’IA prépare une extraction ; vous contrôlez les champs.",
+          "points": [
+            "Bon de commande d’exemple",
+            "Référence, date et montant à comparer au document source.",
+            "Validation humaine avant utilisation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signature-v1-flux",
+      "title": "Automatiser sans perdre le contrôle.",
+      "category": "Automatisation",
+      "template": "automation",
+      "theme": "light",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Automatiser un flux, c’est aussi concevoir ses exceptions.\n\nDans ce scénario, une demande arrive, ses informations sont préparées, puis une personne vérifie le dossier avant validation. Les champs manquants déclenchent une demande de complément.\n\nAvant toute mise en service, il faut définir les accès, les règles, les erreurs possibles et la personne qui reprend la main.\n\nScénario illustratif, sans résultat client revendiqué.",
+      "slides": [
+        {
+          "label": "LE FLUX À CADRER",
+          "title": "Moins de ressaisie.\nUne décision visible.",
+          "body": "Un exemple de demande traitée avec validation humaine.",
+          "points": [
+            "Une demande est reçue",
+            "Les informations sont préparées",
+            "Une personne vérifie et valide"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signature-v1-architecture",
+      "title": "L’architecture commence par les liens.",
+      "category": "Architecture & intégrations",
+      "template": "focus",
+      "theme": "dark",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "Un produit ne vit pas seul.\n\nIl échange avec des utilisateurs, des données, des outils existants et parfois des services externes. Dessiner ces liens tôt permet de poser les bonnes questions : qui accède à quoi, quel système fait référence et que se passe-t-il si une connexion échoue ?\n\nL’architecture se construit autour de ces contraintes concrètes, puis s’affine avec le périmètre.\n\nLes connexions et les responsabilités méritent autant d’attention que les écrans.",
+      "slides": [
+        {
+          "label": "LE REGARD TECHNIQUE",
+          "title": "Les écrans comptent.\nLes liens aussi.",
+          "body": "Une architecture lisible relie les usages, les données et les outils.",
+          "points": [
+            "Les utilisateurs et leurs droits",
+            "Les données de référence",
+            "Les connexions et leurs exceptions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signature-v1-referent",
+      "title": "La mission démarre. Le suivi continue.",
+      "category": "Suivi de mission",
+      "template": "squad",
+      "theme": "light",
+      "status": "draft",
+      "date": "",
+      "image": "",
+      "caption": "La mission démarre. Le suivi continue.\n\nUn référent projet B&M accompagne le consultant pendant sa mission : intégration, points de suivi, difficultés rencontrées et ajustements convenus.\n\nDans une mission de renfort, votre équipe garde le pilotage opérationnel et la validation des travaux. Le rythme des échanges est défini ensemble selon le contexte.\n\nUn cadre simple pour garder le lien tout au long de la collaboration.\nhttps://www.bandmdigitalconsulting.com/profils-et-squads/",
+      "slides": [
+        {
+          "label": "L’ACCOMPAGNEMENT B&M",
+          "title": "Un consultant.\nUn référent.\nUn lien qui dure.",
+          "body": "Le suivi de mission se définit avec vous.",
+          "points": [
+            "Préparer l’intégration",
+            "Faire le point",
+            "Convenir des ajustements"
+          ]
+        }
+      ]
+    }
+  ]
+}

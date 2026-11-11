@@ -4,6 +4,7 @@ import initialPosts from '@/studio-social/content/posts.json';
 import strategy from '@/studio-social/content/strategy.json';
 import practicalPack from '@/studio-social/content/practical-pack.json';
 import companionPack from '@/studio-social/content/companion-pack.json';
+import signaturePack from '@/studio-social/content/signature-pack.json';
 import { z } from 'zod';
 
 const slideSchema=z.object({label:z.string().max(100),title:z.string().max(140),body:z.string().max(350),points:z.array(z.string().max(240)).max(4)});
@@ -57,7 +58,7 @@ export async function studioState(){
  let document:Document,backend:string;
  try{({document,backend}=await readStudio());}catch{document=initial();backend='readonly';}
  if(document.usage.month!==new Date().toISOString().slice(0,7))document.usage={month:new Date().toISOString().slice(0,7),reservedUsd:0,calls:0};
- return{...document,availablePacks:[practicalPack,companionPack],strategy,backend,aiEnabled:!!process.env.GEMINI_API_KEY&&backend==='cloud',budget:Number(process.env.AI_MONTHLY_BUDGET_USD||2)};
+ return{...document,availablePacks:[practicalPack,companionPack,signaturePack],strategy,backend,aiEnabled:!!process.env.GEMINI_API_KEY&&backend==='cloud',budget:Number(process.env.AI_MONTHLY_BUDGET_USD||2)};
 }
 export async function generateStudio(topic:string){
  if(!process.env.GEMINI_API_KEY)throw Error('La rédaction IA attend une clé GEMINI_API_KEY.');

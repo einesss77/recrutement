@@ -20,10 +20,11 @@ async function exportOne(post,format,index=0,ratio='square'){
 export async function browserExport(input,batch=false){
  if(!batch)return new Response(await exportOne(input.post,input.format,input.index,input.ratio));
  if(input.posts.length>30)throw Error('Export par lot limité à 30 publications.');
+ const ratio=input.ratio==='portrait'?'portrait':'square';
  const files={};for(const [i,p]of input.posts.entries()){
   const name=`${String(i+1).padStart(2,'0')}-${p.template}`;
-  files[name+'.pdf']=new Uint8Array(await(await exportOne(p,'pdf',0,'square')).arrayBuffer());
-  files[name+'.png']=new Uint8Array(await(await exportOne(p,'png',0,'square')).arrayBuffer());
+  files[name+'.pdf']=new Uint8Array(await(await exportOne(p,'pdf',0,ratio)).arrayBuffer());
+  files[name+'.png']=new Uint8Array(await(await exportOne(p,'png',0,ratio)).arrayBuffer());
   files[name+'-legende.txt']=strToU8(p.caption||'');
  }
  files['contenus.json']=strToU8(JSON.stringify({version:1,posts:input.posts},null,2));return new Response(new Blob([zipSync(files,{level:0})],{type:'application/zip'}));

@@ -1,4 +1,4 @@
-export const PALETTE={bg:'#111e2c',ink:'#153a35',mint:'#b9efde',paper:'#f8fbf4',muted:'#b6cbc2'};
+export const PALETTE={bg:'#090e18',ink:'#101a28',mint:'#d6ff46',paper:'#f4f6f8',muted:'#adb9ca'};
 export const SCENES=[
  ['Identité & écran de fin',13.7,[['brand','Marque','B&M.',24],['strap','Signature','DU BESOIN AU PRODUIT',48],['close1','Titre final · ligne 1','VOTRE MÉTIER.',42],['close2','Titre final · ligne 2','VOTRE OUTIL.',42],['cta','Appel à l’action','Parlons de votre projet  ↗',48],['domain','Adresse affichée','bandmdigitalconsulting.com',60]]],
  ['01 · Le problème',1.4,[['hook1','Titre · ligne 1','VOS OUTILS.',42],['hook2','Titre · ligne 2','DISPERSÉS ?',42],['card1','Carte 1 · titre','Un fichier.',40],['body1','Carte 1 · détail','Version finale_v3.xlsx',60],['card2','Carte 2 · titre','Un message.',40],['body2','Carte 2 · détail','« Qui s’en occupe ? »',60],['card3','Carte 3 · titre','Une urgence.',40],['body3','Carte 3 · détail','Retrouver la bonne info.',60]]],
@@ -8,11 +8,13 @@ export const SCENES=[
  ['05 · Le bénéfice',11.6,[['result1','Titre · ligne 1','MOINS DE FLOU.',42],['result2','Titre · ligne 2','PLUS DE SUIVI.',42],['benefit1','Bénéfice 1','Un point d’entrée.',50],['benefit2','Bénéfice 2','Des rôles clairs.',50],['benefit3','Bénéfice 3','Des actions visibles.',50]]]
 ];
 export const TEXT=Object.fromEntries(SCENES.flatMap(([, ,fields])=>fields.map(([key,,value])=>[key,value])));
-export const PRESETS={bm:{label:'B&M',colors:PALETTE},ocean:{label:'Océan',colors:{bg:'#101b32',ink:'#152d52',mint:'#98dafa',paper:'#f5f9ff',muted:'#c4d1e5'}},sunset:{label:'Terracotta',colors:{bg:'#281c22',ink:'#4b2832',mint:'#ffc3a2',paper:'#fff7ef',muted:'#decbc8'}},sage:{label:'Sauge',colors:{bg:'#19241d',ink:'#2b4535',mint:'#d5e7ab',paper:'#f8faef',muted:'#c4d1ba'}}};
+export const PRESETS={bm:{label:'Signature B&M',colors:PALETTE},ocean:{label:'Cobalt',colors:{bg:'#142a78',ink:'#101a28',mint:'#d6ff46',paper:'#f4f6f8',muted:'#c5d0ee'}},sunset:{label:'Encre',colors:{bg:'#080a0b',ink:'#111315',mint:'#d6ff46',paper:'#f4f6f8',muted:'#adb9ca'}},sage:{label:'Bleu glacier',colors:{bg:'#101a28',ink:'#101a28',mint:'#aec5ff',paper:'#f4f6f8',muted:'#bdc8d9'}}};
 export function normalizeSettings(input={}){
  const source=input&&typeof input==='object'?input:{},text={...TEXT},colors={...PALETTE};
  for(const [, ,fields]of SCENES)for(const [key,,,limit]of fields)if(typeof source.text?.[key]==='string')text[key]=source.text[key].replace(/[\r\n\t]/g,' ').slice(0,limit);
- for(const key of Object.keys(colors))if(/^#[0-9a-f]{6}$/i.test(source.colors?.[key]||''))colors[key]=source.colors[key];
+ const legacy={bg:'#111e2c',ink:'#153a35',mint:'#b9efde',paper:'#f8fbf4',muted:'#b6cbc2'};
+ const isLegacyDefault=Object.entries(legacy).every(([key,value])=>source.colors?.[key]?.toLowerCase()===value);
+ if(!isLegacyDefault)for(const key of Object.keys(colors))if(/^#[0-9a-f]{6}$/i.test(source.colors?.[key]||''))colors[key]=source.colors[key];
  return{version:1,text,colors,interactions:source.interactions!==false};
 }
 export function customScript(settings){return Object.keys(TEXT).some(key=>settings.text[key]!==TEXT[key]);}

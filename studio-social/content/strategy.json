@@ -1,12 +1,14 @@
 {
  "brand":"B&M Digital Consulting",
  "audience":"Dirigeants de PME, DSI, responsables produit et équipes qui ont besoin de renfort ou d'un produit numérique sur mesure.",
- "objective":"Faire comprendre notre expertise, rendre notre accompagnement concret et susciter des conversations qualifiées.",
- "voice":"Clair, factuel, humain. Une idée par publication. Expliquer un choix, un usage ou une méthode plutôt que promettre une révolution.",
+ "objective":"Faire comprendre les deux interventions de B&M : mobiliser des consultants IT et concevoir des applications sur mesure. Rendre l’accompagnement concret et susciter des conversations qualifiées.",
+ "voice":"Clair, précis, humain. Une idée par publication. Des titres courts, un usage concret et des phrases sobres. Expliquer un choix ou une méthode plutôt que promettre une révolution.",
  "facts":["Consultants individuels ou squads selon le besoin.","Expertises fullstack, cloud, data, IA et Product Ownership.","Un référent projet accompagne le consultant durant sa mission.","Conseil, cadrage et développement sur mesure dans une démarche agile."],
- "rules":["Ne jamais inventer de clients, résultats, témoignages, certifications, disponibilités ou chiffres.","Un exemple hypothétique doit être présenté comme tel.","Les cas clients restent des brouillons jusqu'à validation des faits et des droits de diffusion.","Pas de publication automatique : export puis validation humaine."],
- "pillars":["Conseil et décisions produit","Consultant solo et squad","Méthode agile et suivi de mission","Web, mobile, data et IA"],
- "rhythm":"Point de départ : 3 publications par semaine sur LinkedIn, ajustées selon les retours. Alterner point de vue, méthode et expertise. Réutiliser les visuels adaptés sur Instagram si pertinent.",
+ "rules":["Ne jamais inventer de clients, résultats, témoignages, certifications, disponibilités ou chiffres.","Présenter explicitement les concepts, interfaces et scénarios fictifs comme des démonstrations.","Les cas clients restent des brouillons jusqu’à validation des faits et des droits de diffusion.","Pas de publication automatique : export puis validation humaine.","Pas d’emoji, de superlatif gratuit ou de jargon sans explication.","Sur le visuel : un titre de 65 caractères maximum, un corps de 150 caractères maximum et jusqu’à 4 points courts. Répartir les idées sur plusieurs pages plutôt que densifier un écran.","Privilégier une invitation utile en légende ; limiter les hashtags aux sujets pertinents."],
+ "pillars":["Notre offre : consultants IT et applications sur mesure","Consultant solo, squad et suivi de mission","Méthode, cadrage, audit et décisions produit","Web, mobile, cloud, data et IA en pratique"],
+ "rhythm":"Point de départ : 3 publications par semaine sur LinkedIn, à ajuster selon les retours. Alterner offre, méthode et usage concret, avec un mélange de visuels nuit et papier. Préparer les carrousels dans un seul format ; adapter en portrait pour Instagram lorsque le contenu s’y prête.",
  "measurement":"Suivre les échanges qualifiés, visites du site et demandes de contact. Comparer les thèmes et formats après quatre semaines avant d'augmenter la cadence.",
- "colors":{"navy":"#111e2c","mint":"#b9efde","teal":"#377b79","white":"#ffffff"}
+ "colors":{"ink":"#080a0b","navy":"#090e18","cobalt":"#345bff","lime":"#d6ff46","paper":"#f4f6f8"},
+ "fonts":{"heading":"Bricolage Grotesque","body":"Manrope"},
+ "visual":"Fonds bleu nuit ou papier froid, cobalt pour la structure et citron par touches. Titres mesurés, espaces nets, lignes techniques fines et diagrammes lisibles. Pas de serif, d’emoji ni d’aplats citron envahissants."
 }

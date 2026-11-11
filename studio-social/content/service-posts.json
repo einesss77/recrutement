@@ -1,0 +1,232 @@
+[
+  {
+    "id": "01-agence",
+    "title": "L’accompagnement B&M",
+    "category": "Agence",
+    "template": "editorial",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "B&M : du diagnostic à la réalisation.\n\nAudit, création, web, automatisation : les solutions se choisissent selon les besoins identifiés, les moyens disponibles et les objectifs de l’entreprise.\n\nCe catalogue présente des possibilités d’accompagnement à qualifier. Livrables, responsabilités, calendrier et coûts sont précisés dans la proposition.\n\nhttps://www.bandmdigitalconsulting.com/contact/",
+    "slides": [
+      {
+        "label": "LES SOLUTIONS B&M",
+        "title": "Du diagnostic.\nÀ la réalisation.",
+        "body": "Un accompagnement construit autour de vos priorités.",
+        "points": [
+          "Comprendre le besoin",
+          "Définir le bon périmètre",
+          "Créer, connecter et transmettre"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "02-audit",
+    "title": "Audit & stratégie",
+    "category": "Stratégie",
+    "template": "steps",
+    "theme": "light",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Un audit doit aider à décider.\n\nLe périmètre et les sources sont définis au départ. Les constats vérifiables sont distingués des hypothèses et des informations manquantes. Les recommandations relient chaque priorité à une preuve et à une action.\n\nProposition à qualifier selon l’activité, les accès disponibles et les objectifs.",
+    "slides": [
+      {
+        "label": "UNE MÉTHODE, UN CAP",
+        "title": "Observer.\nComprendre.\nPrioriser.",
+        "body": "Un diagnostic sourcé pour décider de la suite.",
+        "points": [
+          "Le périmètre et les sources",
+          "Les constats et leurs limites",
+          "Les priorités et leurs prérequis"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "03-instagram",
+    "title": "Instagram",
+    "category": "Réseaux sociaux",
+    "template": "focus",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Une présence Instagram se construit avec une ligne éditoriale, des formats cohérents et un rythme adapté aux ressources disponibles.\n\nLes sujets partent de votre activité, de vos offres et des questions de votre audience. Les contenus restent soumis à votre validation.\n\nProposition à qualifier : accès au compte, volume de contenus, médias disponibles et modalités de suivi.",
+    "slides": [
+      {
+        "label": "PRÉSENCE & CONTENUS",
+        "title": "Instagram.\nUne présence cohérente.",
+        "body": "Des contenus reliés à votre activité et à votre identité.",
+        "points": [
+          "Une ligne éditoriale",
+          "Des formats réutilisables",
+          "Un planning et un bilan"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "04-tiktok",
+    "title": "TikTok & vidéos courtes",
+    "category": "Réseaux sociaux",
+    "template": "case",
+    "theme": "light",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "TikTok, Reels et vidéos courtes : une série peut partir de gestes, de choix et de questions propres à votre métier.\n\nLe visuel présente un concept éditorial illustratif, pas une campagne client ni une promesse de performance.\n\nScripts, tournage, montage, sous-titres et déclinaisons sont à cadrer selon les médias disponibles, les droits et le nombre de versions souhaitées.",
+    "slides": [
+      {
+        "label": "CONCEPT DE SÉRIE À ADAPTER",
+        "title": "Votre savoir-faire.\nEn format court.",
+        "body": "Un exemple de série vidéo, à adapter à votre activité.",
+        "points": [
+          "Montrer un geste métier",
+          "Expliquer un choix",
+          "Répondre à une question"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "05-google",
+    "title": "Google & présence locale",
+    "category": "Visibilité",
+    "template": "checklist",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Le parcours local commence souvent par une information simple : votre activité, votre adresse, vos horaires ou la façon de vous contacter.\n\nLe travail peut porter sur la fiche Google, les avis, les pages locales et le suivi de visibilité. Une optimisation ne garantit pas une position dans les résultats.\n\nProposition à qualifier : établissements concernés, accès propriétaire, territoire et sources disponibles.",
+    "slides": [
+      {
+        "label": "LE PARCOURS LOCAL",
+        "title": "Être trouvé.\nÊtre compris.",
+        "body": "Des informations utiles, à jour et faciles à retrouver.",
+        "points": [
+          "La fiche et les informations pratiques",
+          "Les avis et les réponses",
+          "Les pages et les recherches locales"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "06-web",
+    "title": "Sites & conversion",
+    "category": "Web",
+    "template": "focus",
+    "theme": "light",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Un site utile permet de comprendre l’offre et de passer à l’étape suivante sans chercher.\n\nStructure, contenus, design, développement et parcours de contact se travaillent ensemble. Le périmètre peut concerner un site, une page ciblée ou l’amélioration d’un parcours existant.\n\nContenus, langues, hébergement, mesure et maintenance sont à préciser au cadrage.",
+    "slides": [
+      {
+        "label": "SITE & PARCOURS",
+        "title": "Une offre claire.\nUn prochain pas évident.",
+        "body": "Un site pensé pour comprendre, explorer et prendre contact.",
+        "points": [
+          "Une structure lisible sur mobile",
+          "Des contenus utiles à la décision",
+          "Des parcours et formulaires testés"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "07-creation",
+    "title": "Identité & création",
+    "category": "Création",
+    "template": "editorial",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Une identité devient utile quand elle se décline avec cohérence.\n\nCouleurs, typographies, compositions et règles d’usage permettent de préparer des supports que l’équipe peut reprendre : pages, présentations et publications sociales.\n\nProposition à qualifier selon la charte existante, les usages, les droits sur les ressources et le périmètre de création.",
+    "slides": [
+      {
+        "label": "LA SIGNATURE DE MARQUE",
+        "title": "Une identité.\nTous vos supports.",
+        "body": "Un langage visuel cohérent, du site aux publications.",
+        "points": [
+          "Une direction artistique",
+          "Des compositions réutilisables",
+          "Des déclinaisons adaptées"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "08-acquisition",
+    "title": "Campagnes & acquisition",
+    "category": "Acquisition",
+    "template": "steps",
+    "theme": "light",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Une campagne commence par une hypothèse : une offre, un public et une action attendue.\n\nLes annonces, la page de destination et la mesure doivent raconter la même chose. Les résultats se relisent avant de décider des ajustements.\n\nComptes, suivi des conversions, créations et responsabilités sont à qualifier. Le budget média est précisé séparément. Aucun résultat n’est garanti.",
+    "slides": [
+      {
+        "label": "TESTER & APPRENDRE",
+        "title": "Une audience.\nUne offre.\nUn test mesurable.",
+        "body": "Des campagnes définies autour d’une hypothèse claire.",
+        "points": [
+          "Le message et la cible",
+          "La page et l’action attendue",
+          "La mesure et les ajustements"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "09-automatisation",
+    "title": "Automatisation & IA",
+    "category": "Automatisation",
+    "template": "automation",
+    "theme": "dark",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Automatisation et IA : commencer par un flux concret.\n\nUne demande arrive, les informations sont préparées, puis une personne valide lorsque le processus l’exige. Les erreurs, les champs manquants et le relais humain font partie de la conception.\n\nScénario illustratif, sans résultat client revendiqué. Outils, accès, volumes, règles et coûts tiers sont à qualifier avant un pilote.",
+    "slides": [
+      {
+        "label": "UN FLUX À CONCEVOIR",
+        "title": "Les outils se parlent.\nVous gardez la main.",
+        "body": "Un scénario illustratif de traitement d’une demande.",
+        "points": [
+          "Une demande est reçue",
+          "Les données sont préparées",
+          "Une personne vérifie et valide"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "10-accompagnement",
+    "title": "Les formats d’accompagnement",
+    "category": "Agence",
+    "template": "squad",
+    "theme": "light",
+    "status": "draft",
+    "date": "",
+    "image": "",
+    "caption": "Le format d’accompagnement dépend du besoin.\n\nUn audit peut préparer les décisions. Un projet peut couvrir un livrable ou un périmètre défini. Un suivi peut organiser les points réguliers et les ajustements retenus.\n\nChaque proposition précise les livrables, les rôles, le calendrier et les modalités de validation. La disponibilité et les conditions sont confirmées au cadrage.",
+    "slides": [
+      {
+        "label": "LE FORMAT SELON LE BESOIN",
+        "title": "Un projet précis.\nOu un suivi dans la durée.",
+        "body": "Le dispositif se définit avec votre équipe.",
+        "points": [
+          "Un audit pour choisir les priorités",
+          "Un projet au périmètre convenu",
+          "Un suivi au rythme défini"
+        ]
+      }
+    ]
+  }
+]
