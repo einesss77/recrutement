@@ -176,13 +176,32 @@ async function run(opts){
  finally{await lock.close();await unlink(lockPath).catch(()=>{});}
 }
 
+export function draftParameters(opts={}){
+ const accountId=opts.account||'organization';if(!['person','organization'].includes(accountId))throw Error('Le compte doit être person ou organization.');
+ const days=opts.days===undefined?7:Number(opts.days);if(!Number.isInteger(days)||days<1||days>7)throw Error('Le plan doit comporter entre 1 et 7 jours.');
+ const start=opts.start||new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(Date.now()+86400000));
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(start)||!Number.isFinite(Date.parse(start+'T12:00:00Z'))||new Date(start+'T12:00:00Z').toISOString().slice(0,10)!==start)throw Error('La date de départ doit être une date réelle au format YYYY-MM-DD.');
+ const slots=Array.from({length:days},(_,i)=>({day:new Date(Date.parse(start+'T12:00:00Z')+i*86400000).toISOString().slice(0,10),publishAt:''}));
+ return{accountId,start,slots};
+}
 async function draft(opts){
+ const {accountId,start,slots}=draftParameters(opts);
  const strategy=JSON.parse(await readFile(path.join(repoRoot,'studio-social','content','strategy.json'),'utf8'));
- const days=Math.max(1,Math.min(7,Number(opts.days)||7)),slots=Array.from({length:days},(_,i)=>({day:new Date(Date.now()+(i+1)*86400000).toISOString().slice(0,10),publishAt:''}));
- const payload={strategy,config:{targetType:'organization',targetUrl:'https://www.linkedin.com/company/bandmdigitalconsulting/',mode:'autopilot'},slots,recentPosts:[]};
+ const playbook=JSON.parse(await readFile(path.join(repoRoot,'studio-social','content','linkedin-playbook.json'),'utf8'));
+ const {buildEditorialStrategy}=await import('../shared/linkedin-strategy.mjs');
+ let recentPosts=[];
+ if(opts.recent){
+  const file=path.resolve(opts.recent),info=await stat(file);if(info.size>500000)throw Error('L’historique de prévisualisation doit rester sous 500 Ko.');
+  const previous=JSON.parse(await readFile(file,'utf8')),items=Array.isArray(previous)?previous:previous.items||previous.recentPosts;
+  if(!Array.isArray(items))throw Error('L’historique doit être un plan précédent ou une liste de publications.');
+  recentPosts=items.slice(-60).map(item=>({accountId:item.accountId||previous.accountId,status:item.status||'draft',title:item.post?.title||item.title||'',caption:item.post?.caption||item.caption||'',publishedAt:item.publishedAt,editorial:item.editorial||previous.editorial?.briefs?.find(brief=>brief.id===item.briefId)}));
+ }
+ const config={targetType:accountId,targetUrl:accountId==='organization'?'https://www.linkedin.com/company/bandmdigitalconsulting/':'',mode:'autopilot',objective:playbook.primaryGoal,voice:strategy.voice,facts:strategy.facts,pillars:strategy.pillars,excludedTopics:[],commercialFocus:'balanced',targetAudience:'mixed',campaignStart:start};
+ const editorial=buildEditorialStrategy({playbook,accountId,config,slots,recentPosts,queue:[],now:new Date()});
+ const payload={strategy,config,editorial,slots,recentPosts};
  const generated=await generateStructured({schema:planJsonSchema,prompt:promptFor('plan',payload),workingRoot:localRoot});
- const result=checkPlan(generated.data,payload),output=path.join(localRoot,'draft-preview.json');await writeFile(output,JSON.stringify(result,null,2),{mode:0o600});
- console.log(JSON.stringify({status:'draft-only',posts:result.items.length,humanChecks:result.items.filter(x=>x.needsHuman).length,output,usage:generated.usage,message:'Aucun appel LinkedIn, aucune publication, aucune écriture dans le studio.'}));
+ const result=checkPlan(generated.data,payload),output=path.resolve(opts.out||path.join(localRoot,'draft-preview.json'));await mkdir(path.dirname(output),{recursive:true});await writeFile(output,JSON.stringify({accountId,editorial,...result},null,2),{mode:0o600});
+ console.log(JSON.stringify({status:'draft-only',accountId,start,posts:result.items.length,humanChecks:result.items.filter(x=>x.needsHuman).length,output,usage:generated.usage,message:'Aucun appel LinkedIn, aucune publication, aucune écriture dans le studio.'}));
 }
 
 async function render(opts){
@@ -196,7 +215,7 @@ async function render(opts){
 export async function main(){
  const command=process.argv[2]||'doctor',opts=options();
  if(command==='doctor')return doctor();if(command==='pair')return pair(opts);if(command==='run')return run(opts);if(command==='draft')return draft(opts);if(command==='render')return render(opts);
- if(command==='help'){console.log('Agent LinkedIn B&M\n  doctor\n  pair --file <liaison.json>\n  pair --studio <origine HTTPS>  (mot de passe local)\n  run [--auto-pair-download] [--max-jobs 4]\n  draft [--days 7]  (préparation locale, aucun envoi)\n  render --file <post-ou-plan.json> --format png|pdf [--out <fichier>]');return;}
+ if(command==='help'){console.log('Agent LinkedIn B&M\n  doctor\n  pair --file <liaison.json>\n  pair --studio <origine HTTPS>  (mot de passe local)\n  run [--auto-pair-download] [--max-jobs 4]\n  draft [--days 7] [--account person|organization] [--start YYYY-MM-DD] [--out <plan.json>] [--recent <plan-ou-historique.json>]  (local, aucun envoi)\n  render --file <post-ou-plan.json> --format png|pdf [--out <fichier>]');return;}
  throw Error('Commande inconnue. Utilisez help.');
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href)main().catch(error=>{console.error(redact(error.message));process.exitCode=1;});

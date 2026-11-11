@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import {mkdtemp,writeFile,unlink,rmdir,utimes} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
-import {checkPlan,similarity,promptFor,redact,safeStrategy} from './quality.mjs';
+import {checkPlan,similarity,promptFor,redact,safeStrategy,editorialContext} from './quality.mjs';
 import {subscriptionEnvironment} from './codex.mjs';
-import {processJob,normalizeStudioUrl,downloadedConnection,pairDownloadedConnection} from '../linkedin-agent.mjs';
+import {processJob,normalizeStudioUrl,downloadedConnection,pairDownloadedConnection,draftParameters} from '../linkedin-agent.mjs';
 import {validateEmbeddedImage} from './render.mjs';
 
 const sample=()=>({items:[{post:{title:'Clarifier le bon renfort.',category:'Consultants',template:'editorial',theme:'dark',caption:'Une compétence précise ou un projet à construire : le choix du renfort commence par le travail à accomplir. Posons le contexte avant de décider.',slides:[{label:'LE BON CADRE',title:'Clarifier le bon renfort.',body:'Un rôle clair dans votre équipe.',points:[]}]},rationale:'Expliquer le choix du format.',sourceUrls:['https://www.bandmdigitalconsulting.com/'],needsHuman:false,humanReason:''}],summary:'Une publication.'});
@@ -17,6 +17,67 @@ test('un contenu récent ne se republie pas silencieusement',()=>{const input=sa
 test('les sujets exclus par l’utilisateur sont effectivement bloqués',()=>{const input=sample();input.items[0].post.caption+=' La cryptomonnaie mérite aussi une discussion.';const result=checkPlan(input,{...payload,config:{excludedTopics:['cryptomonnaie']}});assert.equal(result.items[0].needsHuman,true);assert.match(result.items[0].humanReason,/Sujet exclu/);});
 test('les sources nouvelles et les références clients demandent vérification',()=>{const input=sample();input.items[0].sourceUrls=['https://exemple.com/etude'];input.items[0].post.caption+=' Notre client Acme a obtenu de meilleurs résultats.';const item=checkPlan(input,payload).items[0];assert.equal(item.needsHuman,true);assert.match(item.humanReason,/externe/);assert.match(item.humanReason,/Référence/);});
 test('le nombre de brouillons correspond aux créneaux du serveur',()=>assert.throws(()=>checkPlan(sample(),{slots:[{},{}]}),/créneaux/));
+const editorialBrief={id:'organization-2026-11-12-test',day:'2026-11-12',audienceId:'it',audience:{name:'DSI'},purpose:'Aider un arbitrage',series:'Le critère de décision',angle:'Clarifier un renfort',problem:'Un rôle mal défini',takeAway:'Poser une responsabilité',proofRequirement:'Méthode proposée sans résultat promis',suggestedTemplate:'editorial',ctaKind:'none',ctaGuidance:'Conclure par le critère',destinationUrl:''};
+const strategicSample=()=>{const input=sample();input.items[0].briefId=editorialBrief.id;input.items[0].post.caption='Le périmètre du renfort mérite une décision avant la recherche de profils. Un rôle devient plus clair quand son résultat attendu et ses interlocuteurs sont définis.\n\nLe cadrage peut tenir en quelques questions : quelle décision cette personne pourra-t-elle prendre, et avec qui devra-t-elle la valider ?\n\nCe critère permet de comparer un renfort individuel et une équipe mobilisée sur un livrable. Il donne aussi un point de départ au suivi de mission.';return input;};
+const strategicPayload={...payload,editorial:{briefs:[editorialBrief]}};
+test('chaque publication est rattachée au bon brief, sans permutation silencieuse',()=>{
+ const input=strategicSample();assert.equal(checkPlan(input,strategicPayload).items[0].needsHuman,false);
+ input.items[0].briefId='another-brief';assert.throws(()=>checkPlan(input,strategicPayload),/brief éditorial/);
+ delete input.items[0].briefId;assert.throws(()=>checkPlan(input,strategicPayload),/brief éditorial/);
+ assert.ok(!('briefId' in checkPlan(sample(),payload).items[0]));
+});
+test('le plan respecte les CTA utiles et ne transforme pas chaque brief en vente',()=>{
+ const bait=strategicSample();bait.items[0].post.caption+='\n\nCommentez « GUIDE » pour recevoir notre méthode.';
+ assert.match(checkPlan(bait,strategicPayload).items[0].humanReason,/interaction artificielle/);
+ const sales=strategicSample();sales.items[0].post.caption+='\n\nContactez-nous : https://www.bandmdigitalconsulting.com/contact/';
+ assert.match(checkPlan(sales,strategicPayload).items[0].humanReason,/invitation commerciale/);
+ const question=strategicSample();assert.match(checkPlan(question,{...strategicPayload,editorial:{briefs:[{...editorialBrief,ctaKind:'contact',destinationUrl:'https://www.bandmdigitalconsulting.com/contact/'}]}}).items[0].humanReason,/destination/);
+});
+test('un point de vue personnel ne devient pas une expérience inventée',()=>{
+ const input=strategicSample();input.items[0].post.caption+='\n\nJ’ai accompagné des équipes dans ce choix.';
+ assert.match(checkPlan(input,strategicPayload).items[0].humanReason,/Expérience personnelle/);
+ const confirmed=checkPlan(input,{...strategicPayload,config:{facts:['J’ai accompagné des équipes dans ce choix.']}});
+ assert.ok(!confirmed.items[0].humanReason.includes('Expérience personnelle'));
+});
+test('le mot concept ne justifie pas un résultat client dans un brief de démonstration',()=>{
+ const input=strategicSample();input.items[0].post.template='case';input.items[0].post.caption='Un client de B&M a transformé son suivi métier grâce à notre application. Ce concept montre comment une application peut soutenir une activité.';
+ const brief={...editorialBrief,purpose:'proof',suggestedTemplate:'case'};
+ const checked=checkPlan(input,{...strategicPayload,editorial:{briefs:[brief]}}).items[0];
+ assert.equal(checked.needsHuman,true);assert.match(checked.humanReason,/Référence/);assert.match(checked.humanReason,/scénario fictif ou illustratif/);
+ input.items[0].post.caption='Scénario fictif : un client de B&M a transformé son suivi métier grâce à notre application. Ce concept décrit un exemple illustratif, sans réalisation client revendiquée.';
+ const explicit=checkPlan(input,{...strategicPayload,editorial:{briefs:[brief]}}).items[0];
+ assert.ok(!explicit.humanReason.includes('Référence'));assert.ok(!explicit.humanReason.includes('exige la mention'));
+});
+test('accroches répétées et blocs illisibles restent dans la file de contrôle',()=>{
+ const input=strategicSample(),recent={title:'Un autre angle',caption:'Le périmètre du renfort mérite une décision avant la recherche de profils. Une légende très différente ensuite.'};
+ assert.match(checkPlan(input,{...strategicPayload,recentPosts:[recent]}).items[0].humanReason,/Accroche répétée/);
+ input.items[0].post.caption='Une méthode concrète reste utile. '.repeat(23);
+ assert.match(checkPlan(input,strategicPayload).items[0].humanReason,/paragraphe est trop dense/);
+});
+test('une semaine ne réutilise pas la même composition sur tous ses posts',()=>{
+ const input={items:Array.from({length:5},(_,i)=>{const entry=sample().items[0];entry.post.title=`Décision de métier ${i+1}`;return entry;}),summary:'Semaine à diversifier.'};
+ const checked=checkPlan(input,{slots:Array.from({length:5},()=>({})),recentPosts:[]});
+ assert.ok(!checked.items[1].humanReason.includes('Composition trop répétée'));assert.match(checked.items[2].humanReason,/Composition trop répétée/);
+});
+test('un lot qui comble plusieurs semaines respecte la diversité de chaque semaine',()=>{
+ const days=['2026-11-12','2026-11-19','2026-11-26','2026-12-03','2026-12-10'];
+ const briefs=days.map(day=>({...editorialBrief,id:'brief-'+day,day}));
+ const input={items:briefs.map(brief=>{const entry=strategicSample().items[0];entry.briefId=brief.id;entry.post.title=brief.id;return entry;}),summary:'Créneaux de plusieurs semaines.'};
+ const checked=checkPlan(input,{...payload,slots:days.map(day=>({day})),editorial:{campaign:{startDate:'2026-11-12'},briefs}});
+ assert.ok(checked.items.every(item=>!item.humanReason.includes('Composition trop répétée')));
+});
+test('le contexte éditorial conserve les briefs précis et retire les champs sensibles',()=>{
+ const editorial={version:1,positioning:'Décisions utiles',accountRole:{voice:'Point de vue',token:'secret-role'},proofRules:['Pas de résultat inventé'],assumption:'Un point de départ à tester',review:{limitations:['Une absence de saisie ne vaut pas zéro']},briefs:[{...editorialBrief,clientSecret:'secret-brief',audience:{name:'DSI',password:'secret-audience'}}],clientSecret:'secret-top'};
+ const safe=editorialContext(editorial);assert.equal(safe.briefs[0].id,editorialBrief.id);assert.equal(safe.briefs[0].audience.name,'DSI');assert.ok(!JSON.stringify(safe).includes('secret-'));
+ const prompt=promptFor('plan',{...strategicPayload,editorial,config:{commercialFocus:'consulting',targetAudience:'it',campaignStart:'2026-11-12'}});
+ assert.ok(prompt.includes('briefId'));assert.ok(prompt.includes(editorialBrief.id));assert.ok(prompt.includes('sept annonces commerciales'));
+ const context=JSON.parse(prompt.split('CONTEXTE_JSON:\n')[1]);assert.equal(context.config.commercialFocus,'consulting');assert.equal(context.config.targetAudience,'it');
+ assert.equal(context.editorial.proofRules[0],'Pas de résultat inventé');assert.equal(context.editorial.assumption,'Un point de départ à tester');assert.equal(context.editorial.review.limitations[0],'Une absence de saisie ne vaut pas zéro');
+});
+test('les aperçus des deux comptes partagent des créneaux explicites et refusent les dates impossibles',()=>{
+ const result=draftParameters({account:'person',start:'2026-11-28',days:'7'});assert.equal(result.accountId,'person');assert.equal(result.slots[0].day,'2026-11-28');assert.equal(result.slots.at(-1).day,'2026-12-04');
+ assert.throws(()=>draftParameters({start:'2026-02-30'}),/date réelle/);assert.throws(()=>draftParameters({account:'both'}),/person ou organization/);assert.throws(()=>draftParameters({days:'eight'}),/1 et 7/);
+});
 test('la portée des instructions respecte le nouvel autopilote sans copier des secrets',()=>{
  const strategy={rules:['Pas de publication automatique : export puis validation humaine.','Ne pas inventer.'],rhythm:'Trois fois par semaine'};
  assert.deepEqual(safeStrategy(strategy).rules,['Ne pas inventer.']);

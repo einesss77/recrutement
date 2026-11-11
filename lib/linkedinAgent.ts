@@ -5,6 +5,8 @@ import {z} from 'zod';
 import {prisma} from '@/lib/db';
 import {postsSchema,type SocialPost} from '@/lib/socialStudio';
 import strategy from '@/studio-social/content/strategy.json';
+import playbook from '@/studio-social/content/linkedin-playbook.json';
+import {buildEditorialStrategy,type EditorialBrief,type EditorialStrategy} from '@/shared/linkedin-strategy.mjs';
 import {exchangeLinkedInCode,refreshLinkedInToken,verifyLinkedInTarget,uploadLinkedInMedia,publishLinkedInPost,getLinkedInPost,getLinkedInAnalytics,LinkedInError,type PublishMedia} from '@/lib/linkedinClient';
 
 const pathname='bm-social-studio/linkedin-agent-v1.json';
@@ -12,14 +14,18 @@ const token=()=>process.env.BLOB_READ_WRITE_TOKEN??process.env.BLOB_READ_WRITE_T
 const statuses=['draft','scheduled','publishing','published','blocked','uncertain','rejected'] as const;
 type QueueStatus=typeof statuses[number];
 const sourceUrl=z.string().url().max(500).refine(v=>new URL(v).protocol==='https:');
+const campaignDate=z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(v=>{const stamp=Date.parse(v+'T12:00:00Z');return Number.isFinite(stamp)&&new Date(stamp).toISOString().slice(0,10)===v;});
+const feedbackSchema=z.object({qualifiedConversations:z.number().int().min(0).max(999),meetings:z.number().int().min(0).max(999),opportunities:z.number().int().min(0).max(999),notes:z.string().max(1000).default('')});
 const configSchema=z.object({
+ commercialFocus:z.enum(['balanced','consulting','build']),targetAudience:z.enum(['mixed','it','business']),campaignStart:campaignDate,
  targetType:z.enum(['organization','person']),targetUrl:z.string().max(300).refine(v=>{if(!v)return true;let u:URL;try{u=new URL(v);}catch{return false;}return u.protocol==='https:'&&['linkedin.com','www.linkedin.com'].includes(u.hostname)&&/^\/(company|in)\/[\w%-]+\/?$/.test(u.pathname);}),
  organizationUrn:z.string().max(100).refine(v=>!v||/^urn:li:organization:\d+$/.test(v)),time:z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),timezone:z.string().max(60).refine(v=>{try{new Intl.DateTimeFormat('en',{timeZone:v});return true;}catch{return false;}}),
  mode:z.enum(['autopilot','review']),enabled:z.boolean(),publishWindowMinutes:z.number().int().min(15).max(180),objective:z.string().min(1).max(1500),voice:z.string().max(1000),facts:z.array(z.string().min(1).max(500)).max(40),pillars:z.array(z.string().min(1).max(200)).min(1).max(12),excludedTopics:z.array(z.string().max(160)).max(30)
 });
 export type AgentConfig=z.infer<typeof configSchema>;
-export type QueueItem={id:string;day:string;publishAt:string;post:SocialPost;format?:'png'|'pdf'|'text';status:QueueStatus;rationale:string;sourceUrls:string[];humanReason:string;error?:string;linkedinUrn?:string;linkedinUrl?:string;publishedAt?:string;fingerprint:string;authorUrn?:string;mediaUrn?:string};
-type Job={id:string;kind:'plan'|'publish'|'profile';status:'queued'|'running'|'completed'|'failed';createdAt:string;finishedAt?:string;message?:string;itemId?:string;leaseHash?:string;leaseExpiresAt?:string;phase?:'rendering'|'uploading'|'sending';slots?:{day:string;publishAt:string}[]};
+export type SalesFeedback=z.infer<typeof feedbackSchema>&{updatedAt:string;source:'manual'};
+export type QueueItem={editorial?:EditorialBrief;salesFeedback?:SalesFeedback;id:string;day:string;publishAt:string;post:SocialPost;format?:'png'|'pdf'|'text';status:QueueStatus;rationale:string;sourceUrls:string[];humanReason:string;error?:string;linkedinUrn?:string;linkedinUrl?:string;publishedAt?:string;fingerprint:string;authorUrn?:string;mediaUrn?:string};
+type Job={editorial?:EditorialStrategy;id:string;kind:'plan'|'publish'|'profile';status:'queued'|'running'|'completed'|'failed';createdAt:string;finishedAt?:string;message?:string;itemId?:string;leaseHash?:string;leaseExpiresAt?:string;phase?:'rendering'|'uploading'|'sending';slots?:{day:string;publishAt:string}[]};
 type Connection={connected:boolean;targetConfirmed:boolean;displayName:string;targetName:string;authorUrn:string;memberUrn:string;expiresAt:string;scopes:string[]};
 type Journal={id:string;at:string;level:'info'|'warning'|'error';message:string};
 type AgentDocument={version:1;revision:number;config:AgentConfig;connection:Connection;secrets:{clientId?:string;clientSecret?:string;access?:string;refresh?:string;refreshExpiresAt?:string};worker:{id?:string;tokenHash?:string;name?:string;lastSeenAt?:string;status:string;message:string;subscriptionAuth:boolean};queue:QueueItem[];jobs:Job[];journal:Journal[];oauth?:{hash:string;expiresAt:string;fingerprint:string;application:string;scopes:string[]};analytics:{updatedAt?:string;attemptedAt?:string;metrics:{key:string;label:string;value:number}[];message:string};profile:{updatedAt?:string;headline?:string;about?:string;recommendations:string[];summary?:string}};
@@ -31,8 +37,9 @@ export function accountId(value:unknown):AccountId {if(value===undefined||value=
 export function withAgentAccount<T>(id:AccountId,operation:()=>T):T{return accountContext.run(id,operation);}
 const selectedAccount=()=>accountContext.getStore()||'organization';
 type AgentStore={version:2;revision:number;accounts:Record<AccountId,AgentDocument>;worker:AgentDocument['worker'];app:{clientId?:string;clientSecret?:string}};
-export function initialAgent(id:AccountId=selectedAccount()):AgentDocument{const doc:AgentDocument={version:1,revision:0,config:{targetType:'organization',targetUrl:'https://www.linkedin.com/company/bandmdigitalconsulting/',organizationUrn:'',time:'09:00',timezone:'Europe/Paris',mode:'autopilot',enabled:false,publishWindowMinutes:120,objective:strategy.objective,voice:strategy.voice,facts:[...strategy.facts],pillars:[...strategy.pillars],excludedTopics:['Résultats clients non vérifiés','Promesses de performance','Sujets politiques partisans']},connection:{connected:false,targetConfirmed:false,displayName:'',targetName:'',authorUrn:'',memberUrn:'',expiresAt:'',scopes:[]},secrets:{},worker:{status:'offline',message:'Le moteur local n’est pas encore relié.',subscriptionAuth:false},queue:[],jobs:[],journal:[],analytics:{metrics:[],message:'Aucune statistique LinkedIn collectée.'},profile:{recommendations:[]}};if(id==='person'){doc.config.targetType='person';doc.config.targetUrl='';doc.config.time='10:00';doc.config.voice='Écrire à la première personne comme un consultant et dirigeant B&M. Partager un point de vue concret, des enseignements et des questions de terrain. Aucun copier-coller des publications de la page entreprise. '+strategy.voice;}return doc;}
-function storeDocument(value?:AgentStore|AgentDocument):AgentStore{if(value?.version===2)return value;const organization=initialAgent('organization'),person=initialAgent('person');const accounts={organization,person};if(value)accounts[value.config.targetType]=value;return{version:2,revision:value?.revision||0,accounts,worker:value?.worker||organization.worker,app:{clientId:value?.secrets.clientId,clientSecret:value?.secrets.clientSecret}};}
+export function initialAgent(id:AccountId=selectedAccount()):AgentDocument{const doc:AgentDocument={version:1,revision:0,config:{commercialFocus:'balanced',targetAudience:'mixed',campaignStart:dayAt(new Date(),'Europe/Paris'),targetType:'organization',targetUrl:'https://www.linkedin.com/company/bandmdigitalconsulting/',organizationUrn:'',time:'09:00',timezone:'Europe/Paris',mode:'autopilot',enabled:false,publishWindowMinutes:120,objective:strategy.objective,voice:strategy.voice,facts:[...strategy.facts],pillars:[...strategy.pillars],excludedTopics:['Résultats clients non vérifiés','Promesses de performance','Sujets politiques partisans']},connection:{connected:false,targetConfirmed:false,displayName:'',targetName:'',authorUrn:'',memberUrn:'',expiresAt:'',scopes:[]},secrets:{},worker:{status:'offline',message:'Le moteur local n’est pas encore relié.',subscriptionAuth:false},queue:[],jobs:[],journal:[],analytics:{metrics:[],message:'Aucune statistique LinkedIn collectée.'},profile:{recommendations:[]}};if(id==='person'){doc.config.targetType='person';doc.config.targetUrl='';doc.config.time='10:00';doc.config.voice='Écrire à la première personne comme un consultant et dirigeant B&M. Partager un point de vue concret, des enseignements et des questions de terrain. Aucun copier-coller des publications de la page entreprise. '+strategy.voice;}return doc;}
+function ensureStrategyConfig(d:AgentDocument){d.config.commercialFocus??='balanced';d.config.targetAudience??='mixed';d.config.campaignStart??=dayAt(new Date(),d.config.timezone||'Europe/Paris');}
+function storeDocument(value?:AgentStore|AgentDocument):AgentStore{if(value?.version===2){Object.values(value.accounts).forEach(ensureStrategyConfig);return value;}const organization=initialAgent('organization'),person=initialAgent('person');const accounts={organization,person};if(value){ensureStrategyConfig(value);accounts[value.config.targetType]=value;}return{version:2,revision:value?.revision||0,accounts,worker:value?.worker||organization.worker,app:{clientId:value?.secrets.clientId,clientSecret:value?.secrets.clientSecret}};}
 function scopedDocument(store:AgentStore){const d=store.accounts[selectedAccount()];d.revision=store.revision;d.worker=store.worker;d.secrets.clientId=store.app.clientId;d.secrets.clientSecret=store.app.clientSecret;return d;}
 function conflict(error:unknown){return error instanceof BlobPreconditionFailedError||/CONFLICT|precondition failed|etag mismatch|already exists/i.test(error instanceof Error?error.message:'');}
 async function readAgent():Promise<{document:AgentDocument;etag?:string;store:AgentStore}>{
@@ -94,10 +101,13 @@ export function dailySlot(day:string,time:string,timezone:string){
 export function nextRun(config:AgentConfig,now=new Date()){let day=dayAt(now,config.timezone),slot=dailySlot(day,config.time,config.timezone);if(Date.parse(slot)<=now.getTime())slot=dailySlot(addDay(day),config.time,config.timezone);return slot;}
 function slotsFor(d:AgentDocument,now=new Date()){
  let day=dayAt(now,d.config.timezone);if(Date.parse(dailySlot(day,d.config.time,d.config.timezone))<=now.getTime())day=addDay(day);
+ if(d.config.campaignStart&&day<d.config.campaignStart)day=d.config.campaignStart;
  const slots:{day:string;publishAt:string}[]=[];
  for(let i=0;slots.length<7&&i<60;i++,day=addDay(day)){if(!d.queue.some(q=>q.day===day&&q.status!=='rejected'))slots.push({day,publishAt:dailySlot(day,d.config.time,d.config.timezone)});}
  return slots;
 }
+function recentPostsFor(store:AgentStore){return Object.entries(store.accounts).flatMap(([accountId,a])=>a.queue.filter(q=>q.status!=='rejected').slice(-30).map(q=>({accountId,status:q.status,title:q.post.title,caption:q.post.caption,publishedAt:q.publishedAt,editorial:q.editorial})));}
+function editorialFor(d:AgentDocument,store:AgentStore,slots=slotsFor(d),now=new Date()):EditorialStrategy{return buildEditorialStrategy({playbook,accountId:selectedAccount(),config:d.config,slots,recentPosts:recentPostsFor(store),queue:d.queue,now});}
 export function postFingerprint(post:SocialPost){return hash(post.caption.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^\p{L}\p{N}]/gu,''));}
 function assess(post:SocialPost,config:AgentConfig,needsHuman=false,reason=''){
  const issues:string[]=[];const all=[post.caption,...post.slides.flatMap(s=>[s.title,s.body,...s.points])].join(' ');
@@ -112,10 +122,10 @@ function assess(post:SocialPost,config:AgentConfig,needsHuman=false,reason=''){
 function refreshAvailable(d:AgentDocument){return !!d.secrets.refresh&&Date.parse(d.secrets.refreshExpiresAt||'')>Date.now();}
 function capabilities(d:AgentDocument){const active=d.connection.connected&&(Date.parse(d.connection.expiresAt)>Date.now()||refreshAvailable(d));return{publish:active&&d.connection.targetConfirmed&&!!d.connection.authorUrn&&d.connection.scopes.includes(d.config.targetType==='organization'?'w_organization_social':'w_member_social'),analytics:active&&d.config.targetType==='organization'&&d.connection.scopes.includes('rw_organization_admin'),comments:false,profileEdit:false};}
 function blockers(d:AgentDocument,storageReady=true){const out:string[]=[];if(!storageReady)out.push('Stockage persistant indisponible : aucune activation ni sauvegarde serveur.');let creds;try{creds=credentials(d);}catch(e){out.push((e as Error).message);}if(!creds?.clientId||!creds.clientSecret)out.push('Renseigner le Client ID et le Client Secret de l’application LinkedIn.');if(!d.connection.connected)out.push('Connecter LinkedIn et vérifier le compte cible.');else if(!d.connection.targetConfirmed)out.push('Confirmer que le profil personnel connecté est bien le destinataire.');else if(Date.parse(d.connection.expiresAt)<=Date.now()&&!refreshAvailable(d))out.push('Autorisation LinkedIn expirée : reconnecter le compte.');else if(!capabilities(d).publish)out.push('Permission de publication LinkedIn manquante.');if(!d.worker.tokenHash)out.push('Relier le moteur local utilisant l’abonnement ChatGPT.');else if(!d.worker.subscriptionAuth)out.push('Le moteur doit confirmer sa connexion Codex avec ChatGPT.');else if(!d.worker.lastSeenAt||Date.now()-Date.parse(d.worker.lastSeenAt)>2*3600000)out.push('Le moteur local n’a pas donné signe de vie depuis plus de deux heures.');return out;}
-function publicState(d:AgentDocument,storageReady=true){let configured=false;try{const c=credentials(d);configured=!!c.clientId&&!!c.clientSecret;}catch{}return{accountId:selectedAccount(),config:d.config,connection:{...d.connection,clientConfigured:configured,redirectUri:callbackUrl()},worker:{paired:!!d.worker.tokenHash,id:d.worker.id,name:d.worker.name,lastSeenAt:d.worker.lastSeenAt,status:d.worker.status,message:d.worker.message,subscriptionAuth:d.worker.subscriptionAuth},queue:d.queue,jobs:d.jobs.map(({leaseHash,...j})=>j),journal:d.journal,capabilities:capabilities(d),blockers:blockers(d,storageReady),storageReady,revision:d.revision,analytics:d.analytics,profile:d.profile,nextRunAt:nextRun(d.config)};}
+function publicState(d:AgentDocument,store:AgentStore,storageReady=true){let configured=false;try{const c=credentials(d);configured=!!c.clientId&&!!c.clientSecret;}catch{}return{editorial:editorialFor(d,store),accountId:selectedAccount(),config:d.config,connection:{...d.connection,clientConfigured:configured,redirectUri:callbackUrl()},worker:{paired:!!d.worker.tokenHash,id:d.worker.id,name:d.worker.name,lastSeenAt:d.worker.lastSeenAt,status:d.worker.status,message:d.worker.message,subscriptionAuth:d.worker.subscriptionAuth},queue:d.queue,jobs:d.jobs.map(({leaseHash,...j})=>j),journal:d.journal,capabilities:capabilities(d),blockers:blockers(d,storageReady),storageReady,revision:d.revision,analytics:d.analytics,profile:d.profile,nextRunAt:nextRun(d.config)};}
 export async function agentState(){
  let store:AgentStore,storageReady=true;try{store=(await readAgent()).store;}catch{store=storeDocument();storageReady=false;}
- const selected=selectedAccount(),state=publicState(scopedDocument(store),storageReady);
+ const selected=selectedAccount(),state=publicState(scopedDocument(store),store,storageReady);
  const accounts=(['organization','person'] as const).map(id=>{const d=store.accounts[id];return{id,label:id==='organization'?'Page B&M':'Profil professionnel',enabled:d.config.enabled,connected:d.connection.connected,targetName:d.connection.targetName,nextRunAt:nextRun(d.config),pendingCount:d.queue.filter(q=>['draft','scheduled','blocked','uncertain'].includes(q.status)).length};});
  return{...state,selectedAccountId:selected,accounts};
 }
@@ -135,20 +145,21 @@ export async function configureAgent(input:unknown){
   log(d,d.config.enabled?'Le quotidien LinkedIn est activé.':'Paramètres de l’agent enregistrés.');return{ok:true};
  });
 }
-function enqueue(d:AgentDocument,kind:'plan'|'profile',now=new Date()){
+function enqueue(d:AgentDocument,kind:'plan'|'profile',store:AgentStore,now=new Date()){
  if(d.jobs.some(j=>j.kind===kind&&['queued','running'].includes(j.status)))return;
- d.jobs.unshift({id:randomUUID(),kind,status:'queued',createdAt:now.toISOString(),...(kind==='plan'?{slots:slotsFor(d,now)}:{})});d.jobs=d.jobs.slice(0,80);log(d,kind==='plan'?'Préparation de sept publications demandée.':'Diagnostic éditorial du profil demandé.');
+ const slots=kind==='plan'?slotsFor(d,now):undefined;
+ d.jobs.unshift({id:randomUUID(),kind,status:'queued',createdAt:now.toISOString(),...(slots?{slots,editorial:editorialFor(d,store,slots,now)}:{})});d.jobs=d.jobs.slice(0,80);log(d,kind==='plan'?'Préparation de sept publications demandée.':'Diagnostic éditorial du profil demandé.');
 }
 export async function agentCommand(input:unknown){
- const cmd=z.object({action:z.enum(['plan','run','pause','approve','reject','retry','analytics','profile','disconnect','update','resolve','enqueue','confirm-target']),authorUrn:z.string().max(150).optional(),itemId:z.string().max(100).optional(),caption:z.string().max(3000).optional(),post:z.unknown().optional(),format:z.enum(['image','document','text']).optional(),publishAt:z.string().datetime().optional(),linkedinUrn:z.string().max(150).optional()}).parse(input);
+ const cmd=z.object({action:z.enum(['plan','run','pause','approve','reject','retry','analytics','profile','disconnect','update','resolve','enqueue','confirm-target','feedback']),feedback:feedbackSchema.optional(),authorUrn:z.string().max(150).optional(),itemId:z.string().max(100).optional(),caption:z.string().max(3000).optional(),post:z.unknown().optional(),format:z.enum(['image','document','text']).optional(),publishAt:z.string().datetime().optional(),linkedinUrn:z.string().max(150).optional()}).parse(input);
  if(cmd.action==='analytics')return collectAnalytics();
  if(cmd.action==='resolve')return resolveUncertain(cmd.itemId||'',cmd.linkedinUrn||'');
  return mutate((d,store)=>{
   if(cmd.action==='confirm-target'){if(!d.connection.connected||cmd.authorUrn!==d.connection.authorUrn)throw new AgentError('Le profil connecté a changé.');d.connection.targetConfirmed=true;log(d,'Profil connecté confirmé comme destinataire : '+d.connection.targetName);return{ok:true};}
-  if(cmd.action==='plan'||cmd.action==='profile'){enqueue(d,cmd.action);return{ok:true,message:'Demande enregistrée. Le moteur local la prendra au prochain passage.'};}
+  if(cmd.action==='plan'||cmd.action==='profile'){enqueue(d,cmd.action,store);return{ok:true,message:'Demande enregistrée. Le moteur local la prendra au prochain passage.'};}
   if(cmd.action==='pause'){d.config.enabled=false;log(d,'Le quotidien a été mis en pause.');return{ok:true};}
   if(cmd.action==='disconnect'){d.config.enabled=false;d.connection=initialAgent().connection;delete d.secrets.access;delete d.secrets.refresh;log(d,'Compte LinkedIn déconnecté.');return{ok:true};}
-  if(cmd.action==='run'){if(!d.queue.some(q=>q.status==='scheduled'))enqueue(d,'plan');log(d,'Cycle demandé. Le moteur respecte le créneau quotidien et les contrôles.');return{ok:true};}
+  if(cmd.action==='run'){if(!d.queue.some(q=>q.status==='scheduled'))enqueue(d,'plan',store);log(d,'Cycle demandé. Le moteur respecte le créneau quotidien et les contrôles.');return{ok:true};}
   if(cmd.action==='enqueue'){
    const post=postsSchema.parse([cmd.post])[0],fingerprint=postFingerprint(post);
    if(Object.values(store.accounts).some(a=>a.queue.some(q=>q.fingerprint===fingerprint&&q.status!=='rejected')))throw new AgentError('Cette publication est déjà dans le calendrier LinkedIn.');
@@ -157,6 +168,7 @@ export async function agentCommand(input:unknown){
    post.id=id;post.date=slot.day;d.queue.push({id,...slot,post,format,status:humanReason||d.config.mode==='review'?'draft':'scheduled',rationale:'Ajouté depuis la bibliothèque du studio.',sourceUrls:[],humanReason,fingerprint});log(d,`Ajout au calendrier LinkedIn : ${post.title}`);return{ok:true,itemId:id,publishAt:slot.publishAt};
   }
   const q=d.queue.find(q=>q.id===cmd.itemId);if(!q)throw new AgentError('Publication introuvable.',404);
+  if(cmd.action==='feedback'){if(q.status!=='published')throw new AgentError('Les retours commerciaux concernent uniquement les publications déjà publiées.');if(!cmd.feedback)throw new AgentError('Renseignez les retours commerciaux observés.');q.salesFeedback={...cmd.feedback,updatedAt:nowIso(),source:'manual'};log(d,`Retours commerciaux saisis manuellement pour « ${q.post.title} » : ${cmd.feedback.qualifiedConversations} conversations qualifiées, ${cmd.feedback.meetings} rendez-vous, ${cmd.feedback.opportunities} opportunités.`);return{ok:true};}
   if(['published','publishing','uncertain'].includes(q.status))throw new AgentError('Cette publication est envoyée, en cours ou à résultat incertain. Aucune modification ni nouvelle tentative automatique.',409);
   if(cmd.action==='reject'){q.status='rejected';log(d,`Publication écartée : ${q.post.title}`);return{ok:true};}
   if(cmd.action==='update'){
@@ -204,15 +216,16 @@ async function claimScopedJob(workerId:string){
    const due=dueQueueItem(d,now);if(due){due.status='publishing';due.authorUrn=d.connection.authorUrn;d.jobs.unshift({id:randomUUID(),kind:'publish',status:'queued',createdAt:now.toISOString(),itemId:due.id,phase:'rendering'});}
    const future=d.queue.filter(q=>['scheduled','draft'].includes(q.status)&&Date.parse(q.publishAt)>now.getTime()).length;
    const recentlyPlanned=d.jobs.some(j=>j.kind==='plan'&&['completed','failed'].includes(j.status)&&Date.parse(j.finishedAt||j.createdAt)>now.getTime()-(j.status==='failed'?24:6)*3600000);
-   if(future<3&&!recentlyPlanned)enqueue(d,'plan',now);
+   if(future<3&&!recentlyPlanned)enqueue(d,'plan',store,now);
   }
   const j=d.jobs.find(j=>j.status==='queued'&&j.kind==='publish')||[...d.jobs].reverse().find(j=>j.status==='queued');if(!j)return{job:null,nextRunAt:nextRun(d.config,now),blockers:blockers(d)};
   if(j.kind==='publish'&&(!d.config.enabled||!capabilities(d).publish)){j.status='failed';j.message='Publication désactivée ou connexion manquante.';const item=d.queue.find(q=>q.id===j.itemId);if(item?.status==='publishing')item.status='blocked';return{job:null};}
   j.status='running';j.leaseHash=hash(leaseToken);j.leaseExpiresAt=new Date(now.getTime()+20*60000).toISOString();d.worker.status='busy';
-  const recentPosts=Object.entries(store.accounts).flatMap(([accountId,a])=>a.queue.filter(q=>q.status!=='rejected').slice(-30).map(q=>({accountId,status:q.status,title:q.post.title,caption:q.post.caption,publishedAt:q.publishedAt})));
+  const recentPosts=recentPostsFor(store);
+  if(j.kind==='plan'&&!j.editorial){j.slots??=slotsFor(d,now);j.editorial=editorialFor(d,store,j.slots,now);}
   const previousResults=d.jobs.filter(j=>['completed','failed'].includes(j.status)).slice(0,8).map(j=>({kind:j.kind,status:j.status,message:j.message,at:j.finishedAt||j.createdAt}));
   const item=d.queue.find(q=>q.id===j.itemId);
-  const payload=j.kind==='publish'?{itemId:item!.id,post:item!.post,format:item!.format||(item!.post.slides.length>1?'pdf':'png'),publishAt:item!.publishAt}:{config:d.config,strategy,recentPosts,analytics:d.analytics,previousResults,templates:['editorial','steps','squad','checklist','case','focus','chatbot','document','automation'],...(j.kind==='plan'?{slots:j.slots||slotsFor(d,now)}:{})};
+  const payload=j.kind==='publish'?{itemId:item!.id,post:item!.post,format:item!.format||(item!.post.slides.length>1?'pdf':'png'),publishAt:item!.publishAt}:{config:d.config,strategy,recentPosts,analytics:d.analytics,previousResults,templates:['editorial','steps','squad','checklist','case','focus','chatbot','document','automation'],...(j.kind==='plan'?{slots:j.slots||slotsFor(d,now),editorial:j.editorial}:{})};
   return{job:{accountId:selectedAccount(),id:j.id,kind:j.kind,leaseToken,leaseExpiresAt:j.leaseExpiresAt,payload}};
  });
 }
@@ -233,14 +246,15 @@ export async function completeJob(workerId:string,input:unknown){
   if(b.error){j.status='failed';j.finishedAt=nowIso();delete j.leaseHash;j.message=b.error;d.worker.status='error';d.worker.message=b.error;const q=d.queue.find(x=>x.id===j.itemId);if(q?.status==='publishing'){q.status=j.phase==='sending'?'uncertain':'blocked';q.error=b.error;}log(d,b.error,'error');return{ok:true,status:'failed'};}
   if(j.kind==='publish')throw new AgentError('Le résultat de publication doit être confirmé par LinkedIn, pas par le modèle.');
   if(j.kind==='plan'){
-   const plan=z.object({items:z.array(z.object({post:z.unknown(),rationale:z.string().max(700).default(''),sourceUrls:z.array(sourceUrl).max(8).default([]),needsHuman:z.boolean().default(false),humanReason:z.string().max(700).default('')})).min(1).max(7),summary:z.string().max(1000).default('')}).parse(b.result);
+   const plan=z.object({items:z.array(z.object({briefId:z.string().max(240).optional(),post:z.unknown(),rationale:z.string().max(700).default(''),sourceUrls:z.array(sourceUrl).max(8).default([]),needsHuman:z.boolean().default(false),humanReason:z.string().max(700).default('')})).min(1).max(7),summary:z.string().max(1000).default('')}).parse(b.result);
    const slots=j.slots||[];let count=0;
    for(const [index,item]of plan.items.entries()){
+    const brief=j.editorial?.briefs[index];if(item.briefId!==undefined&&item.briefId!==brief?.id)throw new AgentError('Le brief de la publication ne correspond pas au plan éditorial demandé. Relancez la préparation.',409);
     const slot=slots[index];if(!slot||d.queue.some(q=>q.day===slot.day&&q.status!=='rejected'))continue;
     const post=postsSchema.parse([item.post])[0];post.id=`li-${selectedAccount()}-${slot.day}-${randomUUID().slice(0,8)}`;post.date=slot.day;post.status='draft';post.image='';
     const fingerprint=postFingerprint(post);if(Object.values(store.accounts).some(a=>a.queue.some(q=>q.fingerprint===fingerprint&&q.status!=='rejected')))continue;
     const humanReason=assess(post,d.config,item.needsHuman,item.humanReason);
-    d.queue.push({id:post.id,day:slot.day,publishAt:slot.publishAt,post,status:humanReason||d.config.mode==='review'?'draft':'scheduled',rationale:item.rationale,sourceUrls:item.sourceUrls,humanReason,fingerprint});count++;
+    d.queue.push({...(brief?{editorial:structuredClone(brief)}:{}),id:post.id,day:slot.day,publishAt:slot.publishAt,post,status:humanReason||d.config.mode==='review'?'draft':'scheduled',rationale:item.rationale,sourceUrls:item.sourceUrls,humanReason,fingerprint});count++;
    }
    j.message=`${count} nouvelles publications préparées.`;log(d,j.message);d.queue=d.queue.slice(-180);
   }else{

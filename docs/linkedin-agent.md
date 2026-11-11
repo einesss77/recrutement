@@ -66,15 +66,28 @@ Les limites du worker sont bornées : 7 jours par plan, 4 pages par post, 2,8 Mo
 
 Les contrôles déterministes réduisent les erreurs courantes ; ils ne certifient pas automatiquement tous les faits d’un texte. Les nouveautés, références clients et engagements commerciaux doivent être fournis dans les faits confirmés. Les informations manquantes restent visibles.
 
+## Une stratégie avant la rédaction
+
+Le playbook partagé définit le positionnement, les audiences, les séries et la progression de campagne. Les réglages du compte précisent la priorité commerciale (équilibre, consultants ou applications), l’audience prioritaire (mixte, décideurs IT ou dirigeants métier) et la date de départ. Le profil exprime un jugement professionnel personnel ; la page explique un cadre de travail collectif. Le calendrier des deux comptes est consulté pour éviter les copies et les accroches répétées.
+
+Chaque créneau possède un brief conservé côté serveur : audience, problème, angle, décision à faciliter, enseignement, preuve nécessaire, composition visuelle et prochaine étape. Le modèle doit rédiger ce brief précis et retourner son identifiant. Un identifiant absent ou permuté fait échouer le plan ; le serveur conserve lui-même les métadonnées de stratégie, sans accepter un rattachement inventé par le modèle.
+
+Une semaine ne se réduit pas à sept publicités : les publications apportent des critères, des méthodes ou des questions de cadrage. Une seule invitation commerciale est prévue par période de sept jours de campagne ; les autres se terminent par une question métier précise ou par leur enseignement. Un lot peut combler plusieurs semaines : les briefs conservés dans le calendrier priment sur le simple nombre de posts générés. Les appels « commentez GUIDE », les sollicitations artificielles et les ressources inexistantes sont signalés. Les expressions d’opinion sont possibles ; une expérience personnelle ou un résultat client doit être étayé par les faits fournis.
+
+Le worker produit un plan en **un seul appel de rédaction**, puis applique des contrôles déterministes : correspondance des briefs, faits, sources, exclusions, répétitions, variété des compositions, CTA et lisibilité. Ces contrôles ne remplacent pas une lecture éditoriale et ne déclenchent pas une boucle de réécriture coûteuse. Un problème précis revient dans la file de contrôle, avec sa raison.
+
+La stratégie reste une hypothèse à tester. Les statistiques LinkedIn disponibles sont des observations, parfois cumulées à l’échelle de la page : elles ne permettent pas d’attribuer automatiquement un résultat à chaque post, ni de prouver qu’un contact devient un client. La revue doit distinguer portée, réactions et conversations commerciales qualifiées, puis intégrer les retours et les faits confirmés avant de changer la ligne éditoriale. Aucun prospect, taux de conversion ou effet de l’algorithme n’est promis.
+
 ## Prévisualiser sans publier
 
 ```powershell
-node scripts/linkedin-agent.mjs draft --days 7
-node scripts/linkedin-agent.mjs render --file .local/linkedin-agent/draft-preview.json --format png
-node scripts/linkedin-agent.mjs render --file .local/linkedin-agent/draft-preview.json --format pdf
+node scripts/linkedin-agent.mjs draft --days 7 --account organization --out .local/linkedin-agent/page-preview.json
+node scripts/linkedin-agent.mjs draft --days 7 --account person --recent .local/linkedin-agent/page-preview.json --out .local/linkedin-agent/profile-preview.json
+node scripts/linkedin-agent.mjs render --file .local/linkedin-agent/page-preview.json --format png
+node scripts/linkedin-agent.mjs render --file .local/linkedin-agent/profile-preview.json --format pdf
 ```
 
-`draft` utilise réellement Codex, mais n’appelle ni le studio ni LinkedIn. Les fichiers restent dans `.local/linkedin-agent/`. `render` prend une publication, un objet `{post: ...}` ou la première publication d’un plan.
+`draft` utilise réellement Codex et le même moteur stratégique que le serveur, mais n’appelle ni le studio ni LinkedIn. Il démarre demain par défaut ; `--start YYYY-MM-DD` fixe le premier jour. `--recent` accepte un plan précédent ou un tableau de publications pour tester la différence entre les deux comptes. Le fichier contient les briefs et les posts ; il reste local à l’emplacement `--out`. `render` prend une publication, un objet `{post: ...}` ou la première publication d’un plan.
 
 ## Diagnostic
 
@@ -88,6 +101,6 @@ node scripts/linkedin-agent.mjs render --file .local/linkedin-agent/draft-previe
 | Visuel trop lourd ou non lisible | Le travail est bloqué. Le worker ne remplace pas discrètement un carrousel par du texte. |
 | Réponse d’envoi perdue | Contrôle de l’issue avant toute nouvelle publication. |
 
-Tests locaux : `node --test scripts/linkedin-agent/test.mjs`.
+Tests du worker : `node --test scripts/linkedin-agent/test.mjs`. Tests du moteur de stratégie : `node --test scripts/linkedin-agent/strategy.test.mjs`. La vérification de cette évolution comprend également les 29 tests du backend LinkedIn.
 
 Documentation officielle utilisée : [Codex non interactif](https://learn.chatgpt.com/docs/non-interactive-mode), [authentification Codex](https://learn.chatgpt.com/docs/auth), [OAuth LinkedIn](https://learn.microsoft.com/en-us/linkedin/shared/authentication/authorization-code-flow), [Posts API LinkedIn](https://learn.microsoft.com/en-us/linkedin/marketing/community-management/shares/posts-api).
