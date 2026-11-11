@@ -222,7 +222,7 @@
 }
 
 .premium-site:not(.home-page) main :is(.service-contact, .about-contact, .mp-contact, .portfolio-contact, .compact-closing) .wrap {
-  padding-block: clamp(42px, 6.25vw, 90px);
+  padding-block: clamp(36px, 4vw, 56px);
 }
 
 .premium-site:not(.home-page) main :is(.service-contact, .about-contact, .mp-contact, .portfolio-contact, .compact-closing) {

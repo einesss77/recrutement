@@ -16,14 +16,14 @@ if(root){
         entrance.unobserve(entry.target);
       }
     },{threshold:.12}):null;
-    root.querySelectorAll('[data-index-reveal]').forEach((el,i)=>{el.style.setProperty('--pi-delay',`${i%2*80}ms`);entrance?.observe(el)});
+    root.querySelectorAll('[data-index-reveal]').forEach((el,i)=>{el.style.setProperty('--pi-delay',`${i%3*65}ms`);entrance?.observe(el)});
     function render(){
       frame=0;
       if(reduced.matches)return;
       const readings=[...active].map(card=>[card,card.getBoundingClientRect()]);
       for(const [card,bounds] of readings){
         const progress=Math.max(-1,Math.min(1,(innerHeight*.5-bounds.top-bounds.height*.5)/(innerHeight*.5+bounds.height*.5)));
-        card.querySelector('[data-index-depth]')?.style.setProperty('--pi-depth-y',`${progress*(innerWidth>700?48:16)}px`);
+        card.querySelector('[data-index-depth]')?.style.setProperty('--pi-depth-y',`${progress*(innerWidth>700?14:6)}px`);
       }
     }
     function schedule(){if(!frame)frame=requestAnimationFrame(render)}

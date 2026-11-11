@@ -30,11 +30,10 @@ export function portfolioIndex() {
   return `<div class="pi-index">
     <header class="pi-hero"><div class="wrap">
       <p class="pi-kicker">B&M / RÉALISATIONS & DÉMONSTRATIONS</p>
-      <div class="pi-hero-grid"><h1>Le travail,<br><span>en images.</span></h1><div><p>Des usages transformés en interfaces.<br>Entrez dans les projets : le contexte, les choix et les écrans.</p><a class="pi-explore" href="#projets">Explorer la sélection ${arrow}</a></div></div>
+      <div class="pi-hero-grid"><h1>Le travail,<br><span>en images.</span></h1><div><p>Des interfaces pensées pour le quotidien.<br>Découvrez les usages, les choix et les écrans de chaque projet.</p><a class="pi-explore" href="#projets">Explorer la sélection ${arrow}</a></div></div>
       <div class="pi-hero-bottom"><span>WEB / MOBILE / OUTILS MÉTIER</span><span><b data-index-count>${String(projects.length).padStart(2,'0')}</b> PROJETS À EXPLORER</span></div>
     </div></header>
     <section class="pi-selection" id="projets" aria-label="Projets et démonstrations"><div class="wrap"><div data-portfolio-index>${indexCardsMarkup(projects)}</div><p class="pi-disclosure" data-index-disclosure>Les projets présentés sont des démonstrations sur données fictives.</p><p class="pi-status" role="status"></p></div></section>
-    <section class="pi-contact"><div class="wrap"><div><p class="pi-kicker">ET VOTRE PROJET ?</p><h2>Donnons forme<br>à votre prochain outil.</h2></div><a href="/contact/?besoin=solution">Parlons de votre projet <span>${arrow}</span></a></div></section>
   </div>`;
 }
 

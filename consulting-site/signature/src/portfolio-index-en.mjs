@@ -15,4 +15,12 @@ export default {
   'La suite se prépare.':'The next chapter is coming.',
   'Les prochains projets seront présentés ici.':'New projects will be presented here.',
   'Projet digital':'Digital project',
+  'Des interfaces pensées pour le quotidien.':'Interfaces designed for everyday work.',
+  'Découvrez les usages, les choix et les écrans de chaque projet.':'Explore the workflows, decisions and screens behind each project.',
+  'LE PROCHAIN CHAPITRE':'THE NEXT CHAPTER',
+  'Une idée à':'An idea to',
+  'mettre en œuvre.':'bring to life.',
+  'Un outil à créer, un parcours à simplifier.':'A tool to build, a workflow to simplify.',
+  'Parlons de votre besoin.':'Tell us what you need.',
+  'Échangeons':'Let’s talk',
 };
