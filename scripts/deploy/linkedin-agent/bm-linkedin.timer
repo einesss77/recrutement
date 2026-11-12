@@ -1,0 +1,12 @@
+[Unit]
+Description=B&M LinkedIn - check due jobs every five minutes
+
+[Timer]
+OnCalendar=*-*-* *:0/5:00
+AccuracySec=1s
+RandomizedDelaySec=10s
+Persistent=false
+Unit=bm-linkedin.service
+
+[Install]
+WantedBy=timers.target

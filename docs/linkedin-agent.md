@@ -1,6 +1,6 @@
 # Agent LinkedIn B&M
 
-Le studio pilote la stratégie, les créneaux, les validations et le journal, séparément pour la **page entreprise B&M** et le **profil professionnel personnel**. Un worker sur un ordinateur de confiance utilise la connexion **Codex avec ChatGPT** pour préparer les textes et compose les images avec les mêmes templates que le studio. La publication passe par l’API officielle LinkedIn, côté serveur.
+Le studio pilote la stratégie, les créneaux, les validations et le journal, séparément pour la **page entreprise B&M** et le **profil professionnel personnel**. Un worker sur une machine de confiance, PC ou VPS, utilise la connexion **Codex avec ChatGPT** pour préparer les textes et compose les images avec les mêmes templates que le studio. La publication passe par l’API officielle LinkedIn, côté serveur. L’installation [sur VPS](linkedin-agent-vps.md) permet de l’exécuter lorsque le PC est éteint.
 
 ## Ce qui doit être connecté
 
@@ -14,9 +14,9 @@ Dans le [portail LinkedIn Developer](https://www.linkedin.com/developers/apps), 
 
 Renseigner l’URL de retour `https://www.bandmdigitalconsulting.com/api/studio-agent/callback` dans les paramètres OAuth de l’application, puis saisir le Client ID et le Client Secret uniquement dans **Agent LinkedIn → Connexions & réglages → Renseigner l’application LinkedIn**. Les deux comptes réutilisent cette application, mais possèdent leurs connexions et calendriers propres. Les permissions demandées restent identiques pour les deux connexions afin que LinkedIn n’invalide pas le premier accès en autorisant le second.
 
-Connecter ensuite la page, puis le profil et confirmer l’identité reçue de LinkedIn. Après le premier signal du moteur local, activer le quotidien séparément pour chaque compte. Aucun identifiant, jeton ou mot de passe n’a besoin d’être envoyé dans un chat.
+Connecter ensuite la page, puis le profil et confirmer l’identité reçue de LinkedIn. Après le premier signal du service d’exécution, activer le quotidien séparément pour chaque compte. Aucun identifiant, jeton ou mot de passe n’a besoin d’être envoyé dans un chat.
 
-Pour une installation manuelle, importer explicitement le fichier sur l’ordinateur qui exécutera l’agent :
+Pour une installation manuelle, importer explicitement le fichier sur la machine qui exécutera l’agent :
 
 ```powershell
 Set-Location C:\Users\eines\recrutement
@@ -47,9 +47,9 @@ Le cycle opérationnel est :
 node scripts/linkedin-agent.mjs run --auto-pair-download
 ```
 
-Une tâche récurrente créée dans Codex peut déclencher cette commande. **L’ordinateur doit être allumé, connecté au réseau et capable d’exécuter cette tâche.** Le worker n’installe aucun service Windows caché et ne crée pas de planificateur alternatif. Le serveur décide si un créneau est dû ; l’exécution d’un cycle n’impose pas une publication immédiate. Plusieurs cycles servent à préparer les contenus avant leur heure de diffusion.
+Sur PC, une tâche récurrente créée dans Codex peut déclencher cette commande ; l’ordinateur doit alors rester allumé et connecté au réseau. Sur VPS, un service systemd dédié et un minuteur déclenchent les cycles sans dépendre du PC. Le worker n’installe aucun service Windows. Le studio décide si un créneau est dû ; l’exécution d’un cycle n’impose pas une publication immédiate. Plusieurs cycles servent à préparer les contenus avant leur heure de diffusion.
 
-L’automatisation Codex **Agent LinkedIn B&M — profil et page** a été créée avec un passage chaque heure, à la minute 0. Elle utilise `run --auto-pair-download --max-jobs 4`. Les créneaux initiaux sont 09 h pour la page B&M et 10 h pour le profil, en heure de Paris ; chaque compte possède son réglage dans le studio. Un passage en attente de liaison ne déclenche aucun envoi.
+Depuis la migration sur VPS du 12 novembre 2026, l’automatisation locale **Agent LinkedIn B&M — profil et page** est en pause. Le minuteur `bm-linkedin.timer` déclenche un cycle borné toutes les cinq minutes sur le serveur. Les créneaux initiaux restent 09 h pour la page B&M et 10 h pour le profil, en heure de Paris ; chaque compte possède son réglage dans le studio. Un passage sans travail admissible ne déclenche aucun envoi.
 
 Le studio indique séparément « connecté », « préparé », « programmé » et « publié ». Tant que la liaison ou l’autorisation LinkedIn manque, l’automatisation n’est pas opérationnelle, même si l’interface est en ligne.
 
@@ -96,7 +96,7 @@ node scripts/linkedin-agent.mjs render --file .local/linkedin-agent/profile-prev
 | Liaison absente ou révoquée | Importer une nouvelle liaison depuis le studio. Aucun travail n’est pris. |
 | Session ChatGPT absente ou clé API active | Connecter Codex avec ChatGPT. Aucun autre mode n’est utilisé. |
 | Quota Codex atteint | Travail signalé en erreur, sans nouvelle tentative de rédaction en boucle. |
-| Ordinateur arrêté | Aucun cycle ne tourne ; le signal de présence devient ancien. |
+| PC arrêté | Le service VPS continue. Une installation uniquement locale s’arrête avec son ordinateur. |
 | Bail concurrent | Le serveur n’attribue pas le même travail à deux workers. |
 | Visuel trop lourd ou non lisible | Le travail est bloqué. Le worker ne remplace pas discrètement un carrousel par du texte. |
 | Réponse d’envoi perdue | Contrôle de l’issue avant toute nouvelle publication. |

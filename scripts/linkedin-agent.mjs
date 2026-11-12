@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import {readFile,writeFile,mkdir,rename,chmod,open,unlink,stat,readdir,lstat} from 'node:fs/promises';
+import {readFile,writeFile,mkdir,rename,chmod,open,unlink,stat,readdir,lstat,realpath} from 'node:fs/promises';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import path from 'node:path';
 import {homedir} from 'node:os';
@@ -91,16 +91,17 @@ async function pair(opts){
   const result=await api({studioUrl},'pair',{name:'Agent B&M — '+(process.env.COMPUTERNAME||'ordinateur')},{headers:{Origin:studioUrl,Cookie:'bm_admin_session='+session}});
   connection=await saveConnection({...result,studioUrl});
  }
- console.log(JSON.stringify({paired:true,studioUrl:connection.studioUrl,workerId:connection.workerId,message:'Liaison enregistrée uniquement sur cet ordinateur. Aucun secret affiché.'}));
+ console.log(JSON.stringify({paired:true,studioUrl:connection.studioUrl,workerId:connection.workerId,message:'Liaison enregistrée uniquement sur cette machine. Aucun secret affiché.'}));
 }
 
 async function doctor(){
  const auth=await subscriptionStatus();let connection;
  try{connection=await readConnection();}catch{}
  let chromiumReady=true;try{await chromiumPath();}catch{chromiumReady=false;}
- const result={codex:auth,paired:!!connection,studioUrl:connection?.studioUrl||null,chromiumReady,execution:'Cet ordinateur doit être allumé et la tâche Codex doit pouvoir s’exécuter.',nextSteps:[]};
+ const hosted=process.env.STUDIO_AGENT_RUNTIME==='vps';
+ const result={codex:auth,paired:!!connection,studioUrl:connection?.studioUrl||null,chromiumReady,execution:hosted?'Le service et son minuteur tournent sur le VPS, indépendamment du PC.':'La machine qui héberge le worker doit être allumée et son planificateur actif.',nextSteps:[]};
  if(!auth.chatgpt)result.nextSteps.push('Exécuter codex login puis choisir la connexion ChatGPT.');
- if(!connection)result.nextSteps.push('Télécharger la liaison privée du studio dans Téléchargements ; la tâche Codex l’importera à son prochain passage. Import manuel possible avec pair --file <fichier.json>.');
+ if(!connection)result.nextSteps.push(hosted?'Importer la liaison privée du studio sur le VPS avec bm-linkedin-as-user worker pair --file <fichier.json>.':'Télécharger la liaison privée du studio dans Téléchargements ; la tâche Codex l’importera à son prochain passage. Import manuel possible avec pair --file <fichier.json>.');
  if(!chromiumReady)result.nextSteps.push('Exécuter npx playwright install chromium sur cet ordinateur.');
  console.log(JSON.stringify(result,null,2));return result;
 }
@@ -143,7 +144,7 @@ async function run(opts){
  if(opts['auto-pair-download']){
   const pairing=await pairDownloadedConnection();
   if(pairing.status==='waiting-for-pairing'){console.log(JSON.stringify({...pairing,message:'Dans le studio, téléchargez le fichier de liaison B&M dans Téléchargements. Il sera importé au prochain passage.'}));return;}
-  if(pairing.status!=='unchanged')console.log(JSON.stringify({...pairing,message:'Liaison téléchargée importée sur cet ordinateur. Aucun secret affiché.'}));
+  if(pairing.status!=='unchanged')console.log(JSON.stringify({...pairing,message:'Liaison téléchargée importée sur cette machine. Aucun secret affiché.'}));
  }
  const connection=await readConnection(),auth=await subscriptionStatus();
  if(opts.studio&&normalizeStudioUrl(opts.studio)!==connection.studioUrl)throw Error('Cette liaison appartient à un autre studio. Réappairez avec le studio voulu.');
@@ -156,7 +157,7 @@ async function run(opts){
    const prior=await readFile(lockPath,'utf8').catch(()=>''),info=await stat(lockPath).catch(()=>null);let stale=false;
    try{const pid=JSON.parse(prior).pid;if(Number.isInteger(pid)&&pid>0){try{process.kill(pid,0);}catch(e){stale=e.code==='ESRCH';}}}catch{stale=!!info&&Date.now()-info.mtimeMs>300000;}
    if(stale&&attempt===0&&(await readFile(lockPath,'utf8').catch(()=>null))===prior){await unlink(lockPath).catch(()=>{});continue;}
-   console.log(JSON.stringify({status:'busy',message:'Un cycle est déjà en cours sur cet ordinateur.'}));return;
+   console.log(JSON.stringify({status:'busy',message:'Un cycle est déjà en cours sur cette machine.'}));return;
   }
  }
  try{
@@ -218,4 +219,5 @@ export async function main(){
  if(command==='help'){console.log('Agent LinkedIn B&M\n  doctor\n  pair --file <liaison.json>\n  pair --studio <origine HTTPS>  (mot de passe local)\n  run [--auto-pair-download] [--max-jobs 4]\n  draft [--days 7] [--account person|organization] [--start YYYY-MM-DD] [--out <plan.json>] [--recent <plan-ou-historique.json>]  (local, aucun envoi)\n  render --file <post-ou-plan.json> --format png|pdf [--out <fichier>]');return;}
  throw Error('Commande inconnue. Utilisez help.');
 }
-if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href)main().catch(error=>{console.error(redact(error.message));process.exitCode=1;});
+const entryPath=process.argv[1]?await realpath(path.resolve(process.argv[1])).catch(()=>path.resolve(process.argv[1])):null;
+if(entryPath&&import.meta.url===pathToFileURL(entryPath).href)main().catch(error=>{console.error(redact(error.message));process.exitCode=1;});

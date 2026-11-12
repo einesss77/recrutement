@@ -1,0 +1,53 @@
+[Unit]
+Description=B&M LinkedIn - bounded worker cycle
+Wants=network-online.target
+After=network-online.target time-sync.target
+ConditionPathExists=/var/lib/bm-linkedin/state/connection.json
+
+[Service]
+Type=oneshot
+User=bm-linkedin
+Group=bm-linkedin
+WorkingDirectory=/opt/bm-linkedin/current
+Environment="PATH=@NODE_DIRECTORY@:/opt/bm-linkedin/current/runtime/codex/node_modules/.bin:/usr/local/bin:/usr/bin:/bin"
+Environment="HOME=/var/lib/bm-linkedin/home"
+Environment="CODEX_HOME=/var/lib/bm-linkedin/home/.codex"
+Environment="STUDIO_AGENT_LOCAL_DIR=/var/lib/bm-linkedin/state"
+Environment="STUDIO_AGENT_RUNTIME=vps"
+Environment="STUDIO_CODEX_BINARY=/opt/bm-linkedin/current/runtime/codex/node_modules/.bin/codex"
+Environment="PLAYWRIGHT_BROWSERS_PATH=/opt/bm-linkedin/browsers"
+Environment="NODE_ENV=production"
+UnsetEnvironment=OPENAI_API_KEY CODEX_API_KEY CODEX_ACCESS_TOKEN ADMIN_PASSWORD LINKEDIN_CLIENT_SECRET DATABASE_URL BLOB_READ_WRITE_TOKEN
+ExecStart=@NODE_BINARY@ /opt/bm-linkedin/current/scripts/linkedin-agent.mjs run --max-jobs 4
+TimeoutStartSec=30min
+TimeoutStopSec=20s
+Restart=no
+KillMode=control-group
+OOMPolicy=stop
+UMask=0077
+StateDirectory=bm-linkedin
+StateDirectoryMode=0700
+PrivateTmp=true
+PrivateDevices=true
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/bm-linkedin
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+MemoryHigh=768M
+MemoryMax=1G
+CPUQuota=100%
+TasksMax=256
+Nice=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=bm-linkedin
+LogRateLimitIntervalSec=60s
+LogRateLimitBurst=30

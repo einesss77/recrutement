@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp,writeFile,unlink,rmdir,utimes} from 'node:fs/promises';
+import {mkdtemp,writeFile,unlink,rmdir,utimes,symlink} from 'node:fs/promises';
+import {execFile} from 'node:child_process';
+import {promisify} from 'node:util';
+import {fileURLToPath} from 'node:url';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {checkPlan,similarity,promptFor,redact,safeStrategy,editorialContext} from './quality.mjs';
@@ -10,6 +13,16 @@ import {validateEmbeddedImage} from './render.mjs';
 
 const sample=()=>({items:[{post:{title:'Clarifier le bon renfort.',category:'Consultants',template:'editorial',theme:'dark',caption:'Une compétence précise ou un projet à construire : le choix du renfort commence par le travail à accomplir. Posons le contexte avant de décider.',slides:[{label:'LE BON CADRE',title:'Clarifier le bon renfort.',body:'Un rôle clair dans votre équipe.',points:[]}]},rationale:'Expliquer le choix du format.',sourceUrls:['https://www.bandmdigitalconsulting.com/'],needsHuman:false,humanReason:''}],summary:'Une publication.'});
 const payload={slots:[{day:'2026-11-12'}],strategy:{facts:['Consultants individuels ou squads selon le besoin.']},recentPosts:[]};
+
+test('le CLI exécute help lorsqu’il est lancé par un lien symbolique de release',async context=>{
+ const directory=await mkdtemp(path.join(tmpdir(),'bm-cli-symlink-')),entry=path.join(directory,'linkedin-agent.mjs');
+ try{
+  try{await symlink(fileURLToPath(new URL('../linkedin-agent.mjs',import.meta.url)),entry,'file');}
+  catch(error){if(process.platform==='win32'&&error.code==='EPERM'){context.skip('Windows refuse la création de liens symboliques sans privilège ; ce test reste obligatoire sous Linux.');return;}throw error;}
+  const {stdout,stderr}=await promisify(execFile)(process.execPath,[entry,'help'],{cwd:directory,windowsHide:true,timeout:10000,maxBuffer:100000});
+  assert.match(stdout,/Agent LinkedIn B&M/);assert.match(stdout,/run \[--auto-pair-download\]/);assert.equal(stderr,'');
+ }finally{await unlink(entry).catch(()=>{});await rmdir(directory);}
+});
 
 test('les statistiques non confirmées déclenchent un relais humain',()=>{const input=sample();input.items[0].post.caption+=' Nous apportons 35 % de productivité et 100 clients satisfaits.';const checked=checkPlan(input,payload);assert.equal(checked.items[0].needsHuman,true);assert.match(checked.items[0].humanReason,/chiffré/);});
 test('un fait permanent peut être préparé sans validation répétée',()=>{const checked=checkPlan(sample(),payload);assert.equal(checked.items[0].needsHuman,false);assert.equal(checked.items[0].post.date,'2026-11-12');assert.equal(checked.items[0].post.image,'');assert.equal(checked.items[0].post.status,'draft');});
