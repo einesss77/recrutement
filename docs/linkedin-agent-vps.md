@@ -170,3 +170,6 @@ Pour une mise à jour, construire une nouvelle archive, relancer l’installatio
 Les journaux sont envoyés à journald, avec limitation du débit du service ; aucune politique globale de rétention du VPS n’est modifiée. Surveiller l’espace disque et la mémoire réelle lors de l’exploitation. Les anciens paquets et releases ne sont pas supprimés automatiquement.
 
 Références : [authentification Codex sans navigateur](https://learn.chatgpt.com/docs/auth?surface=cli), [comportement des timers systemd](https://www.freedesktop.org/software/systemd/man/latest/systemd.timer.html), [limites et arrêt d’un service](https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html), [permissions et isolation](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html).
+
+### Formats du navigateur Hermes
+Les plans automatiques de la page B&M utilisent des images PNG : le compositeur entreprise LinkedIn laisse actuellement le PDF en chargement. La légende complète est conservée. Le profil Ines conserve les PDF, validés dans le compositeur réel. Les formats explicitement choisis restent respectés et bloquent si leur aperçu ne se confirme pas.

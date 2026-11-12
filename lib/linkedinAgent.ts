@@ -275,7 +275,7 @@ export async function completeJob(workerId:string,input:unknown){
     const post=postsSchema.parse([item.post])[0];post.id=`li-${selectedAccount()}-${slot.day}-${randomUUID().slice(0,8)}`;post.date=slot.day;post.status='draft';post.image='';
     const fingerprint=postFingerprint(post);if(Object.values(store.accounts).some(a=>a.queue.some(q=>q.fingerprint===fingerprint&&q.status!=='rejected')))continue;
     const humanReason=assess(post,d.config,item.needsHuman,item.humanReason);
-    d.queue.push({...(brief?{editorial:structuredClone(brief)}:{}),id:post.id,day:slot.day,publishAt:slot.publishAt,post,status:humanReason||d.config.mode==='review'?'draft':'scheduled',rationale:item.rationale,sourceUrls:item.sourceUrls,humanReason,fingerprint});count++;
+    d.queue.push({...(brief?{editorial:structuredClone(brief)}:{}),id:post.id,day:slot.day,publishAt:slot.publishAt,post,...(d.connection.provider==='hermes-browser'&&d.config.targetType==='organization'?{format:'png' as const}:{}),status:humanReason||d.config.mode==='review'?'draft':'scheduled',rationale:item.rationale,sourceUrls:item.sourceUrls,humanReason,fingerprint});count++;
    }
    j.message=`${count} nouvelles publications préparées.`;log(d,j.message);d.queue=d.queue.slice(-180);
   }else{
@@ -363,6 +363,7 @@ export async function connectBrowser(workerId:string,input:unknown){
    if(!organization){if(a.config.voice===legacyPersonalVoice)a.config.voice=personalVoice;if(!a.config.facts.includes(verifiedPersonalRole)&&a.config.facts.length<40)a.config.facts.push(verifiedPersonalRole);}
    a.config.targetUrl=organization?a.config.targetUrl:browserProfile;if(organization)a.config.organizationUrn=`urn:li:organization:${browserOrganization}`;
    a.connection={provider:'hermes-browser',connected:true,targetConfirmed:true,displayName:b.displayName,targetName:organization?b.organization.name:b.displayName,authorUrn:organization?`urn:li:organization:${browserOrganization}`:'',memberUrn:'',expiresAt:'',scopes:[],browser:{sessionReady:true,verifiedAt:nowIso(),lastError:'',targetKey,profileUrl:browserProfile,...(organization?{organizationId:browserOrganization,adminUrl}:{} )}};
+   if(organization)for(const q of a.queue)if(['scheduled','draft'].includes(q.status)&&!q.format)q.format='png';
    delete a.secrets.access;delete a.secrets.refresh;delete a.secrets.refreshExpiresAt;delete a.oauth;
    if(b.activate)a.config.enabled=true;
    log(a,b.activate?'Session Hermes vérifiée ; publication quotidienne activée.':'Session Hermes et destinataire LinkedIn revérifiés.');
