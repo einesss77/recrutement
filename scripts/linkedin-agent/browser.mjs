@@ -145,7 +145,7 @@ export class HermesBrowserSession {
   const page=await this.newPage(target.accountId==='organization'?'https://www.linkedin.com/company/106357560/admin/feed/posts?share=true':'https://www.linkedin.com/feed/');
   await this.dismissPremium(page);
   if(target.accountId==='person')await (await this.visibleButton(page,'Commencer un post')).click();
-  const {frame,dialog}=await this.composerFrame(page,target.accountId);
+  let composer;try{composer=await this.composerFrame(page,target.accountId);}catch(error){if(target.accountId!=='person'||new URL(page.url()).pathname!=='/feed/')throw error;await page.goto('https://www.linkedin.com/sharing/compose',{waitUntil:'domcontentloaded',timeout:30000});composer=await this.composerFrame(page,target.accountId);}const {frame,dialog}=composer;
   this.composer={page,frame,dialog,target,post,format};await this.author();
   const editor=target.accountId==='organization'?dialog.getByRole('textbox',{name:'Éditeur de texte pour créer du contenu',exact:true}):dialog.getByRole('textbox');
   await requireVisible(editor,'L’éditeur de la publication n’est pas disponible.');
