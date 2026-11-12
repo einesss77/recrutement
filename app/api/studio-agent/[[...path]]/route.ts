@@ -16,6 +16,7 @@ async function handler(req:NextRequest,context:Context){
   if(route.startsWith('worker/')){
    if(req.method!=='POST')return json({error:'Méthode non autorisée.'},405);
    const bearer=/^Bearer ([A-Za-z0-9_-]+)$/.exec(req.headers.get('authorization')||'')?.[1]||'',workerId=await authenticateWorker(bearer),input=await body(req);
+   if(route==='worker/state')return json(await withAgentAccount(accountId(input.accountId),()=>agentState()));
    if(route==='worker/browser-connect')return json(await connectBrowser(workerId,input));
    if(route==='worker/browser-begin')return json(await withAgentAccount(accountId(input.accountId),()=>beginBrowserPublication(workerId,input)));
    if(route==='worker/browser-result')return json(await withAgentAccount(accountId(input.accountId),()=>finishBrowserPublication(workerId,input)));
