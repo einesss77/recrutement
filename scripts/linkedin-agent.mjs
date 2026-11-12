@@ -10,6 +10,7 @@ import {z} from 'zod';
 import {subscriptionStatus,generateStructured} from './linkedin-agent/codex.mjs';
 import {planJsonSchema,profileJsonSchema,profileSchema,checkPlan,promptFor,redact} from './linkedin-agent/quality.mjs';
 import {renderPost,chromiumPath} from './linkedin-agent/render.mjs';
+import {verifyHermesBrowser,publishWithHermes,replayConfirmedBrowserReceipts} from './linkedin-agent/browser.mjs';
 
 export const repoRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const localRoot=process.env.STUDIO_AGENT_LOCAL_DIR?path.resolve(process.env.STUDIO_AGENT_LOCAL_DIR):path.join(repoRoot,'.local','linkedin-agent'),connectionFile=path.join(localRoot,'connection.json');
@@ -106,7 +107,15 @@ async function doctor(){
  console.log(JSON.stringify(result,null,2));return result;
 }
 
-export async function processJob(connection,job,{generate=generateStructured,render=renderPost,request=api}={}){
+async function connectBrowser(opts){
+ const connection=await readConnection(),auth=await subscriptionStatus();
+ if(!auth.chatgpt)throw Error(auth.message);
+ await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'online',subscriptionAuth:true,message:'Vérification de la session navigateur LinkedIn.'});
+ try{const evidence=await verifyHermesBrowser();const result=await api(connection,'worker/browser-connect',{...evidence,activate:opts.activate===true});console.log(JSON.stringify({status:'browser-connected',profile:evidence.profileUrl,organization:evidence.organization.id,activated:opts.activate===true,message:result.message||'Les deux destinations ont été vérifiées dans le navigateur existant.'}));}
+ catch(error){await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',subscriptionAuth:true,message:redact(error.message).slice(0,500),browser:{sessionReady:false,message:redact(error.message).slice(0,500)}}).catch(()=>{});throw error;}
+}
+
+export async function processJob(connection,job,{generate=generateStructured,render=renderPost,request=api,browserPublish=publishWithHermes}={}){
  const identity={jobId:job.id,leaseToken:job.leaseToken,...(job.accountId?{accountId:job.accountId}:{})};
  let publishing=false;
  try{
@@ -124,6 +133,11 @@ export async function processJob(connection,job,{generate=generateStructured,ren
   if(job.kind==='publish'){
    const format=job.payload.format;
    if(!['text','png','pdf'].includes(format))throw Error('Format de publication inconnu.');
+   if(job.payload.provider==='hermes-browser'){
+    publishing=true;
+    const result=await browserPublish({job,workingRoot:localRoot,render:(post,type)=>render(post,type,{repoRoot,workingRoot:localRoot}),begin:body=>request(connection,'worker/browser-begin',{...identity,...body}),finish:body=>request(connection,'worker/browser-result',{...identity,...body})});
+    return{kind:job.kind,status:result.status,url:result.permalink,message:result.message};
+   }
    const media=format==='text'?undefined:await render(job.payload.post,format,{repoRoot,workingRoot:localRoot});
    const payload={...identity,...(media?{media:{mime:media.mime,base64:media.base64,title:media.title}}:{})};
    publishing=true;
@@ -163,6 +177,12 @@ async function run(opts){
  try{
   await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:auth.chatgpt?'online':'error',message:redact(auth.message).slice(0,500),subscriptionAuth:auth.chatgpt});
   if(!auth.chatgpt)throw Error(auth.message);
+  if(process.env.STUDIO_LINKEDIN_PROVIDER==='hermes-browser'){
+   try{const evidence=await verifyHermesBrowser();await api(connection,'worker/browser-connect',{...evidence,activate:false,verifyOnly:true});}
+   catch(error){await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',subscriptionAuth:true,message:redact(error.message).slice(0,500),browser:{sessionReady:false,message:redact(error.message).slice(0,500)}}).catch(()=>{});console.log(JSON.stringify({status:'browser-human-required',message:redact(error.message).slice(0,500)}));}
+  }
+  const replay=await replayConfirmedBrowserReceipts({workingRoot:localRoot,finish:body=>api(connection,'worker/browser-result',body)});
+  if(replay.reconciled||replay.pending)console.log(JSON.stringify({status:'browser-receipts',...replay}));
   const completed=[],limit=Math.max(1,Math.min(4,Number(opts['max-jobs'])||4));
   for(let i=0;i<limit;i++){
    const {job}=await api(connection,'worker/claim',{});if(!job)break;
@@ -215,8 +235,8 @@ async function render(opts){
 
 export async function main(){
  const command=process.argv[2]||'doctor',opts=options();
- if(command==='doctor')return doctor();if(command==='pair')return pair(opts);if(command==='run')return run(opts);if(command==='draft')return draft(opts);if(command==='render')return render(opts);
- if(command==='help'){console.log('Agent LinkedIn B&M\n  doctor\n  pair --file <liaison.json>\n  pair --studio <origine HTTPS>  (mot de passe local)\n  run [--auto-pair-download] [--max-jobs 4]\n  draft [--days 7] [--account person|organization] [--start YYYY-MM-DD] [--out <plan.json>] [--recent <plan-ou-historique.json>]  (local, aucun envoi)\n  render --file <post-ou-plan.json> --format png|pdf [--out <fichier>]');return;}
+ if(command==='doctor')return doctor();if(command==='pair')return pair(opts);if(command==='run')return run(opts);if(command==='draft')return draft(opts);if(command==='render')return render(opts);if(command==='connect-browser')return connectBrowser(opts);
+ if(command==='help'){console.log('Agent LinkedIn B&M\n  doctor\n  pair --file <liaison.json>\n  pair --studio <origine HTTPS>  (mot de passe local)\n  connect-browser [--activate]  (vérifie les deux comptes, sans publier)\n  run [--auto-pair-download] [--max-jobs 4]\n  draft [--days 7] [--account person|organization] [--start YYYY-MM-DD] [--out <plan.json>] [--recent <plan-ou-historique.json>]  (local, aucun envoi)\n  render --file <post-ou-plan.json> --format png|pdf [--out <fichier>]');return;}
  throw Error('Commande inconnue. Utilisez help.');
 }
 const entryPath=process.argv[1]?await realpath(path.resolve(process.argv[1])).catch(()=>path.resolve(process.argv[1])):null;

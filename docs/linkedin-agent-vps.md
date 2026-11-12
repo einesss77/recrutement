@@ -103,7 +103,35 @@ bm-linkedin-as-user worker pair --file /var/lib/bm-linkedin/state/pairing-import
 bm-linkedin-as-user worker doctor
 ```
 
-Le JSON de liaison contient uniquement la clé du worker, son identifiant et l’origine du studio. Les secrets LinkedIn restent sur le serveur du site. Les deux copies temporaires de transfert peuvent être supprimées après import ; le worker utilise `state/connection.json`. Il ne cherche pas de fichier de liaison dans les téléchargements d’un autre utilisateur du VPS.
+Le JSON de liaison contient uniquement la clé du worker, son identifiant et l’origine du studio. Les autorisations OAuth LinkedIn restent sur le serveur du site ; une session Hermes reste dans le profil du navigateur sur le VPS. Les deux copies temporaires de transfert peuvent être supprimées après import ; le worker utilise `state/connection.json`. Il ne cherche pas de fichier de liaison dans les téléchargements d’un autre utilisateur du VPS.
+
+## Réutiliser la session LinkedIn de Hermes
+
+Le connecteur `hermes-browser` utilise le navigateur persistant déjà connecté sur le VPS, via son port CDP limité à `127.0.0.1:9222`. Il ne copie pas les cookies et ne les transforme pas en jetons OAuth. Il vérifie une navigation fraîche, le profil exact d’Ines Favre et l’administration de la page B&M `106357560` avant d’enregistrer la connexion dans le studio. La liaison est limitée à ces deux destinataires.
+
+Chaque publication ouvre son propre onglet. Le moteur contrôle le compte visible, prépare le texte et le média, puis demande au studio une réservation atomique avant le clic final. Une trace locale est conservée avant l’envoi ; le résultat ne devient « publié » qu’avec un lien LinkedIn vérifié. Une réponse perdue ou ambiguë bloque le post et ne déclenche aucun second envoi. Les statistiques API ne sont pas disponibles avec cette connexion.
+
+En cas d’expiration de session, de contrôle de sécurité ou de changement de compte, reconnecter humainement le navigateur Hermes puis relancer sa vérification. Une nouvelle vérification ne réactive pas un compte volontairement mis en pause. Aucun port CDP ou VNC ne doit être exposé publiquement.
+
+Services utilisateur nécessaires : `linkedin-xvfb`, `linkedin-chromium`, `linkedin-vnc` et `linkedin-novnc`. Leur helper de disponibilité est conservé dans `/home/hermes/.hermes/linkedin-browser/wait-ready.py`, en dehors des anciens profils Hermes archivés. Le profil connecté reste dans `/home/hermes/.hermes/linkedin-browser/profile`. Ne pas lancer un second Chromium sur ce même répertoire.
+
+Les anciennes routines LinkedIn archivées sont désactivées ; les processus résiduels correspondants ont été arrêtés lors de la bascule. Le gateway Hermes et les autres services du VPS restent indépendants du minuteur du studio.
+
+Après les contrôles de préparation sans publication, la commande explicite de liaison est :
+
+```bash
+bm-linkedin-as-user worker connect-browser --activate
+```
+
+Elle vérifie les deux identités puis active leurs calendriers dans le studio. Sans `--activate`, elle établit la liaison en conservant les pauses. Les cycles utilisent un complément d’unité `/etc/systemd/system/bm-linkedin.service.d/browser.conf` :
+
+```ini
+[Service]
+Environment="STUDIO_LINKEDIN_PROVIDER=hermes-browser"
+Environment="STUDIO_LINKEDIN_BROWSER_URL=http://127.0.0.1:9222"
+```
+
+Recharger systemd après ajout de ce fichier. Les contrôles automatiques rafraîchissent uniquement une connexion Hermes existante ; ils ne remplacent pas une déconnexion explicite ou une connexion OAuth choisie ensuite dans le studio.
 
 ## Vérifier et activer
 

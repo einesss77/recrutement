@@ -100,7 +100,7 @@ test('la portée des instructions respecte le nouvel autopilote sans copier des 
 });
 test('le profil personnel et la page entreprise ont des voix distinctes',()=>{
  const person=promptFor('plan',{config:{targetType:'person'},slots:[{}]});const company=promptFor('plan',{config:{targetType:'organization'},slots:[{}]});
- assert.match(person,/première personne/);assert.match(person,/sans inventer une expérience vécue/);assert.match(company,/voix collective/);
+ assert.match(person,/première personne/);assert.match(person,/sans inventer[^.]*expérience vécue/);assert.ok(!person.includes('profil professionnel personnel du dirigeant'));assert.match(company,/voix collective/);
 });
 test('le contexte croise les comptes et les métriques sans copier les secrets ni inventer de mesure',()=>{
  const prompt=promptFor('plan',{config:{targetType:'person'},slots:[{}],recentPosts:[{accountId:'organization',status:'scheduled',title:'Angle existant',caption:'Légende déjà programmée',token:'secret-history'}],analytics:{updatedAt:'2026-11-11T09:00:00.000Z',metrics:[{key:'impressions',label:'Impressions',value:123},{key:'unknown',value:NaN}],accessToken:'secret-analytics'},previousResults:[{kind:'plan',status:'failed',message:'Quota atteint',at:'2026-11-10',token:'secret-result'}]});
