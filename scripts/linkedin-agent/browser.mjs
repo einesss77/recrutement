@@ -183,12 +183,12 @@ export class HermesBrowserSession {
    const {dialog:upload}=await this.visibleDialog(page,'Partager un document');let input;
    if(personal){const chooserPromise=page.waitForEvent('filechooser',{timeout:15000});await upload.getByRole('button',{name:'Choisir un fichier',exact:true}).click();const chooser=await chooserPromise;await chooser.setFiles(file);input=chooser.element();}
    else{input=await upload.locator('input[type="file"][accept*=".pdf"]').elementHandle();if(!input)throw new BrowserHumanError('Le champ de document LinkedIn n’est pas disponible.');await input.setInputFiles(file);}
-   if(personal)await requireVisible(upload.getByText(/^\d+ pages?$/),'LinkedIn n’affiche pas les pages du PDF chargé.',120000);
+   if(personal)await requireVisible(upload.getByText(/^\d+\s+pages?$/),'LinkedIn n’affiche pas les pages du PDF chargé.',120000);
    else await requireVisible(upload.getByText(file.name,{exact:true}),'LinkedIn n’affiche pas le fichier PDF préparé.',30000);
    if(!personal)await requireVisible(upload.getByRole('button',{name:'Supprimer un document chargé',exact:true}),'Le document n’a pas été chargé dans LinkedIn.',30000);
    await upload.getByRole('textbox',{name:/^Titre du document\s*\*$/}).fill(post.title.slice(0,58));await upload.getByRole('button',{name:'Terminé',exact:true}).click();
    const returned=await this.composerFrame(page,target.accountId);this.composer.frame=returned.frame;this.composer.dialog=returned.dialog;
-   if(personal){await requireVisible(returned.dialog.getByText(post.title.slice(0,58),{exact:true}),'Le compositeur n’affiche pas le titre du PDF.',45000);await requireVisible(returned.dialog.getByText(/•\s*\d+ pages?/),'Le PDF chargé n’affiche pas ses pages.',45000);}
+   if(personal){await requireVisible(returned.dialog.getByText(post.title.slice(0,58),{exact:true}),'Le compositeur n’affiche pas le titre du PDF.',45000);await requireVisible(returned.dialog.getByText(/•\s*\d+\s+pages?/),'Le PDF chargé n’affiche pas ses pages.',45000);}
    else await requireVisible(returned.frame.getByRole('alert').filter({hasText:'Le chargement de votre document est terminé'}),'LinkedIn n’a pas confirmé le chargement du PDF.',120000);
   }
   this.composer.editor=personal?this.composer.dialog.getByRole('textbox'):this.composer.dialog.getByRole('textbox',{name:'Éditeur de texte pour créer du contenu',exact:true});
@@ -212,7 +212,7 @@ export class HermesBrowserSession {
    this.composer.mediaSignature=signature;
   }
   if(format==='pdf'&&target.accountId==='person'){
-   const title=dialog.getByText(post.title.slice(0,58),{exact:true}),pages=dialog.getByText(/•\s*\d+ pages?/);
+   const title=dialog.getByText(post.title.slice(0,58),{exact:true}),pages=dialog.getByText(/•\s*\d+\s+pages?/);
    if(!(await title.isVisible().catch(()=>false))||!(await pages.isVisible().catch(()=>false)))throw new BrowserHumanError('Le titre ou l’aperçu du PDF préparé a changé.');
    const signature=JSON.stringify({title:await title.innerText(),pages:await pages.innerText()});
    if(this.composer.mediaSignature&&this.composer.mediaSignature!==signature)throw new BrowserHumanError('Le document affiché a changé depuis sa préparation.');
