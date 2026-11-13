@@ -1,0 +1,21 @@
+[Unit]
+Description=Deliver five existing US prospect cards to owner Telegram (no LinkedIn access)
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=/var/lib/bm-prospect-batches/config.json
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/lib/bm-prospect-batches/worker.py
+TimeoutStartSec=75s
+Restart=no
+UMask=0077
+Environment=PYTHONDONTWRITEBYTECODE=1
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/bm-prospect-batches /home/hermes/.hermes /home/hermes/bm-agents/livrables/prospects-us-manual
+MemoryMax=384M
+CPUQuota=50%
+

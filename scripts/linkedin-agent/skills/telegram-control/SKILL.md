@@ -68,6 +68,14 @@ Le contrôle permet d'approuver ou d'écarter une publication préparée à la d
 
 ## Prospection US
 
+### Lots automatiques dans Telegram, invitations manuelles
+
+À la demande d’Eines, `bm-prospect-batches.timer` remet cinq fiches de la liste existante toutes les trente minutes dans son chat Telegram habituel. Plafond de cinquante contacts par jour de Paris, premier lot déjà remis compris. Déduplication permanente par URL ; réservation avant envoi ; une livraison ambiguë suspend la routine sans renvoi automatique. Le dernier lot peut contenir moins de cinq personnes. Quand la liste est épuisée, attendre de nouvelles fiches sans recycler les anciennes ni envoyer de messages vides. La recherche publique peut rester en pause : cette routine utilise le fichier existant et n’ouvre jamais LinkedIn. Elle n’envoie aucune invitation ni message aux prospects et ne modifie pas les publications.
+
+Commandes accessibles à Hermes : `bm-linkedin-batches status`, `bm-linkedin-batches pause`, `bm-linkedin-batches resume`. Elles concernent seulement la remise des fiches dans Telegram. Le statut indique la date source, les contacts réservés aujourd’hui, les contacts restants, la dernière vérification et le motif d’attente. `eligibleAfter` est la première heure autorisée, pas nécessairement l’heure réelle du prochain déclenchement ; `systemctl list-timers bm-prospect-batches.timer --no-pager` donne ce déclenchement. Afficher les heures en Europe/Paris.
+
+Ne pas sélectionner/envoyer un lot supplémentaire en parallèle sur « lot suivant » : la file automatique est désormais l’autorité et évite les doublons. Répondre avec le statut et l’échéance du prochain lot. Une demande de pause globale doit aussi exécuter `bm-linkedin-batches pause`. Une reprise des publications ne reprend pas implicitement la remise de fiches. Un statut `uncertain-delivery-needs-review` demande une vérification du reçu, pas une nouvelle tentative ou une suppression du registre. Les confirmations d’invitations saisies par Eines restent des déclarations manuelles.
+
 La recherche publique quotidienne est désormais installable sur le VPS et autorisée par Eines. Elle vise jusqu'à 50 nouveaux profils par jour à 07:00 Europe/Paris. Le minuteur `bm-linkedin-prospects.timer` vérifie toutes les cinq minutes si le créneau du jour ou une demande manuelle est dû; `bm-linkedin-prospects.service` réalise la recherche avec l'abonnement ChatGPT. Les invocations de simple contrôle ne produisent pas 50 profils à chaque passage. Historique SQLite de dédoublonnage persistant, quota de 50 nouveaux profils/jour, une tentative quotidienne automatique avec jusqu'à quatre passes complémentaires, limitées à vingt minutes et soixante appels de recherche au total. Au maximum trois tentatives dans la journée si Eines demande une relance. Les résultats de chaque passe sont conservés avant la suivante. Une collecte partielle reste partielle et indique le manque; ne jamais annoncer 50 sans résultat.
 
 ```sh
