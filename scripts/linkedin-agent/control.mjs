@@ -4,7 +4,7 @@ const commands=new Set(['plan','run','pause','approve','reject','profile','updat
 const configKeys=new Set(['time','timezone','mode','enabled','publishWindowMinutes','objective','voice','facts','pillars','excludedTopics','commercialFocus','targetAudience','campaignStart']);
 export class ControlError extends Error {constructor(message,status=400){super(message);this.status=status;}}
 function checkFields(input,allowed){for(const key of Object.keys(input))if(!allowed.has(key))throw new ControlError('Champ non autorisé : '+key);}
-export function createControl(agent,{prospects,preview}={}){
+export function createControl(agent,{prospects,preview,research}={}){
  return async input=>{
   if(!input||Array.isArray(input)||typeof input!=='object')throw new ControlError('Objet JSON requis.');
   checkFields(input,new Set(['action','accountId','itemId','payload']));
@@ -12,6 +12,10 @@ export function createControl(agent,{prospects,preview}={}){
   if(!accounts.has(accountId))throw new ControlError('Choisir explicitement person (Ines) ou organization (B&M).');
   return agent.withAgentAccount(accountId,async()=>{
    if(action==='prospects')return prospects();
+   if(['prospecting-status','prospecting-pause','prospecting-resume','prospecting-run'].includes(action)){
+    if(accountId!=='person')throw new ControlError('La prospection US concerne uniquement le compte Ines.');
+    return research(action);
+   }
    if(['status','queue','post','preview'].includes(action)){
     const s=await agent.agentState();
     if(!s.storageReady)throw new ControlError('Stockage métier indisponible; aucun état par défaut ne doit être présenté comme vérifié.',503);

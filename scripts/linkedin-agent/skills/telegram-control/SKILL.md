@@ -60,7 +60,21 @@ Le contrôle permet d'approuver ou d'écarter une publication préparée à la d
 
 ## Prospection US
 
-`prospects ines` donne la première liste de 50 profils, le brief et l'accusé de réception du moteur. Cibles : recruteurs IT, dirigeants de petites sociétés IT/agences et fondateurs SaaS/IA aux États-Unis. C'est une présélection publique : poste actuel, effectif, besoin, relation existante et compatibilité Europe/US restent à qualifier selon chaque fiche. Dédupliquer et conserver preuves et dates. Aucun envoi automatique d'invitations ni de messages n'est activé. La recherche quotidienne n'est pas encore planifiée : ne pas prétendre qu'elle tourne.
+La recherche publique quotidienne est désormais installable sur le VPS et autorisée par Eines. Elle vise jusqu'à 50 nouveaux profils par jour à 07:00 Europe/Paris. Le minuteur `bm-linkedin-prospects.timer` vérifie toutes les cinq minutes si le créneau du jour ou une demande manuelle est dû; `bm-linkedin-prospects.service` réalise la recherche avec l'abonnement ChatGPT. Les invocations de simple contrôle ne produisent pas 50 profils à chaque passage. Historique SQLite de dédoublonnage persistant, quota de 50 nouveaux profils/jour, une tentative quotidienne automatique et au maximum trois tentatives si Eines demande une relance. Une collecte partielle reste partielle et indique le manque; ne jamais annoncer 50 sans résultat.
+
+```sh
+bm-linkedin-control prospecting-status ines
+bm-linkedin-control prospects ines
+bm-linkedin-control prospecting-pause ines
+bm-linkedin-control prospecting-resume ines
+bm-linkedin-control prospecting-run ines
+```
+
+Lire `prospecting-status` avant d'annoncer une activation : il donne les réglages, l'état réel du timer et le dernier résultat métier. Une demande manuelle est mise en file pour le passage suivant, ne contourne pas le quota et ne reprend pas une pause. Pause/reprise de recherche et pause/reprise de publications sont indépendantes. Si Eines demande de mettre toute l'activité en pause, appliquer `pause both` ET `prospecting-pause ines`, puis vérifier les deux états. Ne pas reprendre les deux systèmes pour une demande visant un seul.
+
+`prospects ines` donne la dernière collecte datée, le brief et le résultat de la recherche. Tant qu'aucune collecte quotidienne n'est disponible, la première liste de 50 reste accessible; ne pas la présenter comme trouvée aujourd'hui automatiquement. L'ancien receipt est un accusé de réception historique, pas l'état du planificateur actuel. Une collecte échouée ou en cours ne permet pas de redater l'ancienne liste.
+
+Cibles : recruteurs IT, dirigeants de petites sociétés IT/agences et fondateurs SaaS/IA aux États-Unis. Les fiches sont préparées à partir de sources publiques consultées ou indexées, avec preuves courtes de rôle et localisation; ce n'est pas une vérification dans le compte LinkedIn ni une demande d'achat avérée. Effectif, budget, relation existante et compatibilité Europe/US restent à qualifier selon chaque fiche. Aucun envoi automatique d'invitations ni de messages n'est activé.
 
 ## Limites à annoncer clairement
 

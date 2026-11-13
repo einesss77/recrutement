@@ -1,0 +1,28 @@
+[Unit]
+Description=B&M daily US prospect research (public sources, no invitations)
+After=network-online.target
+Wants=network-online.target
+ConditionPathExists=/var/lib/bm-linkedin/state/prospecting/schedule.json
+[Service]
+Type=oneshot
+User=bm-linkedin
+Group=bm-linkedin
+WorkingDirectory=/opt/bm-linkedin/current
+Environment=HOME=/var/lib/bm-linkedin/home
+Environment=CODEX_HOME=/var/lib/bm-linkedin/home/.codex
+Environment=STUDIO_CODEX_BINARY=/opt/bm-linkedin/current/runtime/codex/node_modules/.bin/codex
+Environment=PATH=@NODE_DIRECTORY@:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/python3 /opt/bm-linkedin/current/deploy/prospect-worker.py
+TimeoutStartSec=22min
+KillMode=control-group
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/bm-linkedin/state/prospecting /var/lib/bm-linkedin/home/.codex
+MemoryMax=768M
+CPUQuota=50%
+Nice=10
+[Install]
+WantedBy=multi-user.target

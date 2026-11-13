@@ -8,7 +8,7 @@ class UnixConnection(http.client.HTTPConnection):
         self.sock.connect('/run/bm-linkedin-control/control.sock')
 def main():
     parser=argparse.ArgumentParser(description='Piloter les posts LinkedIn B&M et Ines depuis Hermes Telegram.')
-    parser.add_argument('action',choices=['status','queue','post','preview','prospects','pause','resume','configure','plan','profile','run','approve','reject','update','enqueue','feedback'])
+    parser.add_argument('action',choices=['status','queue','post','preview','prospects','prospecting-status','prospecting-pause','prospecting-resume','prospecting-run','pause','resume','configure','plan','profile','run','approve','reject','update','enqueue','feedback'])
     parser.add_argument('account',choices=['ines','bm','person','organization','both'])
     parser.add_argument('--id',dest='item_id')
     parser.add_argument('--json-stdin',action='store_true',help='Lire le payload ou les paramètres configure en JSON depuis stdin.')
