@@ -4,6 +4,7 @@ After=network.target
 [Service]
 User=bm-linkedin
 Group=bm-linkedin
+EnvironmentFile=/var/lib/bm-linkedin/state/studio-store.env
 ExecStart=/usr/bin/python3 /opt/bm-linkedin/current/deploy/store.py
 UMask=0077
 Restart=on-failure

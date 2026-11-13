@@ -26,7 +26,7 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(body)
     def authorized(self):
         if self.path != '/linkedin-agent-store': self.respond(404); return False
-        token = json.loads((ROOT/'connection.json').read_text())['token']
+        token = os.environ.get('STUDIO_AGENT_STORE_TOKEN') or json.loads((ROOT/'connection.json').read_text())['token']
         if not hmac.compare_digest(self.headers.get('Authorization',''), 'Bearer '+token):
             self.respond(401); return False
         return True
