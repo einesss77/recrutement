@@ -55,6 +55,41 @@ class Tests(unittest.TestCase):
         with self.assertRaises(KeyboardInterrupt):self.run_at()
         self.sender=lambda *_:self.fail('A crashed send must not be replayed')
         self.assertEqual(self.run_at(NOW+datetime.timedelta(hours=1))['status'],'uncertain-delivery-needs-review')
+    def test_new_daily_export_preserves_unsent_previous_contacts(self):
+        archive=self.root/'batches';archive.mkdir()
+        (archive/'2026-11-13.json').write_text(json.dumps({'date':'2026-11-13','prospects':self.people[:10]}))
+        self.people=self.people[10:20];self.write_source('2026-11-14')
+        result=self.run_at(NOW+datetime.timedelta(days=1));self.assertEqual(result['remainingContacts'],15)
+        self.assertIn('person-0/',self.sent[0]);self.assertNotIn('person-10/',self.sent[0]);self.assertIn('2026-11-13',self.sent[0])
+        self.assertEqual(result['sourceDates'],['2026-11-13','2026-11-14'])
+    def test_latest_and_daily_archive_are_merged_without_repeating_urls(self):
+        archive=self.root/'batches';archive.mkdir()
+        (archive/'2026-11-13.json').write_text(json.dumps({'date':'2026-11-13','prospects':self.people[:15]}))
+        self.people=self.people[:10];self.write_source()
+        self.assertEqual(self.run_at(dry_run=True)['remainingContacts'],15)
+    def test_future_exports_cannot_hide_the_current_queue(self):
+        archive=self.root/'batches';archive.mkdir()
+        (archive/'2026-11-13.json').write_text(json.dumps({'date':'2026-11-13','prospects':self.people[:5]}))
+        self.write_source('2026-11-14')
+        self.assertEqual(self.run_at()['sentCount'],5);self.assertIn('2026-11-13',self.sent[0])
+    def test_old_archive_is_not_reopened_or_reparsed_each_tick(self):
+        archive=self.root/'batches';archive.mkdir();(archive/'2025-01-01.json').write_text('old invalid file should not be read')
+        self.assertEqual(self.run_at(dry_run=True)['status'],'ready')
+    def test_daily_research_feeds_delivery_and_excludes_people_from_previous_days(self):
+        spec=importlib.util.spec_from_file_location('research',Path(__file__).with_name('prospect-worker.py'));research=importlib.util.module_from_spec(spec);spec.loader.exec_module(research)
+        source_root=self.root/'research';source_root.mkdir();self.source=source_root/'latest.json';db=research.database(source_root)
+        def collect(day,people):
+            records=[{**p,'segment':'it-recruiter','sourceUrl':'https://example.com/team/','roleEvidence':'Technical recruiter','usEvidence':p['location'],'uncertainties':'Budget et besoin inconnus.'} for p in people]
+            accepted,rejected=research.qualify(records,db,50)
+            for p in accepted:db.execute('INSERT INTO prospects VALUES(?,?,?,?)',(p['profileUrl'],research.norm(p['name'])+'|'+research.norm(p['company']),day,json.dumps(p)))
+            db.commit();research.materialize(source_root,db,day,50,'Fixture; no web request')
+            return accepted,rejected
+        try:
+            collect('2026-11-13',self.people[:5]);self.assertEqual(self.run_at()['sentCount'],5)
+            accepted,rejected=collect('2026-11-14',self.people[:10]);self.assertEqual(len(accepted),5);self.assertEqual(len(rejected),5)
+            result=self.run_at(NOW+datetime.timedelta(days=1));self.assertEqual(result['sentCount'],5);self.assertEqual(result['todayReserved'],5)
+            self.assertIn('person-5/',self.sent[1]);self.assertNotIn('person-0/',self.sent[1])
+        finally:db.close()
     def test_sender_requires_exact_recipient_and_real_receipt(self):
         result=subprocess.CompletedProcess([],0,json.dumps({'success':True,'chat_id':'99999','message_id':2}), '')
         with patch.object(delivery.subprocess,'run',return_value=result):

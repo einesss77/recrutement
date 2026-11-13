@@ -38,6 +38,29 @@ def import_delivered_seed(db,file):
         for url,p in zip(urls,people):db.execute('INSERT INTO contacts VALUES(?,?,?)',(url,data['id'],json.dumps(p,ensure_ascii=False)))
         db.execute('INSERT INTO meta VALUES(?,?)',(key,'imported'))
 
+def queued_source(source_file,now):
+    """Keep unsent daily exports when latest.json is replaced by tomorrow's run."""
+    paths=[source_file];archive=source_file.parent/'batches';today=now.astimezone(PARIS).date()
+    if archive.exists():
+        for file in sorted(archive.glob('*.json')):
+            if file.is_symlink() or not re.fullmatch(r'\d{4}-\d{2}-\d{2}\.json',file.name):continue
+            try:age=(today-datetime.date.fromisoformat(file.stem)).days
+            except ValueError:continue
+            if 0<=age<=7:paths.append(file)
+    exports=[]
+    for file in paths:
+        if not file.exists():continue
+        value=json.loads(file.read_text());date=datetime.date.fromisoformat(value['date'])
+        if not isinstance(value.get('prospects'),list):raise ValueError('Invalid public research export')
+        exports.append((date,value))
+    if not exports:raise ValueError('No public research source available')
+    people=[];dates=[]
+    for date,value in sorted(exports,key=lambda pair:pair[0]):
+        if not 0<=(today-date).days<=7:continue
+        dates.append(date.isoformat())
+        people.extend({**p,'_sourceDate':date.isoformat()} for p in value['prospects'] if isinstance(p,dict))
+    return{'date':max(dates) if dates else max(date for date,_ in exports).isoformat(),'sourceDates':sorted(set(dates)),'prospects':people}
+
 def candidates(db,source):
     known={row[0] for row in db.execute('SELECT url FROM contacts')};seen=set();people=[]
     for p in source.get('prospects',[]):
@@ -76,7 +99,7 @@ def run(root,source_file,settings_file,status_file,seed=None,sender=send_telegra
         except BlockingIOError:return {'status':'already-running'}
         config=json.loads((root/'config.json').read_text());target=config['target']
         if not re.fullmatch(r'telegram:[1-9][0-9]*(?::[0-9]+)?',target):raise ValueError('Only configured private owner Telegram chat is allowed')
-        settings=json.loads(settings_file.read_text());source=json.loads(source_file.read_text())
+        settings=json.loads(settings_file.read_text());source=queued_source(source_file,now)
         db=database(root)
         try:
             import_delivered_seed(db,seed)
@@ -84,7 +107,7 @@ def run(root,source_file,settings_file,status_file,seed=None,sender=send_telegra
             today=db.execute('SELECT COALESCE(SUM(count),0) FROM batches WHERE day=?',(day,)).fetchone()[0]
             latest=db.execute('SELECT attempted_at FROM batches ORDER BY attempted_at DESC LIMIT 1').fetchone()
             pending=db.execute("SELECT COUNT(*) FROM batches WHERE status IN ('sending','uncertain')").fetchone()[0]
-            state={'checkedAt':now.isoformat(),'enabled':settings.get('enabled') is True,'batchSize':BATCH_SIZE,'intervalMinutes':30,'dailyLimit':DAILY_LIMIT,'todayReserved':today,'remainingContacts':len(remaining),'sourceDate':source.get('date'),'automaticInvitations':False,'linkedInAccess':False}
+            state={'checkedAt':now.isoformat(),'enabled':settings.get('enabled') is True,'batchSize':BATCH_SIZE,'intervalMinutes':30,'dailyLimit':DAILY_LIMIT,'todayReserved':today,'remainingContacts':len(remaining),'sourceDate':source.get('date'),'sourceDates':source.get('sourceDates',[]),'automaticInvitations':False,'linkedInAccess':False}
             def report(status,**extra):
                 value={**state,'status':status,**extra}
                 if not dry_run:atomic(status_file,value)
@@ -104,7 +127,7 @@ def run(root,source_file,settings_file,status_file,seed=None,sender=send_telegra
                 if p['company'].casefold() in companies:continue
                 companies.add(p['company'].casefold());chosen.append(p)
                 if len(chosen)>=min(BATCH_SIZE,DAILY_LIMIT-today):break
-            text=message(chosen,source['date'])
+            text=message(chosen,', '.join(sorted({p['_sourceDate'] for p in chosen})))
             if dry_run:return report('ready',nextBatchCount=len(chosen))
             identifier=uuid.uuid4().hex
             # Reserve before sending. A timeout or crash must never resend these contacts.
