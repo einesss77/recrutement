@@ -2,8 +2,7 @@
 Description=Send a batch of five prospects to owner Telegram every thirty minutes
 
 [Timer]
-OnActiveSec=30min
-OnUnitActiveSec=30min
+OnCalendar=@BATCH_CALENDAR@
 AccuracySec=1s
 Persistent=false
 Unit=bm-prospect-batches.service

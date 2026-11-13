@@ -8,15 +8,20 @@ install -m0644 "$bm_here/prospect-batch-delivery.py" /usr/local/lib/bm-prospect-
 install -m0755 "$bm_here/prospect-batch-control.py" /usr/local/bin/bm-linkedin-batches
 python3 - <<'PY'
 from pathlib import Path
-import json,re,os,pwd,subprocess
+import json,re,os,pwd,subprocess,datetime,importlib.util
 root=Path('/var/lib/bm-prospect-batches');root.mkdir(parents=True,exist_ok=True,mode=0o700)
 seed=json.loads(Path('/var/lib/bm-linkedin/state/prospecting/manual-batches/first-five-20261113.json').read_text());receipt=seed['telegramReceipt']
 assert receipt['success'] is True and seed['deliveryStatus']=='delivered'
 job=next(j for j in json.loads(Path('/home/hermes/.hermes/cron/jobs.json').read_text())['jobs'] if j['id']=='7beaec0d1cdc')
 target=job['deliver'];assert re.fullmatch(r'telegram:[1-9][0-9]*(?::[0-9]+)?',target) and target.split(':')[1]==str(receipt['chat_id'])
 config=root/'config.json'
-if config.exists():assert json.loads(config.read_text())['target']==target
-else:config.write_text(json.dumps({'version':1,'target':target}));config.chmod(0o600)
+if config.exists():
+ data=json.loads(config.read_text());assert data['target']==target
+ anchor=data.get('scheduleAnchorAt') or datetime.datetime.fromtimestamp(config.stat().st_mtime,datetime.timezone.utc).isoformat()
+else:data={'version':1,'target':target};anchor=datetime.datetime.now(datetime.timezone.utc).isoformat()
+data['scheduleAnchorAt']=anchor;config.write_text(json.dumps(data));config.chmod(0o600)
+spec=importlib.util.spec_from_file_location('batch_delivery','/usr/local/lib/bm-prospect-batches/worker.py');worker=importlib.util.module_from_spec(spec);spec.loader.exec_module(worker)
+(root/'calendar.txt').write_text(worker.cadence_calendar(datetime.datetime.fromisoformat(anchor)))
 shared=Path('/home/hermes/bm-agents/livrables/prospects-us-manual');shared.mkdir(parents=True,exist_ok=True,mode=0o700)
 settings=shared/'auto-delivery-settings.json'
 if not settings.exists():settings.write_text(json.dumps({'version':1,'enabled':True}));settings.chmod(0o600)
@@ -27,7 +32,9 @@ for p in [shared,settings,status]:os.chown(p,x.pw_uid,x.pw_gid)
 print(result.stdout,end='')
 PY
 install -m0644 "$bm_here/bm-prospect-batches.service" /etc/systemd/system/bm-prospect-batches.service
-install -m0644 "$bm_here/bm-prospect-batches.timer" /etc/systemd/system/bm-prospect-batches.timer
+bm_batch_calendar=$(cat /var/lib/bm-prospect-batches/calendar.txt)
+sed "s|@BATCH_CALENDAR@|$bm_batch_calendar|g" "$bm_here/bm-prospect-batches.timer" > /etc/systemd/system/bm-prospect-batches.timer
+chmod 0644 /etc/systemd/system/bm-prospect-batches.timer
 systemctl daemon-reload
 systemd-analyze verify /etc/systemd/system/bm-prospect-batches.service /etc/systemd/system/bm-prospect-batches.timer
 systemctl enable --now bm-prospect-batches.timer

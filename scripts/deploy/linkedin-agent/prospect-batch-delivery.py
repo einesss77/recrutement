@@ -8,6 +8,11 @@ BATCH_SIZE=5
 DAILY_LIMIT=50
 INTERVAL_SECONDS=1800
 
+def cadence_calendar(anchor):
+    if anchor.tzinfo is None:raise ValueError('Schedule anchor must include its timezone')
+    anchor=anchor.astimezone(datetime.timezone.utc);minutes=sorted({anchor.minute,(anchor.minute+30)%60})
+    return f"*-*-* *:{minutes[0]:02d},{minutes[1]:02d}:{anchor.second:02d} UTC"
+
 def atomic(file,value):
     temp=file.with_name(file.name+'.'+uuid.uuid4().hex+'.tmp')
     with temp.open('x',encoding='utf-8') as f:
@@ -115,9 +120,21 @@ def run(root,source_file,settings_file,status_file,seed=None,sender=send_telegra
             if pending:return report('uncertain-delivery-needs-review')
             if not state['enabled']:return report('paused')
             if today>=DAILY_LIMIT:return report('daily-limit-reached')
+            slot=None;slot_anchor=None
+            if config.get('scheduleAnchorAt'):
+                slot_anchor=datetime.datetime.fromisoformat(config['scheduleAnchorAt'])
+                if slot_anchor.tzinfo is None:raise ValueError('Invalid schedule anchor')
+                slot_anchor=slot_anchor.replace(microsecond=0)
+                slot=int((now-slot_anchor).total_seconds()//INTERVAL_SECONDS)
+                previous=db.execute("SELECT value FROM meta WHERE key='last-delivery-slot'").fetchone()
+                required=max(1,int(previous[0])+1) if previous else 1
+                if slot<required:return report('not-due',eligibleAfter=(slot_anchor+datetime.timedelta(seconds=required*INTERVAL_SECONDS)).isoformat())
+            else:previous=None
             if latest:
                 eligible=datetime.datetime.fromisoformat(latest[0])+datetime.timedelta(seconds=INTERVAL_SECONDS)
-                if now<eligible:return report('not-due',eligibleAfter=eligible.isoformat())
+                # Fixed calendar slots tolerate normal scheduler jitter. A prior manual
+                # delivery without a slot still observes a full initial thirty minutes.
+                if not previous and now<eligible:return report('not-due',eligibleAfter=eligible.isoformat())
             source_day=datetime.date.fromisoformat(source['date']);age=(now.astimezone(PARIS).date()-source_day).days
             if age<0 or age>7:return report('waiting-for-current-source')
             if not remaining:return report('waiting-for-new-prospects')
@@ -134,13 +151,15 @@ def run(root,source_file,settings_file,status_file,seed=None,sender=send_telegra
             with db:
                 db.execute('INSERT INTO batches VALUES(?,?,?,?,?,?,?)',(identifier,day,now.isoformat(),'sending',len(chosen),text,None))
                 for p in chosen:db.execute('INSERT INTO contacts VALUES(?,?,?)',(p['profileUrl'],identifier,json.dumps(p,ensure_ascii=False)))
+                if slot is not None:db.execute("INSERT OR REPLACE INTO meta VALUES('last-delivery-slot',?)",(str(slot),))
             try:receipt=sender(target,text)
             except Exception:
                 with db:db.execute("UPDATE batches SET status='uncertain' WHERE id=?",(identifier,))
                 atomic(settings_file,{**settings,'enabled':False})
                 return report('uncertain-delivery-needs-review',enabled=False)
             with db:db.execute("UPDATE batches SET status='delivered',message_id=? WHERE id=?",(str(receipt),identifier))
-            return report('delivered',sentCount=len(chosen),telegramMessageId=str(receipt),todayReserved=today+len(chosen),remainingContacts=len(remaining)-len(chosen),eligibleAfter=(now+datetime.timedelta(seconds=INTERVAL_SECONDS)).isoformat())
+            next_slot=slot_anchor+datetime.timedelta(seconds=(slot+1)*INTERVAL_SECONDS) if slot is not None else now+datetime.timedelta(seconds=INTERVAL_SECONDS)
+            return report('delivered',sentCount=len(chosen),telegramMessageId=str(receipt),todayReserved=today+len(chosen),remainingContacts=len(remaining)-len(chosen),eligibleAfter=next_slot.isoformat())
         finally:db.close()
 
 def main():

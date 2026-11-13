@@ -14,6 +14,19 @@ class Tests(unittest.TestCase):
         self.write_source()
     def tearDown(self):self.temp.cleanup()
     def write_source(self,date='2026-11-13'):self.source.write_text(json.dumps({'date':date,'prospects':self.people}))
+    def test_calendar_keeps_initial_half_hour_phase_across_reloads(self):
+        anchor=datetime.datetime.fromisoformat('2026-11-13T14:39:34+00:00')
+        self.assertEqual(delivery.cadence_calendar(anchor),'*-*-* *:09,39:34 UTC')
+        self.assertEqual(delivery.cadence_calendar(anchor.astimezone(delivery.PARIS)),delivery.cadence_calendar(anchor))
+        with self.assertRaises(ValueError):delivery.cadence_calendar(anchor.replace(tzinfo=None))
+    def test_scheduler_jitter_does_not_skip_every_other_batch_or_allow_duplicates(self):
+        (self.state/'config.json').write_text(json.dumps({'target':'telegram:12345','scheduleAnchorAt':'2026-11-13T14:39:34.999+00:00'}))
+        self.assertEqual(self.run_at(datetime.datetime.fromisoformat('2026-11-13T15:00:00+00:00'))['status'],'not-due')
+        self.assertEqual(self.run_at(datetime.datetime.fromisoformat('2026-11-13T15:09:38+00:00'))['sentCount'],5)
+        self.assertEqual(self.run_at(datetime.datetime.fromisoformat('2026-11-13T15:39:33+00:00'))['status'],'not-due')
+        self.assertEqual(self.run_at(datetime.datetime.fromisoformat('2026-11-13T15:39:34.100+00:00'))['sentCount'],5)
+        self.assertEqual(self.run_at(datetime.datetime.fromisoformat('2026-11-13T15:40:00+00:00'))['status'],'not-due')
+        self.assertEqual(len(self.sent),2)
     def sender(self,target,text):self.assertEqual(target,'telegram:12345');self.sent.append(text);return str(len(self.sent))
     def run_at(self,now=NOW,**kwargs):return delivery.run(self.state,self.source,self.settings,self.status,self.seed,self.sender,now,**kwargs)
     def test_seed_dedup_and_half_hour_gap(self):
