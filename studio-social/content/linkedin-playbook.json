@@ -1,118 +1,423 @@
 {
-  "version": 1,
-  "positioning": "B&M aide à choisir puis mettre en place le bon dispositif : un consultant ou une squad dans une équipe, ou une application sur mesure pour un besoin métier précis.",
+  "version": 2,
+  "positioning": "B&M propose des consultants IT pour renforcer les équipes et des applications sur mesure. Les contenus doivent vendre clairement ces prestations, en partant des tâches et des profils recherchés.",
   "primaryGoal": "Faire émerger des conversations qualifiées autour d’un besoin IT ou produit identifié, puis des rendez-vous et des opportunités renseignés par l’équipe.",
   "accountRoles": {
-    "person": "Porter un jugement professionnel utile : expliquer un arbitrage, poser un critère de décision et assumer un point de vue. Employer je pour une opinion, jamais pour inventer une expérience, une rencontre ou un résultat. Respecter l’identité et le rôle confirmés du profil connecté.",
+    "person": "Ines présente et porte commercialement les offres B&M. Employer je pour la prise de contact, nous pour les prestations. Présenter les rôles, les projets et les tâches qui peuvent être confiés aux consultants. Aucun parcours personnel ou CV disponible inventé.",
     "organization": "Rendre l’offre B&M concrète : expliquer le dispositif, les étapes, les responsabilités et les livrables attendus. Montrer des exemples explicitement illustratifs quand aucune preuve client n’est disponible. Le lecteur doit comprendre ce qu’il peut demander à B&M."
   },
   "audiences": [
-    {"id":"it","label":"DSI, CTO et responsables produit","problem":"Un chantier avance mal, une compétence manque ou la capacité de livraison doit être clarifiée.","decision":"Définir le rôle, le périmètre et les critères qui permettent de choisir un renfort ou une équipe."},
-    {"id":"business","label":"Dirigeants de PME et responsables métier","problem":"Des ressaisies, un suivi fragmenté ou une idée d’application compliquent une activité concrète.","decision":"Décider quel usage traiter, avec quel outil, quel responsable et quel premier périmètre."}
+    {
+      "id": "it",
+      "label": "DSI, CTO et responsables produit",
+      "problem": "Un chantier avance mal, une compétence manque ou la capacité de livraison doit être clarifiée.",
+      "decision": "Définir le rôle, le périmètre et les critères qui permettent de choisir un renfort ou une équipe."
+    },
+    {
+      "id": "business",
+      "label": "Dirigeants de PME et responsables métier",
+      "problem": "Des ressaisies, un suivi fragmenté ou une idée d’application compliquent une activité concrète.",
+      "decision": "Décider quel usage traiter, avec quel outil, quel responsable et quel premier périmètre."
+    }
   ],
   "offers": {
-    "consulting":{"label":"Consultants IT & squads","url":"https://www.bandmdigitalconsulting.com/profils-et-squads/","proof":"Les faits confirmés décrivent consultants individuels, squads, expertises IT et référent projet. Aucun profil disponible, délai de recrutement, tarif ou résultat ne doit être inventé."},
-    "build":{"label":"Applications sur mesure","url":"https://www.bandmdigitalconsulting.com/solutions-sur-mesure/","proof":"Les faits confirmés décrivent conseil, cadrage et développement sur mesure. Une interface ou un scénario créé pour expliquer est une démonstration, jamais une réalisation client revendiquée."}
+    "consulting": {
+      "label": "Consultants IT & squads",
+      "url": "https://www.bandmdigitalconsulting.com/profils-et-squads/",
+      "proof": "Les faits confirmés décrivent consultants individuels, squads, expertises IT et référent projet. Aucun profil disponible, délai de recrutement, tarif ou résultat ne doit être inventé."
+    },
+    "build": {
+      "label": "Applications sur mesure",
+      "url": "https://www.bandmdigitalconsulting.com/solutions-sur-mesure/",
+      "proof": "Les faits confirmés décrivent conseil, cadrage et développement sur mesure. Une interface ou un scénario créé pour expliquer est une démonstration, jamais une réalisation client revendiquée."
+    }
   },
   "weeklyMix": [
-    {"purpose":"educate","label":"Aider à diagnostiquer","count":2},
-    {"purpose":"method","label":"Donner une méthode","count":2},
-    {"purpose":"proof","label":"Montrer un exemple","count":1},
-    {"purpose":"objection","label":"Traiter une objection","count":1},
-    {"purpose":"conversion","label":"Inviter à un échange","count":1}
+    {
+      "purpose": "educate",
+      "label": "Aider à diagnostiquer",
+      "count": 2
+    },
+    {
+      "purpose": "method",
+      "label": "Donner une méthode",
+      "count": 2
+    },
+    {
+      "purpose": "proof",
+      "label": "Montrer un exemple",
+      "count": 1
+    },
+    {
+      "purpose": "objection",
+      "label": "Traiter une objection",
+      "count": 1
+    },
+    {
+      "purpose": "conversion",
+      "label": "Inviter à un échange",
+      "count": 1
+    }
   ],
   "sequence": [
-    {"purpose":"educate","series":"Le problème à nommer","ctaKind":"none","template":"editorial"},
-    {"purpose":"method","series":"Le critère de décision","ctaKind":"question","template":"steps"},
-    {"purpose":"proof","series":"Le cas expliqué","ctaKind":"none","template":"case"},
-    {"purpose":"objection","series":"L’objection utile","ctaKind":"question","template":"checklist"},
-    {"purpose":"conversion","series":"Le prochain pas","ctaKind":"contact","template":"focus"},
-    {"purpose":"educate","series":"Le point de vue B&M","ctaKind":"question","template":"editorial"},
-    {"purpose":"method","series":"Le mémo de la semaine","ctaKind":"conversation","template":"checklist"}
+    {
+      "purpose": "educate",
+      "series": "Le problème à nommer",
+      "ctaKind": "none",
+      "template": "editorial"
+    },
+    {
+      "purpose": "method",
+      "series": "Le critère de décision",
+      "ctaKind": "question",
+      "template": "steps"
+    },
+    {
+      "purpose": "proof",
+      "series": "Le cas expliqué",
+      "ctaKind": "none",
+      "template": "case"
+    },
+    {
+      "purpose": "objection",
+      "series": "L’objection utile",
+      "ctaKind": "question",
+      "template": "checklist"
+    },
+    {
+      "purpose": "conversion",
+      "series": "Le prochain pas",
+      "ctaKind": "contact",
+      "template": "focus"
+    },
+    {
+      "purpose": "educate",
+      "series": "Le point de vue B&M",
+      "ctaKind": "question",
+      "template": "editorial"
+    },
+    {
+      "purpose": "method",
+      "series": "Le mémo de la semaine",
+      "ctaKind": "conversation",
+      "template": "checklist"
+    }
   ],
   "weeks": [
     {
-      "number":1,"label":"Nommer le besoin","objective":"Aider le lecteur à distinguer le symptôme, le besoin et le résultat attendu avant de parler de solution.",
-      "consulting":[
-        ["Le poste à pourvoir n’est pas toujours le problème à résoudre","Une demande de renfort décrit une technologie mais pas le travail à accomplir.","Formuler une mission par résultat attendu, responsabilités et contraintes."],
-        ["Un backlog en retard : capacité, dépendance ou décision manquante ?","Le retard est attribué trop vite au manque de développeurs.","Examiner les dépendances et décisions avant de dimensionner un renfort."],
-        ["Ce qu’une fiche de mission doit rendre visible","Un intitulé de poste laisse les interlocuteurs imaginer des missions différentes.","Relier contexte, périmètre, équipe et critère de réussite dans un exemple fictif."],
-        ["Pourquoi demander un profil qui sait tout rend le besoin moins clair","Les attentes mêlent expertise, coordination et exécution sans priorité.","Séparer les compétences indispensables des tâches partageables."],
-        ["Le brief utile pour parler d’un renfort IT","Une prise de contact commence souvent sans périmètre exploitable.","Inviter à préciser le chantier, le rôle et les contraintes ; ne promettre aucune disponibilité."],
-        ["L’expertise seule ne suffit pas à définir une mission","La compatibilité avec l’équipe et les responsabilités reste implicite.","Distinguer compétence technique, autonomie et collaboration attendues."],
-        ["Un besoin urgent mérite quand même des critères","L’urgence fait disparaître les questions de contexte.","Proposer un mémo court : problème, impact, interlocuteur et décision attendue."]
+      "number": 1,
+      "label": "Installer l’offre B&M",
+      "objective": "Présenter B&M dès le premier jour puis un profil ou une prestation par jour, avec tâches concrètes et contact commercial.",
+      "consulting": [
+        [
+          "Le poste à pourvoir n’est pas toujours le problème à résoudre",
+          "Une demande de renfort décrit une technologie mais pas le travail à accomplir.",
+          "Formuler une mission par résultat attendu, responsabilités et contraintes."
+        ],
+        [
+          "Un backlog en retard : capacité, dépendance ou décision manquante ?",
+          "Le retard est attribué trop vite au manque de développeurs.",
+          "Examiner les dépendances et décisions avant de dimensionner un renfort."
+        ],
+        [
+          "Ce qu’une fiche de mission doit rendre visible",
+          "Un intitulé de poste laisse les interlocuteurs imaginer des missions différentes.",
+          "Relier contexte, périmètre, équipe et critère de réussite dans un exemple fictif."
+        ],
+        [
+          "Pourquoi demander un profil qui sait tout rend le besoin moins clair",
+          "Les attentes mêlent expertise, coordination et exécution sans priorité.",
+          "Séparer les compétences indispensables des tâches partageables."
+        ],
+        [
+          "Le brief utile pour parler d’un renfort IT",
+          "Une prise de contact commence souvent sans périmètre exploitable.",
+          "Inviter à préciser le chantier, le rôle et les contraintes ; ne promettre aucune disponibilité."
+        ],
+        [
+          "L’expertise seule ne suffit pas à définir une mission",
+          "La compatibilité avec l’équipe et les responsabilités reste implicite.",
+          "Distinguer compétence technique, autonomie et collaboration attendues."
+        ],
+        [
+          "Un besoin urgent mérite quand même des critères",
+          "L’urgence fait disparaître les questions de contexte.",
+          "Proposer un mémo court : problème, impact, interlocuteur et décision attendue."
+        ]
       ],
-      "build":[
-        ["Quand la ressaisie devient un sujet produit","Une même information est recopiée entre plusieurs outils.","Identifier qui saisit quoi, où se trouve la référence et quelle erreur éviter."],
-        ["Une application commence par une situation de travail","L’idée d’application est décrite par une liste d’écrans.","Décrire un utilisateur, un moment, une action et une information utile."],
-        ["Du fichier partagé au suivi métier : un exemple fictif","Les états d’un dossier sont dispersés dans des messages et tableaux.","Illustrer un parcours simple en identifiant clairement sa nature de démonstration."],
-        ["Tout problème de processus ne demande pas une nouvelle application","La solution est choisie avant l’analyse du besoin.","Comparer simplification du processus, paramétrage d’un outil et développement."],
-        ["Le bon point de départ pour cadrer votre outil métier","Le projet reste une idée sans usage ni responsable identifiés.","Inviter à apporter un exemple de tâche, les outils actuels et la difficulté rencontrée."],
-        ["Un tableau de bord ne remplace pas une décision","Des indicateurs sont demandés sans savoir qui les utilise.","Associer chaque information affichée à une décision et à son responsable."],
-        ["Les questions à poser avant de dessiner un écran","L’interface arrive avant la définition des règles métier.","Lister utilisateurs, données, exceptions et droits d’accès."]
+      "build": [
+        [
+          "Quand la ressaisie devient un sujet produit",
+          "Une même information est recopiée entre plusieurs outils.",
+          "Identifier qui saisit quoi, où se trouve la référence et quelle erreur éviter."
+        ],
+        [
+          "Une application commence par une situation de travail",
+          "L’idée d’application est décrite par une liste d’écrans.",
+          "Décrire un utilisateur, un moment, une action et une information utile."
+        ],
+        [
+          "Du fichier partagé au suivi métier : un exemple fictif",
+          "Les états d’un dossier sont dispersés dans des messages et tableaux.",
+          "Illustrer un parcours simple en identifiant clairement sa nature de démonstration."
+        ],
+        [
+          "Tout problème de processus ne demande pas une nouvelle application",
+          "La solution est choisie avant l’analyse du besoin.",
+          "Comparer simplification du processus, paramétrage d’un outil et développement."
+        ],
+        [
+          "Le bon point de départ pour cadrer votre outil métier",
+          "Le projet reste une idée sans usage ni responsable identifiés.",
+          "Inviter à apporter un exemple de tâche, les outils actuels et la difficulté rencontrée."
+        ],
+        [
+          "Un tableau de bord ne remplace pas une décision",
+          "Des indicateurs sont demandés sans savoir qui les utilise.",
+          "Associer chaque information affichée à une décision et à son responsable."
+        ],
+        [
+          "Les questions à poser avant de dessiner un écran",
+          "L’interface arrive avant la définition des règles métier.",
+          "Lister utilisateurs, données, exceptions et droits d’accès."
+        ]
       ]
     },
     {
-      "number":2,"label":"Choisir le dispositif","objective":"Expliquer les arbitrages entre renfort individuel, squad, outil existant et développement sur mesure.",
-      "consulting":[
-        ["Consultant ou squad : partir du chantier","Le choix du dispositif est réduit au nombre de personnes.","Comparer rôle identifié dans une équipe et chantier qui demande plusieurs compétences."],
-        ["Qui décide, qui produit, qui valide ?","Les responsabilités entre l’équipe et le renfort se chevauchent.","Clarifier les décisions avant de choisir le format de collaboration."],
-        ["Deux dispositifs pour un même besoin : scénario illustratif","Une même demande peut cacher un rôle vacant ou un chantier autonome.","Montrer les deux organisations possibles, sans chiffre de performance inventé."],
-        ["Externaliser une compétence sans externaliser toute la connaissance","La crainte de dépendance bloque le recours à un consultant.","Prévoir documentation, binômage et points de transmission."],
-        ["Choisir un dispositif commence par les contraintes de votre équipe","Le contexte existant est absent de la demande commerciale.","Inviter à confronter le périmètre au fonctionnement de l’équipe."],
-        ["Le bon niveau de séniorité dépend des décisions à prendre","Le niveau est choisi par habitude ou seulement par budget.","Relier autonomie attendue, complexité et accompagnement disponible."],
-        ["Comparer des profils avec les mêmes critères","Des échanges de recrutement évaluent des sujets différents.","Construire une grille commune : mission, expertise, collaboration, autonomie."]
+      "number": 2,
+      "label": "Choisir le dispositif",
+      "objective": "Expliquer les arbitrages entre renfort individuel, squad, outil existant et développement sur mesure.",
+      "consulting": [
+        [
+          "Consultant ou squad : partir du chantier",
+          "Le choix du dispositif est réduit au nombre de personnes.",
+          "Comparer rôle identifié dans une équipe et chantier qui demande plusieurs compétences."
+        ],
+        [
+          "Qui décide, qui produit, qui valide ?",
+          "Les responsabilités entre l’équipe et le renfort se chevauchent.",
+          "Clarifier les décisions avant de choisir le format de collaboration."
+        ],
+        [
+          "Deux dispositifs pour un même besoin : scénario illustratif",
+          "Une même demande peut cacher un rôle vacant ou un chantier autonome.",
+          "Montrer les deux organisations possibles, sans chiffre de performance inventé."
+        ],
+        [
+          "Externaliser une compétence sans externaliser toute la connaissance",
+          "La crainte de dépendance bloque le recours à un consultant.",
+          "Prévoir documentation, binômage et points de transmission."
+        ],
+        [
+          "Choisir un dispositif commence par les contraintes de votre équipe",
+          "Le contexte existant est absent de la demande commerciale.",
+          "Inviter à confronter le périmètre au fonctionnement de l’équipe."
+        ],
+        [
+          "Le bon niveau de séniorité dépend des décisions à prendre",
+          "Le niveau est choisi par habitude ou seulement par budget.",
+          "Relier autonomie attendue, complexité et accompagnement disponible."
+        ],
+        [
+          "Comparer des profils avec les mêmes critères",
+          "Des échanges de recrutement évaluent des sujets différents.",
+          "Construire une grille commune : mission, expertise, collaboration, autonomie."
+        ]
       ],
-      "build":[
-        ["Acheter, paramétrer ou développer ?","Le sur-mesure est considéré comme une évidence ou rejeté par principe.","Comparer singularité métier, intégrations, contraintes et coût de maintenance sans inventer de devis."],
-        ["Web ou mobile : regarder le terrain","Le choix de plateforme vient d’une préférence esthétique.","Évaluer mobilité, connexion, périphériques et fréquence d’usage."],
-        ["Un formulaire métier avec une exception visible","Les démonstrations montrent seulement le parcours idéal.","Illustrer un dossier incomplet et la décision humaine qui le débloque."],
-        ["Un MVP n’est pas une application complète moins soignée","Le premier périmètre mélange hypothèse à tester et fonctionnalités accessoires.","Choisir un usage complet et un critère d’apprentissage."],
-        ["Préparer un arbitrage entre outil existant et sur-mesure","La comparaison reste une liste de fonctionnalités.","Inviter à décrire un usage incontournable et les limites de l’outil actuel."],
-        ["Une intégration peut résoudre plus qu’un nouvel écran","Une information existe déjà ailleurs mais n’est pas accessible au bon moment.","Cartographier la source et les échanges avant d’ajouter une interface."],
-        ["Choisir une automatisation qui garde ses exceptions","L’automatisation est décrite comme un fonctionnement sans intervention.","Identifier déclencheur, action, contrôle et exception."]
+      "build": [
+        [
+          "Acheter, paramétrer ou développer ?",
+          "Le sur-mesure est considéré comme une évidence ou rejeté par principe.",
+          "Comparer singularité métier, intégrations, contraintes et coût de maintenance sans inventer de devis."
+        ],
+        [
+          "Web ou mobile : regarder le terrain",
+          "Le choix de plateforme vient d’une préférence esthétique.",
+          "Évaluer mobilité, connexion, périphériques et fréquence d’usage."
+        ],
+        [
+          "Un formulaire métier avec une exception visible",
+          "Les démonstrations montrent seulement le parcours idéal.",
+          "Illustrer un dossier incomplet et la décision humaine qui le débloque."
+        ],
+        [
+          "Un MVP n’est pas une application complète moins soignée",
+          "Le premier périmètre mélange hypothèse à tester et fonctionnalités accessoires.",
+          "Choisir un usage complet et un critère d’apprentissage."
+        ],
+        [
+          "Préparer un arbitrage entre outil existant et sur-mesure",
+          "La comparaison reste une liste de fonctionnalités.",
+          "Inviter à décrire un usage incontournable et les limites de l’outil actuel."
+        ],
+        [
+          "Une intégration peut résoudre plus qu’un nouvel écran",
+          "Une information existe déjà ailleurs mais n’est pas accessible au bon moment.",
+          "Cartographier la source et les échanges avant d’ajouter une interface."
+        ],
+        [
+          "Choisir une automatisation qui garde ses exceptions",
+          "L’automatisation est décrite comme un fonctionnement sans intervention.",
+          "Identifier déclencheur, action, contrôle et exception."
+        ]
       ]
     },
     {
-      "number":3,"label":"Sécuriser l’exécution","objective":"Rendre visibles les responsabilités, les points de contrôle et les limites avant la livraison ou la mission.",
-      "consulting":[
-        ["Une arrivée dans l’équipe se prépare avant le premier jour","Le renfort commence sans accès, interlocuteur ou périmètre prêt.","Préparer accès, contexte, premières tâches et personne de référence."],
-        ["Un point de suivi qui sert à décider","Le suivi de mission devient un compte rendu sans action.","Suivre les obstacles, décisions et ajustements plutôt que l’activité seule."],
-        ["Un référent projet dans un scénario de mission fictif","Le rôle du référent reste abstrait.","Illustrer une difficulté remontée, un échange et une décision, sans affirmer un cas vécu."],
-        ["Plus de personnes ne supprime pas les dépendances","Un renfort est attendu comme solution à tout blocage.","Nommer les dépendances et la capacité de l’équipe à intégrer ce renfort."],
-        ["Préparer une mission avec ses points de contrôle","L’accord sur la mission ne précise pas comment suivre son déroulement.","Inviter à définir ensemble le résultat attendu et les étapes de suivi."],
-        ["Une responsabilité explicite évite des attentes contradictoires","Le consultant reçoit des priorités incompatibles.","Identifier l’arbitrage et son responsable dans l’équipe."],
-        ["Le mémo d’intégration d’un consultant","Des informations utiles sont partagées au hasard des échanges.","Regrouper contexte, outils, décisions, rituels et interlocuteurs."]
+      "number": 3,
+      "label": "Sécuriser l’exécution",
+      "objective": "Rendre visibles les responsabilités, les points de contrôle et les limites avant la livraison ou la mission.",
+      "consulting": [
+        [
+          "Une arrivée dans l’équipe se prépare avant le premier jour",
+          "Le renfort commence sans accès, interlocuteur ou périmètre prêt.",
+          "Préparer accès, contexte, premières tâches et personne de référence."
+        ],
+        [
+          "Un point de suivi qui sert à décider",
+          "Le suivi de mission devient un compte rendu sans action.",
+          "Suivre les obstacles, décisions et ajustements plutôt que l’activité seule."
+        ],
+        [
+          "Un référent projet dans un scénario de mission fictif",
+          "Le rôle du référent reste abstrait.",
+          "Illustrer une difficulté remontée, un échange et une décision, sans affirmer un cas vécu."
+        ],
+        [
+          "Plus de personnes ne supprime pas les dépendances",
+          "Un renfort est attendu comme solution à tout blocage.",
+          "Nommer les dépendances et la capacité de l’équipe à intégrer ce renfort."
+        ],
+        [
+          "Préparer une mission avec ses points de contrôle",
+          "L’accord sur la mission ne précise pas comment suivre son déroulement.",
+          "Inviter à définir ensemble le résultat attendu et les étapes de suivi."
+        ],
+        [
+          "Une responsabilité explicite évite des attentes contradictoires",
+          "Le consultant reçoit des priorités incompatibles.",
+          "Identifier l’arbitrage et son responsable dans l’équipe."
+        ],
+        [
+          "Le mémo d’intégration d’un consultant",
+          "Des informations utiles sont partagées au hasard des échanges.",
+          "Regrouper contexte, outils, décisions, rituels et interlocuteurs."
+        ]
       ],
-      "build":[
-        ["Les données font partie du produit dès le cadrage","Le modèle de données est repoussé après les écrans.","Identifier la source, le responsable, les règles et les usages de chaque donnée."],
-        ["Définir ce que veut dire terminé","La réception dépend d’une impression générale.","Associer chaque usage à un critère d’acceptation observable."],
-        ["Une extraction de document avec validation humaine","Une démonstration IA laisse croire que toute réponse est fiable.","Montrer extraction proposée, source à comparer et validation, en exemple fictif."],
-        ["L’IA n’efface pas le besoin de règles métier","Un modèle est supposé connaître les exceptions de l’entreprise.","Distinguer proposition du modèle, contrôle déterministe et décision humaine."],
-        ["Cadrer les risques avant de développer","Le brief omet les accès, intégrations et dépendances externes.","Inviter à examiner les usages critiques et les systèmes à connecter."],
-        ["Le mode dégradé mérite sa place dans le parcours","Le produit n’est pensé que lorsque tous les services répondent.","Définir ce que l’utilisateur peut faire lorsqu’une connexion échoue."],
-        ["Préparer une démonstration qui teste le vrai usage","La démonstration suit seulement le scénario le plus simple.","Prévoir cas nominal, information manquante, erreur et reprise."]
+      "build": [
+        [
+          "Les données font partie du produit dès le cadrage",
+          "Le modèle de données est repoussé après les écrans.",
+          "Identifier la source, le responsable, les règles et les usages de chaque donnée."
+        ],
+        [
+          "Définir ce que veut dire terminé",
+          "La réception dépend d’une impression générale.",
+          "Associer chaque usage à un critère d’acceptation observable."
+        ],
+        [
+          "Une extraction de document avec validation humaine",
+          "Une démonstration IA laisse croire que toute réponse est fiable.",
+          "Montrer extraction proposée, source à comparer et validation, en exemple fictif."
+        ],
+        [
+          "L’IA n’efface pas le besoin de règles métier",
+          "Un modèle est supposé connaître les exceptions de l’entreprise.",
+          "Distinguer proposition du modèle, contrôle déterministe et décision humaine."
+        ],
+        [
+          "Cadrer les risques avant de développer",
+          "Le brief omet les accès, intégrations et dépendances externes.",
+          "Inviter à examiner les usages critiques et les systèmes à connecter."
+        ],
+        [
+          "Le mode dégradé mérite sa place dans le parcours",
+          "Le produit n’est pensé que lorsque tous les services répondent.",
+          "Définir ce que l’utilisateur peut faire lorsqu’une connexion échoue."
+        ],
+        [
+          "Préparer une démonstration qui teste le vrai usage",
+          "La démonstration suit seulement le scénario le plus simple.",
+          "Prévoir cas nominal, information manquante, erreur et reprise."
+        ]
       ]
     },
     {
-      "number":4,"label":"Préparer la décision","objective":"Donner au lecteur de quoi formuler son besoin et engager une discussion utile avec B&M.",
-      "consulting":[
-        ["Les signaux qui rendent un besoin de renfort actionnable","Le besoin existe mais aucune décision n’est attribuée.","Relier chantier, responsabilité, horizon et contraintes de collaboration."],
-        ["Une fiche de mission qui aide les deux parties","Le document décrit une personne idéale plutôt qu’un travail réalisable.","Organiser le brief autour de la mission, de l’équipe et des critères."],
-        ["Un exemple de brief avant et après clarification","Une demande vague empêche de proposer un dispositif pertinent.","Comparer deux versions d’un brief fictif sans promettre un résultat commercial."],
-        ["Pourquoi un premier échange peut aboutir à préciser le besoin","L’échange commercial est attendu comme une réponse immédiate à tout.","Expliquer les informations encore nécessaires et les choix à faire."],
-        ["Votre chantier mérite un dispositif lisible","Le lecteur sait qu’il lui manque un renfort mais ne sait pas comment le demander.","Inviter à partager rôle attendu, périmètre et contexte, sans engagement inventé."],
-        ["La fin de mission se prépare dès le départ","La continuité après le départ du consultant n’est pas définie.","Penser transmission, documentation et responsabilités futures."],
-        ["Le bilan d’une mission se prépare avant qu’elle commence","Les critères ne sont définis qu’au moment d’évaluer le travail.","Écrire ce qui sera observé et comment en discuter."]
+      "number": 4,
+      "label": "Préparer la décision",
+      "objective": "Donner au lecteur de quoi formuler son besoin et engager une discussion utile avec B&M.",
+      "consulting": [
+        [
+          "Les signaux qui rendent un besoin de renfort actionnable",
+          "Le besoin existe mais aucune décision n’est attribuée.",
+          "Relier chantier, responsabilité, horizon et contraintes de collaboration."
+        ],
+        [
+          "Une fiche de mission qui aide les deux parties",
+          "Le document décrit une personne idéale plutôt qu’un travail réalisable.",
+          "Organiser le brief autour de la mission, de l’équipe et des critères."
+        ],
+        [
+          "Un exemple de brief avant et après clarification",
+          "Une demande vague empêche de proposer un dispositif pertinent.",
+          "Comparer deux versions d’un brief fictif sans promettre un résultat commercial."
+        ],
+        [
+          "Pourquoi un premier échange peut aboutir à préciser le besoin",
+          "L’échange commercial est attendu comme une réponse immédiate à tout.",
+          "Expliquer les informations encore nécessaires et les choix à faire."
+        ],
+        [
+          "Votre chantier mérite un dispositif lisible",
+          "Le lecteur sait qu’il lui manque un renfort mais ne sait pas comment le demander.",
+          "Inviter à partager rôle attendu, périmètre et contexte, sans engagement inventé."
+        ],
+        [
+          "La fin de mission se prépare dès le départ",
+          "La continuité après le départ du consultant n’est pas définie.",
+          "Penser transmission, documentation et responsabilités futures."
+        ],
+        [
+          "Le bilan d’une mission se prépare avant qu’elle commence",
+          "Les critères ne sont définis qu’au moment d’évaluer le travail.",
+          "Écrire ce qui sera observé et comment en discuter."
+        ]
       ],
-      "build":[
-        ["Quand une idée d’outil devient un projet à cadrer","La demande n’a encore ni utilisateur prioritaire ni responsable.","Identifier l’usage, le porteur et la décision attendue du cadrage."],
-        ["Un brief produit qui tient sur l’essentiel","Le cahier des charges accumule des fonctionnalités sans ordre.","Présenter contexte, usage prioritaire, contraintes et questions ouvertes."],
-        ["Du besoin au premier parcours : exemple de démonstration","Le lecteur ne voit pas comment une idée se transforme en périmètre.","Montrer un usage, son parcours et une limite assumée dans un cas fictif."],
-        ["Un devis ne résout pas un périmètre encore indécis","Le prix est demandé avant les arbitrages fonctionnels.","Distinguer les éléments estimables des inconnues à clarifier."],
-        ["Parlons d’un usage concret à améliorer","La prise de contact reste trop générale.","Inviter à apporter une tâche réelle, ses outils et ses contraintes."],
-        ["Après la mise en ligne, qui fait vivre l’outil ?","La maintenance et les retours utilisateurs arrivent après coup.","Prévoir responsabilités et remontée des problèmes dès le cadrage."],
-        ["Ce qu’il faut observer après un premier lancement","Le lancement est confondu avec la preuve d’utilité.","Choisir quelques observations liées à l’usage avant de décider de la suite."]
+      "build": [
+        [
+          "Quand une idée d’outil devient un projet à cadrer",
+          "La demande n’a encore ni utilisateur prioritaire ni responsable.",
+          "Identifier l’usage, le porteur et la décision attendue du cadrage."
+        ],
+        [
+          "Un brief produit qui tient sur l’essentiel",
+          "Le cahier des charges accumule des fonctionnalités sans ordre.",
+          "Présenter contexte, usage prioritaire, contraintes et questions ouvertes."
+        ],
+        [
+          "Du besoin au premier parcours : exemple de démonstration",
+          "Le lecteur ne voit pas comment une idée se transforme en périmètre.",
+          "Montrer un usage, son parcours et une limite assumée dans un cas fictif."
+        ],
+        [
+          "Un devis ne résout pas un périmètre encore indécis",
+          "Le prix est demandé avant les arbitrages fonctionnels.",
+          "Distinguer les éléments estimables des inconnues à clarifier."
+        ],
+        [
+          "Parlons d’un usage concret à améliorer",
+          "La prise de contact reste trop générale.",
+          "Inviter à apporter une tâche réelle, ses outils et ses contraintes."
+        ],
+        [
+          "Après la mise en ligne, qui fait vivre l’outil ?",
+          "La maintenance et les retours utilisateurs arrivent après coup.",
+          "Prévoir responsabilités et remontée des problèmes dès le cadrage."
+        ],
+        [
+          "Ce qu’il faut observer après un premier lancement",
+          "Le lancement est confondu avec la preuve d’utilité.",
+          "Choisir quelques observations liées à l’usage avant de décider de la suite."
+        ]
       ]
     }
   ],
@@ -123,15 +428,112 @@
     "Aucun cadeau, guide à télécharger, audit gratuit ou ressource promise si cette ressource n’existe pas dans le brief."
   ],
   "measurement": {
-    "primary":"Conversations qualifiées déclarées par l’équipe : un interlocuteur cible et un besoin concret ont été identifiés.",
-    "secondary":["Rendez-vous obtenus","Opportunités commerciales identifiées"],
-    "minimumObserved":8,"minimumDays":14,"maturityDays":7,"windowDays":28,
-    "limitations":["Les retours commerciaux sont saisis par vous et ne sont pas mesurés par LinkedIn.","Une absence de saisie n’est pas un résultat nul.","Pour comparer les posts, renseigner ou actualiser leurs retours au moins sept jours après publication.","Les statistiques cumulées de la page ne permettent pas de désigner un post gagnant.","La comparaison reste descriptive : audience, ancienneté et diffusion peuvent différer.","Les paramètres UTM préparent l’attribution ; ils ne prouvent pas qu’un outil de mesure est connecté."]
+    "primary": "Conversations qualifiées déclarées par l’équipe : un interlocuteur cible et un besoin concret ont été identifiés.",
+    "secondary": [
+      "Rendez-vous obtenus",
+      "Opportunités commerciales identifiées"
+    ],
+    "minimumObserved": 8,
+    "minimumDays": 14,
+    "maturityDays": 7,
+    "windowDays": 28,
+    "limitations": [
+      "Les retours commerciaux sont saisis par vous et ne sont pas mesurés par LinkedIn.",
+      "Une absence de saisie n’est pas un résultat nul.",
+      "Pour comparer les posts, renseigner ou actualiser leurs retours au moins sept jours après publication.",
+      "Les statistiques cumulées de la page ne permettent pas de désigner un post gagnant.",
+      "La comparaison reste descriptive : audience, ancienneté et diffusion peuvent différer.",
+      "Les paramètres UTM préparent l’attribution ; ils ne prouvent pas qu’un outil de mesure est connecté."
+    ]
   },
-  "sources":[
+  "sources": [
     "https://business.linkedin.com/advertise/linkedin-pages/best-practices",
     "https://www.linkedin.com/help/lms/answer/a564051/content-analytics-for-your-linkedin",
     "https://www.linkedin.com/business/marketing/blog/content-marketing/creating-a-thought-leadership-marketing-plan"
   ],
-  "assumption":"Le cycle de quatre semaines et le mix sont une stratégie de départ B&M à tester, pas une recette de l’algorithme LinkedIn. La cadence quotidienne vient de votre choix."
+  "assumption": "Le cycle de quatre semaines et le mix sont une stratégie de départ B&M à tester, pas une recette de l’algorithme LinkedIn. La cadence quotidienne vient de votre choix.",
+  "launchWeek": {
+    "label": "Meet B&M : nos offres et nos profils",
+    "topics": [
+      [
+        "B&M, concrètement",
+        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
+        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+      ],
+      [
+        "Développeur fullstack",
+        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
+        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+      ],
+      [
+        "Développeur front-end",
+        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
+        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+      ],
+      [
+        "Consultant DevOps",
+        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
+        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+      ],
+      [
+        "Data Engineer",
+        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
+        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+      ],
+      [
+        "Développeur back-end",
+        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
+        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+      ],
+      [
+        "Applications sur mesure",
+        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
+        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+      ]
+    ],
+    "sequence": [
+      {
+        "purpose": "conversion",
+        "series": "Meet B&M",
+        "ctaKind": "contact",
+        "template": "offer"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Meet the role",
+        "ctaKind": "contact",
+        "template": "offer"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Meet the role",
+        "ctaKind": "contact",
+        "template": "offer"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Meet the role",
+        "ctaKind": "contact",
+        "template": "offer"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Meet the role",
+        "ctaKind": "contact",
+        "template": "offer"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Meet the role",
+        "ctaKind": "contact",
+        "template": "offer"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Meet the role",
+        "ctaKind": "contact",
+        "template": "offer"
+      }
+    ]
+  }
 }

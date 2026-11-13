@@ -39,9 +39,9 @@ export function buildEditorialStrategy({playbook,accountId,config={},slots=[],re
  const briefs=slots.slice(0,7).map(slot=>{
   const day=dateValue(slot.day);if(!day)throw Error('Créneau éditorial invalide.');
   const absoluteDay=Math.max(0,Math.floor((dayTime(day)-dayTime(startDate))/DAY)),weekIndex=Math.floor(absoluteDay/7)%4,dayIndex=absoluteDay%7,cycleIndex=Math.floor(absoluteDay/28)+1;
-  const week=playbook.weeks[weekIndex],sequence=playbook.sequence[dayIndex],person=account==='person';
+  const week=playbook.weeks[weekIndex],launch=cycleIndex===1&&weekIndex===0&&focus==='balanced'?playbook.launchWeek:null,sequence=(launch?.sequence||playbook.sequence)[dayIndex],person=account==='person';
   // Balanced accounts divide seven topics per offer, rather than echoing the same week's posts.
-  const defaultOffer=(dayIndex+(person?1:0)+weekIndex)%2===0?'consulting':'build',offer=focus==='balanced'?defaultOffer:focus;
+  const defaultOffer=(dayIndex+(person?1:0)+weekIndex)%2===0?'consulting':'build',offer=launch?(dayIndex===6?'build':'consulting'):focus==='balanced'?defaultOffer:focus;
   const earlier=Array.from({length:dayIndex},(_,d)=>(d+(person?1:0)+weekIndex)%2===0?'consulting':'build').filter(x=>x===offer).length;
   const companyCount=Array.from({length:7},(_,d)=>(d+weekIndex)%2===0?'consulting':'build').filter(x=>x===offer).length;
   let topicIndex=focus==='balanced'?earlier+(person?companyCount:0):(dayIndex+(person?3:0))%7;
@@ -52,7 +52,7 @@ export function buildEditorialStrategy({playbook,accountId,config={},slots=[],re
    if(!used)break;topicIndex=(topicIndex+1)%topics.length;
   }
   plannedTopics.add(`${baseKey}-${topicIndex}`);
-  const [baseAngle,problem,takeAway]=topics[topicIndex],audienceId=target==='mixed'?(offer==='consulting'?'it':'business'):target;
+  const [baseAngle,problem,takeAway]=launch?launch.topics[dayIndex]:topics[topicIndex],audienceId=target==='mixed'?(offer==='consulting'?'it':'business'):target;
   const cycleLenses=['','Revisiter sous l’angle de la coordination entre équipes','Revisiter sous l’angle de la transmission et de la continuité','Revisiter sous l’angle des exceptions et des décisions difficiles'];
   const angle=cycleIndex===1?baseAngle:`${baseAngle} — ${cycleLenses[(cycleIndex-2)%3+1]}. Choisir une situation différente de l’historique fourni.`;
   const audience=playbook.audiences.find(a=>a.id===audienceId),variant=weekIndex%2===0?'problem':'decision';

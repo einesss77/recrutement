@@ -1,0 +1,382 @@
+{
+  "version": 1,
+  "campaign": "Meet B&M · Week 1",
+  "policy": "One concise visual; full FR/EN captions. Role spotlights are consulting offers, not verified individual CVs. Confirm availability against an actual profile.",
+  "marketReview": {
+    "checkedAt": "2026-11-13",
+    "scope": "Échantillon de demandes publiques ; pas un classement exhaustif ni la preuve que ces employeurs achètent des prestations.",
+    "sources": [
+      "https://ingeline.fr/carrieres/offres?ville=Paris",
+      "https://careers.capgemini.com/job/Issy-les-Moulineaux-Lead-Data-Engineer-Java-Spark/1250557301/",
+      "https://www.welcometothejungle.com/fr/pages/emploi-developpement-informatique?page=1"
+    ]
+  },
+  "accounts": {
+    "organization": [
+      {
+        "dayIndex": 0,
+        "post": {
+          "title": "B&M, concrètement",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "dark",
+          "caption": "FR\nB&M Digital Consulting, concrètement : des consultants IT pour renforcer vos équipes et des applications sur mesure pour votre activité.\n\nVous avez un produit à faire évoluer, une intégration à développer ou un projet qui attend les bonnes compétences ? Nous proposons un consultant intégré à votre équipe, ou une squad pour un chantier qui demande plusieurs expertises.\n\nBesoin d’un outil métier plutôt que d’un renfort ? Nous vous accompagnons du cadrage au développement de votre application. Envoyez-nous votre besoin, votre stack et la date souhaitée : https://www.bandmdigitalconsulting.com/contact/\n\nEN\nHere is what B&M Digital Consulting does: IT consultants to strengthen your team, and custom applications built around your business.\n\nNeed to improve a product, build an integration or move a project forward? We offer a consultant embedded in your team, or a squad when the work needs several areas of expertise.\n\nNeed a business application rather than extra capacity? We support you from scoping through development. Share your requirements, stack and target date: https://www.bandmdigitalconsulting.com/contact/",
+          "slides": [
+            {
+              "label": "B&M DIGITAL CONSULTING",
+              "title": "IT consultants.\nCustom apps.",
+              "body": "Des consultants IT. Des applications sur mesure.",
+              "points": [
+                "IT consultants",
+                "Custom applications"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : B&M, concrètement. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      },
+      {
+        "dayIndex": 1,
+        "post": {
+          "title": "Développeur fullstack",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "dark",
+          "caption": "FR\nVotre produit Java / React a besoin de renfort ? B&M propose des consultants fullstack pour intervenir côté API et côté interface.\n\nLe périmètre peut être précis : développer un nouvel écran, le connecter aux services existants, gérer les validations et compléter les tests avant livraison. Le consultant rejoint votre équipe et votre façon de travailler.\n\nVous cherchez ce profil ? Partagez votre stack, le chantier à livrer et la date souhaitée. Nous vérifierons les compétences et la disponibilité adaptées à la mission.\n\nEN\nNeed extra capacity on a Java / React product? B&M offers fullstack consultants who can work across APIs and user interfaces.\n\nThe assignment can be specific: build a new screen, connect it to existing services, implement validation rules and complete tests before release. The consultant works within your team and delivery process.\n\nLooking for this profile? Share your stack, the work to deliver and your target date. We will check the skills and availability needed for the assignment.",
+          "slides": [
+            {
+              "label": "MEET THE ROLE",
+              "title": "Fullstack\ndevelopers.",
+              "body": "Java · React",
+              "points": [
+                "APIs",
+                "Web interfaces",
+                "Product delivery"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : Développeur fullstack. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      },
+      {
+        "dayIndex": 2,
+        "post": {
+          "title": "Développeur front-end",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "dark",
+          "caption": "FR\nUn portail client, un espace de gestion ou un produit web à faire évoluer ? B&M propose des consultants front-end React / TypeScript.\n\nLeur périmètre peut inclure les formulaires, les tableaux de suivi, les appels API et les composants réutilisables. Le travail comprend aussi les états d’erreur et l’adaptation mobile.\n\nEnvoyez-nous le produit concerné, votre stack et la partie front-end à renforcer. Nous définirons avec vous le profil à mobiliser.\n\nEN\nBuilding a customer portal, management workspace or web product? B&M offers React / TypeScript front-end consultants.\n\nThe scope can include forms, tracking tables, API integration and reusable components, as well as error states and mobile layouts.\n\nTell us which product you are working on, your stack and the front-end scope that needs support. We will define the profile to mobilise with you.",
+          "slides": [
+            {
+              "label": "MEET THE ROLE",
+              "title": "Front-end\ndevelopers.",
+              "body": "React · TypeScript",
+              "points": [
+                "Customer portals",
+                "Business interfaces",
+                "Design systems"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : Développeur front-end. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      },
+      {
+        "dayIndex": 3,
+        "post": {
+          "title": "Consultant DevOps",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "dark",
+          "caption": "FR\nVotre équipe développe, mais les mises en production restent difficiles à préparer ? B&M propose un accompagnement cloud et DevOps.\n\nLe périmètre peut porter sur les pipelines CI/CD, les conteneurs, les environnements et la supervision. La mission précise ce qui doit être déployé, où et avec quels contrôles.\n\nVous cherchez un consultant pour ce chantier ? Partagez votre environnement cloud, vos outils et les difficultés rencontrées. Nous étudierons le renfort adapté.\n\nEN\nYour team ships code, but preparing production releases remains difficult? B&M offers cloud and DevOps support.\n\nThe scope can cover CI/CD pipelines, containers, environments and monitoring. The assignment specifies what needs to be deployed, where and with which checks.\n\nNeed a consultant for this workstream? Share your cloud environment, tools and current obstacles. We will review the support you need.",
+          "slides": [
+            {
+              "label": "MEET THE ROLE",
+              "title": "Cloud &\nDevOps.",
+              "body": "Déploiement · Infrastructure",
+              "points": [
+                "CI/CD",
+                "Containers",
+                "Cloud environments"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : Consultant DevOps. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      },
+      {
+        "dayIndex": 4,
+        "post": {
+          "title": "Data Engineer",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "dark",
+          "caption": "FR\nVos données restent dispersées entre plusieurs outils ? B&M propose des consultants data pour travailler sur leur collecte, leur transformation et leur mise à disposition.\n\nUn périmètre de Data Engineer peut inclure des pipelines d’ingestion, des transformations SQL et des échanges entre systèmes. Nous le définissons à partir des sources et des usages attendus.\n\nVous cherchez ce type de renfort ? Envoyez les sources à connecter, votre environnement et le premier flux à prendre en charge.\n\nEN\nYour data is spread across several systems? B&M offers data consultants to work on collection, transformation and access.\n\nA Data Engineer assignment can include ingestion pipelines, SQL transformations and system-to-system integration. We define it around the sources and intended uses.\n\nLooking for this type of support? Send us the sources to connect, your environment and the first data flow to cover.",
+          "slides": [
+            {
+              "label": "MEET THE ROLE",
+              "title": "Data\nengineers.",
+              "body": "Pipelines · SQL · Integration",
+              "points": [
+                "Data ingestion",
+                "Transformations",
+                "Reliable datasets"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : Data Engineer. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      },
+      {
+        "dayIndex": 5,
+        "post": {
+          "title": "Développeur back-end",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "dark",
+          "caption": "FR\nUne API à développer, une application à connecter ou des règles métier à faire évoluer ? B&M propose des consultants back-end pour renforcer vos équipes.\n\nLe chantier peut porter sur des services Java, les échanges entre systèmes, la gestion des données et les tests. Le rôle se précise avec votre architecture et les responsabilités à prendre en charge.\n\nEnvoyez-nous votre stack, le périmètre et la date de démarrage souhaitée. Parlons du profil à mobiliser.\n\nEN\nNeed to build an API, connect an application or change business rules? B&M offers back-end consultants to strengthen your team.\n\nThe work can cover Java services, system integration, data handling and tests. Define the role around your architecture and the responsibilities to cover.\n\nShare your stack, scope and target start date. Let’s discuss the profile you need.",
+          "slides": [
+            {
+              "label": "MEET THE ROLE",
+              "title": "Back-end\ndevelopers.",
+              "body": "Java · APIs · Business logic",
+              "points": [
+                "APIs",
+                "Business rules",
+                "System integration"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : Développeur back-end. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      },
+      {
+        "dayIndex": 6,
+        "post": {
+          "title": "Applications sur mesure",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "dark",
+          "caption": "FR\nVous cherchez une application à construire plutôt qu’un développeur à intégrer ? B&M propose aussi le développement sur mesure.\n\nPortail client, application métier, outil de suivi ou application mobile : nous partons d’un usage concret pour organiser le cadrage, la conception et le développement. Ces exemples décrivent les projets que vous pouvez nous soumettre.\n\nConsultant dans votre équipe ou application à prendre en charge : dites-nous ce que vous devez réaliser. Échangeons ici : https://www.bandmdigitalconsulting.com/contact/\n\nEN\nNeed an application built rather than a developer embedded in your team? B&M also offers custom development.\n\nCustomer portals, business applications, tracking tools or mobile apps: we start with a concrete use case to organise scoping, design and development. These examples describe projects you can bring to us.\n\nA consultant for your team or an application to build: tell us what you need to deliver. Get in touch: https://www.bandmdigitalconsulting.com/contact/",
+          "slides": [
+            {
+              "label": "MEET THE ROLE",
+              "title": "Your business.\nYour app.",
+              "body": "Web · Mobile · Outils métier",
+              "points": [
+                "Custom applications",
+                "IT consultants",
+                "Project teams"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : Applications sur mesure. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      }
+    ],
+    "person": [
+      {
+        "dayIndex": 0,
+        "post": {
+          "title": "Je vous présente B&M",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "light",
+          "caption": "FR\nVous cherchez des développeurs pour votre projet ? C’est l’une des offres que je porte chez B&M Digital Consulting.\n\nNous proposons des consultants IT pour rejoindre vos équipes, des squads pour un chantier complet et le développement d’applications sur mesure. Un rôle à renforcer ou un produit à construire : vous pouvez nous adresser ces deux demandes.\n\nCette semaine, je vous présente les profils et les interventions que vous pouvez nous demander. Vous avez déjà un besoin ? Envoyez-moi le périmètre, la stack et la date de démarrage souhaitée. Nous vérifierons les profils à mobiliser et leur disponibilité.\n\nEN\nLooking for developers for your project? That is one of the services I represent at B&M Digital Consulting.\n\nWe offer IT consultants to join your team, squads for a defined workstream, and custom application development. Whether you need to strengthen a role or build a product, you can bring that requirement to us.\n\nThis week I will introduce the profiles and services you can ask us for. Already have a requirement? Send me the scope, stack and target start date. We will review suitable profiles and confirm their availability.",
+          "slides": [
+            {
+              "label": "B&M DIGITAL CONSULTING",
+              "title": "IT consultants.\nCustom apps.",
+              "body": "Des consultants IT. Des applications sur mesure.",
+              "points": [
+                "IT consultants",
+                "Custom applications"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : B&M, concrètement. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      },
+      {
+        "dayIndex": 1,
+        "post": {
+          "title": "Un renfort Java / React",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "light",
+          "caption": "FR\nUne nouvelle fonctionnalité traverse souvent plusieurs couches : l’écran, l’API, les règles et les données. Un profil fullstack peut renforcer l’équipe sur ce périmètre.\n\nChez B&M, vous pouvez nous solliciter pour un consultant Java / React. Exemple de demande : ajouter un parcours de validation et le relier au back-end de votre application.\n\nVous avez un chantier de ce type ? Écrivez-moi avec votre environnement et le rôle à prendre en charge. Parlons du renfort que vous cherchez.\n\nEN\nA new feature often spans the screen, API, business rules and data. A fullstack consultant can strengthen your team across that scope.\n\nAt B&M, you can ask us for a Java / React consultant. One example is adding an approval flow and connecting it to the back end of your application.\n\nWorking on something similar? Send me your environment and the responsibility to cover. Let’s discuss the support you need.",
+          "slides": [
+            {
+              "label": "MEET THE ROLE",
+              "title": "Fullstack\ndevelopers.",
+              "body": "Java · React",
+              "points": [
+                "APIs",
+                "Web interfaces",
+                "Product delivery"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : Développeur fullstack. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      },
+      {
+        "dayIndex": 2,
+        "post": {
+          "title": "Renforcer votre front-end",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "light",
+          "caption": "FR\nUn espace client doit permettre de se connecter, retrouver un dossier et comprendre la prochaine action. C’est un exemple de chantier front-end concret.\n\nVous pouvez solliciter B&M pour un consultant React / TypeScript qui rejoint votre équipe et développe les interfaces connectées à vos API.\n\nVous cherchez ce type de renfort ? Envoyez-moi ce que vous construisez et la partie à prendre en charge. Nous regarderons le profil qui correspond à la mission.\n\nEN\nA customer workspace must let users sign in, find a case and understand what to do next. That is a concrete example of front-end work.\n\nYou can ask B&M for a React / TypeScript consultant to join your team and build interfaces connected to your APIs.\n\nNeed this type of support? Send me what you are building and the scope to cover. We will review the profile that fits the assignment.",
+          "slides": [
+            {
+              "label": "MEET THE ROLE",
+              "title": "Front-end\ndevelopers.",
+              "body": "React · TypeScript",
+              "points": [
+                "Customer portals",
+                "Business interfaces",
+                "Design systems"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : Développeur front-end. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      },
+      {
+        "dayIndex": 3,
+        "post": {
+          "title": "Un consultant pour vos déploiements",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "light",
+          "caption": "FR\nQuand des développeurs attendent un environnement ou une procédure de déploiement, le renfort recherché peut être un profil DevOps.\n\nPipelines, environnements ou supervision : ce sont des périmètres que vous pouvez nous soumettre chez B&M. La mission se définit selon votre architecture et l’organisation de votre équipe.\n\nSi votre sujet est là, envoyez-moi vos outils et le chantier à fiabiliser. Nous regarderons quel consultant mobiliser.\n\nEN\nWhen developers are waiting for an environment or deployment process, the support you need may be a DevOps consultant.\n\nPipelines, environments or monitoring: these are scopes you can bring to B&M. The assignment depends on your architecture and team setup.\n\nIf that is your challenge, send me your tools and the workstream to improve. We will review which consultant to mobilise.",
+          "slides": [
+            {
+              "label": "MEET THE ROLE",
+              "title": "Cloud &\nDevOps.",
+              "body": "Déploiement · Infrastructure",
+              "points": [
+                "CI/CD",
+                "Containers",
+                "Cloud environments"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : Consultant DevOps. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      },
+      {
+        "dayIndex": 4,
+        "post": {
+          "title": "Un profil pour vos flux de données",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "light",
+          "caption": "FR\nAvant de demander un tableau de bord, il faut souvent récupérer les données, les rapprocher et contrôler les transformations.\n\nC’est un périmètre pour lequel vous pouvez solliciter B&M et un profil Data Engineer. Exemple illustratif : réunir commandes et facturation pour alimenter un suivi commun.\n\nVous avez un flux à construire ou à reprendre ? Écrivez-moi avec vos sources et l’usage visé. Nous préciserons la mission du consultant.\n\nEN\nBefore asking for a dashboard, teams often need to collect data, reconcile it and check the transformations.\n\nYou can bring that requirement to B&M when looking for a Data Engineer. One illustrative example is combining orders and billing data to support a shared operational view.\n\nNeed to build or improve a data flow? Send me the sources and intended use. We can define the consultant’s assignment together.",
+          "slides": [
+            {
+              "label": "MEET THE ROLE",
+              "title": "Data\nengineers.",
+              "body": "Pipelines · SQL · Integration",
+              "points": [
+                "Data ingestion",
+                "Transformations",
+                "Reliable datasets"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : Data Engineer. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      },
+      {
+        "dayIndex": 5,
+        "post": {
+          "title": "Un renfort pour vos API",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "light",
+          "caption": "FR\nUn portail peut être prêt visuellement et attendre encore sa connexion au système de gestion. Le travail restant porte alors sur les API et les échanges de données.\n\nVous pouvez solliciter B&M pour un consultant back-end, notamment autour de Java et des intégrations. Il s’agit de renforcer votre équipe sur un rôle identifié.\n\nEnvoyez-moi le système à connecter et les responsabilités à couvrir. Nous regarderons quel renfort proposer.\n\nEN\nA portal can look ready while the connection to a management system is still missing. The remaining work then sits in APIs and data exchange.\n\nYou can ask B&M for a back-end consultant, including Java and integration work. The aim is to strengthen your team in a defined role.\n\nSend me the system to connect and the responsibilities to cover. We will review the support to propose.",
+          "slides": [
+            {
+              "label": "MEET THE ROLE",
+              "title": "Back-end\ndevelopers.",
+              "body": "Java · APIs · Business logic",
+              "points": [
+                "APIs",
+                "Business rules",
+                "System integration"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : Développeur back-end. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      },
+      {
+        "dayIndex": 6,
+        "post": {
+          "title": "Un profil ou une application ?",
+          "category": "B&M · IT consultants & custom apps",
+          "template": "offer",
+          "theme": "light",
+          "caption": "FR\nCette semaine, je vous ai présenté les renforts que vous pouvez demander à B&M : fullstack, front-end, back-end, cloud et data.\n\nSi vous avez déjà l’équipe et cherchez une compétence, parlons de la mission du consultant. Si vous avez un produit à construire, nous pouvons aussi travailler sur votre application sur mesure.\n\nQu’avez-vous à livrer et qu’est-ce qui vous manque pour avancer ? Envoyez-moi votre besoin ou contactez B&M : https://www.bandmdigitalconsulting.com/contact/\n\nEN\nThis week I introduced the support you can ask B&M for: fullstack, front-end, back-end, cloud and data.\n\nIf you already have a team and need a skill, let’s discuss the consultant’s assignment. If you need a product built, we can also work on your custom application.\n\nWhat do you need to deliver, and what is missing to move forward? Send me your requirements or contact B&M: https://www.bandmdigitalconsulting.com/contact/",
+          "slides": [
+            {
+              "label": "MEET THE ROLE",
+              "title": "Your business.\nYour app.",
+              "body": "Web · Mobile · Outils métier",
+              "points": [
+                "Custom applications",
+                "IT consultants",
+                "Project teams"
+              ]
+            }
+          ]
+        },
+        "sourceUrls": [
+          "https://www.bandmdigitalconsulting.com/"
+        ],
+        "rationale": "Lancement commercial : Applications sur mesure. Offre de prestation, pas annonce de recrutement ni CV individuel vérifié."
+      }
+    ]
+  }
+}

@@ -8,7 +8,7 @@ import signaturePack from '@/studio-social/content/signature-pack.json';
 import { z } from 'zod';
 
 const slideSchema=z.object({label:z.string().max(100),title:z.string().max(140),body:z.string().max(350),points:z.array(z.string().max(240)).max(4)});
-export const postsSchema=z.array(z.object({id:z.string().min(1).max(80),title:z.string().max(180),category:z.string().max(100),template:z.enum(['editorial','steps','squad','checklist','case','focus','chatbot','document','automation','advisor','cat']),theme:z.enum(['dark','light']),status:z.enum(['draft','ready']),date:z.string().max(10),image:z.string().max(3_500_000).refine(s=>!s||/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(s)),caption:z.string().max(15000),slides:z.array(slideSchema).min(1).max(10)})).max(500).refine(posts=>new Set(posts.map(p=>p.id)).size===posts.length);
+export const postsSchema=z.array(z.object({id:z.string().min(1).max(80),title:z.string().max(180),category:z.string().max(100),template:z.enum(['offer','editorial','steps','squad','checklist','case','focus','chatbot','document','automation','advisor','cat']),theme:z.enum(['dark','light']),status:z.enum(['draft','ready']),date:z.string().max(10),image:z.string().max(3_500_000).refine(s=>!s||/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(s)),caption:z.string().max(15000),slides:z.array(slideSchema).min(1).max(10)})).max(500).refine(posts=>new Set(posts.map(p=>p.id)).size===posts.length);
 export type SocialPost=z.infer<typeof postsSchema>[number];
 type Document={posts:SocialPost[];appliedPacks?:string[];revision:number;usage:{month:string;reservedUsd:number;calls:number}};
 export function isStudioConflict(error:unknown){

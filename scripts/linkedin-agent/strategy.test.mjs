@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {buildEditorialStrategy} from '../../shared/linkedin-strategy.mjs';
-const playbook=JSON.parse(await readFile(new URL('../../studio-social/content/linkedin-playbook.json',import.meta.url),'utf8'));
+const actualPlaybook=JSON.parse(await readFile(new URL('../../studio-social/content/linkedin-playbook.json',import.meta.url),'utf8'));
+const playbook=structuredClone(actualPlaybook);delete playbook.launchWeek;
 const day=(n)=>new Date(Date.UTC(2026,10,1+n,12)).toISOString().slice(0,10);
 const slots=(start=0,length=7)=>Array.from({length},(_,i)=>({day:day(start+i)}));
 const base={playbook,accountId:'organization',config:{campaignStart:day(0),timezone:'Europe/Paris',commercialFocus:'balanced',targetAudience:'mixed'},slots:slots(),now:new Date('2026-11-01T12:00:00Z')};
@@ -84,4 +85,12 @@ test('le bilan utilise seulement des retours manuels et ne change pas le mix',()
 test('un mois de posts sans retours ne devient pas une preuve de performance nulle',()=>{
  const p=plan({now:'2026-11-28T12:00:00Z',queue:Array.from({length:20},(_,n)=>queueItem(n))});
  assert.equal(p.review.observedCount,0);assert.equal(p.review.status,'collecting');assert.match(p.review.recommendation,/Aucun thème gagnant/);
+});
+
+test('la première semaine présente B&M puis les profils, avec une offre et un contact chaque jour',()=>{
+ for(const accountId of ['organization','person']){
+  const p=buildEditorialStrategy({...base,playbook:actualPlaybook,accountId});
+  assert.match(p.briefs[0].angle,/B&M/);assert(p.briefs.every(b=>b.ctaKind==='contact'&&b.suggestedTemplate==='offer'));
+  assert.match(p.briefs[1].angle,/fullstack/i);assert.match(p.briefs[4].angle,/Data/);assert.equal(p.briefs[6].offer,'build');
+ }
 });

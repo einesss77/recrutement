@@ -1,12 +1,13 @@
 import {character} from './characters.js';
 
 export const templates = {
- editorial:'Le point de vue', steps:'La méthode', squad:'Le collectif',
+ offer:'L’offre B&M', editorial:'Le point de vue', steps:'La méthode', squad:'Le collectif',
  checklist:'Le mémo', case:'Le cas concret', focus:'L’expertise',
  chatbot:'Le chatbot', document:'Le document IA', automation:'Le flux automatisé',
  advisor:'Le conseiller illustré', cat:'Le chat assistant'
 };
 export const templateDetails = {
+ offer:{purpose:'Faire comprendre l’offre et inviter à un besoin concret.',format:'Campagne commerciale'},
  editorial:{purpose:'Une idée forte, une prise de position.',format:'Post ou ouverture de carrousel'},
  steps:{purpose:'Expliquer une démarche en étapes.',format:'Carrousel pédagogique'},
  squad:{purpose:'Présenter un consultant, une équipe ou un accompagnement.',format:'Post offre & équipe'},
@@ -42,6 +43,7 @@ export function artwork(post,index=0){
  const s=post.slides[index]||post.slides[0]||{title:'Votre prochaine idée.',body:'',points:[]};
  if(['advisor','cat'].includes(post.template))return personifiedArtwork(post,s,index);
  if(['chatbot','document','automation'].includes(post.template))return practicalArtwork(post,s,index);
+ if(post.template==='offer')return frame(post,s,index,`<div class="offer-stage"><div class="offer-code"><span>&lt;team /&gt;</span><i></i><b>B&M</b></div><div class="offer-tags">${(s.points||[]).map(p=>`<span>${esc(p)}</span>`).join('')}</div><div class="offer-action"><span>Let’s talk about your project</span>${icon('arrow')}</div></div>`,'offer-post');
  const list=(s.points||[]).map((p,i)=>`<li><span>${post.template==='checklist'?icon('check'):String(i+1).padStart(2,'0')}</span><div>${esc(p)}</div></li>`).join('');
  const visual=post.image?imageMarkup(post):circuitScene(post.template);
  return frame(post,s,index,`${list?`<ul>${list}</ul>`:''}${visual}`,list?'has-points':'no-points');

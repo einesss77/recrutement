@@ -249,7 +249,7 @@ async function claimScopedJob(workerId:string){
   if(j.kind==='plan'&&!j.editorial){j.slots??=slotsFor(d,now);j.editorial=editorialFor(d,store,j.slots,now);}
   const previousResults=d.jobs.filter(j=>['completed','failed'].includes(j.status)).slice(0,8).map(j=>({kind:j.kind,status:j.status,message:j.message,at:j.finishedAt||j.createdAt}));
   const item=d.queue.find(q=>q.id===j.itemId);
-  const payload=j.kind==='publish'?{itemId:item!.id,post:item!.post,provider:d.connection.provider||'linkedin-oauth',fingerprint:item!.fingerprint,...(d.connection.provider==='hermes-browser'?{target:browserTarget(d)}:{}),format:item!.format||(item!.post.slides.length>1?'pdf':'png'),publishAt:item!.publishAt}:{config:d.config,strategy,recentPosts,analytics:d.analytics,previousResults,templates:['editorial','steps','squad','checklist','case','focus','chatbot','document','automation'],...(j.kind==='plan'?{slots:j.slots||slotsFor(d,now),editorial:j.editorial}:{})};
+  const payload=j.kind==='publish'?{itemId:item!.id,post:item!.post,provider:d.connection.provider||'linkedin-oauth',fingerprint:item!.fingerprint,...(d.connection.provider==='hermes-browser'?{target:browserTarget(d)}:{}),format:item!.format||(item!.post.slides.length>1?'pdf':'png'),publishAt:item!.publishAt}:{config:d.config,strategy,recentPosts,analytics:d.analytics,previousResults,templates:['offer','editorial','steps','squad','checklist','case','focus','chatbot','document','automation'],...(j.kind==='plan'?{slots:j.slots||slotsFor(d,now),editorial:j.editorial}:{})};
   return{job:{accountId:selectedAccount(),id:j.id,kind:j.kind,leaseToken,leaseExpiresAt:j.leaseExpiresAt,payload}};
  });
 }
