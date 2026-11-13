@@ -1,4 +1,5 @@
 import importlib.util,json,tempfile,unittest
+from unittest.mock import patch
 from pathlib import Path
 spec=importlib.util.spec_from_file_location('prospect_worker',Path(__file__).with_name('prospect-worker.py'));m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 def person(slug='alice',name='Alice Example',location='Austin, Texas, United States'):
@@ -24,4 +25,14 @@ class Tests(unittest.TestCase):
   m.atomic(self.root/'schedule.json',{'enabled':True,'time':'07:00','dailyTarget':1});p=person();day=m.datetime.datetime.now(m.PARIS).date().isoformat()
   self.db.execute('INSERT INTO prospects VALUES(?,?,?,?)',(m.profile_url(p['profileUrl']),'alice|example',day,json.dumps(p)));self.db.commit()
   self.assertEqual(m.run(self.root,True)['status'],'daily-target-already-met')
+ def test_partial_passes_top_up_and_stop_at_daily_target(self):
+  m.atomic(self.root/'schedule.json',{'enabled':True,'time':'07:00','dailyTarget':3})
+  outputs=[({'prospects':[person()],'summary':'Première passe'},2),({'prospects':[person('bob','Bob Example'),person('carol','Carol Example')],'summary':'Complément'},3)]
+  with patch.object(m,'research',side_effect=outputs) as search:
+   result=m.run(self.root,True)
+  self.assertEqual(result['status'],'complete');self.assertEqual(result['countToday'],3);self.assertEqual(search.call_count,2)
+  self.assertEqual(json.loads((self.root/'latest.json').read_text())['count'],3)
+ def test_old_manual_request_never_triggers_tomorrow_before_schedule(self):
+  r={'id':'request','at':'2026-11-13T10:00:00+00:00'}
+  self.assertTrue(m.request_pending(r,{},'2026-11-13'));self.assertFalse(m.request_pending(r,{},'2026-11-14'));self.assertFalse(m.request_pending(r,{'requestId':'request'},'2026-11-13'))
 if __name__=='__main__':unittest.main()

@@ -19,7 +19,7 @@ const dispatch=createControl(agent,{
  research:async(action)=>{
   if(action==='prospecting-status')return researchStatus();
   const file=state+'/prospecting/schedule.json',config=await optionalJson(file,null);if(!config)throw new ControlError('La routine de recherche n’est pas installée.',503);
-  if(action==='prospecting-pause'||action==='prospecting-resume'){config.enabled=action==='prospecting-resume';await saveJson(file,config);}
+  if(action==='prospecting-pause'||action==='prospecting-resume'){config.enabled=action==='prospecting-resume';await saveJson(file,config);if(config.enabled)await saveJson(state+'/prospecting/request.json',{id:randomUUID(),at:new Date().toISOString()});}
   if(action==='prospecting-run'){
    if(!config.enabled)throw new ControlError('La recherche est en pause. Demander une reprise explicite avant de lancer une recherche.');
    await saveJson(state+'/prospecting/request.json',{id:randomUUID(),at:new Date().toISOString()});
