@@ -1,0 +1,27 @@
+[Unit]
+Description=B&M LinkedIn owner control for Hermes Telegram
+After=network.target bm-linkedin-store.service
+Requires=bm-linkedin-store.service
+[Service]
+User=bm-linkedin
+Group=hermes
+WorkingDirectory=/opt/bm-linkedin/current
+EnvironmentFile=/var/lib/bm-linkedin/state/studio-store.env
+Environment=NODE_ENV=production
+Environment=PLAYWRIGHT_BROWSERS_PATH=/opt/bm-linkedin/browsers
+Environment=HOME=/var/lib/bm-linkedin-control
+Environment=XDG_CACHE_HOME=/var/lib/bm-linkedin-control/.cache
+RuntimeDirectory=bm-linkedin-control
+RuntimeDirectoryMode=0750
+StateDirectory=bm-linkedin-control
+StateDirectoryMode=0750
+ExecStart=@NODE_BINARY@ /opt/bm-linkedin/current/scripts/linkedin-agent/control-api.bundle.mjs
+Restart=on-failure
+UMask=0007
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/bm-linkedin/state
+[Install]
+WantedBy=multi-user.target

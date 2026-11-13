@@ -38,7 +38,7 @@ export function minimalLock(source){
 }
 
 const runtimeFiles=[
- 'scripts/linkedin-agent.mjs','scripts/linkedin-agent/codex.mjs','scripts/linkedin-agent/quality.mjs','scripts/linkedin-agent/render.mjs','scripts/linkedin-agent/browser.mjs','scripts/linkedin-agent/social.mjs','scripts/linkedin-agent/skills/social/SKILL.md','scripts/linkedin-agent/skills/social/post-templates.md','scripts/linkedin-agent/skills/social/LICENSE',
+ 'scripts/linkedin-agent.mjs','scripts/linkedin-agent/codex.mjs','scripts/linkedin-agent/quality.mjs','scripts/linkedin-agent/render.mjs','scripts/linkedin-agent/browser.mjs','scripts/linkedin-agent/social.mjs','scripts/linkedin-agent/skills/social/SKILL.md','scripts/linkedin-agent/skills/social/post-templates.md','scripts/linkedin-agent/skills/social/LICENSE','scripts/linkedin-agent/skills/telegram-control/SKILL.md',
  'shared/linkedin-strategy.mjs','studio-social/exporter.js','studio-social/content/strategy.json','studio-social/content/linkedin-playbook.json','studio-social/content/linkedin-launch-week.json',
  'studio-social/assets/style.css','studio-social/assets/brand-art.css','studio-social/assets/templates.js','studio-social/assets/characters.js',
  'studio-social/assets/fonts/manrope-0.ttf','studio-social/assets/fonts/bricolagegrotesque-0.ttf','studio-social/assets/fonts/instrumentserif-0.ttf'
@@ -48,14 +48,16 @@ export async function buildPackage(output){
  const sourceLock=await readFile(path.join(root,'package-lock.json'));
  const {manifest,lock}=minimalLock(JSON.parse(sourceLock));
  const files=new Map();
- const localApi=await build({entryPoints:[path.join(root,'scripts/linkedin-agent/local-api.mjs')],bundle:true,platform:'node',format:'esm',write:false,external:['zod'],plugins:[{name:'vps-only-storage',setup(b){
+ for(const entry of ['local-api','control-api']){
+ const localApi=await build({entryPoints:[path.join(root,'scripts/linkedin-agent/'+entry+'.mjs')],bundle:true,platform:'node',format:'esm',write:false,external:['zod','esbuild','@playwright/test','/studio-social/exporter.bundle.js'],plugins:[{name:'vps-only-storage',setup(b){
  b.onResolve({filter:/^@\/lib\/db$/},()=>({path:'db',namespace:'vps'}));
  b.onResolve({filter:/^@vercel\/blob$/},()=>({path:'blob',namespace:'vps'}));
  b.onLoad({filter:/.*/,namespace:'vps'},args=>({loader:'js',contents:args.path==='db'?'export const prisma={};':'export class BlobNotFoundError extends Error{};export class BlobPreconditionFailedError extends Error{};export function get(){throw Error("VPS storage required")};export function put(){throw Error("VPS storage required")};'}));
  }}]});
- files.set('scripts/linkedin-agent/local-api.bundle.mjs',Buffer.from(localApi.outputFiles[0].contents));
+ files.set('scripts/linkedin-agent/'+entry+'.bundle.mjs',Buffer.from(localApi.outputFiles[0].contents));
+ }
  for(const name of runtimeFiles){const file=path.join(root,name);if(!(await lstat(file)).isFile())throw Error('Fichier runtime non régulier : '+name);files.set(name,await readFile(file));}
- for(const name of ['install.sh','bm-linkedin.service','bm-linkedin.timer','verify-package.mjs','as-user.sh','store.py','backup-store.py','bm-linkedin-api.service','bm-linkedin-store.service','bm-linkedin-backup.service','bm-linkedin-backup.timer','install-local-api.sh'])files.set('deploy/'+name,Buffer.from((await readFile(path.join(here,name),'utf8')).replace(/\r\n/g,'\n')));
+ for(const name of ['install.sh','bm-linkedin.service','bm-linkedin.timer','verify-package.mjs','as-user.sh','store.py','backup-store.py','bm-linkedin-api.service','bm-linkedin-store.service','bm-linkedin-backup.service','bm-linkedin-backup.timer','install-local-api.sh','bm-linkedin-control.service','control-cli.py','install-control.sh'])files.set('deploy/'+name,Buffer.from((await readFile(path.join(here,name),'utf8')).replace(/\r\n/g,'\n')));
  const licenses=path.join(root,'studio-social/assets/licenses');
  for(const name of await readdir(licenses)){const file=path.join(licenses,name);if((await lstat(file)).isFile())files.set('studio-social/assets/licenses/'+name,await readFile(file));}
  files.set('package.json',Buffer.from(JSON.stringify(manifest,null,2)+'\n'));
