@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 """Private agent state; loopback HTTP behind Caddy, atomic SQLite CAS."""
 import hashlib, hmac, json, os, sqlite3
+from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 ROOT = Path(os.environ.get('STUDIO_AGENT_LOCAL_DIR', '/var/lib/bm-linkedin/state'))
 DB = ROOT / 'agent-store.sqlite3'
+@contextmanager
 def connect():
     c = sqlite3.connect(DB, timeout=20)
     c.execute('CREATE TABLE IF NOT EXISTS document (id INTEGER PRIMARY KEY CHECK(id=1), body TEXT NOT NULL, etag TEXT NOT NULL)')
-    return c
+    try:
+        with c: yield c
+    finally: c.close()
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *args): pass
     def respond(self, code, body=b'', etag=None):

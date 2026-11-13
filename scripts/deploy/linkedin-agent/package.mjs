@@ -55,7 +55,7 @@ export async function buildPackage(output){
  }}]});
  files.set('scripts/linkedin-agent/local-api.bundle.mjs',Buffer.from(localApi.outputFiles[0].contents));
  for(const name of runtimeFiles){const file=path.join(root,name);if(!(await lstat(file)).isFile())throw Error('Fichier runtime non régulier : '+name);files.set(name,await readFile(file));}
- for(const name of ['install.sh','bm-linkedin.service','bm-linkedin.timer','verify-package.mjs','as-user.sh'])files.set('deploy/'+name,Buffer.from((await readFile(path.join(here,name),'utf8')).replace(/\r\n/g,'\n')));
+ for(const name of ['install.sh','bm-linkedin.service','bm-linkedin.timer','verify-package.mjs','as-user.sh','store.py','backup-store.py','bm-linkedin-api.service','bm-linkedin-store.service','bm-linkedin-backup.service','bm-linkedin-backup.timer','install-local-api.sh'])files.set('deploy/'+name,Buffer.from((await readFile(path.join(here,name),'utf8')).replace(/\r\n/g,'\n')));
  const licenses=path.join(root,'studio-social/assets/licenses');
  for(const name of await readdir(licenses)){const file=path.join(licenses,name);if((await lstat(file)).isFile())files.set('studio-social/assets/licenses/'+name,await readFile(file));}
  files.set('package.json',Buffer.from(JSON.stringify(manifest,null,2)+'\n'));

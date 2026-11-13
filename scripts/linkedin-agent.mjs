@@ -71,9 +71,11 @@ export async function pairDownloadedConnection({connectionPath=connectionFile,di
  if(downloaded){await save(downloaded);return{status:stored?'renewed':'paired',studioUrl:downloaded.studioUrl};}
  return{status:stored?'unchanged':'waiting-for-pairing'};
 }
+export function workerApiOrigin(connection,route){
+ let origin=connection.studioUrl;if(route.startsWith('worker/')&&process.env.STUDIO_AGENT_API_URL){const local=new URL(process.env.STUDIO_AGENT_API_URL);if(local.protocol!=='http:'||local.hostname!=='127.0.0.1'||local.port!=='8788'||local.username||local.password||local.pathname!=='/'||local.search||local.hash)throw Error('API locale invalide.');origin=local.origin;}return origin;
+}
 async function api(connection,route,body={},extra={}){
- let origin=connection.studioUrl;if(route.startsWith('worker/')&&process.env.STUDIO_AGENT_API_URL){const local=new URL(process.env.STUDIO_AGENT_API_URL);if(local.protocol!=='http:'||local.hostname!=='127.0.0.1'||local.port!=='8788'||local.username||local.password||local.pathname!=='/'||local.search||local.hash)throw Error('API locale invalide.');origin=local.origin;}
- const response=await fetch(origin+'/api/studio-agent/'+route,{method:'POST',headers:{'Content-Type':'application/json',...(connection.token?{Authorization:'Bearer '+connection.token}:{}),...extra.headers},body:JSON.stringify(body),redirect:'error',signal:AbortSignal.timeout(extra.timeout||65000)});
+ const response=await fetch(workerApiOrigin(connection,route)+'/api/studio-agent/'+route,{method:'POST',headers:{'Content-Type':'application/json',...(connection.token?{Authorization:'Bearer '+connection.token}:{}),...extra.headers},body:JSON.stringify(body),redirect:'error',signal:AbortSignal.timeout(extra.timeout||65000)});
  let data;try{data=await response.json();}catch{throw Error(`Le studio ne répond pas au protocole de l’agent (${response.status}). Vérifiez que sa version déployée contient Agent LinkedIn.`);}
  if(!response.ok)throw Error(response.status===401?'Liaison expirée ou révoquée. Téléchargez un nouveau fichier de liaison dans le studio.':redact(data.error||`Erreur studio (${response.status}).`));
  return data;

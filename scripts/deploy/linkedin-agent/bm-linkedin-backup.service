@@ -1,0 +1,11 @@
+[Unit]
+Description=Back up B&M LinkedIn SQLite
+[Service]
+Type=oneshot
+User=bm-linkedin
+Group=bm-linkedin
+UMask=0077
+ExecStart=/usr/bin/python3 /opt/bm-linkedin/current/deploy/backup-store.py
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/bm-linkedin/state

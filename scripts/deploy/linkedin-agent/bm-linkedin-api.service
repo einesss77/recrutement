@@ -1,0 +1,18 @@
+[Unit]
+Description=B&M LinkedIn local scheduling API
+After=network.target bm-linkedin-store.service
+Requires=bm-linkedin-store.service
+[Service]
+User=bm-linkedin
+Group=bm-linkedin
+WorkingDirectory=/opt/bm-linkedin/current
+EnvironmentFile=/var/lib/bm-linkedin/state/studio-store.env
+Environment=NODE_ENV=production
+ExecStart=@NODE_BINARY@ /opt/bm-linkedin/current/scripts/linkedin-agent/local-api.bundle.mjs
+Restart=on-failure
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+[Install]
+WantedBy=multi-user.target

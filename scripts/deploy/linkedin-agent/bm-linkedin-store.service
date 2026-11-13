@@ -1,0 +1,15 @@
+[Unit]
+Description=B&M LinkedIn private SQLite state
+After=network.target
+[Service]
+User=bm-linkedin
+Group=bm-linkedin
+ExecStart=/usr/bin/python3 /opt/bm-linkedin/current/deploy/store.py
+UMask=0077
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/bm-linkedin/state
+[Install]
+WantedBy=multi-user.target
