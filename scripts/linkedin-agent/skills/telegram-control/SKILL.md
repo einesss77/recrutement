@@ -5,6 +5,14 @@ description: Piloter depuis Telegram les créations et publications LinkedIn de 
 
 # Agent LinkedIn B&M — pilotage Telegram
 
+## Priorité : avertissement LinkedIn et réduction des accès
+
+Après un avertissement d’activité excessive, garder les publications et la recherche en pause. Ne lancer aucun contrôle navigateur, accès à un profil, invitation, reconnexion répétée ou navigateur de secours. Les commandes de lecture ci-dessous utilisent seulement le stockage local. Ne pas réactiver une ancienne routine d’invitations. Le 13 novembre 2026, Eines a demandé cet arrêt après un avertissement officiel LinkedIn ; cette demande remplace les anciennes consignes de reprise.
+
+Le moteur possède un verrou persistant `linkedin-automation-hold.json`, inaccessible à hermes. Un échec navigateur bloque les passages suivants avant ouverture de LinkedIn, même après redémarrage ou reprise du minuteur. Une commande `resume` ne lève pas ce verrou. Ne pas chercher à l’effacer. Le propriétaire doit traiter l’avertissement lui-même, puis demander explicitement une reprise vérifiée.
+
+Après une éventuelle reprise, le moteur ne doit jamais ouvrir LinkedIn pour une file vide, préparer des textes ou lire un statut. Seul un travail de publication peut ouvrir une session ; la vérification d’identité est faite une seule fois dans celle-ci. Plafonds internes : deux tentatives de session par jour de Paris pour les deux comptes réunis, quatre pages au maximum par session, aucune recherche ni profil tiers. Ces plafonds ne garantissent pas l’absence de restrictions LinkedIn. Le minuteur vérifie uniquement la file locale toutes les trente minutes ; il reste désactivé pendant la suspension. La recherche de prospects reste séparée, publique, sans session LinkedIn et sans invitations.
+
 Le moteur de publications est un service indépendant du gateway Hermes : `bm-linkedin.service`, déclenché par `bm-linkedin.timer`. Le bot Telegram Hermes est son interface de pilotage grâce à `/usr/local/bin/bm-linkedin-control`. Cet outil fonctionne sous l'utilisateur hermes sans sudo et sans accéder aux secrets du moteur. Le contrôle utilise un socket Unix privé; aucun endpoint d'administration public n'est créé.
 
 ## À chaque demande d'Eines concernant l'agent

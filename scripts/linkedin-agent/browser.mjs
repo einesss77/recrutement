@@ -2,6 +2,7 @@ import {chromium,request as playwrightRequest} from '@playwright/test';
 import {mkdir,open,readFile,rename,unlink,readdir,stat} from 'node:fs/promises';
 import {createHash,randomUUID} from 'node:crypto';
 import path from 'node:path';
+import {reserveBrowserVisit} from './safety.mjs';
 
 export const browserIdentity={profileUrl:'https://www.linkedin.com/in/ines-favre-424651436/',displayName:'Ines Favre',organization:{id:'106357560',name:'B&M Digital Consulting',adminUrl:'https://www.linkedin.com/company/106357560/admin/'}};
 const sha=value=>createHash('sha256').update(value).digest('hex');
@@ -117,7 +118,13 @@ export function linkedInInterstitialTarget(html){
 
 export class HermesBrowserSession {
  constructor(browser,{createRequest=()=>playwrightRequest.newContext()}={}){this.browser=browser;this.context=browser.contexts()[0];this.createRequest=createRequest;this.pages=new Set();if(!this.context)throw new BrowserHumanError('Le navigateur ne contient aucune session existante.');}
- async newPage(url){const page=await this.context.newPage();this.pages.add(page);page.setDefaultTimeout(12000);await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});checkPageUrl(page);return page;}
+ async newPage(url){
+  const destination=new URL(url),allowed=destination.origin==='https://www.linkedin.com'&&!destination.username&&!destination.password&&(/^(?:\/feed\/?|\/sharing\/compose\/?|\/company\/106357560\/admin(?:\/.*)?|\/in\/ines-favre-424651436(?:\/recent-activity\/all\/?)?\/?)$/.test(destination.pathname)||verifiedPermalink(url));
+  if(!allowed)throw new BrowserHumanError('Navigation hors des destinations B&M et Ines interdite. Aucun profil tiers ni recherche LinkedIn.');
+  if((this.openedPages||0)>=4)throw new BrowserHumanError('Limite atteinte : quatre pages au maximum par session LinkedIn.');
+  this.openedPages=(this.openedPages||0)+1;
+  const page=await this.context.newPage();this.pages.add(page);page.setDefaultTimeout(12000);await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});checkPageUrl(page);return page;
+ }
  async closePage(page){if(!this.pages.has(page))return;await page.close({runBeforeUnload:false}).catch(()=>{});this.pages.delete(page);}
  async resolveShortLink(value){
   const short=linkedInShortLink(value);if(!short)return null;
@@ -375,7 +382,7 @@ export class HermesBrowserSession {
   await this.browser.close({reason:'Déconnexion du client CDP B&M, navigateur conservé.'});
  }
 }
-export async function openHermesBrowser(){return new HermesBrowserSession(await chromium.connectOverCDP(browserEndpoint(),{timeout:15000}));}
+export async function openHermesBrowser(){await reserveBrowserVisit();return new HermesBrowserSession(await chromium.connectOverCDP(browserEndpoint(),{timeout:15000}));}
 export async function verifyHermesBrowser({openSession=openHermesBrowser}={}){const session=await openSession();try{return await session.verify();}finally{await session.disconnect();}}
 export async function prepareBrowserPublication({post,format,accountId,render,openSession=openHermesBrowser}){
  const target={accountId,profileUrl:browserIdentity.profileUrl,targetKey:accountId==='person'?'person:ines-favre-424651436':'organization:106357560',...(accountId==='organization'?{organizationId:'106357560',adminUrl:browserIdentity.organization.adminUrl}:{})};checkedTarget(target,accountId);

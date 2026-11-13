@@ -7,13 +7,17 @@ import {randomBytes} from 'node:crypto';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import {repoRoot} from '../linkedin-agent.mjs';
+import {holdAutomation,holdFile} from './safety.mjs';
+import {captionFingerprint,browserIdentity} from './browser.mjs';
 const execute=promisify(execFile),local=await mkdtemp(path.join(repoRoot,'.local','worker-contract-test-'));
-const token=randomBytes(32).toString('base64url'),calls=[],accounts=['organization','person'];let publicationStatus='published';
+const token=randomBytes(32).toString('base64url'),calls=[],accounts=['organization','person'];let publicationStatus='published',browserJobs=false;
+const browserPost={title:'Test isolé',caption:'Aucun contenu envoyé à LinkedIn : serveur de test local.',template:'editorial',theme:'dark',slides:[]};
 const server=createServer(async(req,res)=>{
  let raw='';for await(const chunk of req)raw+=chunk;
  assert.equal(req.headers.authorization,'Bearer '+token);const payload=JSON.parse(raw);calls.push({route:req.url,payload});
  res.setHeader('Content-Type','application/json');
- if(req.url.endsWith('/claim')){const accountId=accounts.shift();res.end(JSON.stringify({job:accountId?{id:'contract-test-job-'+accountId,accountId,kind:'publish',leaseToken:'contract-test-lease-'+accountId,payload:{format:'text',post:{caption:'Aucun contenu envoyé à LinkedIn : serveur de test local.'}}}:null}));}
+ if(req.url.endsWith('/claim')){const accountId=accounts.shift();res.end(JSON.stringify({job:accountId?{id:'contract-test-job-'+accountId+(browserJobs?'-browser':''),accountId,kind:'publish',leaseToken:'contract-test-lease-'+accountId,payload:browserJobs?{provider:'hermes-browser',format:'text',post:browserPost,fingerprint:captionFingerprint(browserPost),target:{accountId,profileUrl:browserIdentity.profileUrl,targetKey:'organization:106357560',organizationId:'106357560',adminUrl:browserIdentity.organization.adminUrl}}:{format:'text',post:browserPost}}:null}));}
+ else if(req.url.endsWith('/browser-result'))res.end(JSON.stringify({status:payload.status,message:payload.message}));
  else if(req.url.endsWith('/publish'))res.end(JSON.stringify({status:publicationStatus,urn:'local-test-only',message:'Réponse simulée dans le test isolé.'}));
  else res.end(JSON.stringify({ok:true}));
 });
@@ -30,15 +34,19 @@ try{
  for(const {payload}of publications){assert.equal(payload.jobId,'contract-test-job-'+payload.accountId);assert.equal(payload.leaseToken,'contract-test-lease-'+payload.accountId);}
  assert.equal(calls.filter(x=>x.route.endsWith('/complete')).length,0);
  assert.ok(calls.some(x=>x.route.endsWith('/heartbeat')&&x.payload.subscriptionAuth===true));
- // A browser outage must remain a business AND system failure after an empty claim.
- const cdp=createServer((_req,res)=>{res.writeHead(503);res.end('test-only CDP unavailable');});
+ // An empty queue must NEVER contact the authenticated browser, even when it is down.
+ let cdpCalls=0;const cdp=createServer((_req,res)=>{cdpCalls++;res.writeHead(503);res.end('test-only CDP unavailable');});
  await new Promise(resolve=>cdp.listen(0,'127.0.0.1',resolve));
  try{
-  const result=await execute(process.execPath,['scripts/linkedin-agent.mjs','run','--max-jobs','1'],{cwd:repoRoot,env:{...env,STUDIO_LINKEDIN_PROVIDER:'hermes-browser',STUDIO_LINKEDIN_BROWSER_URL:`http://127.0.0.1:${cdp.address().port}`},windowsHide:true}).then(()=>{throw Error('A browser outage must fail the worker');},error=>error);
-  assert.equal(result.code,1);assert.match(result.stdout,/browser-unavailable/);
-  const lastHeartbeat=calls.filter(x=>x.route.endsWith('/heartbeat')).at(-1).payload;
-  assert.equal(lastHeartbeat.status,'error');assert.match(lastHeartbeat.message,/503|CDP|connect/i);assert.equal(calls.filter(x=>x.route.endsWith('/publish')).length,2);
- }finally{await new Promise(resolve=>cdp.close(resolve));}
+  const browserEnv={...env,STUDIO_LINKEDIN_PROVIDER:'hermes-browser',STUDIO_LINKEDIN_BROWSER_URL:`http://127.0.0.1:${cdp.address().port}`};
+  const result=await execute(process.execPath,['scripts/linkedin-agent.mjs','run','--max-jobs','1'],{cwd:repoRoot,env:browserEnv,windowsHide:true});
+  assert.match(result.stdout,/complete/);assert.equal(cdpCalls,0);assert.equal(calls.filter(x=>x.route.endsWith('/browser-connect')).length,0);
+  await holdAutomation(local,'Avertissement LinkedIn : vérification humaine requise.');
+  const before=calls.filter(x=>x.route.endsWith('/claim')).length;
+  const held=await execute(process.execPath,['scripts/linkedin-agent.mjs','run'],{cwd:repoRoot,env:{...browserEnv,STUDIO_CODEX_BINARY:path.join(local,'must-not-run.exe')},windowsHide:true});
+  assert.match(held.stdout,/automation-held/);assert.equal(cdpCalls,0);assert.equal(calls.filter(x=>x.route.endsWith('/claim')).length,before);
+  assert.equal(calls.filter(x=>x.route.endsWith('/heartbeat')).at(-1).payload.status,'error');
+  await unlink(holdFile(local));
  for(const status of ['blocked','uncertain']){
   publicationStatus=status;accounts.push('organization','person');
   const count=calls.filter(x=>x.route.endsWith('/publish')).length;
@@ -48,6 +56,14 @@ try{
   assert.equal(calls.filter(x=>x.route.endsWith('/publish')).length,count+1,'Stop after the first failed publication');
   accounts.length=0;
  }
+  browserJobs=true;accounts.push('organization');
+  const failed=await execute(process.execPath,['scripts/linkedin-agent.mjs','run','--max-jobs','1'],{cwd:repoRoot,env:browserEnv,windowsHide:true}).then(()=>{throw Error('An actual browser job must fail when CDP is down');},error=>error);
+  assert.equal(failed.code,1);assert.match(failed.stdout,/publication-unconfirmed/);assert.ok(cdpCalls>0);
+  const visits=cdpCalls,claims=calls.filter(x=>x.route.endsWith('/claim')).length;
+  const blockedRetry=await execute(process.execPath,['scripts/linkedin-agent.mjs','run'],{cwd:repoRoot,env:browserEnv,windowsHide:true});
+  assert.match(blockedRetry.stdout,/automation-held/);assert.equal(cdpCalls,visits);assert.equal(calls.filter(x=>x.route.endsWith('/claim')).length,claims);
+  await execute(process.execPath,['scripts/linkedin-agent.mjs','connect-browser'],{cwd:repoRoot,env:browserEnv,windowsHide:true}).then(()=>{throw Error('Held browser connection must not be checked again');},error=>assert.equal(error.code,1));assert.equal(cdpCalls,visits);
+ }finally{await new Promise(resolve=>cdp.close(resolve));}
  console.log(JSON.stringify({pairingImport:true,privateCredentialFile:true,subscriptionAuth:true,accounts:['organization','person'],publishRequestsToLoopback:2,secretNotLogged:true,noLinkedInCalls:true}));
 }finally{
  await Promise.allSettled([unlink(pairFile),unlink(path.join(local,'connection.json'))]);

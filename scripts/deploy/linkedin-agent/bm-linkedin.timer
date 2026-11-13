@@ -1,8 +1,8 @@
 [Unit]
-Description=B&M LinkedIn - check due jobs every five minutes
+Description=B&M LinkedIn - local queue check every thirty minutes (no idle LinkedIn access)
 
 [Timer]
-OnCalendar=*-*-* *:0/5:00
+OnCalendar=*-*-* *:00,30:00
 AccuracySec=1s
 RandomizedDelaySec=10s
 Persistent=false

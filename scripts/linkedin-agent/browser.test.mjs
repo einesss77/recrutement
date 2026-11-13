@@ -23,6 +23,15 @@ test('CDP reste en boucle locale et les cibles restent celles vérifiées',()=>{
  assert.equal(checkedTarget(target,'person'),target);assert.throws(()=>checkedTarget({...target,targetKey:'person:another'},'person'));
  assert.throws(()=>checkedTarget({...target,accountId:'organization'},'organization'));
 });
+
+test('le navigateur interdit les profils tiers et limite les pages d’une session',async()=>{
+ let opened=0;
+ const session=new HermesBrowserSession({contexts:()=>[{newPage:async()=>{opened++;let current='about:blank';return{setDefaultTimeout:()=>{},goto:async url=>{current=url;},url:()=>current};}}]});
+ for(const url of ['https://www.linkedin.com/in/un-prospect/','https://www.linkedin.com/search/results/people/','https://www.linkedin.com/company/123/admin/','https://example.com/feed/'])await assert.rejects(session.newPage(url),/Navigation hors/);
+ assert.equal(opened,0);
+ for(let i=0;i<4;i++)await session.newPage('https://www.linkedin.com/feed/');
+ await assert.rejects(session.newPage('https://www.linkedin.com/feed/'),/quatre pages/);assert.equal(opened,4);
+});
 test('les retours Quill sont tolérés sans masquer une modification du texte',()=>{
  assert.equal(normalizedBrowserText('Première idée.\n\nDeuxième idée.'),normalizedBrowserText('Première idée.\n\n\n\n\nDeuxième idée.'));
  assert.notEqual(normalizedBrowserText('Le projet avance.'),normalizedBrowserText('Le projet ne progresse pas.'));

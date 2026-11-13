@@ -11,6 +11,7 @@ import {subscriptionStatus,generateStructured} from './linkedin-agent/codex.mjs'
 import {planJsonSchema,profileJsonSchema,profileSchema,checkPlan,promptFor,redact} from './linkedin-agent/quality.mjs';
 import {renderPost,chromiumPath} from './linkedin-agent/render.mjs';
 import {verifyHermesBrowser,publishWithHermes,replayConfirmedBrowserReceipts} from './linkedin-agent/browser.mjs';
+import {automationHold,holdAutomation} from './linkedin-agent/safety.mjs';
 
 export const repoRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const localRoot=process.env.STUDIO_AGENT_LOCAL_DIR?path.resolve(process.env.STUDIO_AGENT_LOCAL_DIR):path.join(repoRoot,'.local','linkedin-agent'),connectionFile=path.join(localRoot,'connection.json');
@@ -111,11 +112,12 @@ async function doctor(){
 }
 
 async function connectBrowser(opts){
+ const hold=await automationHold(localRoot);if(hold)throw Error(hold.reason);
  const connection=await readConnection(),auth=await subscriptionStatus();
  if(!auth.chatgpt)throw Error(auth.message);
  await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'online',subscriptionAuth:true,message:'Vérification de la session navigateur LinkedIn.'});
  try{const evidence=await verifyHermesBrowser();const result=await api(connection,'worker/browser-connect',{...evidence,activate:opts.activate===true});console.log(JSON.stringify({status:'browser-connected',profile:evidence.profileUrl,organization:evidence.organization.id,activated:opts.activate===true,message:result.message||'Les deux destinations ont été vérifiées dans le navigateur existant.'}));}
- catch(error){await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',subscriptionAuth:true,message:redact(error.message).slice(0,500),browser:{sessionReady:false,message:redact(error.message).slice(0,500)}}).catch(()=>{});throw error;}
+ catch(error){await holdAutomation(localRoot,redact(error.message));await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',subscriptionAuth:true,message:redact(error.message).slice(0,500),browser:{sessionReady:false,message:redact(error.message).slice(0,500)}}).catch(()=>{});throw error;}
 }
 
 export async function processJob(connection,job,{generate=generateStructured,render=renderPost,request=api,browserPublish=publishWithHermes}={}){
@@ -140,6 +142,7 @@ export async function processJob(connection,job,{generate=generateStructured,ren
    if(job.payload.provider==='hermes-browser'){
     publishing=true;
     const result=await browserPublish({job,workingRoot:localRoot,render:(post,type)=>render(post,type,{repoRoot,workingRoot:localRoot}),begin:body=>request(connection,'worker/browser-begin',{...identity,...body}),finish:body=>request(connection,'worker/browser-result',{...identity,...body})});
+    if(['blocked','uncertain'].includes(result.status))await holdAutomation(localRoot,result.message||'Vérification humaine LinkedIn requise avant reprise.');
     return{kind:job.kind,status:result.status,url:result.permalink,message:result.message};
    }
    const media=format==='text'?undefined:await render(job.payload.post,format,{repoRoot,workingRoot:localRoot});
@@ -159,6 +162,8 @@ export async function processJob(connection,job,{generate=generateStructured,ren
 }
 
 async function run(opts){
+ const hold=await automationHold(localRoot);
+ if(hold){const connection=await readConnection(),message=hold.reason.slice(0,500);await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',message,subscriptionAuth:false,browser:{sessionReady:false,message}}).catch(()=>{});console.log(JSON.stringify({status:'automation-held',message}));return;}
  if(opts['auto-pair-download']){
   const pairing=await pairDownloadedConnection();
   if(pairing.status==='waiting-for-pairing'){console.log(JSON.stringify({...pairing,message:'Dans le studio, téléchargez le fichier de liaison B&M dans Téléchargements. Il sera importé au prochain passage.'}));return;}
@@ -181,11 +186,8 @@ async function run(opts){
  try{
   await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:auth.chatgpt?'online':'error',message:redact(auth.message).slice(0,500),subscriptionAuth:auth.chatgpt});
   if(!auth.chatgpt)throw Error(auth.message);
-  let browserFailure='';
-  if(process.env.STUDIO_LINKEDIN_PROVIDER==='hermes-browser'){
-   try{const evidence=await verifyHermesBrowser();await api(connection,'worker/browser-connect',{...evidence,activate:false,verifyOnly:true});}
-   catch(error){browserFailure=redact(error.message).slice(0,500);await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',subscriptionAuth:true,message:browserFailure,browser:{sessionReady:false,message:browserFailure}}).catch(()=>{});console.log(JSON.stringify({status:'browser-human-required',message:browserFailure}));}
-  }
+  // Queue checks and planning are local. Only an actual publish job may open LinkedIn;
+  // publishWithHermes verifies identity once within its bounded browser session.
   const replay=await replayConfirmedBrowserReceipts({workingRoot:localRoot,finish:body=>api(connection,'worker/browser-result',body)});
   if(replay.reconciled||replay.pending)console.log(JSON.stringify({status:'browser-receipts',...replay}));
   const completed=[],limit=Math.max(1,Math.min(4,Number(opts['max-jobs'])||4));
@@ -197,9 +199,9 @@ async function run(opts){
    if(['uncertain','blocked'].includes(result.status))break;
   }
   const failedJob=completed.find(result=>['blocked','uncertain'].includes(result.status));
-  const failure=browserFailure|| (failedJob?redact(failedJob.message||`Publication ${failedJob.status}.`).slice(0,500):'');
+  const failure=failedJob?redact(failedJob.message||`Publication ${failedJob.status}.`).slice(0,500):'';
   await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:failure?'error':'online',message:failure|| (completed.length?`${completed.length} travail(s) traité(s).`:'Cycle terminé. Aucun travail pris en charge maintenant.'),subscriptionAuth:true});
-  console.log(JSON.stringify({status:browserFailure?'browser-unavailable':failedJob?'publication-unconfirmed':'complete',jobs:completed.length,studioUrl:connection.studioUrl}));
+  console.log(JSON.stringify({status:failedJob?'publication-unconfirmed':'complete',jobs:completed.length,studioUrl:connection.studioUrl}));
   if(failure)process.exitCode=1;
  }catch(error){await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',message:redact(error.message).slice(0,500),subscriptionAuth:auth.chatgpt}).catch(()=>{});throw error;}
  finally{await lock.close();await unlink(lockPath).catch(()=>{});}
