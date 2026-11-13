@@ -72,7 +72,8 @@ export async function pairDownloadedConnection({connectionPath=connectionFile,di
  return{status:stored?'unchanged':'waiting-for-pairing'};
 }
 async function api(connection,route,body={},extra={}){
- const response=await fetch(connection.studioUrl+'/api/studio-agent/'+route,{method:'POST',headers:{'Content-Type':'application/json',...(connection.token?{Authorization:'Bearer '+connection.token}:{}),...extra.headers},body:JSON.stringify(body),redirect:'error',signal:AbortSignal.timeout(extra.timeout||65000)});
+ let origin=connection.studioUrl;if(route.startsWith('worker/')&&process.env.STUDIO_AGENT_API_URL){const local=new URL(process.env.STUDIO_AGENT_API_URL);if(local.protocol!=='http:'||local.hostname!=='127.0.0.1'||local.port!=='8788'||local.username||local.password||local.pathname!=='/'||local.search||local.hash)throw Error('API locale invalide.');origin=local.origin;}
+ const response=await fetch(origin+'/api/studio-agent/'+route,{method:'POST',headers:{'Content-Type':'application/json',...(connection.token?{Authorization:'Bearer '+connection.token}:{}),...extra.headers},body:JSON.stringify(body),redirect:'error',signal:AbortSignal.timeout(extra.timeout||65000)});
  let data;try{data=await response.json();}catch{throw Error(`Le studio ne répond pas au protocole de l’agent (${response.status}). Vérifiez que sa version déployée contient Agent LinkedIn.`);}
  if(!response.ok)throw Error(response.status===401?'Liaison expirée ou révoquée. Téléchargez un nouveau fichier de liaison dans le studio.':redact(data.error||`Erreur studio (${response.status}).`));
  return data;
@@ -120,6 +121,7 @@ export async function processJob(connection,job,{generate=generateStructured,ren
  let publishing=false;
  try{
   if(job.kind==='plan'){
+   job.payload.config={...job.payload.config,languages:'fr-en'};
    const generated=await generate({schema:planJsonSchema,prompt:promptFor('plan',job.payload),workingRoot:localRoot});
    const result=checkPlan(generated.data,job.payload);
    await request(connection,'worker/complete',{...identity,result});
@@ -217,7 +219,7 @@ async function draft(opts){
   if(!Array.isArray(items))throw Error('L’historique doit être un plan précédent ou une liste de publications.');
   recentPosts=items.slice(-60).map(item=>({accountId:item.accountId||previous.accountId,status:item.status||'draft',title:item.post?.title||item.title||'',caption:item.post?.caption||item.caption||'',publishedAt:item.publishedAt,editorial:item.editorial||previous.editorial?.briefs?.find(brief=>brief.id===item.briefId)}));
  }
- const config={targetType:accountId,targetUrl:accountId==='organization'?'https://www.linkedin.com/company/bandmdigitalconsulting/':'',mode:'autopilot',objective:playbook.primaryGoal,voice:strategy.voice,facts:strategy.facts,pillars:strategy.pillars,excludedTopics:[],commercialFocus:'balanced',targetAudience:'mixed',campaignStart:start};
+ const config={languages:'fr-en',targetType:accountId,targetUrl:accountId==='organization'?'https://www.linkedin.com/company/bandmdigitalconsulting/':'',mode:'autopilot',objective:playbook.primaryGoal,voice:strategy.voice,facts:strategy.facts,pillars:strategy.pillars,excludedTopics:[],commercialFocus:'balanced',targetAudience:'mixed',campaignStart:start};
  const editorial=buildEditorialStrategy({playbook,accountId,config,slots,recentPosts,queue:[],now:new Date()});
  const payload={strategy,config,editorial,slots,recentPosts};
  const generated=await generateStructured({schema:planJsonSchema,prompt:promptFor('plan',payload),workingRoot:localRoot});

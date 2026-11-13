@@ -3,6 +3,7 @@ import {readFile,writeFile,mkdir,lstat,readdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import path from 'node:path';
+import {build} from 'esbuild';
 
 const here=path.dirname(fileURLToPath(import.meta.url));
 const root=path.resolve(here,'../../..');
@@ -47,6 +48,12 @@ export async function buildPackage(output){
  const sourceLock=await readFile(path.join(root,'package-lock.json'));
  const {manifest,lock}=minimalLock(JSON.parse(sourceLock));
  const files=new Map();
+ const localApi=await build({entryPoints:[path.join(root,'scripts/linkedin-agent/local-api.mjs')],bundle:true,platform:'node',format:'esm',write:false,external:['zod'],plugins:[{name:'vps-only-storage',setup(b){
+ b.onResolve({filter:/^@\/lib\/db$/},()=>({path:'db',namespace:'vps'}));
+ b.onResolve({filter:/^@vercel\/blob$/},()=>({path:'blob',namespace:'vps'}));
+ b.onLoad({filter:/.*/,namespace:'vps'},args=>({loader:'js',contents:args.path==='db'?'export const prisma={};':'export class BlobNotFoundError extends Error{};export class BlobPreconditionFailedError extends Error{};export function get(){throw Error("VPS storage required")};export function put(){throw Error("VPS storage required")};'}));
+ }}]});
+ files.set('scripts/linkedin-agent/local-api.bundle.mjs',Buffer.from(localApi.outputFiles[0].contents));
  for(const name of runtimeFiles){const file=path.join(root,name);if(!(await lstat(file)).isFile())throw Error('Fichier runtime non régulier : '+name);files.set(name,await readFile(file));}
  for(const name of ['install.sh','bm-linkedin.service','bm-linkedin.timer','verify-package.mjs','as-user.sh'])files.set('deploy/'+name,Buffer.from((await readFile(path.join(here,name),'utf8')).replace(/\r\n/g,'\n')));
  const licenses=path.join(root,'studio-social/assets/licenses');

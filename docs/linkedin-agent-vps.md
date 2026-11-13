@@ -176,3 +176,7 @@ Les plans automatiques de la page B&M utilisent des images PNG : le compositeur 
 
 ### Skill éditorial embarqué
 Social Content 2.5.2 de Corey Haines (MIT, https://github.com/coreyhaines31/marketingskills/tree/main/skills/social) est livré avec le runtime. `social.mjs` charge le skill et les modèles de textes dans chaque génération de plan, avec des consignes distinctes pour Ines et B&M. Les briefs serveur et faits confirmés priment. Les horaires restent configurés tant qu’aucune donnée comparable ne justifie un test. Metricool doit être connecté séparément : le skill ne fournit aucun accès aux statistiques.
+
+### Exécution autonome et état VPS
+Le worker utilise désormais une API métier locale sur 127.0.0.1:8788, compilée depuis les mêmes règles que le studio. SQLite privé est servi sur 127.0.0.1:8787 avec transactions CAS/ETag. Caddy expose uniquement le stockage authentifié en HTTPS pour le studio ; aucun secret du navigateur ne quitte Hermes. STUDIO_AGENT_STORE_URL et STUDIO_AGENT_STORE_TOKEN relient le studio. Le worker local reste actif si Vercel ou Blob ne répondent plus.
+Après suspension Blob (quota), aucun envoi publié n’était enregistré dans les journaux du worker. Le nouvel état conserve la liaison du worker, puis les calendriers sont régénérés en FR/EN. Le document Blob original reste conservé ; il n’a pas été importé car inaccessible. Les nouveaux textes ont deux sections FR et EN complètes.

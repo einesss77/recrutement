@@ -19,5 +19,6 @@ exec runuser -u bm-linkedin -- env -i \
   STUDIO_AGENT_RUNTIME=vps \
   STUDIO_CODEX_BINARY=/opt/bm-linkedin/current/runtime/codex/node_modules/.bin/codex \
   PLAYWRIGHT_BROWSERS_PATH=/opt/bm-linkedin/browsers \
+  STUDIO_AGENT_API_URL=http://127.0.0.1:8788 \
   NODE_ENV=production \
   "$bm_executable" "$@"

@@ -10,6 +10,8 @@ import {buildEditorialStrategy,type EditorialBrief,type EditorialStrategy} from 
 import {exchangeLinkedInCode,refreshLinkedInToken,verifyLinkedInTarget,uploadLinkedInMedia,publishLinkedInPost,getLinkedInPost,getLinkedInAnalytics,LinkedInError,type PublishMedia} from '@/lib/linkedinClient';
 
 const pathname='bm-social-studio/linkedin-agent-v1.json';
+const vpsStore=()=>process.env.STUDIO_AGENT_STORE_URL;
+async function storeRequest(method:string,body?:string,etag?:string){const url=new URL(vpsStore()!);if(url.protocol!=='https:')throw new AgentError('Le stockage VPS doit utiliser HTTPS.',503);const key=process.env.STUDIO_AGENT_STORE_TOKEN;if(!key)throw new AgentError('Liaison du stockage VPS absente.',503);const r=await fetch(url,{method,headers:{Authorization:'Bearer '+key,...(body?{'Content-Type':'application/json',...(etag?{'If-Match':etag}:{'If-None-Match':'*'})}:{})},...(body?{body}:{}),cache:'no-store',redirect:'error',signal:AbortSignal.timeout(15000)});if(r.status===412)throw Error('CONFLICT');if(!r.ok&&r.status!==404)throw new AgentError('Stockage VPS indisponible ('+r.status+').',503);return r;}
 const token=()=>process.env.BLOB_READ_WRITE_TOKEN??process.env.BLOB_READ_WRITE_TOKEN_READ_WRITE_TOKEN;
 const statuses=['draft','scheduled','publishing','published','blocked','uncertain','rejected'] as const;
 type QueueStatus=typeof statuses[number];
@@ -49,7 +51,7 @@ function scopedDocument(store:AgentStore){const d=store.accounts[selectedAccount
 function conflict(error:unknown){return error instanceof BlobPreconditionFailedError||/CONFLICT|precondition failed|etag mismatch|already exists/i.test(error instanceof Error?error.message:'');}
 async function readAgent():Promise<{document:AgentDocument;etag?:string;store:AgentStore}>{
  let raw:AgentStore|AgentDocument|undefined,etag:string|undefined;
- if(token()){
+ if(vpsStore()){const r=await storeRequest('GET');if(r.status===404)throw new AgentError('État VPS absent : restaurer avant de démarrer.',503);raw=await r.json();etag=r.headers.get('etag')||undefined;}else if(token()){
   try{const r=await get(pathname,{access:'private',token:token(),useCache:false,headers:{'Accept-Encoding':'identity'}});if(r?.statusCode===200){raw=JSON.parse(await new Response(r.stream).text());etag=r.blob.etag;}}catch(e){if(!(e instanceof BlobNotFoundError))throw e;}
  }else{
   if(!process.env.DATABASE_URL)throw new AgentError('Stockage persistant indisponible. Configurez Vercel Blob privé ou PostgreSQL avant de relier l’agent.',503,'STORAGE_UNAVAILABLE');
@@ -63,7 +65,8 @@ async function writeAgent(document:AgentDocument,revision:number,etag:string|und
  const appChanged=store.app.clientId!==document.secrets.clientId||store.app.clientSecret!==document.secrets.clientSecret;
  store.revision=revision+1;document.revision=store.revision;store.accounts[selectedAccount()]=document;store.worker=document.worker;store.app={clientId:document.secrets.clientId,clientSecret:document.secrets.clientSecret};
  if(appChanged)for(const id of ['organization','person'] as const)if(id!==selectedAccount()){const d=store.accounts[id];d.config.enabled=false;d.connection.connected=false;d.connection.authorUrn='';delete d.secrets.access;delete d.secrets.refresh;delete d.oauth;for(const q of d.queue)if(['scheduled','draft','blocked'].includes(q.status)){q.status='blocked';q.error='L’application LinkedIn a changé. Reconnectez ce compte et relisez les publications.';}log(d,'Application LinkedIn modifiée. Reconnexion du compte nécessaire.','warning');}
- if(token())await put(pathname,JSON.stringify(store),{access:'private',token:token(),contentType:'application/json',addRandomSuffix:false,cacheControlMaxAge:60,...(etag?{ifMatch:etag,allowOverwrite:true}:{allowOverwrite:false})});
+ if(vpsStore())await storeRequest('PUT',JSON.stringify(store),etag);
+ else if(token())await put(pathname,JSON.stringify(store),{access:'private',token:token(),contentType:'application/json',addRandomSuffix:false,cacheControlMaxAge:60,...(etag?{ifMatch:etag,allowOverwrite:true}:{allowOverwrite:false})});
  else{
   const count=await prisma.$executeRaw`INSERT INTO "LinkedInAgentDocument" ("id","data","revision") VALUES ('main',${JSON.stringify(store)}::jsonb,${store.revision}) ON CONFLICT ("id") DO UPDATE SET "data"=EXCLUDED."data","revision"=EXCLUDED."revision" WHERE "LinkedInAgentDocument"."revision"=${revision}`;
   if(count!==1)throw Error('CONFLICT');
