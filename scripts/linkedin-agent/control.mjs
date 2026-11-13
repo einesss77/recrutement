@@ -25,7 +25,7 @@ export function createControl(agent,{prospects,preview,research}={}){
     if(action==='post')return{accountId,item};
     return preview(item,accountId);
    }
-   if(action==='resume')return agent.configureAgent({enabled:true});
+   if(action==='resume')return agent.configureAgent({enabled:true},{allowPendingBrowserSchedule:true});
    if(action==='configure'){
     if(!payload||typeof payload!=='object'||Array.isArray(payload)||!Object.keys(payload).length)throw new ControlError('Paramètres requis.');
     checkFields(payload,configKeys);return agent.configureAgent(payload);

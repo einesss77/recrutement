@@ -153,7 +153,7 @@ export async function agentState(){
  const accounts=(['organization','person'] as const).map(id=>{const d=store.accounts[id];return{id,label:id==='organization'?'Page B&M':'Profil professionnel',enabled:d.config.enabled,connected:d.connection.connected,targetName:d.connection.targetName,nextRunAt:nextRun(d.config),pendingCount:d.queue.filter(q=>['draft','scheduled','blocked','uncertain'].includes(q.status)).length};});
  return{...state,selectedAccountId:selected,accounts};
 }
-export async function configureAgent(input:unknown){
+export async function configureAgent(input:unknown,options:{allowPendingBrowserSchedule?:boolean}={}){
  const extra=z.object({linkedinClientId:z.string().max(300).optional(),linkedinClientSecret:z.string().max(2000).optional()}).passthrough().parse(input);
  return mutate(d=>{
   const previous=d.config,next=configSchema.parse({...d.config,...extra});
@@ -165,7 +165,11 @@ export async function configureAgent(input:unknown){
   d.config=next;
   if(!changed&&(previous.time!==next.time||previous.timezone!==next.timezone))for(const q of d.queue)if(['scheduled','draft'].includes(q.status)&&Date.parse(q.publishAt)>Date.now())q.publishAt=dailySlot(q.day,next.time,next.timezone);
   if(changed||appChanged){delete d.oauth;d.config.enabled=false;d.connection.connected=false;d.connection.authorUrn='';delete d.secrets.access;delete d.secrets.refresh;for(const q of d.queue)if(['scheduled','draft','blocked'].includes(q.status)){q.status='blocked';q.error='La cible ou l’application LinkedIn a changé. Relire avant reprogrammation.';}log(d,'Cible ou application modifiée. Une nouvelle connexion LinkedIn est nécessaire.','warning');}
-  if(d.config.enabled){if(!capabilities(d).publish)throw new AgentError('Connectez LinkedIn avec la permission de publication avant d’activer le quotidien.');if(!d.worker.tokenHash||!d.worker.subscriptionAuth)throw new AgentError('Reliez le service d’exécution et vérifiez sa connexion ChatGPT avant l’activation.');}
+  // Owner control can restore a previously verified calendar while delivery is held.
+  // This records intent only: claim/begin and the persistent browser hold still block sending.
+  const pendingBrowserSchedule=options.allowPendingBrowserSchedule===true&&d.connection.provider==='hermes-browser'&&d.connection.connected&&d.connection.targetConfirmed&&!!d.worker.tokenHash;
+  if(d.config.enabled){if(!capabilities(d).publish&&!pendingBrowserSchedule)throw new AgentError('Connectez LinkedIn avec la permission de publication avant d’activer le quotidien.');if(!d.worker.tokenHash||(!d.worker.subscriptionAuth&&!pendingBrowserSchedule))throw new AgentError('Reliez le service d’exécution et vérifiez sa connexion ChatGPT avant l’activation.');}
+  if(d.config.enabled&&pendingBrowserSchedule&&!capabilities(d).publish){const message='Calendrier quotidien activé. Envoi en attente de la vérification de LinkedIn et du moteur ; aucun contrôle navigateur automatique.';log(d,message,'warning');return{ok:true,publicationPending:true,message};}
   log(d,d.config.enabled?'Le quotidien LinkedIn est activé.':'Paramètres de l’agent enregistrés.');return{ok:true};
  });
 }
