@@ -173,3 +173,6 @@ Références : [authentification Codex sans navigateur](https://learn.chatgpt.co
 
 ### Formats du navigateur Hermes
 Les plans automatiques de la page B&M utilisent des images PNG : le compositeur entreprise LinkedIn laisse actuellement le PDF en chargement. La légende complète est conservée. Le profil Ines conserve les PDF, validés dans le compositeur réel. Les formats explicitement choisis restent respectés et bloquent si leur aperçu ne se confirme pas.
+
+### Skill éditorial embarqué
+Social Content 2.5.2 de Corey Haines (MIT, https://github.com/coreyhaines31/marketingskills/tree/main/skills/social) est livré avec le runtime. `social.mjs` charge le skill et les modèles de textes dans chaque génération de plan, avec des consignes distinctes pour Ines et B&M. Les briefs serveur et faits confirmés priment. Les horaires restent configurés tant qu’aucune donnée comparable ne justifie un test. Metricool doit être connecté séparément : le skill ne fournit aucun accès aux statistiques.

@@ -37,7 +37,7 @@ export function minimalLock(source){
 }
 
 const runtimeFiles=[
- 'scripts/linkedin-agent.mjs','scripts/linkedin-agent/codex.mjs','scripts/linkedin-agent/quality.mjs','scripts/linkedin-agent/render.mjs','scripts/linkedin-agent/browser.mjs',
+ 'scripts/linkedin-agent.mjs','scripts/linkedin-agent/codex.mjs','scripts/linkedin-agent/quality.mjs','scripts/linkedin-agent/render.mjs','scripts/linkedin-agent/browser.mjs','scripts/linkedin-agent/social.mjs','scripts/linkedin-agent/skills/social/SKILL.md','scripts/linkedin-agent/skills/social/post-templates.md','scripts/linkedin-agent/skills/social/LICENSE',
  'shared/linkedin-strategy.mjs','studio-social/exporter.js','studio-social/content/strategy.json','studio-social/content/linkedin-playbook.json',
  'studio-social/assets/style.css','studio-social/assets/brand-art.css','studio-social/assets/templates.js','studio-social/assets/characters.js',
  'studio-social/assets/fonts/manrope-0.ttf','studio-social/assets/fonts/bricolagegrotesque-0.ttf','studio-social/assets/fonts/instrumentserif-0.ttf'

@@ -1,5 +1,6 @@
 import {randomUUID} from 'node:crypto';
 import {z} from 'zod';
+import {socialGuidance} from './social.mjs';
 
 export const templateIds=['editorial','steps','squad','checklist','case','focus','chatbot','document','automation','advisor','cat'];
 const slide=z.object({label:z.string().max(65),title:z.string().min(1).max(65),body:z.string().max(150),points:z.array(z.string().max(95)).max(4)}).strict();
@@ -126,5 +127,5 @@ export function promptFor(kind,payload){
   'Limites par page : titre 65 caractères, corps 150, jusqu’à 4 points de 95 caractères chacun. Pour chatbot : points question/réponse/source ; document : document/extraction/validation ; automation : déclencheur/traitement/validation. Ne présente pas un exemple d’interface comme une capture d’un client réel.',
   'rationale explique brièvement pour qui est ce post, la décision qu’il aide à prendre et sa place dans la campagne. sourceUrls cite seulement des sources présentes et vérifiées dans le contexte : https://www.bandmdigitalconsulting.com/, /profils-et-squads/ ou /solutions-sur-mesure/. Elles ne justifient aucun chiffre absent des faits. Le résumé distingue la stratégie testée des résultats réellement observés, sans promettre des prospects ni une hausse de portée.'
  ];
- return common+instructions.join('\n')+`\nCONTEXTE_JSON:\n${JSON.stringify(context)}`;
+ return common+socialGuidance(payload.config?.targetType)+'\n'+instructions.join('\n')+`\nCONTEXTE_JSON:\n${JSON.stringify(context)}`;
 }
