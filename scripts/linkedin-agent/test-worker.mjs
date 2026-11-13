@@ -30,6 +30,15 @@ try{
  for(const {payload}of publications){assert.equal(payload.jobId,'contract-test-job-'+payload.accountId);assert.equal(payload.leaseToken,'contract-test-lease-'+payload.accountId);}
  assert.equal(calls.filter(x=>x.route.endsWith('/complete')).length,0);
  assert.ok(calls.some(x=>x.route.endsWith('/heartbeat')&&x.payload.subscriptionAuth===true));
+ // A browser outage must remain a business AND system failure after an empty claim.
+ const cdp=createServer((_req,res)=>{res.writeHead(503);res.end('test-only CDP unavailable');});
+ await new Promise(resolve=>cdp.listen(0,'127.0.0.1',resolve));
+ try{
+  const result=await execute(process.execPath,['scripts/linkedin-agent.mjs','run','--max-jobs','1'],{cwd:repoRoot,env:{...env,STUDIO_LINKEDIN_PROVIDER:'hermes-browser',STUDIO_LINKEDIN_BROWSER_URL:`http://127.0.0.1:${cdp.address().port}`},windowsHide:true}).then(()=>{throw Error('A browser outage must fail the worker');},error=>error);
+  assert.equal(result.code,1);assert.match(result.stdout,/browser-unavailable/);
+  const lastHeartbeat=calls.filter(x=>x.route.endsWith('/heartbeat')).at(-1).payload;
+  assert.equal(lastHeartbeat.status,'error');assert.match(lastHeartbeat.message,/503|CDP|connect/i);assert.equal(calls.filter(x=>x.route.endsWith('/publish')).length,2);
+ }finally{await new Promise(resolve=>cdp.close(resolve));}
  console.log(JSON.stringify({pairingImport:true,privateCredentialFile:true,subscriptionAuth:true,accounts:['organization','person'],publishRequestsToLoopback:2,secretNotLogged:true,noLinkedInCalls:true}));
 }finally{
  await Promise.allSettled([unlink(pairFile),unlink(path.join(local,'connection.json'))]);

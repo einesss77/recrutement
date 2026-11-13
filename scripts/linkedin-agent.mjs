@@ -181,9 +181,10 @@ async function run(opts){
  try{
   await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:auth.chatgpt?'online':'error',message:redact(auth.message).slice(0,500),subscriptionAuth:auth.chatgpt});
   if(!auth.chatgpt)throw Error(auth.message);
+  let browserFailure='';
   if(process.env.STUDIO_LINKEDIN_PROVIDER==='hermes-browser'){
    try{const evidence=await verifyHermesBrowser();await api(connection,'worker/browser-connect',{...evidence,activate:false,verifyOnly:true});}
-   catch(error){await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',subscriptionAuth:true,message:redact(error.message).slice(0,500),browser:{sessionReady:false,message:redact(error.message).slice(0,500)}}).catch(()=>{});console.log(JSON.stringify({status:'browser-human-required',message:redact(error.message).slice(0,500)}));}
+   catch(error){browserFailure=redact(error.message).slice(0,500);await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',subscriptionAuth:true,message:browserFailure,browser:{sessionReady:false,message:browserFailure}}).catch(()=>{});console.log(JSON.stringify({status:'browser-human-required',message:browserFailure}));}
   }
   const replay=await replayConfirmedBrowserReceipts({workingRoot:localRoot,finish:body=>api(connection,'worker/browser-result',body)});
   if(replay.reconciled||replay.pending)console.log(JSON.stringify({status:'browser-receipts',...replay}));
@@ -195,8 +196,9 @@ async function run(opts){
    console.log(JSON.stringify({job:job.id,...(job.accountId?{account:job.accountId}:{}),...result}));
    if(['uncertain','blocked'].includes(result.status))break;
   }
-  await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'online',message:completed.length?`${completed.length} travail(s) traité(s).`:'À jour. Aucun travail à exécuter maintenant.',subscriptionAuth:true});
-  console.log(JSON.stringify({status:'complete',jobs:completed.length,studioUrl:connection.studioUrl}));
+  await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:browserFailure?'error':'online',message:browserFailure|| (completed.length?`${completed.length} travail(s) traité(s).`:'Cycle terminé. Aucun travail pris en charge maintenant.'),subscriptionAuth:true});
+  console.log(JSON.stringify({status:browserFailure?'browser-unavailable':'complete',jobs:completed.length,studioUrl:connection.studioUrl}));
+  if(browserFailure)process.exitCode=1;
  }catch(error){await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',message:redact(error.message).slice(0,500),subscriptionAuth:auth.chatgpt}).catch(()=>{});throw error;}
  finally{await lock.close();await unlink(lockPath).catch(()=>{});}
 }
