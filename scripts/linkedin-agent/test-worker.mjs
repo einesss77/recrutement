@@ -8,13 +8,13 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import {repoRoot} from '../linkedin-agent.mjs';
 const execute=promisify(execFile),local=await mkdtemp(path.join(repoRoot,'.local','worker-contract-test-'));
-const token=randomBytes(32).toString('base64url'),calls=[],accounts=['organization','person'];
+const token=randomBytes(32).toString('base64url'),calls=[],accounts=['organization','person'];let publicationStatus='published';
 const server=createServer(async(req,res)=>{
  let raw='';for await(const chunk of req)raw+=chunk;
  assert.equal(req.headers.authorization,'Bearer '+token);const payload=JSON.parse(raw);calls.push({route:req.url,payload});
  res.setHeader('Content-Type','application/json');
  if(req.url.endsWith('/claim')){const accountId=accounts.shift();res.end(JSON.stringify({job:accountId?{id:'contract-test-job-'+accountId,accountId,kind:'publish',leaseToken:'contract-test-lease-'+accountId,payload:{format:'text',post:{caption:'Aucun contenu envoyé à LinkedIn : serveur de test local.'}}}:null}));}
- else if(req.url.endsWith('/publish'))res.end(JSON.stringify({status:'published',urn:'local-test-only',message:'Réponse simulée dans le test isolé.'}));
+ else if(req.url.endsWith('/publish'))res.end(JSON.stringify({status:publicationStatus,urn:'local-test-only',message:'Réponse simulée dans le test isolé.'}));
  else res.end(JSON.stringify({ok:true}));
 });
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
@@ -39,6 +39,15 @@ try{
   const lastHeartbeat=calls.filter(x=>x.route.endsWith('/heartbeat')).at(-1).payload;
   assert.equal(lastHeartbeat.status,'error');assert.match(lastHeartbeat.message,/503|CDP|connect/i);assert.equal(calls.filter(x=>x.route.endsWith('/publish')).length,2);
  }finally{await new Promise(resolve=>cdp.close(resolve));}
+ for(const status of ['blocked','uncertain']){
+  publicationStatus=status;accounts.push('organization','person');
+  const count=calls.filter(x=>x.route.endsWith('/publish')).length;
+  const result=await execute(process.execPath,['scripts/linkedin-agent.mjs','run','--max-jobs','4'],{cwd:repoRoot,env,windowsHide:true}).then(()=>{throw Error('An unconfirmed publication must fail the worker');},error=>error);
+  assert.equal(result.code,1);assert.match(result.stdout,/publication-unconfirmed/);
+  assert.equal(calls.filter(x=>x.route.endsWith('/heartbeat')).at(-1).payload.status,'error');
+  assert.equal(calls.filter(x=>x.route.endsWith('/publish')).length,count+1,'Stop after the first failed publication');
+  accounts.length=0;
+ }
  console.log(JSON.stringify({pairingImport:true,privateCredentialFile:true,subscriptionAuth:true,accounts:['organization','person'],publishRequestsToLoopback:2,secretNotLogged:true,noLinkedInCalls:true}));
 }finally{
  await Promise.allSettled([unlink(pairFile),unlink(path.join(local,'connection.json'))]);

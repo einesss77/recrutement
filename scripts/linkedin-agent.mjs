@@ -196,9 +196,11 @@ async function run(opts){
    console.log(JSON.stringify({job:job.id,...(job.accountId?{account:job.accountId}:{}),...result}));
    if(['uncertain','blocked'].includes(result.status))break;
   }
-  await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:browserFailure?'error':'online',message:browserFailure|| (completed.length?`${completed.length} travail(s) traité(s).`:'Cycle terminé. Aucun travail pris en charge maintenant.'),subscriptionAuth:true});
-  console.log(JSON.stringify({status:browserFailure?'browser-unavailable':'complete',jobs:completed.length,studioUrl:connection.studioUrl}));
-  if(browserFailure)process.exitCode=1;
+  const failedJob=completed.find(result=>['blocked','uncertain'].includes(result.status));
+  const failure=browserFailure|| (failedJob?redact(failedJob.message||`Publication ${failedJob.status}.`).slice(0,500):'');
+  await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:failure?'error':'online',message:failure|| (completed.length?`${completed.length} travail(s) traité(s).`:'Cycle terminé. Aucun travail pris en charge maintenant.'),subscriptionAuth:true});
+  console.log(JSON.stringify({status:browserFailure?'browser-unavailable':failedJob?'publication-unconfirmed':'complete',jobs:completed.length,studioUrl:connection.studioUrl}));
+  if(failure)process.exitCode=1;
  }catch(error){await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',message:redact(error.message).slice(0,500),subscriptionAuth:auth.chatgpt}).catch(()=>{});throw error;}
  finally{await lock.close();await unlink(lockPath).catch(()=>{});}
 }

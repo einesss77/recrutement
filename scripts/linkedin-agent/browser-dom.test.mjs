@@ -61,7 +61,7 @@ function documentHTML(body,script=''){
 
 function mediaScript(personal,variant){
  const image=variant.missingPreview?'':`<img alt="${personal?'Aperçu de l’image':'Aperçu de publication-bm.png'}" src="data:image/png;base64,${png}">`;
- return `const file=document.getElementById('file');document.getElementById('add-media').onclick=()=>file.click();file.onchange=()=>{document.getElementById('composer').hidden=true;const upload=document.createElement('section');upload.setAttribute('role','dialog');upload.setAttribute('aria-label','Éditeur');upload.id='media-editor';upload.innerHTML=${JSON.stringify(image+'<button id="media-next">Suivant</button>')};document.body.append(upload);document.getElementById('media-next').onclick=()=>{upload.remove();const composer=document.getElementById('composer');composer.hidden=false;const preview=document.createElement('img');preview.alt=${JSON.stringify(personal?'':'Aperçu de l’image')};preview.src=URL.createObjectURL(file.files[0]);const container=document.createElement('figure');${personal?"container.setAttribute('aria-hidden','true');":''}container.append(preview);composer.append(container);document.getElementById('remove-media').hidden=false;document.getElementById('remove-media').onclick=()=>{container.remove();document.getElementById('remove-media').hidden=true;};};};`;
+ return `const file=document.getElementById('file');document.getElementById('add-media').onclick=()=>file.click();file.onchange=()=>{document.getElementById('composer').hidden=true;const upload=document.createElement('section');upload.setAttribute('role','dialog');upload.setAttribute('aria-label','Éditeur');upload.id='media-editor';upload.innerHTML=${JSON.stringify(image+'<button id="media-next">Suivant</button>')};document.body.append(upload);document.getElementById('media-next').onclick=()=>{upload.remove();const composer=document.getElementById('composer');composer.hidden=false;${variant.remountEditor?"composer.querySelector('[role=textbox]').textContent='';":''}const preview=document.createElement('img');preview.alt=${JSON.stringify(personal?'':'Aperçu de l’image')};preview.src=URL.createObjectURL(file.files[0]);const container=document.createElement('figure');${personal?"container.setAttribute('aria-hidden','true');":''}container.append(preview);composer.append(container);document.getElementById('remove-media').hidden=false;document.getElementById('remove-media').onclick=()=>{container.remove();document.getElementById('remove-media').hidden=true;};};};`;
 }
 
 function pdfScript(personal){
@@ -76,6 +76,7 @@ function publicationHTML(variant){
   const href=authorId==='person'?browserIdentity.profileUrl:authorId==='organization'?'https://www.linkedin.com/company/106357560/':'https://www.linkedin.com/in/autre-auteur/';
   const name=authorId==='person'?'Ines Favre':authorId==='organization'?'B&M Digital Consulting':'Autre auteur';
   const body=`${variant.attributedLike?`<header><a href="${browserIdentity.profileUrl}">Ines Favre</a> a aimé ceci</header>`:''}<h2>Post du fil d’actualité</h2><a href="${href}">${name}</a><button aria-label="Ouvrir le menu de commandes pour le post de ${name}">Options</button><p>${escapeHtml(commentOnly?'Un autre texte dans la publication.':caption)}</p><button>J’aime</button><button>Commenter</button>${commentOnly?`<section><a href="${browserIdentity.profileUrl}">Ines Favre</a><p>${escapeHtml(caption)}</p></section>`:''}`;
+  if(variant.sduiPublication)return `<div role="listitem">${body.replace('<h2>Post du fil d’actualité</h2>','')}</div>`;
   return variant.reactPublication?`<div>${body}</div>`:`<article data-urn="${urn}">${body}</article>`;
  };
  if(variant.recommendation)return card('other',publicationProof.urn)+card(accountId,'urn:li:activity:444000111222333');
@@ -84,14 +85,17 @@ function publicationHTML(variant){
 
 function fixture(url,variant){
  const u=new URL(url);
- if(u.pathname===new URL(publicationProof.permalink).pathname)return documentHTML(variant.reactPublication?'<iframe title="Publication LinkedIn" src="/fixture/publication-frame"></iframe>':publicationHTML(variant));
+ if(u.pathname===new URL(publicationProof.permalink).pathname){
+  if(variant.foreignPublication)return documentHTML(`<iframe src="data:text/html,${encodeURIComponent(publicationHTML(variant))}"></iframe>`);
+  return documentHTML(variant.reactPublication?'<iframe title="Publication LinkedIn" src="/fixture/publication-frame"></iframe>':publicationHTML(variant));
+ }
  if(u.pathname==='/fixture/publication-frame')return documentHTML(publicationHTML(variant));
  if(u.pathname==='/feed/')return documentHTML('<h1>Fil d’actualité</h1><iframe title="Fil LinkedIn" src="/fixture/feed-frame"></iframe>');
  if(u.pathname==='/fixture/feed-frame'){
   const body=`<aside role="complementary" aria-label="Barre latérale"><a href="${browserIdentity.profileUrl}">Ines Favre</a><a href="${browserIdentity.organization.adminUrl}">B&M Digital Consulting</a></aside><button style="display:none">Commencer un post</button><button id="start">Commencer un post</button><div id="personal-composer"></div>`;
   return documentHTML(body,`document.getElementById('start').onclick=()=>{document.getElementById('personal-composer').innerHTML=${JSON.stringify(composerHTML('person',variant))};${mediaScript(true,variant)}${pdfScript(true)}};`);
  }
- if(u.pathname==='/company/106357560/admin/feed/posts'){
+ if(u.pathname==='/company/106357560/admin/page-posts/published/'){
   return documentHTML(composerHTML('organization',variant),mediaScript(false,variant)+pdfScript(false));
  }
  if(u.pathname==='/company/106357560/admin/')return documentHTML('<h1>B&M Digital Consulting</h1><section role="region" aria-label="Section de navigation pour les administrateurs de page organisationnelle">Administrer la page</section>');
@@ -195,6 +199,16 @@ test('un PNG passe par le sélecteur de fichier et deux aperçus avant de deveni
  });
 });
 
+test('le texte est écrit dans l’éditeur final après le remontage causé par le PNG',async()=>{
+ await withSession({remountEditor:true},async session=>{
+  await session.prepare(target('organization'),post,'png',media);
+  assert.equal(normalizedBrowserText(await session.composer.editor.innerText()),normalizedBrowserText(caption));
+  await session.ready();
+  assert.equal(await session.composer.page.locator('body').getAttribute('data-publish-clicks'),'0');
+  await session.discardOwnDraft();
+ });
+});
+
 test('le PNG personnel distingue la preview blob de l’avatar homonyme dans le compositeur React',async()=>{
  await withSession({},async session=>{
   await session.prepare(target('person'),post,'png',media);
@@ -267,8 +281,15 @@ test('une notification conservant un ancien permalien, même auparavant masqué,
  });
 });
 
-test('le permalien refuse un autre auteur, un commentaire, une recommandation, une attribution et un autre URN',async()=>{
- for(const variant of [{wrongPublicationAuthor:true},{commentOnly:true},{recommendation:true},{recommendation:true,reactPublication:true},{attributedLike:true},{mismatchedUrn:true}])await withSession({...variant,publicationAccountId:'person'},async session=>{
+test('une carte SDUI sans titre de fil confirme seulement son auteur et son texte intégral',async()=>{
+ await withSession({sduiPublication:true,publicationAccountId:'person'},async session=>{
+  session.composer={post,target:target('person')};
+  assert.equal(await session.verifyPublicationPermalink(publicationProof,{timeout:1000,pollInterval:20}),true);
+ });
+});
+
+test('le permalien refuse un autre auteur, un commentaire, une recommandation, une attribution, un autre URN et une iframe externe',async()=>{
+ for(const variant of [{wrongPublicationAuthor:true},{commentOnly:true},{commentOnly:true,sduiPublication:true},{recommendation:true},{recommendation:true,reactPublication:true},{attributedLike:true},{mismatchedUrn:true},{foreignPublication:true}])await withSession({...variant,publicationAccountId:'person'},async session=>{
   await session.prepare(target('person'),post,'text',null);
   assert.equal(await session.verifyPublicationPermalink(publicationProof,{timeout:100,pollInterval:20}),false,JSON.stringify(variant));
   assert.equal(session.pages.size,1);

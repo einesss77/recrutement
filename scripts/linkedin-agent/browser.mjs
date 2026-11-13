@@ -99,6 +99,7 @@ export function verifiedPublicationCards(cards,proof,target,caption,organization
  return candidates.length===1&&verifiedPublicationCard(candidates[0],target,caption,organizationPaths);
 }
 function checkPageUrl(page){const url=new URL(page.url());if(url.hostname!=='www.linkedin.com'||/\/(?:login|checkpoint|authwall|challenge|captcha)(?:\/|$)/i.test(url.pathname))throw new BrowserHumanError('LinkedIn demande une connexion ou un contrôle humain. Reprendre la session du navigateur.');}
+function publicationFrames(page){return page.frames().filter(frame=>{try{return new URL(frame.url()).origin==='https://www.linkedin.com';}catch{return false;}});}
 
 export class HermesBrowserSession {
  constructor(browser){this.browser=browser;this.context=browser.contexts()[0];this.pages=new Set();if(!this.context)throw new BrowserHumanError('Le navigateur ne contient aucune session existante.');}
@@ -130,7 +131,7 @@ export class HermesBrowserSession {
   }finally{if(feed)await this.closePage(feed);if(admin)await this.closePage(admin);}
  }
  async visibleDialog(page,name){
-  const deadline=Date.now()+20000;
+  const deadline=Date.now()+45000;
   while(Date.now()<deadline){for(const frame of page.frames()){const dialog=frame.getByRole('dialog',{name,exact:true});if(await dialog.isVisible().catch(()=>false))return{frame,dialog};}await new Promise(resolve=>setTimeout(resolve,250));}
   throw new BrowserHumanError('Le compositeur LinkedIn attendu n’est pas disponible. Vérifier la session ou l’interface.');
  }
@@ -142,7 +143,7 @@ export class HermesBrowserSession {
   await requireVisible(selector,'L’auteur affiché dans le compositeur ne correspond pas à la destination.');
  }
  async prepare(target,post,format,media){
-  const page=await this.newPage(target.accountId==='organization'?'https://www.linkedin.com/company/106357560/admin/feed/posts?share=true':'https://www.linkedin.com/feed/');
+  const page=await this.newPage(target.accountId==='organization'?'https://www.linkedin.com/company/106357560/admin/page-posts/published/?share=true':'https://www.linkedin.com/feed/');
   await this.dismissPremium(page);
   if(target.accountId==='person')await (await this.visibleButton(page,'Commencer un post')).click();
   let composer;try{composer=await this.composerFrame(page,target.accountId);}catch(error){if(target.accountId!=='person'||new URL(page.url()).pathname!=='/feed/')throw error;await page.goto('https://www.linkedin.com/sharing/compose',{waitUntil:'domcontentloaded',timeout:30000});composer=await this.composerFrame(page,target.accountId);}const {frame,dialog}=composer;
@@ -153,8 +154,11 @@ export class HermesBrowserSession {
   if(existing&&!['Donnez votre avis…','De quoi souhaitez-vous discuter ?'].includes(existing))throw new BrowserHumanError('Un brouillon LinkedIn existe déjà dans ce compositeur. Le relire ou l’écarter avant la reprise.');
   const existingMedia=dialog.getByRole('button',{name:target.accountId==='person'?'Close':'Supprimer le média',exact:true});
   if(await existingMedia.isVisible().catch(()=>false))throw new BrowserHumanError('Un média appartient déjà à un brouillon LinkedIn. Le conserver pour vérification humaine avant la reprise.');
-  await editor.fill(post.caption);this.composer.editor=editor;this.composer.ownedContent=true;
+  this.composer.editor=editor;
   if(format!=='text')await this.attach(checkedMedia(media,format));
+  // LinkedIn can remount and clear its editor when a media preview is attached.
+  // Fill the final editor only after attachment, then verify its complete content.
+  await this.composer.editor.fill(post.caption);this.composer.ownedContent=true;
   await this.ready();
  }
  async attach(file){
@@ -230,7 +234,7 @@ export class HermesBrowserSession {
  }
  async publicationSignals(page){
   const snapshot={links:[],notifications:[],complete:true};
-  for(const frame of page.frames()){
+  for(const frame of publicationFrames(page)){
    const part=await frame.evaluate(()=>{
     const visible=element=>Boolean(element.getClientRects().length)&&getComputedStyle(element).visibility!=='hidden';
     const links=(element,visibleOnly=true)=>[...element.querySelectorAll('a[href]')].filter(link=>!visibleOnly||visible(link)).map(link=>link.href);
@@ -244,12 +248,13 @@ export class HermesBrowserSession {
  }
  async publicationCards(page,caption){
   const cards=[];
-  for(const frame of page.frames()){
+  for(const frame of publicationFrames(page)){
    const part=await frame.evaluate(expected=>{
     const normalized=value=>String(value||'').replace(/\s+/gu,' ').trim();
     const visible=element=>Boolean(element.getClientRects().length)&&getComputedStyle(element).visibility!=='hidden';
     const controls=element=>[...element.querySelectorAll('button')].some(button=>/Ouvrir le menu de commandes pour le post|Open control menu for post/iu.test(button.getAttribute('aria-label')||button.innerText));
     const roots=new Set([...document.querySelectorAll('article,[data-urn^="urn:li:activity:"],[data-urn^="urn:li:share:"],[data-urn^="urn:li:ugcPost:"]')].filter(controls));
+    for(const item of document.querySelectorAll('[role="listitem"]'))if(controls(item))roots.add(item);
     for(const heading of document.querySelectorAll('h2,[role="heading"]')){
      if(!/^(?:Post du fil d[’']actualité|Feed post)$/iu.test(normalized(heading.innerText)))continue;
      for(let node=heading.parentElement;node&&node!==document.body;node=node.parentElement){if(controls(node)){roots.add(node);break;}}
