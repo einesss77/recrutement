@@ -1,4 +1,4 @@
-import {chromium} from '@playwright/test';
+import {chromium,request as playwrightRequest} from '@playwright/test';
 import {mkdir,open,readFile,rename,unlink,readdir,stat} from 'node:fs/promises';
 import {createHash,randomUUID} from 'node:crypto';
 import path from 'node:path';
@@ -30,8 +30,9 @@ export function checkedMedia(media,format){
 }
 export function verifiedPermalink(input){
  try{const url=new URL(input,'https://www.linkedin.com');if(url.protocol!=='https:'||!['www.linkedin.com','linkedin.com'].includes(url.hostname)||url.username||url.password)return null;
- const decoded=decodeURIComponent(url.pathname),match=/^\/feed\/update\/(urn:li:(?:activity|share|ugcPost):\d+)\/?$/.exec(decoded);
- if(!match)return null;return{permalink:'https://www.linkedin.com/feed/update/'+match[1]+'/',urn:match[1]};
+ const decoded=decodeURIComponent(url.pathname),match=/^\/feed\/update\/(urn:li:(?:activity|share|ugcPost):\d+)\/?$/.exec(decoded),shared=/^\/posts\/[^/]+-(activity|share|ugcPost)-(\d+)-[A-Za-z0-9_-]+\/?$/.exec(decoded);
+ const urn=match?.[1]||(shared?`urn:li:${shared[1]}:${shared[2]}`:'');
+ if(!urn)return null;return{permalink:'https://www.linkedin.com/feed/update/'+urn+'/',urn};
  }catch{return null;}
 }
 
@@ -100,11 +101,33 @@ export function verifiedPublicationCards(cards,proof,target,caption,organization
 }
 function checkPageUrl(page){const url=new URL(page.url());if(url.hostname!=='www.linkedin.com'||/\/(?:login|checkpoint|authwall|challenge|captcha)(?:\/|$)/i.test(url.pathname))throw new BrowserHumanError('LinkedIn demande une connexion ou un contrôle humain. Reprendre la session du navigateur.');}
 function publicationFrames(page){return page.frames().filter(frame=>{try{return new URL(frame.url()).origin==='https://www.linkedin.com';}catch{return false;}});}
+export function linkedInShortLink(value){
+ try{let url=new URL(value);if(url.origin==='https://www.linkedin.com'&&url.pathname==='/safety/go/')url=new URL(url.searchParams.get('url'));return url.origin==='https://lnkd.in'&&!url.username&&!url.password&&/^\/(?:p\/)?[A-Za-z0-9_-]+$/.test(url.pathname)&&!url.search&&!url.hash?url.href:null;}catch{return null;}
+}
+export function linkedInInterstitialTarget(html){
+ if(typeof html!=='string'||html.length>500000)return null;
+ const targets=new Set();
+ for(const match of html.matchAll(/<a\b([^>]*)>/giu)){
+  if(!/\bdata-tracking-control-name\s*=\s*(["'])external_url_click\1/iu.test(match[1]))continue;
+  const href=/\bhref\s*=\s*(["'])(.*?)\1/iu.exec(match[1])?.[2]?.replace(/&amp;/gu,'&');
+  try{const url=new URL(href);if(url.protocol==='https:'&&!url.username&&!url.password)targets.add(url.href);}catch{}
+ }
+ return targets.size===1?[...targets][0]:null;
+}
 
 export class HermesBrowserSession {
- constructor(browser){this.browser=browser;this.context=browser.contexts()[0];this.pages=new Set();if(!this.context)throw new BrowserHumanError('Le navigateur ne contient aucune session existante.');}
+ constructor(browser,{createRequest=()=>playwrightRequest.newContext()}={}){this.browser=browser;this.context=browser.contexts()[0];this.createRequest=createRequest;this.pages=new Set();if(!this.context)throw new BrowserHumanError('Le navigateur ne contient aucune session existante.');}
  async newPage(url){const page=await this.context.newPage();this.pages.add(page);page.setDefaultTimeout(12000);await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});checkPageUrl(page);return page;}
  async closePage(page){if(!this.pages.has(page))return;await page.close({runBeforeUnload:false}).catch(()=>{});this.pages.delete(page);}
+ async resolveShortLink(value){
+  const short=linkedInShortLink(value);if(!short)return null;
+  this.shortLinkResults ||= new Map();if(this.shortLinkResults.has(short))return this.shortLinkResults.get(short);
+  let destination=null,response,client;
+  // Short-link previews must never read or mutate the authenticated browser's cookies.
+  try{client=await this.createRequest();response=await client.get(short,{timeout:8000,maxRedirects:5});const url=new URL(response.url());if(url.protocol==='https:'&&!url.username&&!url.password){destination=url.href;if(['https://lnkd.in','https://www.linkedin.com'].includes(url.origin))destination=linkedInInterstitialTarget(await response.text())||destination;}}catch{}
+  finally{await response?.dispose().catch(()=>{});await client?.dispose().catch(()=>{});}
+  this.shortLinkResults.set(short,destination);return destination;
+ }
  async dismissPremium(page){const dialog=page.getByRole('dialog').filter({hasText:'Page LinkedIn Premium'});if(await dialog.isVisible().catch(()=>false)){const ignore=dialog.getByRole('button',{name:'Ignorer',exact:true});if(await ignore.isVisible())await ignore.click();}}
  async verifiedFeedFrame(page){
   const deadline=Date.now()+20000;
@@ -244,6 +267,14 @@ export class HermesBrowserSession {
    }).catch(()=>null);
    if(part){snapshot.links.push(...part.links);snapshot.notifications.push(...part.notifications);}else snapshot.complete=false;
   }
+  const resolved=new Map();
+  for(const value of new Set([...snapshot.links,...snapshot.notifications.flatMap(n=>n.links)])){
+   let proof=verifiedPermalink(value);const short=linkedInShortLink(value);
+   if(!proof&&short&&new URL(short).pathname.startsWith('/p/'))proof=verifiedPermalink(await this.resolveShortLink(short));
+   if(proof)resolved.set(value,proof.permalink);
+  }
+  snapshot.links=snapshot.links.map(value=>resolved.get(value)||value);
+  snapshot.notifications=snapshot.notifications.map(notice=>({...notice,links:notice.links.map(value=>resolved.get(value)||value)}));
   return snapshot;
  }
  async publicationCards(page,caption){
@@ -267,15 +298,25 @@ export class HermesBrowserSession {
      const menuAuthor=menu?.replace(/^(?:Ouvrir le menu de commandes pour le post de |Open control menu for post by )/iu,'')||'';
      const actions=[...root.querySelectorAll('button')].filter(button=>/^(?:J[’']aime|Like|Réagir|React|Commenter|Comment|Aimer (?:la|le|ce))/iu.test(normalized(button.getAttribute('aria-label')||button.innerText)));
      const boundary=actions[0];
-     const captionNode=[...root.querySelectorAll('p,div,span')].find(node=>visible(node)&&!node.closest('[role="dialog"],form')&&normalized(node.innerText)===expected&&boundary&&Boolean(node.compareDocumentPosition(boundary)&Node.DOCUMENT_POSITION_FOLLOWING)&&!node.contains(boundary));
+     const maskLinks=value=>value.replace(/https?:\/\/[^\s]+/gu,'<verified-url>');
+     const captionNodes=[...root.querySelectorAll('p,div,span')].filter(node=>visible(node)&&!node.closest('[role="dialog"],form')&&maskLinks(normalized(node.innerText))===maskLinks(expected)&&boundary&&Boolean(node.compareDocumentPosition(boundary)&Node.DOCUMENT_POSITION_FOLLOWING)&&!node.contains(boundary));
+     const captionNode=captionNodes.find(node=>normalized(node.innerText)===expected);
+     const captionCandidates=[...new Map(captionNodes.map(node=>[normalized(node.innerText),{text:normalized(node.innerText),links:[...node.querySelectorAll('a[href]')].map(link=>({text:normalized(link.innerText),href:link.href}))}])).values()].slice(0,3);
      const authorPath=new URL(author.href,location.href).pathname.replace(/\/$/,'');
      const namedAuthor=[...root.querySelectorAll('a[href]')].find(link=>visible(link)&&new URL(link.href,location.href).pathname.replace(/\/$/,'')===authorPath&&normalized(link.innerText));
      const authorName=normalized(namedAuthor?.innerText)||normalized(author.getAttribute('aria-label'))||normalized(author.querySelector('img')?.getAttribute('alt'));
-     return[{authorHref:author.href,authorName,menuAuthor,caption:captionNode?normalized(captionNode.innerText):'',urn:root.getAttribute('data-urn')||''}];
+     return[{authorHref:author.href,authorName,menuAuthor,caption:captionNode?normalized(captionNode.innerText):'',captionCandidates,urn:root.getAttribute('data-urn')||''}];
     });
    },normalizedText(caption)).catch(()=>null);
    if(!part)throw new BrowserHumanError('Les cartes du permalien ne sont pas toutes vérifiables. Aucun reçu confirmé.');
-   cards.push(...part);
+   for(const card of part){
+    if(!card.caption)for(const candidate of card.captionCandidates||[]){
+     let text=candidate.text;
+     for(const link of candidate.links){if(!linkedInShortLink(link.text)||linkedInShortLink(link.href)!==linkedInShortLink(link.text))continue;const destination=await this.resolveShortLink(link.href);if(destination)text=text.split(link.text).join(destination);}
+     if(text===normalizedText(caption)){card.caption=text;break;}
+    }
+    delete card.captionCandidates;cards.push(card);
+   }
   }
   return cards;
  }

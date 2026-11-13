@@ -76,6 +76,7 @@ function publicationHTML(variant){
   const href=authorId==='person'?browserIdentity.profileUrl:authorId==='organization'?'https://www.linkedin.com/company/106357560/':'https://www.linkedin.com/in/autre-auteur/';
   const name=authorId==='person'?'Ines Favre':authorId==='organization'?'B&M Digital Consulting':'Autre auteur';
   const body=`${variant.attributedLike?`<header><a href="${browserIdentity.profileUrl}">Ines Favre</a> a aimé ceci</header>`:''}<h2>Post du fil d’actualité</h2><a href="${href}">${name}</a><button aria-label="Ouvrir le menu de commandes pour le post de ${name}">Options</button><p>${escapeHtml(commentOnly?'Un autre texte dans la publication.':caption)}</p><button>J’aime</button><button>Commenter</button>${commentOnly?`<section><a href="${browserIdentity.profileUrl}">Ines Favre</a><p>${escapeHtml(caption)}</p></section>`:''}`;
+  if(variant.shortenedCaption)return `<article data-urn="${urn}">${body.replace('</p>','<br><a href="https://www.linkedin.com/safety/go/?url=https%3A%2F%2Flnkd.in%2FtestContact">https://lnkd.in/testContact</a></p>')}</article>`;
   if(variant.sduiPublication)return `<div role="listitem">${body.replace('<h2>Post du fil d’actualité</h2>','')}</div>`;
   return variant.reactPublication?`<div>${body}</div>`:`<article data-urn="${urn}">${body}</article>`;
  };
@@ -285,6 +286,25 @@ test('une carte SDUI sans titre de fil confirme seulement son auteur et son text
  await withSession({sduiPublication:true,publicationAccountId:'person'},async session=>{
   session.composer={post,target:target('person')};
   assert.equal(await session.verifyPublicationPermalink(publicationProof,{timeout:1000,pollInterval:20}),true);
+ });
+});
+
+test('un lien raccourci dans le texte doit résoudre exactement vers la destination autorisée',async()=>{
+ for(const destination of ['https://www.bandmdigitalconsulting.com/contact/','https://example.com/','https://www.bandmdigitalconsulting.com/contact/?changed=1',null])await withSession({shortenedCaption:true,publicationAccountId:'organization'},async session=>{
+  session.composer={post:{...post,caption:caption+'\nhttps://www.bandmdigitalconsulting.com/contact/'},target:target('organization')};
+  session.resolveShortLink=async value=>{assert.match(value,/lnkd/);return destination;};
+  assert.equal(await session.verifyPublicationPermalink(publicationProof,{timeout:100,pollInterval:20}),destination==='https://www.bandmdigitalconsulting.com/contact/');
+ });
+});
+
+test('un permalien court dans une notification est résolu sans reprendre un ancien envoi',async()=>{
+ await withSession({},async session=>{
+  const page=await session.newPage('https://www.linkedin.com/feed/');
+  session.resolveShortLink=async()=>publicationProof.permalink;
+  await page.evaluate(()=>{document.body.innerHTML='<div role="status">Votre post a été publié. <a href="https://www.linkedin.com/safety/go/?url=https%3A%2F%2Flnkd.in%2Fp%2FtestPost">Voir le post</a></div>';});
+  const signals=await session.publicationSignals(page);
+  assert.deepEqual(signals.notifications[0].links,[publicationProof.permalink]);
+  assert.ok(signals.links.includes(publicationProof.permalink));
  });
 });
 

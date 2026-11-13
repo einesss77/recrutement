@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdtemp,readdir,readFile,unlink,rmdir} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
-import {browserEndpoint,browserIdentity,checkedTarget,checkedMedia,captionFingerprint,verifiedPermalink,publishWithHermes,replayConfirmedBrowserReceipts,prepareBrowserPublication,normalizedBrowserText,freshPublicationCandidates,verifiedPublicationCard,verifiedPublicationCards,HermesBrowserSession} from './browser.mjs';
+import {browserEndpoint,browserIdentity,checkedTarget,checkedMedia,captionFingerprint,verifiedPermalink,publishWithHermes,replayConfirmedBrowserReceipts,prepareBrowserPublication,normalizedBrowserText,freshPublicationCandidates,verifiedPublicationCard,verifiedPublicationCards,HermesBrowserSession,linkedInShortLink,linkedInInterstitialTarget} from './browser.mjs';
 
 const target={accountId:'person',profileUrl:browserIdentity.profileUrl,targetKey:'person:ines-favre-424651436'};
 const post={title:'Clarifier la prochaine décision',caption:'Une règle explicite aide à nommer la décision attendue. Le contexte et les contraintes restent visibles avant de choisir une réponse.',template:'editorial',theme:'dark',image:'',slides:[{label:'MÉTHODE',title:'Une décision explicite',body:'Nommer la prochaine étape.',points:[]}]};
@@ -29,9 +29,29 @@ test('les retours Quill sont tolérés sans masquer une modification du texte',(
 });
 test('un lien générique ou un média mal déclaré ne prouve pas une publication',()=>{
  assert.deepEqual(verifiedPermalink(proof.permalink),proof);
+ assert.deepEqual(verifiedPermalink('https://www.linkedin.com/posts/ines-favre_fr-texte-share-123456789-AbC/?utm_source=share'),proof);
  assert.equal(verifiedPermalink('https://www.linkedin.com/feed/'),null);assert.equal(verifiedPermalink('https://example.com/feed/update/urn:li:share:123/'),null);
  assert.throws(()=>checkedMedia({mime:'application/pdf',base64:Buffer.from('not a PDF').toString('base64')},'pdf'));
  assert.throws(()=>checkedMedia({mime:'image/png',base64:Buffer.from('%PDF-1.7').toString('base64')},'pdf'));
+});
+
+test('seuls les liens courts LinkedIn sont résolus et chaque redirection est mise en cache',async()=>{
+ const calls=[];let disposed=0;
+ const session=new HermesBrowserSession({contexts:()=>[{request:{get:()=>{throw Error('Authenticated cookies must not be used');}}}]},{createRequest:async()=>({get:async url=>{calls.push(url);return{url:()=> 'https://www.bandmdigitalconsulting.com/contact/',dispose:async()=>{disposed++;}};},dispose:async()=>{}})});
+ assert.equal(linkedInShortLink('https://www.linkedin.com/safety/go/?url=https%3A%2F%2Flnkd.in%2Fcontact123'),'https://lnkd.in/contact123');
+ for(const value of ['http://lnkd.in/test','https://lnkd.in.evil.example/test','https://user:secret@lnkd.in/test','https://www.linkedin.com/safety/go/?url=https%3A%2F%2Fevil.example%2Ftest'])assert.equal(await session.resolveShortLink(value),null);
+ assert.equal(await session.resolveShortLink('https://lnkd.in/contact123'),'https://www.bandmdigitalconsulting.com/contact/');
+ assert.equal(await session.resolveShortLink('https://lnkd.in/contact123'),'https://www.bandmdigitalconsulting.com/contact/');
+ assert.deepEqual(calls,['https://lnkd.in/contact123']);assert.equal(disposed,1);
+});
+
+test('la page intermédiaire LinkedIn donne une seule destination externe explicite',async()=>{
+ const html='<a class="tertiary" data-tracking-control-name="external_url_click" data-tracking-will-navigate href="https://www.bandmdigitalconsulting.com/contact/">https://www.bandmdigitalconsulting.com/contact/</a>';
+ assert.equal(linkedInInterstitialTarget(html),'https://www.bandmdigitalconsulting.com/contact/');
+ assert.equal(linkedInInterstitialTarget(html+'<a data-tracking-control-name="external_url_click" href="https://example.com/">Autre</a>'),null);
+ assert.equal(linkedInInterstitialTarget('<a href="https://example.com/">Sans preuve de destination LinkedIn</a>'),null);
+ const session=new HermesBrowserSession({contexts:()=>[{}]},{createRequest:async()=>({get:async()=>({url:()=> 'https://lnkd.in/testContact',text:async()=>html,dispose:async()=>{}}),dispose:async()=>{}})});
+ assert.equal(await session.resolveShortLink('https://lnkd.in/testContact'),'https://www.bandmdigitalconsulting.com/contact/');
 });
 test('une notification positive ne confirme que des liens nouveaux après le clic',()=>{
  const previous='https://www.linkedin.com/feed/update/urn:li:activity:987654321/?trk=before';
