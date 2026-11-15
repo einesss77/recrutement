@@ -1,21 +1,21 @@
 {
-  "version": 2,
-  "positioning": "B&M propose des consultants IT pour renforcer les équipes et des applications sur mesure. Les contenus doivent vendre clairement ces prestations, en partant des tâches et des profils recherchés.",
+  "version": 3,
+  "positioning": "B&M vend des consultants IT intégrés aux équipes, des squads et des applications métier sur mesure. Cibler les CTO/fondateurs de startups et PME ainsi que les recruteurs et dirigeants de petites sociétés de conseil, notamment aux États-Unis. Montrer le travail confié et le critère de réception. Une demande observée sur le marché ne prouve jamais notre stock de profils.",
   "primaryGoal": "Faire émerger des conversations qualifiées autour d’un besoin IT ou produit identifié, puis des rendez-vous et des opportunités renseignés par l’équipe.",
   "accountRoles": {
-    "person": "Ines présente et porte commercialement les offres B&M. Employer je pour la prise de contact, nous pour les prestations. Présenter les rôles, les projets et les tâches qui peuvent être confiés aux consultants. Aucun parcours personnel ou CV disponible inventé.",
-    "organization": "Rendre l’offre B&M concrète : expliquer le dispositif, les étapes, les responsabilités et les livrables attendus. Montrer des exemples explicitement illustratifs quand aucune preuve client n’est disponible. Le lecteur doit comprendre ce qu’il peut demander à B&M."
+    "person": "Ines Favre, CEO Office Associate chez B&M : interlocutrice commerciale. Je pour un jugement assumé ou le contact, nous pour l’offre. Prendre position sur les briefs irréalistes, les missions mal définies et les décisions d’achat. Donner au lecteur une question qu’il peut envoyer à son équipe. Aucun récit de mission vécu, CV ou disponibilité inventé. Ne pas copier la publication de la page.",
+    "organization": "B&M : vitrine commerciale technique. Exposer un chantier reconnaissable, le consultant ou dispositif proposé, ce qu’il prend en charge et comment recevoir son travail. Montrer des schémas et démonstrations illustratives. Une publication doit aider un acheteur à savoir quoi nous confier. Ne pas recycler la légende d’Ines."
   },
   "audiences": [
     {
       "id": "it",
-      "label": "DSI, CTO et responsables produit",
-      "problem": "Un chantier avance mal, une compétence manque ou la capacité de livraison doit être clarifiée.",
+      "label": "CTO, responsables engineering/produit, fondateurs de startups, recruteurs IT et dirigeants de petites ESN, notamment US",
+      "problem": "Une release, une intégration, une plateforme ou un recrutement bloque un chantier précis.",
       "decision": "Définir le rôle, le périmètre et les critères qui permettent de choisir un renfort ou une équipe."
     },
     {
       "id": "business",
-      "label": "Dirigeants de PME et responsables métier",
+      "label": "Dirigeants de PME et responsables opérations/finance/commercial",
       "problem": "Des ressaisies, un suivi fragmenté ou une idée d’application compliquent une activité concrète.",
       "decision": "Décider quel usage traiter, avec quel outil, quel responsable et quel premier périmètre."
     }
@@ -106,43 +106,43 @@
   "weeks": [
     {
       "number": 1,
-      "label": "Installer l’offre B&M",
-      "objective": "Présenter B&M dès le premier jour puis un profil ou une prestation par jour, avec tâches concrètes et contact commercial.",
+      "label": "Rendre les missions visibles",
+      "objective": "Installer les offres B&M avec des tâches à confier, pas un catalogue de technologies.",
       "consulting": [
         [
-          "Le poste à pourvoir n’est pas toujours le problème à résoudre",
-          "Une demande de renfort décrit une technologie mais pas le travail à accomplir.",
-          "Formuler une mission par résultat attendu, responsabilités et contraintes."
+          "Votre recrutement fullstack cache peut-être deux missions",
+          "Le brief empile interface, API et exploitation sans priorité.",
+          "Distinguer le parcours à livrer de la responsabilité de production ; proposer un consultant ou une squad selon ce périmètre."
         ],
         [
-          "Un backlog en retard : capacité, dépendance ou décision manquante ?",
-          "Le retard est attribué trop vite au manque de développeurs.",
-          "Examiner les dépendances et décisions avant de dimensionner un renfort."
+          "Développeur fullstack : débloquer une intégration",
+          "Le parcours produit attend un échange entre CRM et application.",
+          "Illustrer une mission fullstack : contrat API, gestion des erreurs et parcours testable de bout en bout."
         ],
         [
-          "Ce qu’une fiche de mission doit rendre visible",
-          "Un intitulé de poste laisse les interlocuteurs imaginer des missions différentes.",
-          "Relier contexte, périmètre, équipe et critère de réussite dans un exemple fictif."
+          "Un front-end livré se teste sur les états vides",
+          "Le parcours idéal fonctionne, les erreurs et droits rendent l’usage fragile.",
+          "Présenter un renfort front-end sur états vide/erreur/chargement et critères d’acceptation."
         ],
         [
-          "Pourquoi demander un profil qui sait tout rend le besoin moins clair",
-          "Les attentes mêlent expertise, coordination et exécution sans priorité.",
-          "Séparer les compétences indispensables des tâches partageables."
+          "Votre release attend encore une personne connectée",
+          "Le déploiement dépend de gestes manuels et d’une connaissance isolée.",
+          "Mission DevOps : pipeline, secrets, procédure de retour arrière et responsabilité de validation."
         ],
         [
-          "Le brief utile pour parler d’un renfort IT",
-          "Une prise de contact commence souvent sans périmètre exploitable.",
-          "Inviter à préciser le chantier, le rôle et les contraintes ; ne promettre aucune disponibilité."
+          "Data Engineer : réconcilier les données avant le dashboard",
+          "Commandes et facturation ne décrivent pas le même objet.",
+          "Mission Data Engineer : sources, mapping, reprise et contrôles de rapprochement."
         ],
         [
-          "L’expertise seule ne suffit pas à définir une mission",
-          "La compatibilité avec l’équipe et les responsabilités reste implicite.",
-          "Distinguer compétence technique, autonomie et collaboration attendues."
+          "Le paiement passe deux fois : une mission back-end concrète",
+          "Les tentatives de reprise créent des événements en double.",
+          "Expliquer traitement idempotent, tests de reprise et observation des erreurs sans promettre zéro incident."
         ],
         [
-          "Un besoin urgent mérite quand même des critères",
-          "L’urgence fait disparaître les questions de contexte.",
-          "Proposer un mémo court : problème, impact, interlocuteur et décision attendue."
+          "Le consultant doit savoir ce qu’il peut décider",
+          "Une liste de technologies ne précise pas l’autonomie attendue.",
+          "Donner au recruteur le livrable, la responsabilité et le décideur de réception."
         ]
       ],
       "build": [
@@ -185,43 +185,43 @@
     },
     {
       "number": 2,
-      "label": "Choisir le dispositif",
-      "objective": "Expliquer les arbitrages entre renfort individuel, squad, outil existant et développement sur mesure.",
+      "label": "Démonter les mauvais briefs",
+      "objective": "Assumer un point de vue sur le staffing et montrer comment acheter un renfort utile.",
       "consulting": [
         [
-          "Consultant ou squad : partir du chantier",
-          "Le choix du dispositif est réduit au nombre de personnes.",
-          "Comparer rôle identifié dans une équipe et chantier qui demande plusieurs compétences."
+          "Votre fiche de poste demande le travail d’une équipe",
+          "La mission mélange produit, développement et exploitation sans arbitrage.",
+          "Distinguer un rôle intégré d’un chantier pour squad et nommer les responsabilités."
         ],
         [
-          "Qui décide, qui produit, qui valide ?",
-          "Les responsabilités entre l’équipe et le renfort se chevauchent.",
-          "Clarifier les décisions avant de choisir le format de collaboration."
+          "Un senior payé pour attendre un accès reste bloqué",
+          "Le démarrage ne prévoit ni accès, ni responsable, ni première tâche.",
+          "Proposer une mission consultant avec préparation des accès et première livraison vérifiable."
         ],
         [
-          "Deux dispositifs pour un même besoin : scénario illustratif",
-          "Une même demande peut cacher un rôle vacant ou un chantier autonome.",
-          "Montrer les deux organisations possibles, sans chiffre de performance inventé."
+          "Une intégration CRM a besoin de règles de reprise",
+          "Un événement échoué disparaît ou se répète au prochain passage.",
+          "Scénario illustratif : API, idempotence, journal et file de reprise confiés au back-end."
         ],
         [
-          "Externaliser une compétence sans externaliser toute la connaissance",
-          "La crainte de dépendance bloque le recours à un consultant.",
-          "Prévoir documentation, binômage et points de transmission."
+          "Une stack sur un CV ne décrit pas l’autonomie",
+          "Un brief senior exige parfois surtout de clarifier des décisions produit.",
+          "Évaluer diagnostic, arbitrage technique et transmission sur une même situation de mission."
         ],
         [
-          "Choisir un dispositif commence par les contraintes de votre équipe",
-          "Le contexte existant est absent de la demande commerciale.",
-          "Inviter à confronter le périmètre au fonctionnement de l’équipe."
+          "Envoyez le ticket bloqué avant la liste de technologies",
+          "La demande commerciale reste un intitulé sans chantier.",
+          "Inviter le CTO ou recruteur à envoyer le premier livrable et la stack pour qualifier un renfort B&M."
         ],
         [
-          "Le bon niveau de séniorité dépend des décisions à prendre",
-          "Le niveau est choisi par habitude ou seulement par budget.",
-          "Relier autonomie attendue, complexité et accompagnement disponible."
+          "Le consultant doit laisser une procédure utilisable",
+          "La continuité dépend d’une explication orale impossible à rejouer.",
+          "Inclure test de reprise, documentation et transfert dans le périmètre."
         ],
         [
-          "Comparer des profils avec les mêmes critères",
-          "Des échanges de recrutement évaluent des sujets différents.",
-          "Construire une grille commune : mission, expertise, collaboration, autonomie."
+          "Le brief qui évite une semaine de malentendus",
+          "L’équipe et le recruteur évaluent des missions différentes.",
+          "Montrer comment écrire objectif, dépendances et réception dans le brief."
         ]
       ],
       "build": [
@@ -264,43 +264,43 @@
     },
     {
       "number": 3,
-      "label": "Sécuriser l’exécution",
-      "objective": "Rendre visibles les responsabilités, les points de contrôle et les limites avant la livraison ou la mission.",
+      "label": "Montrer le travail de production",
+      "objective": "Exposer API, déploiement, données, erreurs et validations humaines avec des démonstrations identifiées.",
       "consulting": [
         [
-          "Une arrivée dans l’équipe se prépare avant le premier jour",
-          "Le renfort commence sans accès, interlocuteur ou périmètre prêt.",
-          "Préparer accès, contexte, premières tâches et personne de référence."
+          "Le prototype IA devient un chantier d’intégration",
+          "La démo ne prévoit ni accès aux sources ni traitement des erreurs.",
+          "Positionner un consultant IA/backend sur intégration, tests de réponses et escalade humaine."
         ],
         [
-          "Un point de suivi qui sert à décider",
-          "Le suivi de mission devient un compte rendu sans action.",
-          "Suivre les obstacles, décisions et ajustements plutôt que l’activité seule."
+          "Votre DevOps doit pouvoir montrer le retour arrière",
+          "La release est décrite sans scénario d’échec.",
+          "Demander une procédure testable, des droits explicites et une validation de remise en service."
         ],
         [
-          "Un référent projet dans un scénario de mission fictif",
-          "Le rôle du référent reste abstrait.",
-          "Illustrer une difficulté remontée, un échange et une décision, sans affirmer un cas vécu."
+          "Un pipeline data doit expliquer ses lignes rejetées",
+          "Une importation partielle semble complète dans le tableau de bord.",
+          "Démonstration illustrative : données reçues, données rejetées, raison et responsable de correction."
         ],
         [
-          "Plus de personnes ne supprime pas les dépendances",
-          "Un renfort est attendu comme solution à tout blocage.",
-          "Nommer les dépendances et la capacité de l’équipe à intégrer ce renfort."
+          "La squad ne peut pas valider son propre besoin métier",
+          "Le périmètre externalisé laisse l’arbitrage produit sans propriétaire.",
+          "Nommer le responsable de validation côté acheteur et les livrables de la squad."
         ],
         [
-          "Préparer une mission avec ses points de contrôle",
-          "L’accord sur la mission ne précise pas comment suivre son déroulement.",
-          "Inviter à définir ensemble le résultat attendu et les étapes de suivi."
+          "Une mission API commence avec ses systèmes voisins",
+          "Le consultant reçoit une route à créer sans contrat ni données de test.",
+          "Inviter à partager dépendances, environnement et premier flux à livrer pour qualifier la mission."
         ],
         [
-          "Une responsabilité explicite évite des attentes contradictoires",
-          "Le consultant reçoit des priorités incompatibles.",
-          "Identifier l’arbitrage et son responsable dans l’équipe."
+          "Le back-end peut livrer pendant que le front attend",
+          "Les équipes attendent le même environnement pour avancer.",
+          "Décrire contrat API, mocks et tests d’intégration comme périmètre de renfort."
         ],
         [
-          "Le mémo d’intégration d’un consultant",
-          "Des informations utiles sont partagées au hasard des échanges.",
-          "Regrouper contexte, outils, décisions, rituels et interlocuteurs."
+          "Qui reprend le service quand la mission finit ?",
+          "La responsabilité future est discutée seulement au départ du consultant.",
+          "Prévoir documentation, accès et décision de réception au début de la mission."
         ]
       ],
       "build": [
@@ -343,43 +343,43 @@
     },
     {
       "number": 4,
-      "label": "Préparer la décision",
-      "objective": "Donner au lecteur de quoi formuler son besoin et engager une discussion utile avec B&M.",
+      "label": "Transformer le sujet en brief",
+      "objective": "Amener un décideur ou recruteur à formuler une mission et à contacter B&M.",
       "consulting": [
         [
-          "Les signaux qui rendent un besoin de renfort actionnable",
-          "Le besoin existe mais aucune décision n’est attribuée.",
-          "Relier chantier, responsabilité, horizon et contraintes de collaboration."
+          "Un besoin urgent mérite un ticket exploitable",
+          "L’urgence remplace le périmètre et empêche de comparer les profils.",
+          "Donner une grille de brief à réutiliser pour une mission B&M."
         ],
         [
-          "Une fiche de mission qui aide les deux parties",
-          "Le document décrit une personne idéale plutôt qu’un travail réalisable.",
-          "Organiser le brief autour de la mission, de l’équipe et des critères."
+          "Remplacer un développeur oblige à transmettre le contexte",
+          "La demande vise une personne identique sans inventorier ses responsabilités.",
+          "Identifier domaines, accès et décisions à reprendre pour définir le renfort."
         ],
         [
-          "Un exemple de brief avant et après clarification",
-          "Une demande vague empêche de proposer un dispositif pertinent.",
-          "Comparer deux versions d’un brief fictif sans promettre un résultat commercial."
+          "Du brief React au parcours facturation : exemple illustratif",
+          "Le nom de technologie cache validation, droits et échange avec une API.",
+          "Montrer avant/après d’un brief fictif et les éléments à réceptionner."
         ],
         [
-          "Pourquoi un premier échange peut aboutir à préciser le besoin",
-          "L’échange commercial est attendu comme une réponse immédiate à tout.",
-          "Expliquer les informations encore nécessaires et les choix à faire."
+          "Le taux journalier ne décrit pas le dispositif",
+          "Les propositions n’incluent pas le même périmètre ni la même autonomie.",
+          "Comparer responsabilités, supervision et livrables sans inventer de prix."
         ],
         [
-          "Votre chantier mérite un dispositif lisible",
-          "Le lecteur sait qu’il lui manque un renfort mais ne sait pas comment le demander.",
-          "Inviter à partager rôle attendu, périmètre et contexte, sans engagement inventé."
+          "Un chantier précis suffit pour commencer à parler",
+          "Le prospect pense devoir fournir un cahier des charges complet.",
+          "Inviter à partager tâche, outils et contrainte pour qualifier consultant, squad ou développement."
         ],
         [
-          "La fin de mission se prépare dès le départ",
-          "La continuité après le départ du consultant n’est pas définie.",
-          "Penser transmission, documentation et responsabilités futures."
+          "Un consultant doit rendre les blocages visibles",
+          "Le suivi de mission décrit seulement les tâches exécutées.",
+          "Suivre dépendances, décisions et prochaines validations."
         ],
         [
-          "Le bilan d’une mission se prépare avant qu’elle commence",
-          "Les critères ne sont définis qu’au moment d’évaluer le travail.",
-          "Écrire ce qui sera observé et comment en discuter."
+          "Une mission réussie laisse un système compréhensible",
+          "La réception se limite à voir fonctionner un écran.",
+          "Inclure tests, documentation et reprise comme critères de réception."
         ]
       ],
       "build": [
@@ -456,39 +456,39 @@
     "label": "Meet B&M : nos offres et nos profils",
     "topics": [
       [
-        "B&M, concrètement",
-        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
-        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+        "B&M, concrètement : un chantier à confier",
+        "Le visiteur doit comprendre consultants IT, squads et applications métier.",
+        "Présenter les deux offres et un exemple de tâche ; dire ce qu’il faut envoyer pour qualifier une mission."
       ],
       [
-        "Développeur fullstack",
-        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
-        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+        "Développeur fullstack : débloquer une intégration",
+        "Le parcours produit attend un échange entre CRM et application.",
+        "Illustrer une mission fullstack : contrat API, gestion des erreurs et parcours testable de bout en bout."
       ],
       [
-        "Développeur front-end",
-        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
-        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+        "Un front-end livré se teste sur les états vides",
+        "Le parcours idéal fonctionne, les erreurs et droits rendent l’usage fragile.",
+        "Présenter un renfort front-end sur états vide/erreur/chargement et critères d’acceptation."
       ],
       [
-        "Consultant DevOps",
-        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
-        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+        "Votre release attend encore une personne connectée",
+        "Le déploiement dépend de gestes manuels et d’une connaissance isolée.",
+        "Mission DevOps : pipeline, secrets, procédure de retour arrière et responsabilité de validation."
       ],
       [
-        "Data Engineer",
-        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
-        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+        "Data Engineer : réconcilier les données avant le dashboard",
+        "Commandes et facturation ne décrivent pas le même objet.",
+        "Mission Data Engineer : sources, mapping, reprise et contrôles de rapprochement."
       ],
       [
-        "Développeur back-end",
-        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
-        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+        "Le paiement passe deux fois : une mission back-end concrète",
+        "Les tentatives de reprise créent des événements en double.",
+        "Expliquer traitement idempotent, tests de reprise et observation des erreurs sans promettre zéro incident."
       ],
       [
-        "Applications sur mesure",
-        "Le lecteur doit comprendre le service B&M et reconnaître un besoin concret de renfort IT ou de développement.",
-        "Présenter le profil, des tâches réalisables et une prochaine étape commerciale. Ne pas inventer un consultant identifié, un tarif ou une disponibilité détaillée."
+        "Applications sur mesure : le suivi sort du tableur",
+        "Dossiers, pièces et validations passent entre mails et fichiers.",
+        "Scénario illustratif : dossier, statut, pièce manquante et validation humaine. Proposer cadrage et développement B&M."
       ]
     ],
     "sequence": [
@@ -535,5 +535,39 @@
         "template": "case"
       }
     ]
+  },
+  "editorialDirection": {
+    "objective": "Déclencher des briefs de mission et des discussions d’achat, plutôt que collectionner des impressions.",
+    "accountLenses": {
+      "organization": "La mission, les tâches, les dépendances et le livrable à vérifier.",
+      "person": "Le jugement commercial, le piège du brief et la question à poser avant de choisir."
+    },
+    "rules": [
+      "Commencer par un frottement observable : release bloquée, facture ressaisie, API qui double un événement, dashboard non rapproché. Nommer le rôle ou la prestation B&M dans le premier tiers de la légende.",
+      "Assumer une thèse discutable et argumentée. Bannir les titres seuls du type Consultant DevOps ou La transformation digitale. Le rôle apparaît comme la réponse à une mission explicite.",
+      "Faire comprendre ce que le consultant réalise concrètement, avec une limite ou un critère de réception. Éviter les listes de technologies sans tâche ni livrable.",
+      "Page et profil apportent des angles complémentaires, avec des accroches et des visuels différents. Ne pas recopier la même légende sous deux auteurs.",
+      "Les jours contact, demander un brief exploitable : chantier, stack, responsabilité et contrainte. Les autres jours, conclure sur un critère utile ou une question précise.",
+      "Une seule langue sur chaque visuel : anglais. Légende complète FR puis EN, traduction naturelle, même offre et même niveau de preuve.",
+      "Utiliser uniquement les compositions existantes du Studio ; adapter leurs textes. Aucun PNG ancien de campagne comme source. Au moins trois compositions par semaine, maximum deux occurrences par composition.",
+      "Deux à trois carrousels de 2 à 4 slides par semaine quand le sujet nécessite une séquence ou une comparaison ; les autres jours une image concise. Export PDF complet pour le carrousel, jamais sa seule couverture.",
+      "Pas de mascotte, cat, advisor ou offer répété par défaut. Favoriser editorial, steps, squad, checklist, case, focus, automation, document selon le sens.",
+      "Prise de risque éditoriale = position claire et exemple précis. Jamais de faux chiffres, résultat client, profil disponible, délai garanti, fausse urgence ou attaque personnelle."
+    ],
+    "review": "Chaque semaine, lire les retours commerciaux disponibles par compte et angle. Après 14 jours minimum et huit posts observés, tester une variable (accroche ou format), sans changer la fréquence ni qualifier un gagnant sur les likes seuls. Ne pas visiter les profils ou boucler sur LinkedIn pour collecter ces données.",
+    "marketSignals": {
+      "checkedAt": "2026-11-15",
+      "scope": "Signaux publics US pour choisir des thèmes, sans extrapolation quantitative ni promesse de disponibilité.",
+      "sources": [
+        {
+          "url": "https://www.ycombinator.com/jobs/",
+          "use": "Offres publiques de startups : exemples de besoins software/fullstack. Instantané qualitatif, pas une mesure de tout le marché."
+        },
+        {
+          "url": "https://www.bls.gov/ooh/Computer-and-Information-Technology/Software-developers.htm",
+          "use": "Contexte emploi software aux États-Unis. Ne pas confondre projection d’emploi et missions disponibles chez B&M."
+        }
+      ]
+    }
   }
 }

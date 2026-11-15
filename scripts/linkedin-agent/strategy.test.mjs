@@ -2,12 +2,24 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {buildEditorialStrategy} from '../../shared/linkedin-strategy.mjs';
+import {editorialContext} from './quality.mjs';
 const actualPlaybook=JSON.parse(await readFile(new URL('../../studio-social/content/linkedin-playbook.json',import.meta.url),'utf8'));
 const playbook=structuredClone(actualPlaybook);delete playbook.launchWeek;
 const day=(n)=>new Date(Date.UTC(2026,10,1+n,12)).toISOString().slice(0,10);
 const slots=(start=0,length=7)=>Array.from({length},(_,i)=>({day:day(start+i)}));
 const base={playbook,accountId:'organization',config:{campaignStart:day(0),timezone:'Europe/Paris',commercialFocus:'balanced',targetAudience:'mixed'},slots:slots(),now:new Date('2026-11-01T12:00:00Z')};
 const plan=extra=>buildEditorialStrategy({...base,...extra});
+
+test('la direction commerciale et visuelle atteint le prompt du worker pour les deux comptes',()=>{
+ for(const accountId of ['person','organization']){
+  const strategy=buildEditorialStrategy({...base,playbook:actualPlaybook,accountId});
+  const context=editorialContext(strategy);
+  assert.equal(context.editorialDirection.objective,actualPlaybook.editorialDirection.objective);
+  assert(context.editorialDirection.rules.some(rule=>/Studio/.test(rule)));
+  assert(context.editorialDirection.rules.some(rule=>/FR puis EN/.test(rule)));
+  assert.match(context.accountRole,accountId==='person'?/commerciale/:/vitrine commerciale/);
+ }
+});
 test('chaque semaine suit un mix utile et un seul contact commercial',()=>{
  for(let offset=0;offset<28;offset++){
   const p=plan({slots:slots(offset)});

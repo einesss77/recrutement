@@ -101,7 +101,7 @@ function boundedContext(value,depth=0){
 }
 export function editorialContext(editorial){
  if(!editorial)return undefined;
- const context=Object.fromEntries(['version','positioning','primaryGoal','accountRole','campaign','audiences','weeklyMix','proofRules','assumption','review'].filter(key=>editorial[key]!==undefined).map(key=>[key,boundedContext(editorial[key])]));
+ const context=Object.fromEntries(['version','positioning','primaryGoal','accountRole','editorialDirection','campaign','audiences','weeklyMix','proofRules','assumption','review'].filter(key=>editorial[key]!==undefined).map(key=>[key,boundedContext(editorial[key])]));
  const fields=['id','day','campaignWeek','audienceId','audience','offer','purpose','series','angle','problem','takeAway','proofRequirement','suggestedTemplate','ctaKind','ctaGuidance','destinationUrl','experiment'];
  context.briefs=(editorial.briefs||[]).slice(0,7).map(brief=>Object.fromEntries(fields.filter(key=>brief[key]!==undefined).map(key=>[key,boundedContext(brief[key])])));
  return context;

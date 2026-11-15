@@ -4,6 +4,7 @@ import {build} from 'esbuild';
 import {chromium} from '@playwright/test';
 import path from 'node:path';
 import os from 'node:os';
+import {templateIds} from './quality.mjs';
 
 const types={'.css':'text/css','.js':'text/javascript','.ttf':'font/ttf','.png':'image/png','.svg':'image/svg+xml'};
 const allowed=new Set(['style.css','brand-art.css','templates.js','characters.js','fonts/manrope-0.ttf','fonts/bricolagegrotesque-0.ttf','fonts/instrumentserif-0.ttf']);
@@ -25,6 +26,7 @@ export async function chromiumPath(){
  throw Error('Chromium est absent. Exécutez npx playwright install chromium ou définissez STUDIO_CHROMIUM_PATH.');
 }
 export async function renderPost(post,format,{repoRoot,workingRoot,maxBytes=2_800_000}={}){
+ if(!templateIds.includes(post?.template))throw Error('La création doit utiliser un template existant du Studio.');
  if(!['png','pdf'].includes(format))throw Error('Format de publication non pris en charge.');
  // Imported raster images remain supported without allowing remote URLs or executable SVG.
  validateEmbeddedImage(post.image);
