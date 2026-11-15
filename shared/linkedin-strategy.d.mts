@@ -6,7 +6,7 @@ export type EditorialBrief={
  experiment:{variable:string;variant:string;hypothesis:string;metric:string};
 };
 export type EditorialStrategy={
- version:number;positioning:string;primaryGoal:string;accountRole:string;
+ version:number;positioning:string;primaryGoal:string;accountRole:string;editorialDirection?:Record<string,unknown>;
  campaign:{startDate:string;week:number;cycle:number;label:string;objective:string;reviewAt:string;weeks:{number:number;label:string;objective:string}[]};
  audiences:{id:string;label:string;problem:string;decision:string}[];
  weeklyMix:{purpose:string;label:string;count:number}[];briefs:EditorialBrief[];proofRules:string[];assumption:string;

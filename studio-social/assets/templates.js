@@ -1,12 +1,15 @@
 import {character} from './characters.js';
+import {campaignArtwork,campaignTemplates,campaignDetails} from './campaign-templates.js';
 
 export const templates = {
+ ...campaignTemplates,
  offer:'L’offre B&M', editorial:'Le point de vue', steps:'La méthode', squad:'Le collectif',
  checklist:'Le mémo', case:'Le cas concret', focus:'L’expertise',
  chatbot:'Le chatbot', document:'Le document IA', automation:'Le flux automatisé',
  advisor:'Le conseiller illustré', cat:'Le chat assistant'
 };
 export const templateDetails = {
+ ...campaignDetails,
  offer:{purpose:'Faire comprendre l’offre et inviter à un besoin concret.',format:'Campagne commerciale'},
  editorial:{purpose:'Une idée forte, une prise de position.',format:'Post ou ouverture de carrousel'},
  steps:{purpose:'Expliquer une démarche en étapes.',format:'Carrousel pédagogique'},
@@ -40,6 +43,7 @@ function circuitScene(kind){
 }
 
 export function artwork(post,index=0){
+ if(Object.hasOwn(campaignTemplates,post.template))return campaignArtwork(post,index);
  const s=post.slides[index]||post.slides[0]||{title:'Votre prochaine idée.',body:'',points:[]};
  if(['advisor','cat'].includes(post.template))return personifiedArtwork(post,s,index);
  if(['chatbot','document','automation'].includes(post.template))return practicalArtwork(post,s,index);

@@ -1,8 +1,8 @@
 {
   "brand": "B&M Digital Consulting",
   "audience": "CTO, responsables engineering/produit, fondateurs de startups, recruteurs IT et dirigeants de petites ESN, notamment US ; Dirigeants de PME et responsables opérations/finance/commercial",
-  "objective": "Faire comprendre les deux interventions de B&M : mobiliser des consultants IT et concevoir des applications sur mesure. Rendre l’accompagnement concret et susciter des conversations qualifiées.",
-  "voice": "Direct, précis, commercial et assumé. Ouvrir sur un problème observable ou un jugement argumenté. Nommer le rôle B&M, la tâche confiée et le critère de réception. Paragraphes naturels, aucune anecdote inventée.",
+  "objective": "Faire comprendre l’offre et obtenir des briefs de mission ou de développement qualifiés.",
+  "voice": "Commercial, humain, clair et concret. Présenter ce que B&M propose et le type de travail à lui confier. Phrases naturelles, sans jargon ni posture artificielle. Ines est l’interlocutrice commerciale ; B&M présente les services. Aucune compétence technique ou expérience vécue inventée.",
   "facts": [
     "Consultants individuels ou squads selon le besoin.",
     "Expertises fullstack, cloud, data, IA et Product Ownership.",
@@ -15,14 +15,14 @@
     "Les cas clients restent des brouillons jusqu’à validation des faits et des droits de diffusion.",
     "Publication automatique uniquement via l’agent LinkedIn connecté et activé, selon le calendrier et les règles définis. Les faits non confirmés demandent une intervention humaine.",
     "Pas d’emoji, de superlatif gratuit ou de jargon sans explication.",
-    "Sur le visuel : un titre de 65 caractères maximum, un corps de 150 caractères maximum et jusqu’à 4 points courts. Répartir les idées sur plusieurs pages plutôt que densifier un écran.",
-    "Privilégier une invitation utile en légende ; limiter les hashtags aux sujets pertinents."
+    "Privilégier une invitation utile en légende ; limiter les hashtags aux sujets pertinents.",
+    "Utiliser les compositions launch/mission/product/compare/brief de la nouvelle collection Studio. Titre visuel maximum 55 caractères, corps 100, trois points de 80 caractères maximum."
   ],
   "pillars": [
-    "Consultants IT : missions à confier et livrables",
-    "Les briefs de recrutement qui bloquent le chantier",
-    "Applications métier : un flux concret et ses exceptions",
-    "Mise en production : API, cloud, données et intégration IA"
+    "Les consultants IT que vous pouvez demander",
+    "Consultant individuel ou squad pour votre projet",
+    "Applications web et mobiles pour votre métier",
+    "Le premier échange pour préparer une mission"
   ],
   "rhythm": "Une publication quotidienne par compte : B&M à 09:00, Ines à 10:00 Europe/Paris, légende FR puis EN et visuel anglais concis. Calendrier imposé par le propriétaire, pas un meilleur horaire démontré. Deux voix et des angles distincts. Varier les compositions du Studio, avec carrousels complets si plusieurs pages.",
   "measurement": "Suivre les échanges qualifiés, visites du site et demandes de contact. Comparer les thèmes et formats après quatre semaines avant d'augmenter la cadence.",
@@ -37,5 +37,5 @@
     "heading": "Bricolage Grotesque",
     "body": "Manrope"
   },
-  "visual": "Fonds bleu nuit ou papier froid, cobalt pour la structure et citron par touches. Titres mesurés, espaces nets, lignes techniques fines et diagrammes lisibles. Pas de serif, d’emoji ni d’aplats citron envahissants."
+  "visual": "Cinq compositions People & Products : launch, mission, product, compare, brief. Encre, papier, cobalt et citron. Une grande maquette, une carte mission, une comparaison ou un brief illustre le service. Titres de 3 à 8 mots et textes courts. Aucun petit décor au bas d’une page vide."
 }

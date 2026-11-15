@@ -5,10 +5,11 @@ import strategy from '@/studio-social/content/strategy.json';
 import practicalPack from '@/studio-social/content/practical-pack.json';
 import companionPack from '@/studio-social/content/companion-pack.json';
 import signaturePack from '@/studio-social/content/signature-pack.json';
+import campaignPack from '@/studio-social/content/campaign-v2.json';
 import { z } from 'zod';
 
 const slideSchema=z.object({label:z.string().max(100),title:z.string().max(140),body:z.string().max(350),points:z.array(z.string().max(240)).max(4)});
-export const postsSchema=z.array(z.object({id:z.string().min(1).max(80),title:z.string().max(180),category:z.string().max(100),template:z.enum(['offer','editorial','steps','squad','checklist','case','focus','chatbot','document','automation','advisor','cat']),theme:z.enum(['dark','light']),status:z.enum(['draft','ready']),date:z.string().max(10),image:z.string().max(3_500_000).refine(s=>!s||/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(s)),caption:z.string().max(15000),slides:z.array(slideSchema).min(1).max(10)})).max(500).refine(posts=>new Set(posts.map(p=>p.id)).size===posts.length);
+export const postsSchema=z.array(z.object({id:z.string().min(1).max(80),title:z.string().max(180),category:z.string().max(100),template:z.enum(['launch','mission','product','compare','brief','offer','editorial','steps','squad','checklist','case','focus','chatbot','document','automation','advisor','cat']),theme:z.enum(['dark','light']),status:z.enum(['draft','ready']),date:z.string().max(10),image:z.string().max(3_500_000).refine(s=>!s||/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(s)),caption:z.string().max(15000),slides:z.array(slideSchema).min(1).max(10)})).max(500).refine(posts=>new Set(posts.map(p=>p.id)).size===posts.length);
 export type SocialPost=z.infer<typeof postsSchema>[number];
 type Document={posts:SocialPost[];appliedPacks?:string[];revision:number;usage:{month:string;reservedUsd:number;calls:number}};
 export function isStudioConflict(error:unknown){
@@ -58,7 +59,7 @@ export async function studioState(){
  let document:Document,backend:string;
  try{({document,backend}=await readStudio());}catch{document=initial();backend='readonly';}
  if(document.usage.month!==new Date().toISOString().slice(0,7))document.usage={month:new Date().toISOString().slice(0,7),reservedUsd:0,calls:0};
- return{...document,availablePacks:[practicalPack,companionPack,signaturePack],strategy,backend,aiEnabled:!!process.env.GEMINI_API_KEY&&backend==='cloud',budget:Number(process.env.AI_MONTHLY_BUDGET_USD||2)};
+ return{...document,availablePacks:[practicalPack,companionPack,signaturePack,campaignPack],strategy,backend,aiEnabled:!!process.env.GEMINI_API_KEY&&backend==='cloud',budget:Number(process.env.AI_MONTHLY_BUDGET_USD||2)};
 }
 export async function generateStudio(topic:string){
  if(!process.env.GEMINI_API_KEY)throw Error('La rédaction IA attend une clé GEMINI_API_KEY.');
@@ -68,7 +69,7 @@ export async function generateStudio(topic:string){
  if(!Number.isFinite(budget)||document.usage.reservedUsd+.02>budget)throw Error('Budget mensuel du studio atteint.');
  document.usage.reservedUsd+=.02;document.usage.calls++;
  const revision=await writeStudio(document,document.revision,current.etag);
- const prompt=`Tu rédiges en français pour B&M. Stratégie : ${JSON.stringify(strategy)}. Sujet : ${topic}. Produis exactement 3 brouillons distincts sans inventer de faits. Réponds avec un tableau JSON de 3 objets : title, category, template parmi editorial/steps/squad/checklist/focus, theme dark/light, caption (texte LinkedIn complet), slides (1 à 4 objets label,title,body,points). Limites par diapositive : title 100 caractères, body 220, points tableau de 0 à 3 textes de 80 caractères. Pas de Markdown.`;
+ const prompt=`Tu rédiges pour B&M. Stratégie : ${JSON.stringify(strategy)}. Sujet : ${topic}. Produis exactement 3 brouillons commerciaux distincts sans inventer de faits. Réponds avec un tableau JSON de 3 objets : title, category, template parmi launch/mission/product/compare/brief, theme dark/light, caption (texte LinkedIn complet FR puis EN), slides (1 à 3 objets label,title,body,points). Limites par diapositive : title 55 caractères, body 100, points tableau de 3 textes de 80 caractères au format Titre court | Détail court. launch = deux offres B&M ; mission = travail à confier ; product = application illustrative ; compare = deux dispositifs ; brief = trois informations à envoyer. Ne pas inventer un profil disponible ni un résultat client. Pas de Markdown.`;
  const response=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent',{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':process.env.GEMINI_API_KEY},signal:AbortSignal.timeout(55000),body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{responseMimeType:'application/json',maxOutputTokens:5000,temperature:.7}})});
  if(!response.ok)throw Error(`Erreur du fournisseur IA (${response.status}). Aucun nouvel essai automatique.`);
  const result=await response.json(),drafts=JSON.parse(result.candidates?.[0]?.content?.parts?.map((p:{text?:string})=>p.text||'').join('')||'null');

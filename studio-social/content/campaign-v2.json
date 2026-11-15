@@ -1,0 +1,414 @@
+{
+  "id": "campaign-v2-2026",
+  "label": "B&M / People & Products",
+  "posts": [
+    {
+      "id": "campaign-v2-bm-16",
+      "title": "B&M : consultants IT et applications sur mesure",
+      "category": "B&M / IT consulting & custom apps",
+      "template": "launch",
+      "theme": "dark",
+      "status": "draft",
+      "date": "2026-11-16",
+      "image": "",
+      "caption": "FR\nUn développeur pour votre équipe. Une application pour votre activité. B&M vous accompagne sur les deux.\n\nVous avez un produit à faire évoluer ou une compétence qui manque ? Nous proposons des consultants IT intégrés à votre organisation, individuellement ou en squad.\n\nVous avez besoin de votre propre outil ? Nous cadrons et développons des applications web et mobiles autour du travail de vos équipes.\n\nParlez-nous du projet, des outils en place et de ce qui doit avancer. Nous préciserons la bonne façon d’intervenir.\n\nEN\nA developer for your team. An application for your business. B&M supports both.\n\nNeed to move a product forward or bring in a missing skill? We offer IT consultants embedded in your organisation, individually or as a squad.\n\nNeed your own tool? We scope and develop web and mobile applications around the work your teams do.\n\nTell us about the project, your current tools and what needs to move forward. We will define the right way to work together.\nhttps://www.bandmdigitalconsulting.com/contact/",
+      "slides": [
+        {
+          "label": "MEET B&M",
+          "title": "IT consultants.\nCustom applications.",
+          "body": "The people to strengthen your team. The software to support your business.",
+          "points": [
+            "IT consultants | A specialist or a dedicated squad.",
+            "Custom applications | Web, mobile and business tools.",
+            "Your project. The right team."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-ines-16",
+      "title": "Votre projet, les bonnes compétences",
+      "category": "Ines Favre / B&M",
+      "template": "brief",
+      "theme": "light",
+      "status": "draft",
+      "date": "2026-11-16",
+      "image": "",
+      "caption": "FR\nVous cherchez un développeur, une équipe pour un projet ou quelqu’un pour construire votre application ? C’est le point de départ de mon rôle chez B&M.\n\nNous proposons des consultants IT pour renforcer vos équipes et du développement sur mesure pour vos outils métier. Je suis votre interlocutrice pour comprendre le besoin et préparer la suite avec notre équipe.\n\nUn projet encore flou peut déjà se discuter. Dites-moi ce que vous voulez faire avancer, les outils utilisés et la compétence recherchée. Nous préciserons le reste ensemble.\n\nEN\nLooking for a developer, a team for a project or someone to build your application? That is where my role at B&M starts.\n\nWe offer IT consultants to strengthen your teams and custom development for business applications. I am your contact to understand the requirement and prepare the next steps with our team.\n\nA project can be discussed while the details are still taking shape. Tell me what you want to move forward, the tools you use and the expertise you need. We will work through the rest together.\nhttps://www.bandmdigitalconsulting.com/contact/",
+      "slides": [
+        {
+          "label": "INES FAVRE / B&M",
+          "title": "What needs\nbuilding next?",
+          "body": "I connect your project with B&M’s IT consulting and custom application services.",
+          "points": [
+            "The project | What needs to move forward?",
+            "The team | Which expertise is missing?",
+            "The first step | What should we work on first?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-bm-17",
+      "title": "Un développeur fullstack pour faire avancer votre produit",
+      "category": "B&M / IT consulting & custom apps",
+      "template": "mission",
+      "theme": "light",
+      "status": "draft",
+      "date": "2026-11-17",
+      "image": "",
+      "caption": "FR\nVotre produit a besoin d’un développeur qui peut intervenir sur l’interface et les API ? B&M propose des consultants fullstack pour rejoindre vos équipes.\n\nFaire évoluer un espace client, connecter un CRM ou développer une nouvelle fonctionnalité : la mission part du travail à réaliser dans votre environnement.\n\nLe consultant intervient avec votre organisation et vos priorités. Un référent B&M l’accompagne pendant la mission.\n\nVous recherchez ce renfort ? Envoyez-nous votre stack et le premier chantier à prendre en charge.\n\nEN\nDoes your product need a developer who can work on both the interface and the APIs? B&M offers full-stack consultants to join your teams.\n\nImproving a customer portal, connecting a CRM or building a new feature: the assignment starts with the work to be done in your environment.\n\nThe consultant works within your organisation and priorities, supported by a B&M project contact throughout the assignment.\n\nLooking for this support? Send us your stack and the first workstream to take on.\nhttps://www.bandmdigitalconsulting.com/profils-et-squads/",
+      "slides": [
+        {
+          "label": "IT CONSULTANTS / FULL-STACK",
+          "title": "Your product.\nOne more builder.",
+          "body": "A full-stack consultant to work with your team, from interface to integration.",
+          "points": [
+            "Interfaces | Build the features users need.",
+            "APIs | Connect the product to your systems.",
+            "Delivery | Test, document and hand over."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-ines-17",
+      "title": "Un consultant ou une squad : quel renfort cherchez-vous ?",
+      "category": "Ines Favre / B&M",
+      "template": "compare",
+      "theme": "dark",
+      "status": "draft",
+      "date": "2026-11-17",
+      "image": "",
+      "caption": "FR\nUn développeur à intégrer dans votre équipe et un projet à confier à plusieurs compétences appellent deux discussions différentes. Chez B&M, nous proposons les deux dispositifs.\n\nPour un rôle précis, nous étudions un consultant qui travaille avec votre organisation. Pour un chantier qui demande plusieurs expertises, nous pouvons définir une squad autour du projet.\n\nJe commencerais par une question : avez-vous surtout besoin d’une compétence dans l’équipe, ou d’un collectif pour construire quelque chose ?\n\nDécrivez-moi le chantier. Nous pourrons regarder le format adapté.\n\nEN\nA developer joining your team and a project requiring several skills call for two different discussions. At B&M, we offer both setups.\n\nFor a defined role, we assess a consultant working within your organisation. For a workstream requiring several areas of expertise, we can shape a squad around the project.\n\nI would start with one question: do you mainly need a skill within the team, or a group to build something together?\n\nTell me about the workstream. We can look at the setup that fits.\nhttps://www.bandmdigitalconsulting.com/contact/",
+      "slides": [
+        {
+          "label": "THE RIGHT SETUP",
+          "title": "One specialist.\nOr a whole squad.",
+          "body": "The right setup starts with the work your team needs to get done.",
+          "points": [
+            "One consultant | A defined role within your team.",
+            "A dedicated squad | Several skills on one project.",
+            "The starting point | What needs to be delivered?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-bm-18",
+      "title": "Une application construite autour du travail de vos équipes",
+      "category": "B&M / IT consulting & custom apps",
+      "template": "product",
+      "theme": "dark",
+      "status": "draft",
+      "date": "2026-11-18",
+      "image": "",
+      "caption": "FR\nVos dossiers passent entre un tableur, des mails et un outil de validation ? B&M développe des applications métier sur mesure pour réunir ce travail dans un parcours cohérent.\n\nLa maquette présentée est illustrative : un dossier, ses documents et la personne qui doit valider. Elle montre le type d’outil que nous pouvons concevoir autour de vos besoins.\n\nNous vous accompagnons du cadrage au développement web ou mobile, en tenant compte des outils à connecter.\n\nQuel processus aimeriez-vous enfin retrouver dans une seule application ?\n\nEN\nDo your cases move between a spreadsheet, emails and an approval tool? B&M develops custom business applications to bring that work into a coherent workflow.\n\nThe mockup shown is illustrative: a case, its documents and the person responsible for approval. It shows the kind of tool we can design around your requirements.\n\nWe support you from scoping to web or mobile development, taking the systems to connect into account.\n\nWhich process would you like to bring together in one application?\nhttps://www.bandmdigitalconsulting.com/solutions-sur-mesure/",
+      "slides": [
+        {
+          "label": "CUSTOM APPLICATIONS",
+          "title": "Your workflow.\nYour application.",
+          "body": "Business software built around the way your team actually works.",
+          "points": [
+            "Track the work | Cases, owners and next steps.",
+            "Keep the documents | Attached to the right case.",
+            "Make the decision | Clear review and approval."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-ines-18",
+      "title": "Un développeur back-end pour connecter vos outils",
+      "category": "Ines Favre / B&M",
+      "template": "mission",
+      "theme": "dark",
+      "status": "draft",
+      "date": "2026-11-18",
+      "image": "",
+      "caption": "FR\nVotre équipe a besoin d’un développeur back-end pour relier ses outils ou faire évoluer ses API ? C’est une mission que vous pouvez nous soumettre chez B&M.\n\nUn espace client qui doit communiquer avec le CRM, une commande à transmettre à la facturation, un service à intégrer : le besoin devient plus clair quand on nomme le flux à construire.\n\nNous proposons des consultants IT qui interviennent dans vos équipes sur ce travail.\n\nEnvoyez-moi votre stack, les systèmes concernés et ce qui doit circuler entre eux. Nous préparerons la discussion sur le renfort.\n\nEN\nDoes your team need a back-end developer to connect its tools or improve its APIs? That is an assignment you can bring to B&M.\n\nA customer portal exchanging data with a CRM, an order moving into billing, a service to integrate: the requirement becomes clearer when we name the flow to build.\n\nWe offer IT consultants who join your teams to work on that requirement.\n\nSend me your stack, the systems involved and what needs to move between them. We will prepare the discussion about the support you need.\nhttps://www.bandmdigitalconsulting.com/profils-et-squads/",
+      "slides": [
+        {
+          "label": "IT CONSULTANTS / BACK-END",
+          "title": "Connect the tools.\nMove the work.",
+          "body": "B&M back-end consultants for APIs, integrations and business rules.",
+          "points": [
+            "APIs | Let your applications exchange data.",
+            "Integrations | Connect the systems you already use.",
+            "Business rules | Make each action behave as expected."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-bm-19",
+      "title": "Renforcer votre équipe ou construire votre application",
+      "category": "B&M / IT consulting & custom apps",
+      "template": "compare",
+      "theme": "light",
+      "status": "draft",
+      "date": "2026-11-19",
+      "image": "",
+      "caption": "FR\nVous avez déjà une équipe et il vous manque une compétence ? B&M propose des consultants IT pour la renforcer.\n\nVous avez besoin d’une application pour votre activité ? Nous vous accompagnons dans son cadrage et son développement sur mesure.\n\nCes deux offres répondent à des situations différentes : ajouter un savoir-faire à votre organisation, ou construire un outil autour d’un usage métier. Une squad peut réunir plusieurs compétences lorsqu’un chantier le demande.\n\nParlez-nous de ce qui existe déjà et de ce qu’il faut construire. Nous préciserons ensemble comment intervenir.\n\nEN\nAlready have a team but need an additional skill? B&M offers IT consultants to strengthen it.\n\nNeed an application for your business? We support its scoping and custom development.\n\nThese offers address different situations: adding expertise to your organisation, or building a tool around a business workflow. A squad can bring several skills together when the work requires it.\n\nTell us what already exists and what needs building. We will define how to work together.\nhttps://www.bandmdigitalconsulting.com/contact/",
+      "slides": [
+        {
+          "label": "TWO WAYS TO WORK WITH B&M",
+          "title": "A role to fill.\nA product to build.",
+          "body": "Consultants within your team, or custom development around your project.",
+          "points": [
+            "IT consulting | An expert working with your team.",
+            "Custom development | An application built for your business.",
+            "Your next move | Tell us what needs to move forward."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-ines-19",
+      "title": "Quel travail mérite votre propre application ?",
+      "category": "Ines Favre / B&M",
+      "template": "product",
+      "theme": "light",
+      "status": "draft",
+      "date": "2026-11-19",
+      "image": "",
+      "caption": "FR\nQuand il faut ouvrir plusieurs outils pour savoir où en est un dossier, je trouve utile de dessiner le parcours avant de parler de fonctionnalités. C’est une discussion que nous pouvons avoir chez B&M.\n\nNous concevons et développons des applications sur mesure. La maquette illustrative ci-dessous donne un exemple simple : retrouver le dossier, ses pièces et la personne qui doit agir au même endroit.\n\nLe point de départ peut être un seul processus qui complique le travail de votre équipe.\n\nLequel aimeriez-vous nous montrer ?\n\nEN\nWhen you need several tools to find out where a case stands, I find it useful to map the workflow before discussing features. That is a conversation we can have at B&M.\n\nWe design and develop custom applications. The illustrative mockup below shows a simple example: the case, its documents and the person who needs to act, all in one place.\n\nThe starting point can be one process making your team’s work harder.\n\nWhich one would you like to show us?\nhttps://www.bandmdigitalconsulting.com/solutions-sur-mesure/",
+      "slides": [
+        {
+          "label": "FROM THE WORK TO THE APP",
+          "title": "Beyond the\nspreadsheet.",
+          "body": "A custom application can bring your cases, documents and decisions together.",
+          "points": [
+            "A shared workspace | Keep the next step visible.",
+            "The right documents | Find them in the case.",
+            "Clear ownership | Know who needs to act."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-bm-20",
+      "title": "Cloud et DevOps : un consultant dans votre équipe",
+      "category": "B&M / IT consulting & custom apps",
+      "template": "mission",
+      "theme": "dark",
+      "status": "draft",
+      "date": "2026-11-20",
+      "image": "",
+      "caption": "FR\nVotre équipe développe, mais les environnements et les déploiements demandent un renfort dédié ? B&M propose des consultants cloud et DevOps.\n\nPréparer un environnement, travailler sur les mises en production, améliorer la supervision ou documenter l’exploitation : la mission se définit autour du chantier à prendre en charge.\n\nLe consultant intervient avec votre équipe. Un référent B&M accompagne la mission.\n\nVous recherchez ce type de renfort ? Partagez votre environnement, vos outils et la priorité du moment.\n\nEN\nYour team is building software, but environments and deployments need dedicated support? B&M offers cloud and DevOps consultants.\n\nPreparing an environment, working on production releases, improving monitoring or documenting operations: the assignment is shaped around the work to take on.\n\nThe consultant works with your team, supported by a B&M project contact throughout the assignment.\n\nLooking for this expertise? Share your environment, tools and current priority.\nhttps://www.bandmdigitalconsulting.com/profils-et-squads/",
+      "slides": [
+        {
+          "label": "IT CONSULTANTS / CLOUD & DEVOPS",
+          "title": "Your cloud.\nThe right expertise.",
+          "body": "Consultants to work on your environments, deployments and day-to-day operations.",
+          "points": [
+            "Environments | Prepare the foundations your team uses.",
+            "Deployments | Build a repeatable release process.",
+            "Operations | Document, monitor and hand over."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-ines-20",
+      "title": "Parlons du projet même si le brief est encore incomplet",
+      "category": "Ines Favre / B&M",
+      "template": "brief",
+      "theme": "dark",
+      "status": "draft",
+      "date": "2026-11-20",
+      "image": "",
+      "caption": "FR\nVous pouvez me parler de votre projet avant d’avoir un cahier des charges complet. Pour discuter d’un consultant IT ou d’une application B&M, je commencerai par le travail à faire avancer.\n\nUn produit à faire évoluer, un rôle à renforcer ou un outil métier à créer : dites-moi où vous en êtes et ce qui manque aujourd’hui.\n\nLes outils déjà utilisés et une première tâche concrète suffisent pour engager une discussion utile. Nous préciserons ensuite les compétences et la façon de travailler ensemble.\n\nVous pouvez m’envoyer ces éléments en message.\n\nEN\nYou can talk to me about a project before you have a complete specification. To discuss a B&M IT consultant or application, I will start with the work you want to move forward.\n\nA product to improve, a role to strengthen or a business tool to create: tell me where you are and what is missing today.\n\nThe tools you already use and one concrete task are enough to start a useful conversation. We can then define the expertise and how to work together.\n\nYou can send me those details in a message.\nhttps://www.bandmdigitalconsulting.com/contact/",
+      "slides": [
+        {
+          "label": "LET’S START WITH YOUR PROJECT",
+          "title": "A project in mind?\nStart here.",
+          "body": "You can start the conversation before every detail is settled.",
+          "points": [
+            "The goal | What would you like to build?",
+            "The tools | What does your team use today?",
+            "The first task | What needs attention first?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-bm-21",
+      "title": "Un outil métier pour réunir le suivi et les validations",
+      "category": "B&M / IT consulting & custom apps",
+      "template": "product",
+      "theme": "light",
+      "status": "draft",
+      "date": "2026-11-21",
+      "image": "",
+      "caption": "FR\nUne application métier doit aider votre équipe à savoir ce qui est en cours et ce qu’elle doit faire ensuite. B&M peut la concevoir et la développer autour de votre activité.\n\nExemple illustratif : un espace commun pour suivre les dossiers, retrouver les documents et transmettre une demande de validation. Les décisions restent prises par les personnes habilitées.\n\nNous partons de vos usages et des outils à connecter pour définir ce qui doit être construit.\n\nVous avez un suivi encore dispersé entre plusieurs fichiers ? Parlons du parcours que votre application devrait réunir.\n\nEN\nA business application should help your team see what is in progress and what to do next. B&M can design and develop it around your operations.\n\nIllustrative example: a shared workspace to track cases, find documents and send a request for approval. Decisions remain with authorised people.\n\nWe start with your workflows and the tools to connect to define what needs building.\n\nIs your tracking still scattered across several files? Let’s discuss the journey your application should bring together.\nhttps://www.bandmdigitalconsulting.com/solutions-sur-mesure/",
+      "slides": [
+        {
+          "label": "CUSTOM BUSINESS SOFTWARE",
+          "title": "One workspace.\nA clearer next step.",
+          "body": "Cases, documents and approvals, designed as one connected workflow.",
+          "points": [
+            "Follow each case | Make the status easy to find.",
+            "Share the context | Keep documents with the work.",
+            "Keep people in control | Review before approval."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-ines-21",
+      "title": "Quel développeur manque à votre équipe ?",
+      "category": "Ines Favre / B&M",
+      "template": "mission",
+      "theme": "light",
+      "status": "draft",
+      "date": "2026-11-21",
+      "image": "",
+      "caption": "FR\nQuand on me parle d’un besoin de développeur, je veux comprendre la place qu’il prendra dans l’équipe. C’est ce qui rend une recherche de consultant B&M concrète.\n\nVa-t-il travailler sur l’interface, les API, les données ou les déploiements ? Quel est le premier chantier et avec qui travaillera-t-il ?\n\nNous proposons des consultants IT individuels ou des squads selon le besoin. Les expertises et la composition se discutent à partir du projet.\n\nVous cherchez un renfort ? Décrivez-moi la compétence qui manque et ce que votre équipe construit.\n\nEN\nWhen someone brings me a developer requirement, I want to understand the role they will take within the team. That makes a B&M consultant discussion concrete.\n\nWill they work on the interface, APIs, data or deployments? What is the first workstream, and who will they work with?\n\nWe offer individual IT consultants or squads depending on the requirement. Expertise and team composition are discussed around the project.\n\nLooking for support? Tell me which skill is missing and what your team is building.\nhttps://www.bandmdigitalconsulting.com/profils-et-squads/",
+      "slides": [
+        {
+          "label": "LET’S TALK ABOUT THE ROLE",
+          "title": "The skill you need.\nInside your team.",
+          "body": "B&M consultants work on the product and systems your team is building.",
+          "points": [
+            "The product | What needs to be built or improved?",
+            "The expertise | Which part needs a specialist?",
+            "The team | Who will the consultant work with?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-bm-22",
+      "title": "Votre prochain projet : commençons par le concret",
+      "category": "B&M / IT consulting & custom apps",
+      "template": "brief",
+      "theme": "dark",
+      "status": "draft",
+      "date": "2026-11-22",
+      "image": "",
+      "caption": "FR\nUn consultant IT, une squad ou une application sur mesure : B&M vous aide à définir l’intervention adaptée à votre projet.\n\nPour commencer, trois éléments nous sont utiles : ce que vous voulez faire avancer, les outils déjà en place et le premier chantier à traiter.\n\nÀ partir de là, nous pouvons parler des compétences recherchées ou du développement à prévoir. Les profils, la composition et les modalités restent à confirmer avec vous.\n\nVous avez un besoin en tête ? Présentez-nous le projet et votre priorité.\n\nEN\nAn IT consultant, a squad or a custom application: B&M helps define the right engagement for your project.\n\nThree things help us get started: what you want to move forward, the tools already in place and the first workstream to address.\n\nFrom there, we can discuss the expertise you need or the development to plan. Profiles, team composition and terms are confirmed with you.\n\nHave a requirement in mind? Tell us about the project and your priority.\nhttps://www.bandmdigitalconsulting.com/contact/",
+      "slides": [
+        {
+          "label": "YOUR NEXT PROJECT",
+          "title": "Let’s make\nthe next move.",
+          "body": "A consultant, a squad or a custom application. Start with the work.",
+          "points": [
+            "Your project | What needs to move forward?",
+            "Your environment | Which tools are already in place?",
+            "Your first task | What should we take on first?"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-ines-22",
+      "title": "Des consultants pour vos équipes, des applications pour votre métier",
+      "category": "Ines Favre / B&M",
+      "template": "launch",
+      "theme": "dark",
+      "status": "draft",
+      "date": "2026-11-22",
+      "image": "",
+      "caption": "FR\nChez B&M, nous avons deux offres très concrètes : des consultants IT pour vos équipes et des applications sur mesure pour votre métier. Mon rôle est de vous aider à ouvrir la bonne discussion.\n\nVous avez déjà l’équipe mais il manque une compétence ? Parlons du rôle. Vous avez besoin de votre propre outil ? Parlons de l’usage et de ce qu’il faut construire.\n\nSi le chantier demande plusieurs compétences, nous pouvons aussi étudier une squad.\n\nGardez mon contact pour votre prochain besoin, ou envoyez-moi simplement le sujet sur lequel vous cherchez à avancer.\n\nEN\nAt B&M, we have two concrete offers: IT consultants for your teams and custom applications for your business. My role is to help start the right discussion.\n\nAlready have the team but need another skill? Let’s talk about the role. Need your own tool? Let’s talk about the workflow and what needs building.\n\nIf the work calls for several skills, we can also assess a squad.\n\nKeep my contact for your next requirement, or simply send me the topic you are trying to move forward.\nhttps://www.bandmdigitalconsulting.com/contact/",
+      "slides": [
+        {
+          "label": "MY ROLE AT B&M",
+          "title": "Your project.\nThe right people.",
+          "body": "IT consultants for your team. Custom applications for your business.",
+          "points": [
+            "IT consultants | A specialist or a dedicated squad.",
+            "Custom applications | Built around your workflows.",
+            "Let’s talk about your next project."
+          ]
+        }
+      ]
+    }
+  ],
+  "calendar": [
+    {
+      "postId": "campaign-v2-bm-16",
+      "accountId": "organization",
+      "day": "2026-11-16",
+      "offer": "consulting"
+    },
+    {
+      "postId": "campaign-v2-ines-16",
+      "accountId": "person",
+      "day": "2026-11-16",
+      "offer": "consulting"
+    },
+    {
+      "postId": "campaign-v2-bm-17",
+      "accountId": "organization",
+      "day": "2026-11-17",
+      "offer": "consulting"
+    },
+    {
+      "postId": "campaign-v2-ines-17",
+      "accountId": "person",
+      "day": "2026-11-17",
+      "offer": "consulting"
+    },
+    {
+      "postId": "campaign-v2-bm-18",
+      "accountId": "organization",
+      "day": "2026-11-18",
+      "offer": "build"
+    },
+    {
+      "postId": "campaign-v2-ines-18",
+      "accountId": "person",
+      "day": "2026-11-18",
+      "offer": "consulting"
+    },
+    {
+      "postId": "campaign-v2-bm-19",
+      "accountId": "organization",
+      "day": "2026-11-19",
+      "offer": "consulting"
+    },
+    {
+      "postId": "campaign-v2-ines-19",
+      "accountId": "person",
+      "day": "2026-11-19",
+      "offer": "build"
+    },
+    {
+      "postId": "campaign-v2-bm-20",
+      "accountId": "organization",
+      "day": "2026-11-20",
+      "offer": "consulting"
+    },
+    {
+      "postId": "campaign-v2-ines-20",
+      "accountId": "person",
+      "day": "2026-11-20",
+      "offer": "consulting"
+    },
+    {
+      "postId": "campaign-v2-bm-21",
+      "accountId": "organization",
+      "day": "2026-11-21",
+      "offer": "build"
+    },
+    {
+      "postId": "campaign-v2-ines-21",
+      "accountId": "person",
+      "day": "2026-11-21",
+      "offer": "consulting"
+    },
+    {
+      "postId": "campaign-v2-bm-22",
+      "accountId": "organization",
+      "day": "2026-11-22",
+      "offer": "consulting"
+    },
+    {
+      "postId": "campaign-v2-ines-22",
+      "accountId": "person",
+      "day": "2026-11-22",
+      "offer": "consulting"
+    }
+  ]
+}
