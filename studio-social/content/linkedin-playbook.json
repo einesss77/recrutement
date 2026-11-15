@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "positioning": "B&M propose des consultants IT pour renforcer les équipes, des squads et des applications web/mobile sur mesure. Le lecteur doit comprendre immédiatement le service, reconnaître un projet à nous confier et savoir comment prendre contact. Première cible : décideurs IT, fondateurs, recruteurs et petites ESN ; seconde cible : dirigeants et responsables métier avec un besoin d’application. Ne pas transformer les posts en cours DevOps ou en conseils de management abstraits.",
   "primaryGoal": "Faire émerger des conversations qualifiées autour d’un besoin IT ou produit identifié, puis des rendez-vous et des opportunités renseignés par l’équipe.",
   "accountRoles": {
@@ -94,7 +94,7 @@
       "purpose": "educate",
       "series": "Le point de vue B&M",
       "ctaKind": "question",
-      "template": "mission"
+      "template": "sms"
     },
     {
       "purpose": "method",
@@ -487,9 +487,9 @@
         "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
       ],
       [
-        "Votre prochain projet : commençons par le concret",
+        "Votre projet peut commencer par un message",
         "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
-        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
+        "Présenter une demande de projet dans un échange SMS explicitement illustratif, puis expliquer l’offre B&M et proposer un premier contact."
       ]
     ],
     "personTopics": [
@@ -514,9 +514,9 @@
         "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
       ],
       [
-        "Parlons du projet même si le brief est encore incomplet",
+        "Un message suffit pour parler de votre renfort IT",
         "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
-        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
+        "Présenter une demande de projet dans un échange SMS explicitement illustratif, puis expliquer l’offre B&M et proposer un premier contact."
       ],
       [
         "Quel développeur manque à votre équipe ?",
@@ -576,7 +576,7 @@
         "purpose": "conversion",
         "series": "Voici B&M",
         "ctaKind": "contact",
-        "template": "brief",
+        "template": "sms",
         "offer": "consulting"
       }
     ],
@@ -613,7 +613,7 @@
         "purpose": "conversion",
         "series": "Parlons de votre projet",
         "ctaKind": "contact",
-        "template": "brief",
+        "template": "sms",
         "offer": "consulting"
       },
       {
@@ -640,7 +640,7 @@
     },
     "rules": [
       "Offre claire avant débat technique : consultants IT, squads et applications sur mesure. Titres visuels courts, sans jargon technique imposé au lecteur.",
-      "Les seules compositions de la campagne sont launch, mission, product, compare et brief. Elles sont disponibles dans le Studio et utilisent le même exporteur que le VPS. Interdire les anciens templates offer, steps, editorial, focus, case ou automation pour les nouvelles créations.",
+      "Les seules compositions de la campagne sont launch, mission, product, compare, brief et sms. Elles sont disponibles dans le Studio et utilisent le même exporteur que le VPS. Interdire les anciens templates offer, steps, editorial, focus, case ou automation pour les nouvelles créations.",
       "launch : deux offres B&M. Trois points : Consultants IT | détail ; Applications sur mesure | détail ; phrase de contact. mission : rôle et tâches du consultant, trois points Tâche | détail. product : outil métier illustratif web/mobile, trois bénéfices courts. compare : deux options Titre | détail et un critère de choix Titre | détail. brief : trois informations utiles Titre | détail.",
       "Une seule image composée est suffisante. Ne créer un carrousel que si chaque page montre un élément différent et nécessaire. Aucun quota de pages à remplir.",
       "Une seule langue sur chaque visuel : anglais. Légende FR puis EN en paragraphes naturels, avec la même offre et le même degré de preuve. Pas de texte bilingue ligne par ligne sur l’affiche.",
@@ -648,7 +648,8 @@
       "Éviter les postures artificielles, les ouvertures nous recommandons/mon critère de réception/le livrable de cadrage et le jargon idempotence/arbitrage/périmètre. Dire simplement ce que nous développons et ce que le client peut nous demander.",
       "Varier les cinq compositions au cours de la semaine, maximum deux occurrences de chacune. Les deux comptes ont un calendrier et des visuels différents.",
       "Le mockup product est une interface illustrative. Le préciser dans la légende. Une mission générique ne prouve pas la disponibilité d’une personne. Aucun résultat, CV, tarif, délai ou client inventé.",
-      "Un CTA commercial utile : décrire le projet, les outils et la première tâche. Ne pas promettre un cadeau, un audit gratuit ou une ressource absente."
+      "Un CTA commercial utile : décrire le projet, les outils et la première tâche. Ne pas promettre un cadeau, un audit gratuit ou une ressource absente.",
+      "sms : trois messages courts demande / réponse B&M / précision, en langage naturel, sans séparateur |. La conversation est illustrative : le signaler dans la légende et sur le visuel. Aucun nom de client, capture privée ou témoignage prétendu. Prévoir un post SMS par semaine et par compte, sur des jours différents ; alterner avec les cinq autres compositions validées."
     ],
     "review": "Lire les conversations, briefs et rendez-vous réellement déclarés. Revoir les angles après deux semaines d’observation ; ne pas inventer de statistiques. Pas de visites de profils ou de contrôles LinkedIn pour alimenter le suivi.",
     "references": {
@@ -660,5 +661,51 @@
         "https://www.sfeir.com/"
       ]
     }
+  },
+  "accountSequences": {
+    "person": [
+      {
+        "purpose": "educate",
+        "series": "Le problème à nommer",
+        "ctaKind": "none",
+        "template": "launch"
+      },
+      {
+        "purpose": "method",
+        "series": "Le critère de décision",
+        "ctaKind": "question",
+        "template": "mission"
+      },
+      {
+        "purpose": "proof",
+        "series": "Le cas expliqué",
+        "ctaKind": "none",
+        "template": "product"
+      },
+      {
+        "purpose": "objection",
+        "series": "L’objection utile",
+        "ctaKind": "question",
+        "template": "sms"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Le prochain pas",
+        "ctaKind": "contact",
+        "template": "brief"
+      },
+      {
+        "purpose": "educate",
+        "series": "Le point de vue B&M",
+        "ctaKind": "question",
+        "template": "compare"
+      },
+      {
+        "purpose": "method",
+        "series": "Le mémo de la semaine",
+        "ctaKind": "conversation",
+        "template": "mission"
+      }
+    ]
   }
 }

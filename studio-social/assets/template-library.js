@@ -7,6 +7,7 @@ export const templateNotes = {
  product:['Montrer l’application','Une interface web et mobile de démonstration, mise en scène à grande échelle.'],
  compare:['Comparer deux dispositifs','Deux options illustrées et un critère de choix visible.'],
  brief:['Inviter à un premier échange','Un brief de projet illustré, avec les informations utiles pour commencer.'],
+ sms:['Créer un post message','Une demande de projet et une réponse B&M dans une conversation SMS clairement illustrative.'],
  editorial: ['Prendre position', 'Une idée forte, un titre court et une explication qui va droit au but.'],
  steps: ['Expliquer une méthode', 'Déroulez votre démarche en plusieurs pages, de la question à la décision.'],
  squad: ['Présenter les consultants', 'Rendez visibles les expertises et la façon dont votre équipe intervient.'],

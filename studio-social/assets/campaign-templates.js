@@ -1,11 +1,12 @@
 // Campaign 2026: the Studio and the autonomous renderer use these exact layouts.
-export const campaignTemplates={launch:'L’offre en images',mission:'La mission en clair',product:'L’application en situation',compare:'Le choix du dispositif',brief:'Le premier échange'};
+export const campaignTemplates={launch:'L’offre en images',mission:'La mission en clair',product:'L’application en situation',compare:'Le choix du dispositif',brief:'Le premier échange',sms:'Le message reçu'};
 export const campaignDetails={
  launch:{purpose:'Présenter les consultants IT et les applications B&M en un regard.',format:'Affiche de marque'},
  mission:{purpose:'Montrer le travail à confier à un consultant, sans inventer de CV disponible.',format:'Carte mission illustrée'},
  product:{purpose:'Présenter une application métier dans une interface de démonstration.',format:'Démo produit web et mobile'},
  compare:{purpose:'Rendre deux dispositifs faciles à comprendre et à comparer.',format:'Comparaison visuelle'},
- brief:{purpose:'Donner un point de départ concret à une discussion commerciale.',format:'Brief de projet visuel'}
+ brief:{purpose:'Donner un point de départ concret à une discussion commerciale.',format:'Brief de projet visuel'},
+ sms:{purpose:'Mettre en scène une demande de projet sous forme de messages illustratifs.',format:'Conversation SMS illustrative'}
 };
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const arrow=`<svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M7 25 25 7M7 7h18v18" stroke="currentColor" stroke-width="2.4"/></svg>`;
@@ -42,9 +43,13 @@ function brief(s){
  while(p.length<3)p.push(pair(['The project | What needs to move forward?','The tools | What does your team use?','The first task | What should we start with?'][p.length]));
  return `<div class="v2-brief-stage"><div class="v2-brief-paper"><div class="v2-paper-top"><span>PROJECT STARTER</span><b>B&M / YOUR NEXT MOVE</b></div>${p.map((v,i)=>`<div class="v2-brief-row"><span>0${i+1}</span><div><small>${esc(v.title)}</small><strong>${esc(v.detail)}</strong></div>${i===2?mark('check'):'<i></i>'}</div>`).join('')}<div class="v2-paper-bottom"><i></i>A concrete starting point. We take it from there.</div></div><div class="v2-brief-contact"><div><span>CONSULTANTS / SQUADS / APPLICATIONS</span><b>Let’s talk about<br>your project.</b></div><span>${arrow}</span></div></div>`;
 }
+function sms(s){
+ const messages=s.points||[];
+ return `<div class="v2-sms-stage"><div class="v2-sms-label"><span>ILLUSTRATIVE CONVERSATION</span><span>PEOPLE & PRODUCTS / B&M</span></div><div class="v2-sms-shell"><div class="v2-sms-contact"><span class="v2-sms-back">‹</span><span class="v2-sms-avatar">B&M<span>.</span></span><div><b>Let’s talk about your project</b><small>IT consultants & custom applications</small></div><span class="v2-sms-info">i</span></div><div class="v2-sms-thread">${messages.slice(0,3).map((message,i)=>`<div class="v2-sms-message ${i===1?'outgoing':'incoming'}"><small>${i===1?'B&M':'PROJECT EXAMPLE'}</small><p>${esc(message)}</p></div>`).join('')}</div><div class="v2-sms-input"><span>Your next project starts here…</span><b>${arrow}</b></div></div><div class="v2-sms-bottom"><span>A message is enough to start the conversation.</span>${arrow}</div></div>`;
+}
 export function campaignArtwork(post,index=0){
  const s=post.slides[index]||post.slides[0]||{label:'',title:'Your next move.',body:'',points:[]};
- const layouts={launch,mission,product,compare,brief};
+ const layouts={launch,mission,product,compare,brief,sms};
  if(!layouts[post.template])throw Error('Unknown campaign template.');
  const visual=post.image?`<div class="v2-custom-stage"><img src="${esc(post.image)}" alt="Visuel fourni pour cette publication"><div>${(s.points||[]).slice(0,3).map(p=>`<span>${esc(pair(p).title)}</span>`).join('')}</div></div>`:layouts[post.template](s);
  return chrome(post,s,index,visual);

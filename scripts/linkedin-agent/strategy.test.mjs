@@ -107,9 +107,15 @@ test('la première semaine explique les offres avec les nouvelles compositions e
   assert.match(p.positioning,/B&M/);assert(p.briefs[0].angle.length>10);assert(p.briefs.every(b=>b.ctaKind==='contact'));
   const types=p.briefs.map(b=>b.suggestedTemplate);assert.ok(new Set(types).size>=3);
   for(const type of new Set(types))assert.ok(types.filter(value=>value===type).length<=2);
-  assert(p.briefs.every(b=>['launch','mission','product','compare','brief'].includes(b.suggestedTemplate)));
+  assert(p.briefs.every(b=>['launch','mission','product','compare','brief','sms'].includes(b.suggestedTemplate)));
   assert(p.briefs.some(b=>b.offer==='build'));
  }
  assert.notDeepEqual(plans[0].briefs.map(b=>b.suggestedTemplate),plans[1].briefs.map(b=>b.suggestedTemplate));
  assert.notDeepEqual(plans[0].briefs.map(b=>b.angle),plans[1].briefs.map(b=>b.angle));
+});
+
+test('la rotation future réserve un SMS par compte sur des jours différents',()=>{
+ const organization=plan({slots:slots(7)}),person=plan({accountId:'person',slots:slots(7)});
+ const bm=organization.briefs.filter(b=>b.suggestedTemplate==='sms'),ines=person.briefs.filter(b=>b.suggestedTemplate==='sms');
+ assert.equal(bm.length,1);assert.equal(ines.length,1);assert.notEqual(bm[0].day,ines[0].day);
 });

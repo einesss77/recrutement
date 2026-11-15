@@ -8,7 +8,7 @@ import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import {z} from 'zod';
 import {subscriptionStatus,generateStructured} from './linkedin-agent/codex.mjs';
-import {planJsonSchema,profileJsonSchema,profileSchema,checkPlan,promptFor,redact} from './linkedin-agent/quality.mjs';
+import {planJsonSchema,profileJsonSchema,profileSchema,checkPlan,promptFor,redact,campaignTemplateIds} from './linkedin-agent/quality.mjs';
 import {renderPost,chromiumPath} from './linkedin-agent/render.mjs';
 import {verifyHermesBrowser,publishWithHermes,replayConfirmedBrowserReceipts} from './linkedin-agent/browser.mjs';
 import {automationHold,holdAutomation} from './linkedin-agent/safety.mjs';
@@ -137,6 +137,7 @@ export async function processJob(connection,job,{generate=generateStructured,ren
    return {kind:job.kind,status:'recommendations-ready',usage:generated.usage};
   }
   if(job.kind==='publish'){
+   if(job.payload.designSystem==='people-products-v2'&&!campaignTemplateIds.includes(job.payload.post?.template))throw Error('Composition hors de la DA People & Products validée. Reprendre la création dans le Studio avant publication.');
    const format=job.payload.format;
    if(!['text','png','pdf'].includes(format))throw Error('Format de publication inconnu.');
    if(job.payload.provider==='hermes-browser'){

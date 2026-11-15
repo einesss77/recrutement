@@ -18,6 +18,13 @@ test('une composition inconnue est refusée avant tout rendu ou chargement de m�
  await assert.rejects(renderPost({template:'old-campaign-custom'},'png'),/template existant du Studio/);
 });
 
+test('un travail marqué People & Products ne peut pas envoyer une ancienne composition',async()=>{
+ let browserCalls=0,renderCalls=0,completion;
+ const job={id:'legacy-publish',kind:'publish',accountId:'organization',leaseToken:'test-lease',payload:{designSystem:'people-products-v2',post:{template:'offer'},format:'png',provider:'hermes-browser'}};
+ await assert.rejects(processJob({},job,{render:async()=>{renderCalls++;},browserPublish:async()=>{browserCalls++;},request:async(c,route,body)=>{completion={route,body};}}),/hors de la DA/);
+ assert.equal(renderCalls,0);assert.equal(browserCalls,0);assert.equal(completion.route,'worker/complete');assert.match(completion.body.error,/People & Products/);
+});
+
 test('le CLI exécute help lorsqu’il est lancé par un lien symbolique de release',async context=>{
  const directory=await mkdtemp(path.join(tmpdir(),'bm-cli-symlink-')),entry=path.join(directory,'linkedin-agent.mjs');
  try{

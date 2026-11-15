@@ -4,6 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {checkPlan,campaignTemplateIds} from './quality.mjs';
 import {campaignTemplates,campaignArtwork} from '../../studio-social/assets/campaign-templates.js';
 const pack=JSON.parse(await readFile(new URL('../../studio-social/content/campaign-v2.json',import.meta.url),'utf8'));
+const smsPack=JSON.parse(await readFile(new URL('../../studio-social/content/campaign-sms.json',import.meta.url),'utf8'));
 const strategy=JSON.parse(await readFile(new URL('../../studio-social/content/strategy.json',import.meta.url),'utf8'));
 function checked(account,mutate=x=>x,editorial){
  const calendar=pack.calendar.filter(c=>c.accountId===account),other=pack.calendar.filter(c=>c.accountId!==account);
@@ -19,15 +20,26 @@ test('les deux semaines FR/EN passent les contrôles sans référence ni disponi
   assert.equal(new Set(result.items.map(x=>x.post.template)).size,5);
  }
 });
-test('le générateur et le Studio partagent les cinq identifiants et chaque composition a sa structure',()=>{
+test('le générateur et le Studio partagent les identifiants et chaque composition a sa structure',()=>{
  assert.deepEqual(Object.keys(campaignTemplates),campaignTemplateIds);
  const structures=[];
  for(const id of campaignTemplateIds){
-  const post=pack.posts.find(p=>p.template===id),html=campaignArtwork(post);
+  const post=[...pack.posts,...smsPack.posts].find(p=>p.template===id),html=campaignArtwork(post);
   assert(html.includes(`v2-${id}`));assert(html.includes('studio-v2'));
   assert(!html.includes('signal-scene'));structures.push(html);
  }
- assert.equal(new Set(structures).size,5);
+ assert.equal(new Set(structures).size,campaignTemplateIds.length);
+});
+test('les messages SMS sont bilingues et identifiés comme exemples dans le texte et sur le visuel',()=>{
+ for(const post of smsPack.posts){
+  const entry={post:Object.fromEntries(['title','category','template','theme','caption','slides'].map(k=>[k,post[k]])),rationale:'Échange illustratif.',sourceUrls:['https://www.bandmdigitalconsulting.com/'],needsHuman:false,humanReason:''};
+  const result=checkPlan({summary:'Exemples SMS.',items:[entry]},{config:{languages:'fr-en'}});
+  assert(!result.items[0].needsHuman,result.items[0].humanReason);
+  assert(campaignArtwork(post).includes('ILLUSTRATIVE CONVERSATION'));
+  entry.post.caption=entry.post.caption.replaceAll(/illustratif|illustrative/g,'visuel');
+  const rejected=checkPlan({summary:'Exemples SMS.',items:[entry]},{config:{languages:'fr-en'}});
+  assert(rejected.items[0].needsHuman);assert.match(rejected.items[0].humanReason,/SMS/);
+ }
 });
 test('une maquette produit non identifiée bloque la publication',()=>{
  const result=checked('organization',posts=>{const p=posts.find(p=>p.template==='product');p.caption=p.caption.replaceAll(/illustratif|illustrative/g,'visuel');});

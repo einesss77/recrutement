@@ -1,0 +1,65 @@
+{
+  "id": "campaign-v2-sms-2026",
+  "posts": [
+    {
+      "id": "campaign-v2-sms-ines-20",
+      "title": "Un message suffit pour parler de votre renfort IT",
+      "category": "Ines Favre / B&M",
+      "template": "sms",
+      "theme": "light",
+      "status": "draft",
+      "date": "2026-11-20",
+      "image": "",
+      "caption": "FR\nVous pouvez m’écrire avec une demande encore courte : « On cherche un développeur React pour notre espace client. »\n\nLa conversation montrée est illustrative. Chez B&M, nous proposons des consultants IT pour renforcer vos équipes, individuellement ou en squad. Mon rôle est de comprendre le chantier et de préparer la discussion avec notre équipe.\n\nJe vous demanderai ce que vous construisez, les outils déjà utilisés et le travail à prendre en charge. Nous pourrons ensuite préciser le renfort recherché.\n\nVous avez ce type de besoin ? Envoyez-moi le projet et votre stack.\n\nEN\nYou can message me with a short request: “We need a React developer for our customer portal.”\n\nThe conversation shown is illustrative. At B&M, we offer IT consultants to strengthen your teams, individually or as a squad. My role is to understand the workstream and prepare the discussion with our team.\n\nI will ask what you are building, the tools already in place and the work to take on. We can then define the support you need.\n\nHave a requirement like this? Send me the project and your stack.\nhttps://www.bandmdigitalconsulting.com/contact/",
+      "slides": [
+        {
+          "label": "LET’S TALK ABOUT YOUR PROJECT",
+          "title": "Your brief can\nstart like this.",
+          "body": "Need a developer for your team? Tell me what you’re building.",
+          "points": [
+            "Hi Ines, we need a React developer for our team.",
+            "What are you building, and which part needs support?",
+            "A customer portal connected to our CRM."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "campaign-v2-sms-bm-22",
+      "title": "Votre projet peut commencer par un message",
+      "category": "B&M / IT consulting & custom apps",
+      "template": "sms",
+      "theme": "dark",
+      "status": "draft",
+      "date": "2026-11-22",
+      "image": "",
+      "caption": "FR\n« On aimerait une application pour suivre nos validations. » Voilà un point de départ pour parler d’un projet avec B&M.\n\nCet échange est illustratif. Nous concevons et développons des applications métier sur mesure, et nous proposons des consultants IT pour renforcer les équipes qui construisent déjà leurs produits.\n\nPour démarrer, décrivez le travail à réunir dans l’outil, les personnes concernées et les systèmes à connecter. Ces éléments permettent d’engager une discussion concrète sur votre application.\n\nVous avez un projet en tête ? Présentez-nous le besoin dans un premier message.\n\nEN\n“We would like an application to manage our approvals.” That is a starting point for discussing a project with B&M.\n\nThis exchange is illustrative. We design and develop custom business applications, and we offer IT consultants to strengthen teams already building their products.\n\nTo get started, describe the work the tool should bring together, the people involved and the systems to connect. Those details let us have a concrete discussion about your application.\n\nHave a project in mind? Tell us about the requirement in a first message.\nhttps://www.bandmdigitalconsulting.com/contact/",
+      "slides": [
+        {
+          "label": "IT CONSULTANTS & CUSTOM APPLICATIONS",
+          "title": "One message.\nA place to start.",
+          "body": "IT consultants or a custom application. Tell us what you want to build.",
+          "points": [
+            "We need an app to manage our team’s approvals.",
+            "Tell us how the work moves through your team today.",
+            "Cases, documents and decisions are in separate tools."
+          ]
+        }
+      ]
+    }
+  ],
+  "calendar": [
+    {
+      "postId": "campaign-v2-sms-ines-20",
+      "accountId": "person",
+      "day": "2026-11-20",
+      "replacesTemplate": "brief"
+    },
+    {
+      "postId": "campaign-v2-sms-bm-22",
+      "accountId": "organization",
+      "day": "2026-11-22",
+      "replacesTemplate": "brief"
+    }
+  ]
+}

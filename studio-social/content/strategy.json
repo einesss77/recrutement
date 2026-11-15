@@ -16,7 +16,8 @@
     "Publication automatique uniquement via l’agent LinkedIn connecté et activé, selon le calendrier et les règles définis. Les faits non confirmés demandent une intervention humaine.",
     "Pas d’emoji, de superlatif gratuit ou de jargon sans explication.",
     "Privilégier une invitation utile en légende ; limiter les hashtags aux sujets pertinents.",
-    "Utiliser les compositions launch/mission/product/compare/brief de la nouvelle collection Studio. Titre visuel maximum 55 caractères, corps 100, trois points de 80 caractères maximum."
+    "Utiliser les compositions launch/mission/product/compare/brief/sms de la nouvelle collection Studio. Titre visuel maximum 55 caractères, corps 100, trois points de 80 caractères maximum.",
+    "Le format sms représente trois messages illustratifs. Il varie la collection une fois par semaine ; la légende indique clairement la nature illustrative de la conversation."
   ],
   "pillars": [
     "Les consultants IT que vous pouvez demander",
@@ -37,5 +38,5 @@
     "heading": "Bricolage Grotesque",
     "body": "Manrope"
   },
-  "visual": "Cinq compositions People & Products : launch, mission, product, compare, brief. Encre, papier, cobalt et citron. Une grande maquette, une carte mission, une comparaison ou un brief illustre le service. Titres de 3 à 8 mots et textes courts. Aucun petit décor au bas d’une page vide."
+  "visual": "Six compositions People & Products : launch, mission, product, compare, brief et sms. Encre, papier, cobalt et citron. Une grande maquette, une carte mission, une comparaison ou un brief illustre le service. Titres de 3 à 8 mots et textes courts. Aucun petit décor au bas d’une page vide."
 }

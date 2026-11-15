@@ -39,7 +39,7 @@ export function buildEditorialStrategy({playbook,accountId,config={},slots=[],re
  const briefs=slots.slice(0,7).map(slot=>{
   const day=dateValue(slot.day);if(!day)throw Error('Créneau éditorial invalide.');
   const absoluteDay=Math.max(0,Math.floor((dayTime(day)-dayTime(startDate))/DAY)),weekIndex=Math.floor(absoluteDay/7)%4,dayIndex=absoluteDay%7,cycleIndex=Math.floor(absoluteDay/28)+1;
-  const week=playbook.weeks[weekIndex],launch=cycleIndex===1&&weekIndex===0&&focus==='balanced'?playbook.launchWeek:null,person=account==='person',sequence=(person&&launch?.personSequence?launch.personSequence:launch?.sequence||playbook.sequence)[dayIndex];
+  const week=playbook.weeks[weekIndex],launch=cycleIndex===1&&weekIndex===0&&focus==='balanced'?playbook.launchWeek:null,person=account==='person',sequence=(person&&launch?.personSequence?launch.personSequence:launch?.sequence||playbook.accountSequences?.[account]||playbook.sequence)[dayIndex];
   // Balanced accounts divide seven topics per offer, rather than echoing the same week's posts.
   const defaultOffer=(dayIndex+(person?1:0)+weekIndex)%2===0?'consulting':'build',offer=launch?(sequence.offer||(dayIndex===6?'build':'consulting')):focus==='balanced'?defaultOffer:focus;
   const earlier=Array.from({length:dayIndex},(_,d)=>(d+(person?1:0)+weekIndex)%2===0?'consulting':'build').filter(x=>x===offer).length;
