@@ -10,7 +10,7 @@ try{
  const context=await browser.newContext(safari?devices['iPhone 13']:{viewport:{width:1440,height:1000}});
  await context.addCookies([{name:'bm_admin_session',value:createHmac('sha256',process.env.ADMIN_PASSWORD).update('bm-digital-consulting-admin').digest('hex'),url:base,httpOnly:true,sameSite:'Lax'}]);
  const page=await context.newPage(),errors=[];inspectedPage=page;page.on('pageerror',e=>errors.push(e.message));
- await page.goto(base+'/studio-social');await page.locator('[data-id="bm-companion-2026-cat"]').click();await page.locator('#motion-open').click();await page.waitForFunction(()=>document.querySelector('#motion-style')?.disabled===false);await page.locator('#motion-style').selectOption('mockups');await page.waitForFunction(()=>document.querySelector('#motion-status')?.textContent.includes('Mockups prêts'));
+ await page.goto(base+'/studio-social');await page.getByRole('button',{name:'Toutes les publications',exact:true}).click();await page.locator('[data-id="bm-companion-2026-cat"]').click();await page.locator('#motion-open').click();await page.waitForFunction(()=>document.querySelector('#motion-style')?.disabled===false);await page.locator('#motion-style').selectOption('mockups');await page.waitForFunction(()=>document.querySelector('#motion-status')?.textContent.includes('Mockups prêts'));
  const pixels=()=>page.locator('.motion-dialog canvas').evaluate(c=>c.toDataURL());
  await page.locator('#motion-seek').fill('1.4');const initial=await pixels();await page.locator('[data-palette="ocean"]').click();assert.notEqual(await pixels(),initial);
  await page.locator('[data-hex="mint"]').fill('#ffaacc');assert.equal(await page.locator('[data-color="mint"]').inputValue(),'#ffaacc');

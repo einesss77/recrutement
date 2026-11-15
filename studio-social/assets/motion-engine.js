@@ -68,7 +68,7 @@ export function drawMotion(canvas,time,resources){
   text(c,'Parlons-en.',54,564,590,{size:52,color:'#345bff',face:'Bricolage',maxLines:1});
   rounded(c,54,658,332,76,38,C.teal);text(c,'Parlons de votre projet  ↗',79,705,285,{size:21,min:19,maxLines:1,color:C.white,face:'Manrope'});
   mascot(352,760,280,.5);text(c,'bandmdigitalconsulting.com',54,872,600,{size:21,face:'Manrope',color:C.teal,maxLines:1});c.restore();}
- label(c,'SCÉNARIO ILLUSTRATIF · SANS VOIX OFF',54,1208,close>.9?'#345bff':'#a1adbf');
+ label(c,'SCÉNARIO ILLUSTRATIF · B&M',54,1208,close>.9?'#345bff':'#a1adbf');
 }
 function drawMockups(canvas,time,resources){drawMockupsFilm(canvas,time,resources);}
 function drawKinetic(canvas,time){

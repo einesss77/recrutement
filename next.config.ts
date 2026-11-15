@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   agentRules: false,
+  serverExternalPackages: ['@andresaya/edge-tts'],
   outputFileTracingIncludes: {
     '/admin/organisation/presentation/export': ['./docs/organisation/BM-synthese-90-jours.pdf', './docs/organisation/BM-synthese-90-jours.html'],
     '/studio-social/[[...path]]': ['./studio-social/assets/**/*'],
