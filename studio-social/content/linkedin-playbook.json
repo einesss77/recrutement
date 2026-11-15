@@ -1,10 +1,10 @@
 {
-  "version": 3,
-  "positioning": "B&M vend des consultants IT intégrés aux équipes, des squads et des applications métier sur mesure. Cibler les CTO/fondateurs de startups et PME ainsi que les recruteurs et dirigeants de petites sociétés de conseil, notamment aux États-Unis. Montrer le travail confié et le critère de réception. Une demande observée sur le marché ne prouve jamais notre stock de profils.",
+  "version": 4,
+  "positioning": "B&M propose des consultants IT pour renforcer les équipes, des squads et des applications web/mobile sur mesure. Le lecteur doit comprendre immédiatement le service, reconnaître un projet à nous confier et savoir comment prendre contact. Première cible : décideurs IT, fondateurs, recruteurs et petites ESN ; seconde cible : dirigeants et responsables métier avec un besoin d’application. Ne pas transformer les posts en cours DevOps ou en conseils de management abstraits.",
   "primaryGoal": "Faire émerger des conversations qualifiées autour d’un besoin IT ou produit identifié, puis des rendez-vous et des opportunités renseignés par l’équipe.",
   "accountRoles": {
-    "person": "Ines Favre, CEO Office Associate chez B&M : interlocutrice commerciale. Je pour un jugement assumé ou le contact, nous pour l’offre. Prendre position sur les briefs irréalistes, les missions mal définies et les décisions d’achat. Donner au lecteur une question qu’il peut envoyer à son équipe. Aucun récit de mission vécu, CV ou disponibilité inventé. Ne pas copier la publication de la page.",
-    "organization": "B&M : vitrine commerciale technique. Exposer un chantier reconnaissable, le consultant ou dispositif proposé, ce qu’il prend en charge et comment recevoir son travail. Montrer des schémas et démonstrations illustratives. Une publication doit aider un acheteur à savoir quoi nous confier. Ne pas recycler la légende d’Ines."
+    "organization": "B&M présente ses offres avec des exemples de travail et des interfaces illustratives. Voix collective commerciale, claire et directe. Nommer consultants IT ou applications sur mesure dès le premier paragraphe. Expliquer ce que le prospect peut nous confier. Aucun CV disponible, chiffre, délai, client ou résultat inventé.",
+    "person": "Ines Favre, CEO Office Associate chez B&M : interlocutrice commerciale. Je pour la relation et les questions utiles, nous pour les prestations. Présenter les services et aider à démarrer une discussion. Ne pas lui inventer une carrière de développeuse, une expertise technique ou des anecdotes client. Ses accroches diffèrent de la page B&M."
   },
   "audiences": [
     {
@@ -64,50 +64,50 @@
       "purpose": "educate",
       "series": "Le problème à nommer",
       "ctaKind": "none",
-      "template": "editorial"
+      "template": "launch"
     },
     {
       "purpose": "method",
       "series": "Le critère de décision",
       "ctaKind": "question",
-      "template": "steps"
+      "template": "mission"
     },
     {
       "purpose": "proof",
       "series": "Le cas expliqué",
       "ctaKind": "none",
-      "template": "case"
+      "template": "product"
     },
     {
       "purpose": "objection",
       "series": "L’objection utile",
       "ctaKind": "question",
-      "template": "checklist"
+      "template": "compare"
     },
     {
       "purpose": "conversion",
       "series": "Le prochain pas",
       "ctaKind": "contact",
-      "template": "focus"
+      "template": "brief"
     },
     {
       "purpose": "educate",
       "series": "Le point de vue B&M",
       "ctaKind": "question",
-      "template": "editorial"
+      "template": "mission"
     },
     {
       "purpose": "method",
       "series": "Le mémo de la semaine",
       "ctaKind": "conversation",
-      "template": "checklist"
+      "template": "product"
     }
   ],
   "weeks": [
     {
       "number": 1,
-      "label": "Rendre les missions visibles",
-      "objective": "Installer les offres B&M avec des tâches à confier, pas un catalogue de technologies.",
+      "label": "Présenter B&M",
+      "objective": "Une semaine pour installer l’offre : consultants IT, squads et applications métier. Cinq compositions visuelles distinctes et deux prises de parole complémentaires.",
       "consulting": [
         [
           "Votre recrutement fullstack cache peut-être deux missions",
@@ -425,7 +425,8 @@
     "Une opinion et une méthode peuvent être expliquées sans inventer une histoire personnelle.",
     "Une démonstration porte explicitement la mention scénario fictif ou illustratif.",
     "Un résultat, nom de client, tarif, délai, disponibilité ou engagement absent des faits attend une validation humaine.",
-    "Aucun cadeau, guide à télécharger, audit gratuit ou ressource promise si cette ressource n’existe pas dans le brief."
+    "Aucun cadeau, guide à télécharger, audit gratuit ou ressource promise si cette ressource n’existe pas dans le brief.",
+    "Toute interface product est une maquette illustrative, jamais une capture présentée comme une réalisation client."
   ],
   "measurement": {
     "primary": "Conversations qualifiées déclarées par l’équipe : un interlocuteur cible et un besoin concret ont été identifiés.",
@@ -453,120 +454,210 @@
   ],
   "assumption": "Le cycle de quatre semaines et le mix sont une stratégie de départ B&M à tester, pas une recette de l’algorithme LinkedIn. La cadence quotidienne vient de votre choix.",
   "launchWeek": {
-    "label": "Meet B&M : nos offres et nos profils",
+    "label": "B&M / People & Products",
     "topics": [
       [
-        "B&M, concrètement : un chantier à confier",
-        "Le visiteur doit comprendre consultants IT, squads et applications métier.",
-        "Présenter les deux offres et un exemple de tâche ; dire ce qu’il faut envoyer pour qualifier une mission."
+        "B&M : consultants IT et applications sur mesure",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
       ],
       [
-        "Développeur fullstack : débloquer une intégration",
-        "Le parcours produit attend un échange entre CRM et application.",
-        "Illustrer une mission fullstack : contrat API, gestion des erreurs et parcours testable de bout en bout."
+        "Un développeur fullstack pour faire avancer votre produit",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
       ],
       [
-        "Un front-end livré se teste sur les états vides",
-        "Le parcours idéal fonctionne, les erreurs et droits rendent l’usage fragile.",
-        "Présenter un renfort front-end sur états vide/erreur/chargement et critères d’acceptation."
+        "Une application construite autour du travail de vos équipes",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
       ],
       [
-        "Votre release attend encore une personne connectée",
-        "Le déploiement dépend de gestes manuels et d’une connaissance isolée.",
-        "Mission DevOps : pipeline, secrets, procédure de retour arrière et responsabilité de validation."
+        "Renforcer votre équipe ou construire votre application",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
       ],
       [
-        "Data Engineer : réconcilier les données avant le dashboard",
-        "Commandes et facturation ne décrivent pas le même objet.",
-        "Mission Data Engineer : sources, mapping, reprise et contrôles de rapprochement."
+        "Cloud et DevOps : un consultant dans votre équipe",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
       ],
       [
-        "Le paiement passe deux fois : une mission back-end concrète",
-        "Les tentatives de reprise créent des événements en double.",
-        "Expliquer traitement idempotent, tests de reprise et observation des erreurs sans promettre zéro incident."
+        "Un outil métier pour réunir le suivi et les validations",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
       ],
       [
-        "Applications sur mesure : le suivi sort du tableur",
-        "Dossiers, pièces et validations passent entre mails et fichiers.",
-        "Scénario illustratif : dossier, statut, pièce manquante et validation humaine. Proposer cadrage et développement B&M."
+        "Votre prochain projet : commençons par le concret",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
+      ]
+    ],
+    "personTopics": [
+      [
+        "Votre projet, les bonnes compétences",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
+      ],
+      [
+        "Un consultant ou une squad : quel renfort cherchez-vous ?",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
+      ],
+      [
+        "Un développeur back-end pour connecter vos outils",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
+      ],
+      [
+        "Quel travail mérite votre propre application ?",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
+      ],
+      [
+        "Parlons du projet même si le brief est encore incomplet",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
+      ],
+      [
+        "Quel développeur manque à votre équipe ?",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
+      ],
+      [
+        "Des consultants pour vos équipes, des applications pour votre métier",
+        "Le lecteur doit comprendre l’offre B&M et reconnaître un besoin de consultant, de squad ou d’application.",
+        "Expliquer le service, donner un exemple de travail et faciliter une prise de contact. Aucun profil disponible ou résultat inventé."
       ]
     ],
     "sequence": [
       {
         "purpose": "conversion",
-        "series": "Meet B&M",
+        "series": "Voici B&M",
         "ctaKind": "contact",
-        "template": "editorial"
+        "template": "launch",
+        "offer": "consulting"
       },
       {
         "purpose": "conversion",
-        "series": "Meet the role",
+        "series": "Voici B&M",
         "ctaKind": "contact",
-        "template": "squad"
+        "template": "mission",
+        "offer": "consulting"
       },
       {
         "purpose": "conversion",
-        "series": "Meet the role",
+        "series": "Voici B&M",
         "ctaKind": "contact",
-        "template": "focus"
+        "template": "product",
+        "offer": "build"
       },
       {
         "purpose": "conversion",
-        "series": "Meet the role",
+        "series": "Voici B&M",
         "ctaKind": "contact",
-        "template": "steps"
+        "template": "compare",
+        "offer": "consulting"
       },
       {
         "purpose": "conversion",
-        "series": "Meet the role",
+        "series": "Voici B&M",
         "ctaKind": "contact",
-        "template": "automation"
+        "template": "mission",
+        "offer": "consulting"
       },
       {
         "purpose": "conversion",
-        "series": "Meet the role",
+        "series": "Voici B&M",
         "ctaKind": "contact",
-        "template": "focus"
+        "template": "product",
+        "offer": "build"
       },
       {
         "purpose": "conversion",
-        "series": "Meet the role",
+        "series": "Voici B&M",
         "ctaKind": "contact",
-        "template": "case"
+        "template": "brief",
+        "offer": "consulting"
+      }
+    ],
+    "personSequence": [
+      {
+        "purpose": "conversion",
+        "series": "Parlons de votre projet",
+        "ctaKind": "contact",
+        "template": "brief",
+        "offer": "consulting"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Parlons de votre projet",
+        "ctaKind": "contact",
+        "template": "compare",
+        "offer": "consulting"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Parlons de votre projet",
+        "ctaKind": "contact",
+        "template": "mission",
+        "offer": "consulting"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Parlons de votre projet",
+        "ctaKind": "contact",
+        "template": "product",
+        "offer": "build"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Parlons de votre projet",
+        "ctaKind": "contact",
+        "template": "brief",
+        "offer": "consulting"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Parlons de votre projet",
+        "ctaKind": "contact",
+        "template": "mission",
+        "offer": "consulting"
+      },
+      {
+        "purpose": "conversion",
+        "series": "Parlons de votre projet",
+        "ctaKind": "contact",
+        "template": "launch",
+        "offer": "consulting"
       }
     ]
   },
   "editorialDirection": {
-    "objective": "Déclencher des briefs de mission et des discussions d’achat, plutôt que collectionner des impressions.",
+    "objective": "Faire comprendre l’offre et obtenir des briefs de mission ou de développement qualifiés.",
     "accountLenses": {
-      "organization": "La mission, les tâches, les dépendances et le livrable à vérifier.",
-      "person": "Le jugement commercial, le piège du brief et la question à poser avant de choisir."
+      "organization": "Voici ce que B&M propose, le type de travail à confier et comment démarrer.",
+      "person": "Voici mon rôle, le besoin dont nous pouvons parler et ce que vous pouvez m’envoyer."
     },
     "rules": [
-      "Commencer par un frottement observable : release bloquée, facture ressaisie, API qui double un événement, dashboard non rapproché. Nommer le rôle ou la prestation B&M dans le premier tiers de la légende.",
-      "Assumer une thèse discutable et argumentée. Bannir les titres seuls du type Consultant DevOps ou La transformation digitale. Le rôle apparaît comme la réponse à une mission explicite.",
-      "Faire comprendre ce que le consultant réalise concrètement, avec une limite ou un critère de réception. Éviter les listes de technologies sans tâche ni livrable.",
-      "Page et profil apportent des angles complémentaires, avec des accroches et des visuels différents. Ne pas recopier la même légende sous deux auteurs.",
-      "Les jours contact, demander un brief exploitable : chantier, stack, responsabilité et contrainte. Les autres jours, conclure sur un critère utile ou une question précise.",
-      "Une seule langue sur chaque visuel : anglais. Légende complète FR puis EN, traduction naturelle, même offre et même niveau de preuve.",
-      "Utiliser uniquement les compositions existantes du Studio ; adapter leurs textes. Aucun PNG ancien de campagne comme source. Au moins trois compositions par semaine, maximum deux occurrences par composition.",
-      "Deux à trois carrousels de 2 à 4 slides par semaine quand le sujet nécessite une séquence ou une comparaison ; les autres jours une image concise. Export PDF complet pour le carrousel, jamais sa seule couverture.",
-      "Pas de mascotte, cat, advisor ou offer répété par défaut. Favoriser editorial, steps, squad, checklist, case, focus, automation, document selon le sens.",
-      "Prise de risque éditoriale = position claire et exemple précis. Jamais de faux chiffres, résultat client, profil disponible, délai garanti, fausse urgence ou attaque personnelle."
+      "Offre claire avant débat technique : consultants IT, squads et applications sur mesure. Titres visuels courts, sans jargon technique imposé au lecteur.",
+      "Les seules compositions de la campagne sont launch, mission, product, compare et brief. Elles sont disponibles dans le Studio et utilisent le même exporteur que le VPS. Interdire les anciens templates offer, steps, editorial, focus, case ou automation pour les nouvelles créations.",
+      "launch : deux offres B&M. Trois points : Consultants IT | détail ; Applications sur mesure | détail ; phrase de contact. mission : rôle et tâches du consultant, trois points Tâche | détail. product : outil métier illustratif web/mobile, trois bénéfices courts. compare : deux options Titre | détail et un critère de choix Titre | détail. brief : trois informations utiles Titre | détail.",
+      "Une seule image composée est suffisante. Ne créer un carrousel que si chaque page montre un élément différent et nécessaire. Aucun quota de pages à remplir.",
+      "Une seule langue sur chaque visuel : anglais. Légende FR puis EN en paragraphes naturels, avec la même offre et le même degré de preuve. Pas de texte bilingue ligne par ligne sur l’affiche.",
+      "Titres de 3 à 8 mots, maximum 55 caractères, sur deux lignes lisibles. Corps bref de 100 caractères maximum. Exactement trois points courts, maximum 80 caractères chacun, au format Titre | détail pour mission, compare et brief.",
+      "Éviter les postures artificielles, les ouvertures nous recommandons/mon critère de réception/le livrable de cadrage et le jargon idempotence/arbitrage/périmètre. Dire simplement ce que nous développons et ce que le client peut nous demander.",
+      "Varier les cinq compositions au cours de la semaine, maximum deux occurrences de chacune. Les deux comptes ont un calendrier et des visuels différents.",
+      "Le mockup product est une interface illustrative. Le préciser dans la légende. Une mission générique ne prouve pas la disponibilité d’une personne. Aucun résultat, CV, tarif, délai ou client inventé.",
+      "Un CTA commercial utile : décrire le projet, les outils et la première tâche. Ne pas promettre un cadeau, un audit gratuit ou une ressource absente."
     ],
-    "review": "Chaque semaine, lire les retours commerciaux disponibles par compte et angle. Après 14 jours minimum et huit posts observés, tester une variable (accroche ou format), sans changer la fréquence ni qualifier un gagnant sur les likes seuls. Ne pas visiter les profils ou boucler sur LinkedIn pour collecter ces données.",
-    "marketSignals": {
+    "review": "Lire les conversations, briefs et rendez-vous réellement déclarés. Revoir les angles après deux semaines d’observation ; ne pas inventer de statistiques. Pas de visites de profils ou de contrôles LinkedIn pour alimenter le suivi.",
+    "references": {
       "checkedAt": "2026-11-15",
-      "scope": "Signaux publics US pour choisir des thèmes, sans extrapolation quantitative ni promesse de disponibilité.",
-      "sources": [
-        {
-          "url": "https://www.ycombinator.com/jobs/",
-          "use": "Offres publiques de startups : exemples de besoins software/fullstack. Instantané qualitatif, pas une mesure de tout le marché."
-        },
-        {
-          "url": "https://www.bls.gov/ooh/Computer-and-Information-Technology/Software-developers.htm",
-          "use": "Contexte emploi software aux États-Unis. Ne pas confondre projection d’emploi et missions disponibles chez B&M."
-        }
+      "purpose": "Références de communication et de hiérarchie visuelle, sans reprise de leurs textes, chiffres ou références clients.",
+      "urls": [
+        "https://www.andela.com/",
+        "https://www.theodo.com/",
+        "https://www.sfeir.com/"
       ]
     }
   }

@@ -6,7 +6,8 @@ let fontCSS;
 async function capture(post,index,ratio){
  const host=document.createElement('div');host.style.cssText='position:fixed;left:-20000px;top:0;width:1080px;z-index:-100;';host.innerHTML=artwork(post,index);document.body.append(host);
  try{const art=host.firstElementChild;if(ratio==='portrait')art.classList.add('portrait-art');await document.fonts.ready;await Promise.all([...art.querySelectorAll('img')].map(i=>i.decode()));
-  const area=art.querySelector('.art-body');if(area.scrollHeight>area.clientHeight+2)throw Error(`Texte trop long dans « ${post.title} ». Répartissez-le sur plusieurs pages.`);
+  const regions=[art.querySelector('.art-body'),...art.querySelectorAll('.v2-service,.v2-option,.v2-brief-paper,.v2-mission-cards>div')].filter(Boolean);
+  if(regions.some(area=>area.scrollHeight>area.clientHeight+2))throw Error(`Texte trop long dans « ${post.title} », page ${index+1}. Raccourcissez les blocs ou répartissez-les sur plusieurs pages.`);
   fontCSS??=await getFontEmbedCSS(art);
   return await toPng(art,{width:1080,height:ratio==='portrait'?1350:1080,pixelRatio:1,fontEmbedCSS:fontCSS,skipAutoScale:true});
  }finally{host.remove();}

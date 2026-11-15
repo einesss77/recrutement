@@ -17,7 +17,7 @@ test('la direction commerciale et visuelle atteint le prompt du worker pour les 
   assert.equal(context.editorialDirection.objective,actualPlaybook.editorialDirection.objective);
   assert(context.editorialDirection.rules.some(rule=>/Studio/.test(rule)));
   assert(context.editorialDirection.rules.some(rule=>/FR puis EN/.test(rule)));
-  assert.match(context.accountRole,accountId==='person'?/commerciale/:/vitrine commerciale/);
+  assert.match(context.accountRole,accountId==='person'?/commerciale/:/commerciale/);
  }
 });
 test('chaque semaine suit un mix utile et un seul contact commercial',()=>{
@@ -99,12 +99,17 @@ test('un mois de posts sans retours ne devient pas une preuve de performance nul
  assert.equal(p.review.observedCount,0);assert.equal(p.review.status,'collecting');assert.match(p.review.recommendation,/Aucun thème gagnant/);
 });
 
-test('la première semaine présente B&M puis les profils, avec une offre et un contact chaque jour',()=>{
+test('la première semaine explique les offres avec les nouvelles compositions et deux calendriers distincts',()=>{
+ const plans=[];
  for(const accountId of ['organization','person']){
   const p=buildEditorialStrategy({...base,playbook:actualPlaybook,accountId});
-  assert.match(p.briefs[0].angle,/B&M/);assert(p.briefs.every(b=>b.ctaKind==='contact'));
+  plans.push(p);
+  assert.match(p.positioning,/B&M/);assert(p.briefs[0].angle.length>10);assert(p.briefs.every(b=>b.ctaKind==='contact'));
   const types=p.briefs.map(b=>b.suggestedTemplate);assert.ok(new Set(types).size>=3);
   for(const type of new Set(types))assert.ok(types.filter(value=>value===type).length<=2);
-  assert.match(p.briefs[1].angle,/fullstack/i);assert.match(p.briefs[4].angle,/Data/);assert.equal(p.briefs[6].offer,'build');
+  assert(p.briefs.every(b=>['launch','mission','product','compare','brief'].includes(b.suggestedTemplate)));
+  assert(p.briefs.some(b=>b.offer==='build'));
  }
+ assert.notDeepEqual(plans[0].briefs.map(b=>b.suggestedTemplate),plans[1].briefs.map(b=>b.suggestedTemplate));
+ assert.notDeepEqual(plans[0].briefs.map(b=>b.angle),plans[1].briefs.map(b=>b.angle));
 });

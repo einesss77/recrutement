@@ -1,6 +1,12 @@
 import {artwork, templates, esc} from './templates.js';
+import {campaignTemplates} from './campaign-templates.js';
 
 export const templateNotes = {
+ launch:['Présenter les deux offres','Consultants IT et applications sur mesure, avec deux univers graphiques dans la même affiche.'],
+ mission:['Montrer une mission','Une carte technique et trois blocs de travail pour présenter un renfort concret.'],
+ product:['Montrer l’application','Une interface web et mobile de démonstration, mise en scène à grande échelle.'],
+ compare:['Comparer deux dispositifs','Deux options illustrées et un critère de choix visible.'],
+ brief:['Inviter à un premier échange','Un brief de projet illustré, avec les informations utiles pour commencer.'],
  editorial: ['Prendre position', 'Une idée forte, un titre court et une explication qui va droit au but.'],
  steps: ['Expliquer une méthode', 'Déroulez votre démarche en plusieurs pages, de la question à la décision.'],
  squad: ['Présenter les consultants', 'Rendez visibles les expertises et la façon dont votre équipe intervient.'],
@@ -15,13 +21,14 @@ export const templateNotes = {
 };
 
 export function templateSeed(state, key) {
- const packs = [...(state.availablePacks || [])].sort((a,b)=>Number(b.id.startsWith('signature'))-Number(a.id.startsWith('signature')));
+ const priority=p=>p.id.startsWith('campaign-v2')?2:p.id.startsWith('signature')?1:0;
+ const packs = [...(state.availablePacks || [])].sort((a,b)=>priority(b)-priority(a));
  const original = packs.flatMap(p=>p.posts).find(p=>p.template===key) || state.posts.find(p=>p.template===key);
  return original ? structuredClone(original) : {title:templates[key],category:'Conseil',template:key,theme:'dark',status:'draft',date:'',image:'',caption:'',slides:[{label:'LE REGARD B&M',title:'Une idée claire. Un pas concret.',body:'Présentez le contexte et le choix qui fait avancer votre projet.',points:[]}]};
 }
 
 export function templateGallery(state) {
- return `<div class="format-note"><span>01 / Choisir un modèle</span><span>02 / Adapter les textes</span><span>03 / Exporter</span></div><div class="grid template-grid">${Object.entries(templates).map(([key,title],i)=>{
+ return `<div class="format-note"><span>01 / Choisir une composition</span><span>02 / Adapter votre offre</span><span>03 / Exporter</span></div><div class="grid template-grid">${Object.entries(campaignTemplates).map(([key,title],i)=>{
   const [use,desc]=templateNotes[key];
   return `<article class="post-card template-card"><button class="thumb" data-template="${key}" aria-label="Utiliser le modèle ${esc(title)}"><div class="scaled">${artwork(templateSeed(state,key))}</div></button><div class="card-meta"><span>MODÈLE ${String(i+1).padStart(2,'0')}</span><span>Carré / Portrait</span></div><h2 class="card-title">${esc(title)}</h2><p class="template-description">${desc}</p><button class="template-use" data-template="${key}">${use}<span aria-hidden="true">↗</span></button></article>`;
  }).join('')}</div>`;

@@ -1,3 +1,4 @@
+@import url('/studio-social/campaign-art.css');
 /* Fixed pixel canvases: the library, editor, PNG and PDF share these compositions. */
 .art.brand-art{--art-ink:#f4f6f8;--art-muted:#a9b4c6;--art-accent:#d6ff46;--art-line:#ffffff26;--art-panel:#101a28;background:#090e18;color:var(--art-ink);padding:60px 64px 40px;font-family:Manrope,Arial,sans-serif}
 .art.brand-art.light{--art-ink:#101a28;--art-muted:#566579;--art-accent:#345bff;--art-line:#14254224;--art-panel:#e8edf5;background:#f4f6f8;color:var(--art-ink)}

@@ -7,7 +7,7 @@ import os from 'node:os';
 import {templateIds} from './quality.mjs';
 
 const types={'.css':'text/css','.js':'text/javascript','.ttf':'font/ttf','.png':'image/png','.svg':'image/svg+xml'};
-const allowed=new Set(['style.css','brand-art.css','templates.js','characters.js','fonts/manrope-0.ttf','fonts/bricolagegrotesque-0.ttf','fonts/instrumentserif-0.ttf']);
+const allowed=new Set(['style.css','brand-art.css','campaign-art.css','templates.js','campaign-templates.js','characters.js','fonts/manrope-0.ttf','fonts/bricolagegrotesque-0.ttf','fonts/instrumentserif-0.ttf']);
 export function validateEmbeddedImage(image){
  if(!image)return;
  if(typeof image!=='string'||image.length>3_500_000||!/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/]+={0,2}$/.test(image))throw Error('L’image doit être un PNG, JPEG ou WebP embarqué de moins de 2,6 Mo. Les URL externes ne sont pas chargées.');
