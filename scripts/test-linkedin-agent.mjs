@@ -139,5 +139,12 @@ try{
   await assert.rejects(a.configureAgent({enabled:true},{allowPendingBrowserSchedule:true}),/Connectez LinkedIn/);
   checks.push('owner may restore a verified browser calendar while held, without publication access or bypassing OAuth/target verification');
  }
+ {
+  await browserFixture();await a.agentCommand({action:'plan'});const planned=(await a.claimJob('worker-test')).job;assert.equal(planned.kind,'plan');
+  const carousel={...structuredClone(seed),slides:[structuredClone(seed.slides[0]),structuredClone(seed.slides[0])]};
+  await a.completeJob('worker-test',{jobId:planned.id,leaseToken:planned.leaseToken,result:{items:[{post:carousel,rationale:'Carrousel du studio',sourceUrls:[],needsHuman:false,humanReason:''}],summary:'Test format'}});
+  assert.equal(saved().queue[0].format,'pdf');assert.equal(saved().queue[0].post.slides.length,2);
+  checks.push('generated company carousel preserves all Studio pages as PDF instead of forcing the first PNG');
+ }
  console.log(JSON.stringify({passed:checks.length,checks,externalNetworkCalls:0},null,2));
 }finally{globalThis.fetch=originalFetch;}

@@ -72,6 +72,12 @@ test('une semaine ne réutilise pas la même composition sur tous ses posts',()=
  const checked=checkPlan(input,{slots:Array.from({length:5},()=>({})),recentPosts:[]});
  assert.ok(!checked.items[1].humanReason.includes('Composition trop répétée'));assert.match(checked.items[2].humanReason,/Composition trop répétée/);
 });
+
+test('le modèle offre ne contourne pas le contrôle de variété des compositions',()=>{
+ const input={items:Array.from({length:7},(_,i)=>{const entry=sample().items[0];entry.post.title=`Consultant spécialisé ${i+1}`;entry.post.template='offer';return entry;}),summary:'Campagne répétitive.'};
+ const checked=checkPlan(input,{slots:Array.from({length:7},()=>({})),recentPosts:[]});
+ assert.ok(checked.items.slice(2).every(item=>item.needsHuman&&item.humanReason.includes('Composition trop répétée')));
+});
 test('un lot qui comble plusieurs semaines respecte la diversité de chaque semaine',()=>{
  const days=['2026-11-12','2026-11-19','2026-11-26','2026-12-03','2026-12-10'];
  const briefs=days.map(day=>({...editorialBrief,id:'brief-'+day,day}));

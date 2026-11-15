@@ -90,7 +90,9 @@ test('un mois de posts sans retours ne devient pas une preuve de performance nul
 test('la première semaine présente B&M puis les profils, avec une offre et un contact chaque jour',()=>{
  for(const accountId of ['organization','person']){
   const p=buildEditorialStrategy({...base,playbook:actualPlaybook,accountId});
-  assert.match(p.briefs[0].angle,/B&M/);assert(p.briefs.every(b=>b.ctaKind==='contact'&&b.suggestedTemplate==='offer'));
+  assert.match(p.briefs[0].angle,/B&M/);assert(p.briefs.every(b=>b.ctaKind==='contact'));
+  const types=p.briefs.map(b=>b.suggestedTemplate);assert.ok(new Set(types).size>=3);
+  for(const type of new Set(types))assert.ok(types.filter(value=>value===type).length<=2);
   assert.match(p.briefs[1].angle,/fullstack/i);assert.match(p.briefs[4].angle,/Data/);assert.equal(p.briefs[6].offer,'build');
  }
 });

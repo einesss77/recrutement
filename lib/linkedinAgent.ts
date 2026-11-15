@@ -282,7 +282,7 @@ export async function completeJob(workerId:string,input:unknown){
     const post=postsSchema.parse([item.post])[0];post.id=`li-${selectedAccount()}-${slot.day}-${randomUUID().slice(0,8)}`;post.date=slot.day;post.status='draft';post.image='';
     const fingerprint=postFingerprint(post);if(Object.values(store.accounts).some(a=>a.queue.some(q=>q.fingerprint===fingerprint&&q.status!=='rejected')))continue;
     const humanReason=assess(post,d.config,item.needsHuman,item.humanReason);
-    d.queue.push({...(brief?{editorial:structuredClone(brief)}:{}),id:post.id,day:slot.day,publishAt:slot.publishAt,post,...(d.connection.provider==='hermes-browser'&&d.config.targetType==='organization'?{format:'png' as const}:{}),status:humanReason||d.config.mode==='review'?'draft':'scheduled',rationale:item.rationale,sourceUrls:item.sourceUrls,humanReason,fingerprint});count++;
+    d.queue.push({...(brief?{editorial:structuredClone(brief)}:{}),id:post.id,day:slot.day,publishAt:slot.publishAt,post,...(d.connection.provider==='hermes-browser'?{format:(post.slides.length>1?'pdf':'png') as 'pdf'|'png'}:{}),status:humanReason||d.config.mode==='review'?'draft':'scheduled',rationale:item.rationale,sourceUrls:item.sourceUrls,humanReason,fingerprint});count++;
    }
    j.message=`${count} nouvelles publications préparées.`;log(d,j.message);d.queue=d.queue.slice(-180);
   }else{

@@ -64,7 +64,7 @@ export function checkPlan(input,payload={}){
   const campaignStart=payload.editorial?.campaign?.startDate||payload.config?.campaignStart,campaignDay=brief?.day&&campaignStart?(Date.parse(brief.day+'T12:00:00Z')-Date.parse(campaignStart+'T12:00:00Z'))/86400000:NaN;
   const templateKey=(Number.isFinite(campaignDay)?Math.floor(campaignDay/7):brief?.campaignWeek||'plan')+':'+entry.post.template;
   const templateCount=(templateCounts.get(templateKey)||0)+1;templateCounts.set(templateKey,templateCount);
-  if(plan.items.length>=5&&templateCount>2&&entry.post.template!=='offer')reasons.push('Composition trop répétée dans la semaine : varier les supports du propos.');
+  if(plan.items.length>=5&&templateCount>2)reasons.push('Composition trop répétée dans la semaine : varier les supports du propos.');
   if(brief){
    if(brief.suggestedTemplate&&entry.post.template!==brief.suggestedTemplate)reasons.push('La composition ne suit pas celle prévue dans le brief.');
    if(entry.post.caption.length<300||entry.post.caption.length>2400)reasons.push('Ajuster la légende entre 300 et 2 400 caractères.');

@@ -496,43 +496,43 @@
         "purpose": "conversion",
         "series": "Meet B&M",
         "ctaKind": "contact",
-        "template": "offer"
+        "template": "editorial"
       },
       {
         "purpose": "conversion",
         "series": "Meet the role",
         "ctaKind": "contact",
-        "template": "offer"
+        "template": "squad"
       },
       {
         "purpose": "conversion",
         "series": "Meet the role",
         "ctaKind": "contact",
-        "template": "offer"
+        "template": "focus"
       },
       {
         "purpose": "conversion",
         "series": "Meet the role",
         "ctaKind": "contact",
-        "template": "offer"
+        "template": "steps"
       },
       {
         "purpose": "conversion",
         "series": "Meet the role",
         "ctaKind": "contact",
-        "template": "offer"
+        "template": "automation"
       },
       {
         "purpose": "conversion",
         "series": "Meet the role",
         "ctaKind": "contact",
-        "template": "offer"
+        "template": "focus"
       },
       {
         "purpose": "conversion",
         "series": "Meet the role",
         "ctaKind": "contact",
-        "template": "offer"
+        "template": "case"
       }
     ]
   }
