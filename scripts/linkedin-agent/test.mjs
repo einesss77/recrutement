@@ -9,10 +9,14 @@ import path from 'node:path';
 import {checkPlan,similarity,promptFor,redact,safeStrategy,editorialContext} from './quality.mjs';
 import {subscriptionEnvironment} from './codex.mjs';
 import {processJob,normalizeStudioUrl,downloadedConnection,pairDownloadedConnection,draftParameters} from '../linkedin-agent.mjs';
-import {validateEmbeddedImage} from './render.mjs';
+import {validateEmbeddedImage,renderPost} from './render.mjs';
 
 const sample=()=>({items:[{post:{title:'Clarifier le bon renfort.',category:'Consultants',template:'editorial',theme:'dark',caption:'Une compétence précise ou un projet à construire : le choix du renfort commence par le travail à accomplir. Posons le contexte avant de décider.',slides:[{label:'LE BON CADRE',title:'Clarifier le bon renfort.',body:'Un rôle clair dans votre équipe.',points:[]}]},rationale:'Expliquer le choix du format.',sourceUrls:['https://www.bandmdigitalconsulting.com/'],needsHuman:false,humanReason:''}],summary:'Une publication.'});
 const payload={slots:[{day:'2026-11-12'}],strategy:{facts:['Consultants individuels ou squads selon le besoin.']},recentPosts:[]};
+
+test('une composition inconnue est refusée avant tout rendu ou chargement de média',async()=>{
+ await assert.rejects(renderPost({template:'old-campaign-custom'},'png'),/template existant du Studio/);
+});
 
 test('le CLI exécute help lorsqu’il est lancé par un lien symbolique de release',async context=>{
  const directory=await mkdtemp(path.join(tmpdir(),'bm-cli-symlink-')),entry=path.join(directory,'linkedin-agent.mjs');
