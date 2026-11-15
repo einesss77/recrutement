@@ -28,30 +28,42 @@ function studioUrl(suffix:string){
   if(url.protocol!=='https:'&&!(url.protocol==='http:'&&['127.0.0.1','localhost','[::1]'].includes(url.hostname)))throw new VoiceError('VoiceStudio nécessite une adresse HTTPS accessible au serveur.',503);
   return base.replace(/\/$/,'').replace(/\/v1$/,'')+'/v1/audio/'+suffix;
 }
-async function request(url:string,init:RequestInit={}){
+async function request(url:string,init:RequestInit={},timeout=20000){
   let response:Response;
-  try{response=await fetch(url,{...init,cache:'no-store',redirect:'error',signal:AbortSignal.timeout(20000)});}
+  try{response=await fetch(url,{...init,cache:'no-store',redirect:'error',signal:AbortSignal.timeout(timeout)});}
   catch{throw new VoiceError('Le service vocal ne répond pas. Réessayez dans un instant.',503);}
   if(!response.ok)throw new VoiceError(response.status===401||response.status===403?'La connexion au service vocal a été refusée. Vérifiez sa clé côté serveur.':response.status===429?'Le service vocal a atteint sa limite. Réessayez plus tard.':'La génération vocale est indisponible ('+response.status+').',503);
   return response;
 }
 const studioHeaders=():Record<string,string>=>process.env.VOICESTUDIO_API_KEY?{Authorization:'Bearer '+process.env.VOICESTUDIO_API_KEY}:{};
-export async function voiceCatalog(provider='edge'){
+export async function voiceCatalog(provider=''){
+  provider=provider||(process.env.VOICESTUDIO_BASE_URL?'voicestudio':'edge');
   const providers=[
     {id:'edge',name:'Voix naturelles · Edge TTS',available:true,note:'Service vocal Microsoft en ligne. Le texte est transmis uniquement lors de la génération.'},
-    {id:'voicestudio',name:'VoiceStudio',available:!!process.env.VOICESTUDIO_BASE_URL,note:process.env.VOICESTUDIO_BASE_URL?'Instance VoiceStudio connectée.':'Une instance VoiceStudio accessible au serveur reste à connecter.'},
+    {id:'voicestudio',name:'VoiceStudio',available:false,note:process.env.VOICESTUDIO_BASE_URL?'Choisissez VoiceStudio pour vérifier les voix du moteur connecté.':'Une instance VoiceStudio accessible au serveur reste à connecter.'},
     {id:'elevenlabs',name:'ElevenLabs',available:!!process.env.ELEVENLABS_API_KEY,note:process.env.ELEVENLABS_API_KEY?'Chaque génération utilise les crédits du compte ElevenLabs.':'Une clé ElevenLabs reste à renseigner côté serveur.'},
   ];
   let voices:Voice[]=[];
   if(provider==='edge')voices=edgeVoices;
   else if(provider==='voicestudio'&&process.env.VOICESTUDIO_BASE_URL){
-    const data=await(await request(studioUrl('voices'),{headers:studioHeaders()})).json();
-    voices=(data.voices||[]).map((v:{voice_id?:string;id?:string;name?:string})=>({id:v.voice_id||v.id||'',name:v.name||v.voice_id||v.id||''})).filter((v:Voice)=>v.id);
+    const data=await(await request(studioUrl('voices'),{headers:studioHeaders()},12000)).json();
+    const model=process.env.VOICESTUDIO_MODEL||'tts-1';
+    const engine=data.engines?.find((e:{id:string})=>e.id===model);
+    const entry=providers.find(p=>p.id==='voicestudio')!;
+    if(engine){
+      entry.available=engine.available===true;
+      entry.note=entry.available?'Supertonic 3 · voix françaises générées par IA sur le serveur B&M. La première génération peut prendre quelques instants.':'VoiceStudio est installé ; le moteur vocal attend son activation.';
+      if(entry.available)voices=(engine.preset_voices||[]).map((id:string)=>({id,name:id+' · français · '+(id.startsWith('F')?'féminine':'masculine')}));
+    }else{
+      // OpenAI aliases all resolve to one default voice; they are not distinct presets.
+      voices=(data.voices||[]).filter((v:{type?:string})=>v.type!=='openai_alias').map((v:{voice_id?:string;id?:string;name?:string})=>({id:v.voice_id||v.id||'',name:v.name||v.voice_id||v.id||''})).filter((v:Voice)=>v.id);
+      entry.available=voices.length>0;
+    }
   }else if(provider==='elevenlabs'&&process.env.ELEVENLABS_API_KEY){
     const data=await(await request('https://api.elevenlabs.io/v2/voices?page_size=100',{headers:{'xi-api-key':process.env.ELEVENLABS_API_KEY}})).json();
     voices=(data.voices||[]).map((v:{voice_id:string;name:string})=>({id:v.voice_id,name:v.name}));
   }else if(!providers.some(p=>p.id===provider))throw new VoiceError('Service vocal inconnu.');
-  return {providers,voices};
+  return {provider,providers,voices};
 }
 export async function generateVoice(input:unknown){
   const parsed=voiceInput.safeParse(input);
@@ -71,7 +83,7 @@ export async function generateVoice(input:unknown){
   const {voices}=await voiceCatalog(provider);
   if(!voices.some(v=>v.id===voice))throw new VoiceError('Cette voix est indisponible. Rechargez le catalogue.');
   const response=provider==='voicestudio'
-    ?await request(studioUrl('speech'),{method:'POST',headers:{...studioHeaders(),'Content-Type':'application/json'},body:JSON.stringify({model:process.env.VOICESTUDIO_MODEL||'tts-1',voice,input:text,response_format:'mp3',speed})})
+    ?await request(studioUrl('speech'),{method:'POST',headers:{...studioHeaders(),'Content-Type':'application/json'},body:JSON.stringify({model:process.env.VOICESTUDIO_MODEL||'tts-1',voice,input:text,response_format:'mp3',speed,language:process.env.VOICESTUDIO_LANGUAGE||'fr'})},45000)
     :await request('https://api.elevenlabs.io/v1/text-to-speech/'+encodeURIComponent(voice)+'?output_format=mp3_44100_128',{method:'POST',headers:{'xi-api-key':process.env.ELEVENLABS_API_KEY!,'Content-Type':'application/json'},body:JSON.stringify({text,model_id:process.env.ELEVENLABS_MODEL_ID||'eleven_multilingual_v2',voice_settings:{stability:0.5,similarity_boost:0.75,speed}})});
   const mime=(response.headers.get('content-type')||'').split(';')[0];
   if(!['audio/mpeg','audio/mp3','audio/wav','audio/x-wav'].includes(mime))throw new VoiceError('Le service vocal a renvoyé un format audio non pris en charge.',502);

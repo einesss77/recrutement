@@ -1,0 +1,38 @@
+services:
+  voice:
+    build: .
+    image: bm-voicestudio:0.5.8-supertonic-1.3.1
+    container_name: bm-voicestudio
+    restart: unless-stopped
+    init: true
+    ports:
+      - "127.0.0.1:3900:3900"
+    env_file: /etc/bm-voicestudio/runtime.env
+    environment:
+      OMNIVOICE_DATA_DIR: /app/omnivoice_data
+      HF_HOME: /app/omnivoice_data/huggingface
+      OMNIVOICE_DEVICE: cpu
+      OMNIVOICE_TTS_BACKEND: supertonic3
+      OMNIVOICE_ANALYTICS_DISABLED: "1"
+      OMNIVOICE_PRELOAD_TTS_ASR: "0"
+      OMNIVOICE_PRELOAD_CAPTURE_ASR: "0"
+      OMNIVOICE_PRELOAD_WATERMARK: "0"
+      OMNIVOICE_CPU_GENERATE_TIMEOUT_S: "120"
+      OMNIVOICE_GPU_WORKERS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+    volumes:
+      - /var/lib/bm-voicestudio:/app/omnivoice_data
+    mem_limit: 2500m
+    mem_reservation: 512m
+    cpus: "1.0"
+    pids_limit: 192
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

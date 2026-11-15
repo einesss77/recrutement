@@ -9,7 +9,7 @@ assert.equal((await send({},'https://example.org')).status,403);
 const data={provider:'edge',voice:'fr-FR-DeniseNeural',text:'Bonjour, bienvenue chez B et M.',speed:1};
 for(const invalid of [{...data,text:''},{...data,text:'a'.repeat(801)},{...data,speed:3},{...data,voice:'inconnue'}])assert.equal((await send(invalid)).status,400);
 assert.equal((await send({...data,text:'a'.repeat(7000)})).status,413);
-const catalog=await(await fetch(base+'/api/studio-voice',{headers:{cookie}})).json();
+const catalog=await(await fetch(base+'/api/studio-voice?provider=edge',{headers:{cookie}})).json();
 assert(catalog.providers.some(p=>p.id==='edge'&&p.available));assert(catalog.voices.some(v=>v.id===data.voice));
 assert(!JSON.stringify(catalog).includes('API_KEY='));
 if(process.env.VOICE_TEST_LIVE==='1'){

@@ -1,0 +1,25 @@
+bm-voice.145.14.158.179.sslip.io {
+    header Cache-Control "private, no-store"
+    header X-Robots-Tag "noindex, nofollow"
+    header X-Content-Type-Options nosniff
+    request_body {
+        max_size 16KB
+    }
+    @speech {
+        path /v1/audio/speech
+        method POST
+    }
+    handle @speech {
+        reverse_proxy 127.0.0.1:3900
+    }
+    @voices {
+        path /v1/audio/voices
+        method GET
+    }
+    handle @voices {
+        reverse_proxy 127.0.0.1:3900
+    }
+    handle {
+        respond "Not found" 404
+    }
+}

@@ -9,7 +9,7 @@ const headers={'Cache-Control':'private, no-store','X-Robots-Tag':'noindex, nofo
 const json=(data:unknown,status=200)=>NextResponse.json(data,{status,headers});
 export async function GET(req:NextRequest){
   if(!await isAdminAuthenticated())return json({error:'Reconnectez-vous au studio.'},401);
-  try{return json(await voiceCatalog(req.nextUrl.searchParams.get('provider')||'edge'));}
+  try{return json(await voiceCatalog(req.nextUrl.searchParams.get('provider')||''));}
   catch(error){return fail(error);}
 }
 export async function POST(req:NextRequest){

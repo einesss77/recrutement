@@ -1,0 +1,17 @@
+.git/
+.vercel/
+.next/
+node_modules/
+.env
+.env.*
+.local/
+.codex/
+.agents/
+.playwright-cli/
+output/
+tmp/
+storage/
+coverage/
+prisma/dev.db*
+tsconfig.tsbuildinfo
+*.log

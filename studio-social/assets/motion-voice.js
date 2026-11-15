@@ -12,22 +12,23 @@ export function mountVoicePanel({modal,config,customizer,stop,status}){
  const saved=customizer.voiceDraft();autoScript=!saved?.text;if(saved){provider.value=saved.provider||'edge';text.value=saved.text||'';speed.value=String(saved.speed||1);}
  if(!text.value)text.value=script().slice(0,800);
  remove.hidden=!customizer.hasNarration();
- async function catalog(){
+ async function catalog(automatic=false){
   const request=++sequence;generate.disabled=true;voice.disabled=true;note.textContent='Chargement des voix…';
   try{
-   const response=await fetch('/api/studio-voice?provider='+encodeURIComponent(provider.value)),data=await response.json();
+   const response=await fetch('/api/studio-voice'+(automatic?'':'?provider='+encodeURIComponent(provider.value))),data=await response.json();
    if(!response.ok)throw Error(data.error||'Catalogue indisponible.');if(closed||request!==sequence)return;
+   provider.value=data.provider||provider.value;
    selectedProvider=data.providers.find(p=>p.id===provider.value);note.textContent=selectedProvider?.note||'';
    voice.innerHTML=data.voices.length?data.voices.map(v=>`<option value="${esc(v.id)}">${esc(v.name)}</option>`).join(''):'<option value="">Aucune voix disponible</option>';
    if(saved?.provider===provider.value&&data.voices.some(v=>v.id===saved.voice))voice.value=saved.voice;
    voice.disabled=!data.voices.length;generate.disabled=!selectedProvider?.available||!data.voices.length;loaded=true;
   }catch(error){if(!closed&&request===sequence){note.textContent=error.message;loaded=false;}}
  }
- panel.addEventListener('toggle',()=>{if(panel.open&&!loaded&&!busy)catalog();});
+ panel.addEventListener('toggle',()=>{if(panel.open&&!loaded&&!busy)catalog(!saved?.provider);});
  provider.onchange=()=>{loaded=false;save();catalog();};voice.onchange=save;speed.onchange=save;text.oninput=()=>{autoScript=false;save();if(blob)message.textContent='Texte modifié : générez une nouvelle voix pour lire cette version.';};
  $('#motion-voice-copy').onclick=()=>{text.value=script().slice(0,800);text.oninput();};
  function release(){listen.pause();listen.removeAttribute('src');if(url)URL.revokeObjectURL(url);url=null;blob=null;}
- async function apply(){stop();listen.pause();await customizer.applyNarration(blob);remove.hidden=false;message.textContent=`Narration de ${duration.toFixed(1)} s incluse dans la vidéo.`;status.textContent='Narration prête. Lancez la lecture ou exportez la vidéo.';}
+ async function apply(){stop();listen.pause();await customizer.applyNarration(blob,{generated:true});remove.hidden=false;message.textContent=`Narration de ${duration.toFixed(1)} s incluse dans la vidéo. La mention « Voix générée par IA » accompagne l’export.`;status.textContent='Narration prête. Lancez la lecture ou exportez la vidéo.';}
  use.onclick=()=>apply().catch(error=>message.textContent=error.message);
  remove.onclick=async()=>{stop();listen.pause();await customizer.applyNarration(null);remove.hidden=true;message.textContent='Narration retirée de la vidéo.';};
  generate.onclick=async()=>{
