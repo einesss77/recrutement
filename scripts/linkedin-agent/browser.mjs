@@ -156,7 +156,10 @@ export class HermesBrowserSession {
    await requireVisible(admin.getByRole('region',{name:'Section de navigation pour les administrateurs de page organisationnelle',exact:true}),'Le rôle administrateur de la page B&M n’est pas vérifiable.');
    await requireVisible(admin.getByRole('heading',{name:browserIdentity.organization.name,exact:true,level:1}),'La page administrée ne correspond pas à B&M.');
    if(!new URL(admin.url()).pathname.startsWith('/company/106357560/admin/'))throw new BrowserHumanError('LinkedIn a quitté la page administrateur attendue.');
-   this.organizationPaths=await admin.locator('a[href]').evaluateAll(links=>links.map(link=>new URL(link.href,location.href)).filter(url=>url.origin==='https://www.linkedin.com'&&url.pathname.replace(/\/$/,'')==='/company/bandmdigitalconsulting').map(url=>url.pathname.replace(/\/$/,'')));
+   // LinkedIn's admin feed links its author to /posts, while the canonical
+   // publication links to the company root. Keep the alias tied to the verified
+   // numeric admin page, and normalize only that observed, expected company.
+   this.organizationPaths=[...new Set(await admin.locator('a[href]').evaluateAll(links=>links.map(link=>new URL(link.href,location.href)).filter(url=>url.origin==='https://www.linkedin.com').map(url=>url.pathname.replace(/\/$/,'').replace(/\/posts$/,'')).filter(pathname=>pathname==='/company/bandmdigitalconsulting')))];
    return structuredClone(browserIdentity);
   }finally{if(feed)await this.closePage(feed);if(admin)await this.closePage(admin);}
  }
@@ -353,7 +356,7 @@ export class HermesBrowserSession {
   this.composer.submissionAttempted=true;
   await dialog.getByRole('button',{name:'Publier',exact:true}).click({timeout:15000});
  }
- async confirmation({timeout=30000,pollInterval=250}={}){
+ async confirmation({timeout=30000,pollInterval=250,recordEvidence=async()=>{}}={}){
   if(!this.composer?.submissionAttempted||!this.composer.beforePublication)throw new BrowserHumanError('Aucune tentative de publication ne peut être rapprochée.');
   const {page,beforePublication}=this.composer,deadline=Date.now()+timeout,checked=new Set();
   do{
@@ -361,6 +364,7 @@ export class HermesBrowserSession {
    const afterPublication=await this.publicationSignals(page);
    for(const proof of afterPublication.complete===false?[]:freshPublicationCandidates(beforePublication,afterPublication)){
     if(checked.has(proof.urn))continue;checked.add(proof.urn);
+    await recordEvidence({candidate:proof,organizationPaths:this.organizationPaths||[],observedAt:new Date().toISOString()});
     if(await this.verifyPublicationPermalink(proof,{timeout:Math.min(12000,Math.max(0,deadline-Date.now())),pollInterval}))return proof;
    }
    if(Date.now()>=deadline)break;
@@ -408,7 +412,7 @@ export async function publishWithHermes({job,workingRoot,render,begin,finish,ope
   if(browserContentDigest(allowed.post,allowed.format,allowed.target)!==saved.receipt.contentDigest)throw new BrowserHumanError('Le serveur a modifié le contenu ou la destination après préparation. Aucun clic envoyé.');
   await session.ready();await updateBrowserReceipt(saved,{status:'submitting',mediaSha256:media?sha(Buffer.from(media.base64,'base64')):null});submission=true;
   await session.submit();
-  const proof=await session.confirmation();const verifiedLink=verifiedPermalink(proof?.permalink);
+  const proof=await session.confirmation({recordEvidence:evidence=>updateBrowserReceipt(saved,{confirmationEvidence:evidence})});const verifiedLink=verifiedPermalink(proof?.permalink);
   if(!verifiedLink||proof.urn!==verifiedLink.urn)throw new BrowserHumanError('Le permalien reçu ne confirme pas une publication LinkedIn.');
   const result={status:'published',targetKey:target.targetKey,...verifiedLink,message:'Publication confirmée dans LinkedIn.'};
   await updateBrowserReceipt(saved,{...result,confirmedAt:new Date().toISOString(),serverAck:false});

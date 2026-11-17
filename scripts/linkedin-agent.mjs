@@ -164,7 +164,7 @@ export async function processJob(connection,job,{generate=generateStructured,ren
 
 async function run(opts){
  const hold=await automationHold(localRoot);
- if(hold){const connection=await readConnection(),message=hold.reason.slice(0,500);await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',message,subscriptionAuth:false,browser:{sessionReady:false,message}}).catch(()=>{});console.log(JSON.stringify({status:'automation-held',message}));return;}
+ if(hold){const connection=await readConnection(),message=hold.reason.slice(0,500),auth=await subscriptionStatus();await api(connection,'worker/heartbeat',{workerId:connection.workerId,status:'error',message,subscriptionAuth:auth.chatgpt,browser:{sessionReady:false,message}}).catch(()=>{});console.log(JSON.stringify({status:'automation-held',message}));process.exitCode=1;return;}
  if(opts['auto-pair-download']){
   const pairing=await pairDownloadedConnection();
   if(pairing.status==='waiting-for-pairing'){console.log(JSON.stringify({...pairing,message:'Dans le studio, téléchargez le fichier de liaison B&M dans Téléchargements. Il sera importé au prochain passage.'}));return;}

@@ -26,8 +26,8 @@ const configSchema=z.object({
 });
 export type AgentConfig=z.infer<typeof configSchema>;
 export type SalesFeedback=z.infer<typeof feedbackSchema>&{updatedAt:string;source:'manual'};
-export type QueueItem={editorial?:EditorialBrief;salesFeedback?:SalesFeedback;id:string;day:string;publishAt:string;post:SocialPost;format?:'png'|'pdf'|'text';status:QueueStatus;rationale:string;sourceUrls:string[];humanReason:string;error?:string;linkedinUrn?:string;linkedinUrl?:string;publishedAt?:string;fingerprint:string;publishJobId?:string;authorKey?:string;authorUrn?:string;mediaUrn?:string};
-type Job={editorial?:EditorialStrategy;id:string;kind:'plan'|'publish'|'profile';status:'queued'|'running'|'completed'|'failed';createdAt:string;finishedAt?:string;message?:string;itemId?:string;leaseHash?:string;leaseExpiresAt?:string;phase?:'rendering'|'uploading'|'sending';slots?:{day:string;publishAt:string}[]};
+export type QueueItem={editorial?:EditorialBrief;salesFeedback?:SalesFeedback;id:string;day:string;publishAt:string;post:SocialPost;format?:'png'|'pdf'|'text';status:QueueStatus;rationale:string;sourceUrls:string[];humanReason:string;error?:string;linkedinUrn?:string;linkedinUrl?:string;publishedAt?:string;confirmedAt?:string;fingerprint:string;publishJobId?:string;authorKey?:string;authorUrn?:string;mediaUrn?:string};
+type Job={editorial?:EditorialStrategy;id:string;kind:'plan'|'publish'|'profile';status:'queued'|'running'|'completed'|'failed';createdAt:string;sendingAt?:string;finishedAt?:string;message?:string;itemId?:string;leaseHash?:string;leaseExpiresAt?:string;phase?:'rendering'|'uploading'|'sending';slots?:{day:string;publishAt:string}[]};
 type BrowserTarget={accountId:AccountId;targetKey:string;profileUrl:string;organizationId?:string;adminUrl?:string};
 type BrowserConnection={sessionReady:boolean;verifiedAt:string;lastError:string;targetKey:string;profileUrl:string;organizationId?:string;adminUrl?:string};
 type Connection={provider?:'linkedin-oauth'|'hermes-browser';browser?:BrowserConnection;connected:boolean;targetConfirmed:boolean;displayName:string;targetName:string;authorUrn:string;memberUrn:string;expiresAt:string;scopes:string[]};
@@ -387,7 +387,7 @@ export async function beginBrowserPublication(workerId:string,input:unknown){
   if(canonicalLinkedIn(b.verification.profileUrl)!==browserProfile||(target.accountId==='organization'&&b.verification.organizationId!==browserOrganization))throw new AgentError('Le destinataire visible dans le navigateur ne correspond pas à la tâche.',409,'BROWSER_TARGET_MISMATCH');
   d.connection.browser!.sessionReady=true;d.connection.browser!.verifiedAt=nowIso();d.connection.browser!.lastError='';d.worker.lastSeenAt=nowIso();
   if(!capabilities(d).publish)throw new AgentError('La session navigateur ou ChatGPT doit être revérifiée avant publication.',409);
-  assertPublicationWindow(d,q);j.phase='sending';log(d,'Envoi navigateur réservé pour '+q.post.title+'. Aucun deuxième clic autorisé.');
+  assertPublicationWindow(d,q);j.phase='sending';j.sendingAt=nowIso();log(d,'Envoi navigateur réservé pour '+q.post.title+'. Aucun deuxième clic autorisé.');
   return{ok:true,post:q.post,format:q.format||(q.post.slides.length>1?'pdf':'png'),fingerprint:q.fingerprint,target};
  });
 }
@@ -406,7 +406,9 @@ export async function finishBrowserPublication(workerId:string,input:unknown){
   if(!j||j.kind!=='publish'||!j.leaseHash||!same(hash(b.leaseToken),j.leaseHash)||!q||q.publishJobId!==j.id||q.authorKey!==b.targetKey)throw new AgentError('Ce reçu ne correspond pas à la réservation du navigateur.',409);
   if(q.status==='published'){if(proof&&q.linkedinUrn!==proof.urn)throw new AgentError('Un autre résultat a déjà été enregistré pour cet envoi.',409);return{status:'published',urn:q.linkedinUrn,url:q.linkedinUrl};}
   if(!['publishing','uncertain','blocked'].includes(q.status))throw new AgentError('Ce reçu ne peut plus modifier cette publication.',409);
-  if(proof){if(Object.values(store.accounts).some(account=>account.queue.some(other=>other.id!==q.id&&other.linkedinUrn===proof.urn)))throw new AgentError('Ce reçu LinkedIn est déjà associé à une autre publication.',409);if(j.phase!=='sending')throw new AgentError('Aucun envoi n’a été réservé pour ce reçu.',409);q.status='published';q.linkedinUrn=proof.urn;q.linkedinUrl=proof.url;q.publishedAt=nowIso();delete q.error;j.status='completed';j.finishedAt=nowIso();d.worker.status='online';log(d,'Publication confirmée par le navigateur : '+q.post.title);return{status:'published',...proof};}
+  // A delayed receipt confirms the original send, not a new post on recovery day.
+  // Legacy jobs did not store sendingAt; their original reservation is the fallback.
+  if(proof){if(Object.values(store.accounts).some(account=>account.queue.some(other=>other.id!==q.id&&other.linkedinUrn===proof.urn)))throw new AgentError('Ce reçu LinkedIn est déjà associé à une autre publication.',409);if(j.phase!=='sending')throw new AgentError('Aucun envoi n’a été réservé pour ce reçu.',409);q.status='published';q.linkedinUrn=proof.urn;q.linkedinUrl=proof.url;q.publishedAt=j.sendingAt||j.createdAt;q.confirmedAt=nowIso();delete q.error;j.status='completed';j.finishedAt=q.confirmedAt;d.worker.status='online';log(d,'Publication confirmée par le navigateur : '+q.post.title);return{status:'published',...proof};}
   const uncertain=j.phase==='sending'||b.status==='uncertain';q.status=uncertain?'uncertain':'blocked';q.error=b.message||(uncertain?'Résultat navigateur inconnu. Vérifier LinkedIn et le reçu local, sans nouvel envoi.':'Préparation navigateur interrompue avant tout envoi.');j.status='failed';j.finishedAt=nowIso();j.message=q.error;d.worker.status='error';d.worker.message=q.error;log(d,q.error,uncertain?'error':'warning');return{status:q.status,message:q.error};
  });
 }

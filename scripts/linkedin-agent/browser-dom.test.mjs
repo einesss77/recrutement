@@ -73,7 +73,7 @@ function pdfScript(personal){
 function publicationHTML(variant){
  const accountId=variant.publicationAccountId||'organization';
  const card=(authorId,urn,commentOnly=false)=>{
-  const href=authorId==='person'?browserIdentity.profileUrl:authorId==='organization'?'https://www.linkedin.com/company/106357560/':'https://www.linkedin.com/in/autre-auteur/';
+  const href=authorId==='person'?browserIdentity.profileUrl:authorId==='organization'?variant.companySlug?'https://www.linkedin.com/company/bandmdigitalconsulting/':'https://www.linkedin.com/company/106357560/':'https://www.linkedin.com/in/autre-auteur/';
   const name=authorId==='person'?'Ines Favre':authorId==='organization'?'B&M Digital Consulting':'Autre auteur';
   const body=`${variant.attributedLike?`<header><a href="${browserIdentity.profileUrl}">Ines Favre</a> a aimé ceci</header>`:''}<h2>Post du fil d’actualité</h2><a href="${href}">${name}</a><button aria-label="Ouvrir le menu de commandes pour le post de ${name}">Options</button><p>${escapeHtml(commentOnly?'Un autre texte dans la publication.':caption)}</p><button>J’aime</button><button>Commenter</button>${commentOnly?`<section><a href="${browserIdentity.profileUrl}">Ines Favre</a><p>${escapeHtml(caption)}</p></section>`:''}`;
   if(variant.shortenedCaption)return `<article data-urn="${urn}">${body.replace('</p>','<br><a href="https://www.linkedin.com/safety/go/?url=https%3A%2F%2Flnkd.in%2FtestContact">https://lnkd.in/testContact</a></p>')}</article>`;
@@ -99,7 +99,7 @@ function fixture(url,variant){
  if(u.pathname==='/company/106357560/admin/page-posts/published/'){
   return documentHTML(composerHTML('organization',variant),mediaScript(false,variant)+pdfScript(false));
  }
- if(u.pathname==='/company/106357560/admin/')return documentHTML('<h1>B&M Digital Consulting</h1><section role="region" aria-label="Section de navigation pour les administrateurs de page organisationnelle">Administrer la page</section>');
+ if(u.pathname==='/company/106357560/admin/')return documentHTML('<h1>B&M Digital Consulting</h1><section role="region" aria-label="Section de navigation pour les administrateurs de page organisationnelle">Administrer la page</section>'+ (variant.companySlug?'<a href="https://www.linkedin.com/company/bandmdigitalconsulting/posts">B&M Digital Consulting</a><a href="https://www.linkedin.com/company/unrelated/posts">Autre page</a><a href="https://evil.example/company/bandmdigitalconsulting/posts">Hors LinkedIn</a>':''));
  return null;
 }
 
@@ -285,6 +285,15 @@ test('une notification conservant un ancien permalien, même auparavant masqué,
 test('une carte SDUI sans titre de fil confirme seulement son auteur et son texte intégral',async()=>{
  await withSession({sduiPublication:true,publicationAccountId:'person'},async session=>{
   session.composer={post,target:target('person')};
+  assert.equal(await session.verifyPublicationPermalink(publicationProof,{timeout:1000,pollInterval:20}),true);
+ });
+});
+
+test('l’alias /posts de la page admin confirme la publication B&M sur son permalien canonique',async()=>{
+ await withSession({companySlug:true,publicationAccountId:'organization',sduiPublication:true},async session=>{
+  await session.verify();
+  assert.deepEqual(session.organizationPaths,['/company/bandmdigitalconsulting']);
+  session.composer={post,target:target('organization')};
   assert.equal(await session.verifyPublicationPermalink(publicationProof,{timeout:1000,pollInterval:20}),true);
  });
 });
