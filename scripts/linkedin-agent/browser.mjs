@@ -147,6 +147,12 @@ export class HermesBrowserSession {
   }await new Promise(resolve=>setTimeout(resolve,250));}
   throw new BrowserHumanError('Le profil connecté et son accès administrateur B&M ne sont pas vérifiables dans la barre latérale.');
  }
+ async observeOrganizationPaths(page){
+  const url=new URL(page.url());
+  if(url.origin!=='https://www.linkedin.com'||!/^\/company\/106357560\/admin(?:\/|$)/.test(url.pathname))throw new BrowserHumanError('L’alias de la page doit être lu dans son espace administrateur vérifié.');
+  const paths=await page.locator('a[href]').evaluateAll(links=>links.map(link=>new URL(link.href,location.href)).filter(url=>url.origin==='https://www.linkedin.com').map(url=>url.pathname.replace(/\/$/,'').replace(/\/posts$/,'')).filter(pathname=>pathname==='/company/bandmdigitalconsulting'));
+  this.organizationPaths=[...new Set([...(this.organizationPaths||[]),...paths])];
+ }
  async verify(){
   let feed,admin;
   try{
@@ -159,7 +165,7 @@ export class HermesBrowserSession {
    // LinkedIn's admin feed links its author to /posts, while the canonical
    // publication links to the company root. Keep the alias tied to the verified
    // numeric admin page, and normalize only that observed, expected company.
-   this.organizationPaths=[...new Set(await admin.locator('a[href]').evaluateAll(links=>links.map(link=>new URL(link.href,location.href)).filter(url=>url.origin==='https://www.linkedin.com').map(url=>url.pathname.replace(/\/$/,'').replace(/\/posts$/,'')).filter(pathname=>pathname==='/company/bandmdigitalconsulting')))];
+   await this.observeOrganizationPaths(admin);
    return structuredClone(browserIdentity);
   }finally{if(feed)await this.closePage(feed);if(admin)await this.closePage(admin);}
  }
@@ -333,6 +339,9 @@ export class HermesBrowserSession {
  async verifyPublicationPermalink(proof,{timeout=12000,pollInterval=250}={}){
   let page;
   try{
+   // The admin dashboard may expose no public company link. The already-open
+   // published-posts page does, once the composer closes after submission.
+   if(this.composer.target.accountId==='organization'&&this.composer.page)await this.observeOrganizationPaths(this.composer.page);
    page=await this.newPage(proof.permalink);
    const deadline=Date.now()+timeout;
    do{
@@ -365,7 +374,9 @@ export class HermesBrowserSession {
    for(const proof of afterPublication.complete===false?[]:freshPublicationCandidates(beforePublication,afterPublication)){
     if(checked.has(proof.urn))continue;checked.add(proof.urn);
     await recordEvidence({candidate:proof,organizationPaths:this.organizationPaths||[],observedAt:new Date().toISOString()});
-    if(await this.verifyPublicationPermalink(proof,{timeout:Math.min(12000,Math.max(0,deadline-Date.now())),pollInterval}))return proof;
+    const verified=await this.verifyPublicationPermalink(proof,{timeout:Math.min(12000,Math.max(0,deadline-Date.now())),pollInterval});
+    await recordEvidence({candidate:proof,verified,organizationPaths:this.organizationPaths||[],observedAt:new Date().toISOString()});
+    if(verified)return proof;
    }
    if(Date.now()>=deadline)break;
    await new Promise(resolve=>setTimeout(resolve,pollInterval));
