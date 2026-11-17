@@ -72,7 +72,7 @@ export async function replayConfirmedBrowserReceipts({workingRoot,finish}){
 async function requireVisible(locator,message,timeout=15000){try{await locator.waitFor({state:'visible',timeout});}catch{throw new BrowserHumanError(message);}return locator;}
 export function normalizedBrowserText(value){return String(value||'').replace(/\s+/gu,' ').trim();}
 const normalizedText=normalizedBrowserText;
-const publicationSuccess=/(?:post|publication)\s+(?:(?:a\s+été|est|was|is|has\s+been)\s+)?(?:publié[es]?|réussi[es]?|published|successful(?:ly)?)|(?:publié[es]?|partagé[es]?)\s+avec\s+succès|successfully\s+(?:posted|published|shared)|your post is live/iu;
+const publicationSuccess=/(?:post|publication)\s+(?:(?:a\s+(?:bien\s+)?été|est|was|is|has\s+been)\s+)?(?:bien\s+)?(?:publié[es]?|réussi[es]?|published|successful(?:ly)?)|(?:publié[es]?|partagé[es]?)\s+avec\s+succès|successfully\s+(?:posted|published|shared)|your post is live/iu;
 export function freshPublicationCandidates(before,after){
  const previous=new Set((before?.links||[]).map(value=>verifiedPermalink(value)?.urn).filter(Boolean));
  for(const link of before?.postLinks||[]){const proof=verifiedPermalink(link);if(proof)previous.add(proof.urn);}
@@ -293,7 +293,8 @@ export class HermesBrowserSession {
    if(part){snapshot.links.push(...part.links);snapshot.notifications.push(...part.notifications);snapshot.postLinks.push(...part.postLinks);}else snapshot.complete=false;
   }
   const resolved=new Map();
-  for(const value of new Set([...snapshot.links,...snapshot.notifications.flatMap(n=>n.links)])){
+  // Resolve only publication candidates and notices, never unrelated feed links.
+  for(const value of new Set([...snapshot.postLinks,...snapshot.notifications.flatMap(n=>n.links)])){
    let proof=verifiedPermalink(value);const short=linkedInShortLink(value);
    if(!proof&&short&&new URL(short).pathname.startsWith('/p/'))proof=verifiedPermalink(await this.resolveShortLink(short));
    if(proof)resolved.set(value,proof.permalink);

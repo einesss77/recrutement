@@ -70,7 +70,8 @@ test('une notification positive ne confirme que des liens nouveaux après le cli
  assert.deepEqual(freshPublicationCandidates(before,{...after,notifications:[{text:'Le post n’a pas été publié.',links:[proof.permalink]}]}),[]);
  assert.deepEqual(freshPublicationCandidates(before,{...after,notifications:[]}),[]);
  assert.deepEqual(freshPublicationCandidates({links:[],notifications:after.notifications},after),[]);
- for(const text of ['Publication réussie. Voir le post','Your post was published. View post','Successfully shared. View post'])assert.deepEqual(freshPublicationCandidates({links:[]},{notifications:[{text,links:[proof.permalink]}]}),[proof]);
+ for(const text of ['Publication réussie. Voir le post','Le post a bien été publié. Voir le post','Le post est bien publié. Voir le post','Your post was published. View post','Successfully shared. View post'])assert.deepEqual(freshPublicationCandidates({links:[]},{notifications:[{text,links:[proof.permalink]}]}),[proof]);
+ assert.deepEqual(freshPublicationCandidates({links:[]},{notifications:[{text:'Le post n’a pas bien été publié.',links:[proof.permalink]}]}),[]);
 });
 test('le permalien doit contenir tout le texte et le lien de la destination exacte',()=>{
  const card={authorHref:browserIdentity.profileUrl,authorName:'Ines Favre',menuAuthor:'Ines Favre',caption:normalizedBrowserText(post.caption)};

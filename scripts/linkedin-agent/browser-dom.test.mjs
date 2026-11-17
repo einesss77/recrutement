@@ -264,7 +264,7 @@ test('un nouveau permalien est confirmé dans sa carte Ember ou React avec le bo
  for(const accountId of ['organization','person'])await withSession({publicationAccountId:accountId,reactPublication:accountId==='person'},async session=>{
   await session.prepare(target(accountId),post,'text',null);
   const frame=session.composer.frame;
-  await session.composer.dialog.getByRole('button',{name:'Publier',exact:true}).evaluate((button,permalink)=>{button.onclick=()=>{document.body.dataset.publishClicks=String(Number(document.body.dataset.publishClicks||0)+1);document.getElementById('composer').hidden=true;const notice=document.createElement('div');notice.setAttribute('role','status');notice.innerHTML='<p>Votre post a été publié</p>';const link=document.createElement('a');link.href=permalink;link.textContent='Voir le post';notice.append(link);document.body.append(notice);};},publicationProof.permalink);
+  await session.composer.dialog.getByRole('button',{name:'Publier',exact:true}).evaluate((button,permalink)=>{button.onclick=()=>{document.body.dataset.publishClicks=String(Number(document.body.dataset.publishClicks||0)+1);document.getElementById('composer').hidden=true;const notice=document.createElement('div');notice.setAttribute('role','status');notice.innerHTML='<p>Le post a bien été publié.</p>';const link=document.createElement('a');link.href=permalink;link.textContent='Voir le post';notice.append(link);document.body.append(notice);};},publicationProof.permalink);
   await session.submit();
   assert.deepEqual(await session.confirmation({timeout:1000,pollInterval:20}),publicationProof);
   await assert.rejects(session.submit(),error=>error instanceof BrowserHumanError&&/déjà/.test(error.message));
@@ -369,6 +369,16 @@ test('un permalien court dans une notification est résolu sans reprendre un anc
   const signals=await session.publicationSignals(page);
   assert.deepEqual(signals.notifications[0].links,[publicationProof.permalink]);
   assert.ok(signals.links.includes(publicationProof.permalink));
+ });
+});
+
+test('la confirmation ne résout aucun lien court appartenant à des posts étrangers au contenu préparé',async()=>{
+ await withSession({},async session=>{
+  const page=await session.newPage('https://www.linkedin.com/feed/'),calls=[];
+  session.composer={post};session.resolveShortLink=async link=>{calls.push(link);return publicationProof.permalink;};
+  await page.evaluate(caption=>{document.body.innerHTML='<article>Un autre sujet <a href="https://lnkd.in/p/unrelated">Lire</a></article><article id="own"><p></p><a href="https://lnkd.in/p/expected">Date</a></article>';document.querySelector('#own p').textContent=caption;},caption);
+  const signals=await session.publicationSignals(page);
+  assert.deepEqual(calls,['https://lnkd.in/p/expected']);assert.deepEqual(signals.postLinks,[publicationProof.permalink]);
  });
 });
 
