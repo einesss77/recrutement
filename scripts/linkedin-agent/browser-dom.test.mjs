@@ -91,6 +91,7 @@ function fixture(url,variant){
   return documentHTML(variant.reactPublication?'<iframe title="Publication LinkedIn" src="/fixture/publication-frame"></iframe>':publicationHTML(variant));
  }
  if(u.pathname==='/fixture/publication-frame')return documentHTML(publicationHTML(variant));
+ if(u.pathname==='/in/ines-favre-424651436/recent-activity/all/'&&variant.reloadPublication)return documentHTML(publicationHTML(variant));
  if(u.pathname==='/feed/')return documentHTML('<h1>Fil d’actualité</h1><iframe title="Fil LinkedIn" src="/fixture/feed-frame"></iframe>');
  if(u.pathname==='/fixture/feed-frame'){
   const body=`<aside role="complementary" aria-label="Barre latérale"><a href="${browserIdentity.profileUrl}">Ines Favre</a><a href="${browserIdentity.organization.adminUrl}">B&M Digital Consulting</a></aside><button style="display:none">Commencer un post</button><button id="start">Commencer un post</button><div id="personal-composer"></div>`;
@@ -312,6 +313,17 @@ test('un ancien URN masqué avant le clic ne devient pas une nouvelle preuve lor
   await session.composer.dialog.getByRole('button',{name:'Publier',exact:true}).evaluate(button=>{button.onclick=()=>{document.getElementById('composer').hidden=true;document.getElementById('old-post').hidden=false;};});
   await session.submit();await assert.rejects(session.confirmation({timeout:100,pollInterval:20}),BrowserHumanError);
   assert.equal(session.openedPages,1);
+ });
+});
+
+test('le profil personnel sans notification utilise une seule lecture de ses propres posts',async()=>{
+ await withSession({reloadPublication:true,publicationAccountId:'person'},async session=>{
+  await session.verify();await session.prepare(target('person'),post,'text',null);
+  const ownedPage=session.composer.page;let clicks=0;
+  ownedPage.on('console',message=>{if(message.text()==='fixture-person-publish')clicks++;});
+  await session.composer.dialog.getByRole('button',{name:'Publier',exact:true}).evaluate(button=>{button.onclick=()=>{console.log('fixture-person-publish');document.getElementById('composer').hidden=true;};});
+  await session.submit();assert.deepEqual(await session.confirmation({timeout:7500,pollInterval:20}),publicationProof);
+  assert.equal(ownedPage.url(),browserIdentity.profileUrl+'recent-activity/all/');assert.equal(clicks,1);assert.equal(session.openedPages,4);
  });
 });
 

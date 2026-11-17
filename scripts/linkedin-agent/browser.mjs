@@ -287,7 +287,8 @@ export class HermesBrowserSession {
     const normalized=value=>String(value||'').replace(/\s+/gu,' ').trim();
     const posts=[...document.querySelectorAll('[data-urn^="urn:li:activity:"],[data-urn^="urn:li:share:"],[data-urn^="urn:li:ugcPost:"]')].map(root=>({urn:root.getAttribute('data-urn'),matches:visible(root)&&expected&&normalized(root.innerText).includes(expected)})).filter(post=>/^urn:li:(?:activity|share|ugcPost):\d+$/.test(post.urn));
     const permalink=post=>'https://www.linkedin.com/feed/update/'+post.urn+'/';
-    return{links:[...links(document,false),...posts.map(permalink)],notifications,postLinks:posts.filter(post=>post.matches).map(permalink)};
+    const matchingCards=[...document.querySelectorAll('article,[role="article"],[role="listitem"]')].filter(root=>visible(root)&&expected&&normalized(root.innerText).includes(expected));
+    return{links:[...links(document,false),...posts.map(permalink)],notifications,postLinks:[...posts.filter(post=>post.matches).map(permalink),...matchingCards.flatMap(root=>links(root))]};
    },normalizedText(this.composer?.post?.caption).slice(0,160)).catch(()=>null);
    if(part){snapshot.links.push(...part.links);snapshot.notifications.push(...part.notifications);snapshot.postLinks.push(...part.postLinks);}else snapshot.complete=false;
   }
@@ -298,6 +299,7 @@ export class HermesBrowserSession {
    if(proof)resolved.set(value,proof.permalink);
   }
   snapshot.links=snapshot.links.map(value=>resolved.get(value)||value);
+  snapshot.postLinks=[...new Set(snapshot.postLinks.map(value=>resolved.get(value)||value).filter(value=>verifiedPermalink(value)))];
   snapshot.notifications=snapshot.notifications.map(notice=>({...notice,links:notice.links.map(value=>resolved.get(value)||value)}));
   return snapshot;
  }
@@ -388,12 +390,13 @@ export class HermesBrowserSession {
     if(verified)return proof;
    }
    if(Date.now()>=deadline)break;
-   // The company admin feed may keep stale cards after closing its composer.
-   // Refresh its read-only published-posts view once, only after the submitted
+   // The feed may keep stale cards after closing its composer.
+   // Open the target's read-only posts view once, only after the submitted
    // composer has closed. Never re-open the composer or retry its publish click.
-   if(!refreshed&&!checked.size&&this.composer.target.accountId==='organization'&&Date.now()-started>=5000&&!(await this.composer.dialog.isVisible())){
+   if(!refreshed&&!checked.size&&Date.now()-started>=5000&&!(await this.composer.dialog.isVisible().catch(()=>true))){
     refreshed=true;this.composer.confirmationRefreshed=true;
-    await page.goto('https://www.linkedin.com/company/106357560/admin/page-posts/published/',{waitUntil:'domcontentloaded',timeout:Math.min(10000,Math.max(1,deadline-Date.now()))});checkPageUrl(page);
+    const destination=this.composer.target.accountId==='organization'?'https://www.linkedin.com/company/106357560/admin/page-posts/published/':browserIdentity.profileUrl+'recent-activity/all/';
+    await page.goto(destination,{waitUntil:'domcontentloaded',timeout:Math.min(10000,Math.max(1,deadline-Date.now()))});checkPageUrl(page);
     continue;
    }
    await new Promise(resolve=>setTimeout(resolve,pollInterval));
