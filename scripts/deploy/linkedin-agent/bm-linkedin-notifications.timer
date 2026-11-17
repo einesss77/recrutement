@@ -1,0 +1,11 @@
+[Unit]
+Description=Local LinkedIn publication watchdog (no LinkedIn access)
+
+[Timer]
+OnBootSec=2min
+OnUnitInactiveSec=2min
+AccuracySec=5s
+Unit=bm-linkedin-notifications.service
+
+[Install]
+WantedBy=timers.target

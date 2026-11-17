@@ -1,0 +1,20 @@
+[Unit]
+Description=Notify owner Telegram about confirmed LinkedIn posts and blocked publishing
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=/var/lib/bm-linkedin-notifications/config.json
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/lib/bm-linkedin-notifications/worker.py
+TimeoutStartSec=4min
+Restart=no
+UMask=0077
+Environment=PYTHONDONTWRITEBYTECODE=1
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/bm-linkedin-notifications /home/hermes/.hermes /home/hermes/bm-agents/livrables/linkedin-notifications
+MemoryMax=384M
+CPUQuota=25%

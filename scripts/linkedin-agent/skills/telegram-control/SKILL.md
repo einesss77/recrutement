@@ -31,6 +31,12 @@ bm-linkedin-control prospects ines
 
 `status` donne activation effective (`config.enabled`), calendrier, connectivité, résultats métier, blocages et journal. Un minuteur actif ne signifie ni publication active ni publication réalisée. Seul un élément published avec preuve LinkedIn permet d'annoncer un post envoyé. Afficher les créneaux en Europe/Paris, sauf demande contraire. Les contenus actuels sont FR puis EN dans le même post, avec visuels allégés; ce ne sont pas deux publications séparées par langue.
 
+## Notifications automatiques Telegram
+
+À la demande explicite d’Eines, le VPS envoie dans son chat habituel une notification pour chaque publication confirmée d’Inès ou de B&M, avec son permalien, ainsi qu’une alerte en cas de blocage. Une publication préparée ou une sortie système 0 ne déclenche jamais une confirmation de publication. Le service `bm-linkedin-notifications.service` se déclenche à la fin du moteur, en succès comme en échec, et un minuteur toutes les deux minutes vérifie uniquement l’état local. Il n’ouvre jamais LinkedIn. Il détecte aussi un calendrier arrêté, un moteur silencieux depuis 75 minutes et les créneaux dépassés depuis 35 minutes.
+
+Pour vérifier les notifications, exécuter `bm-linkedin-alerts status`. Ce statut horodaté donne les messages remis avec accusé Telegram, le dernier contrôle et les livraisons incertaines. Vérifier aussi `timerActive` et `publisherHooksConfigured` pour annoncer le fonctionnement complet, ainsi que `sourceAvailable` et `deliveryHealthy`. Un message réservé ou une livraison incertaine ne prouve pas une remise. La déduplication persiste aux redémarrages : un même post ou un blocage qui persiste n’est pas annoncé en boucle. Une livraison Telegram ambiguë n’est pas renvoyée automatiquement. Ne pas effacer ce registre pour tester, ne pas republier un contenu et ne pas inventer un incident pour tester les alertes. Les notifications ne modifient pas l’activation des publications ni les lots de prospects.
+
 `post` donne le texte et les éléments du visuel. `preview` rend réellement le PNG avec le moteur du studio et renvoie un chemin absolu accessible à hermes, sous `/var/lib/bm-linkedin-control/previews/`. Joindre ce fichier à la réponse Telegram avec le mécanisme média disponible lorsqu'Eines veut voir la création. Ne pas annoncer un aperçu envoyé sur la seule base d'un chemin retourné. Pour un carrousel, le PNG est l'aperçu de la première page; ne pas le présenter comme toutes les pages.
 
 ## Pilotage autorisé à la demande d'Eines
