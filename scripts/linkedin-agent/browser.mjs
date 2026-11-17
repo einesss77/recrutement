@@ -75,12 +75,17 @@ const normalizedText=normalizedBrowserText;
 const publicationSuccess=/(?:post|publication)\s+(?:(?:a\s+été|est|was|is|has\s+been)\s+)?(?:publié[es]?|réussi[es]?|published|successful(?:ly)?)|(?:publié[es]?|partagé[es]?)\s+avec\s+succès|successfully\s+(?:posted|published|shared)|your post is live/iu;
 export function freshPublicationCandidates(before,after){
  const previous=new Set((before?.links||[]).map(value=>verifiedPermalink(value)?.urn).filter(Boolean));
+ for(const link of before?.postLinks||[]){const proof=verifiedPermalink(link);if(proof)previous.add(proof.urn);}
  for(const notice of before?.notifications||[])for(const link of notice.links||[]){const proof=verifiedPermalink(link);if(proof)previous.add(proof.urn);}
  const candidates=new Map();
  for(const notice of after?.notifications||[]){
   if(!publicationSuccess.test(normalizedText(notice.text))||/\b(?:pas|impossible|erreur|failed|unable|not|couldn[’']t)\b/iu.test(notice.text))continue;
   for(const link of notice.links||[]){const proof=verifiedPermalink(link);if(proof&&!previous.has(proof.urn))candidates.set(proof.urn,proof);}
  }
+ // The admin feed does not always expose a toast permalink. A new rendered
+ // post matching the caption prefix is a candidate only; the canonical page
+ // must still prove its exact author and complete caption independently.
+ for(const link of after?.postLinks||[]){const proof=verifiedPermalink(link);if(proof&&!previous.has(proof.urn))candidates.set(proof.urn,proof);}
  return [...candidates.values()];
 }
 export function verifiedPublicationCard(card,target,caption,organizationPaths=[]){
@@ -272,16 +277,19 @@ export class HermesBrowserSession {
   if(!(await publish.isEnabled()))throw new BrowserHumanError('LinkedIn ne permet pas encore la publication de ce contenu.');
  }
  async publicationSignals(page){
-  const snapshot={links:[],notifications:[],complete:true};
+  const snapshot={links:[],notifications:[],postLinks:[],complete:true};
   for(const frame of publicationFrames(page)){
-   const part=await frame.evaluate(()=>{
+   const part=await frame.evaluate(expected=>{
     const visible=element=>Boolean(element.getClientRects().length)&&getComputedStyle(element).visibility!=='hidden';
     const links=(element,visibleOnly=true)=>[...element.querySelectorAll('a[href]')].filter(link=>!visibleOnly||visible(link)).map(link=>link.href);
     const notices=[...document.querySelectorAll('[role="alert"],[role="status"],[aria-live="polite"],[aria-live="assertive"],.artdeco-toast-item')].filter(visible).filter(element=>element.innerText.length<1500);
     const notifications=notices.filter(element=>!notices.some(other=>other!==element&&element.contains(other))).map(element=>({text:element.innerText,links:links(element)}));
-    return{links:links(document,false),notifications};
-   }).catch(()=>null);
-   if(part){snapshot.links.push(...part.links);snapshot.notifications.push(...part.notifications);}else snapshot.complete=false;
+    const normalized=value=>String(value||'').replace(/\s+/gu,' ').trim();
+    const posts=[...document.querySelectorAll('[data-urn^="urn:li:activity:"],[data-urn^="urn:li:share:"],[data-urn^="urn:li:ugcPost:"]')].map(root=>({urn:root.getAttribute('data-urn'),matches:visible(root)&&expected&&normalized(root.innerText).includes(expected)})).filter(post=>/^urn:li:(?:activity|share|ugcPost):\d+$/.test(post.urn));
+    const permalink=post=>'https://www.linkedin.com/feed/update/'+post.urn+'/';
+    return{links:[...links(document,false),...posts.map(permalink)],notifications,postLinks:posts.filter(post=>post.matches).map(permalink)};
+   },normalizedText(this.composer?.post?.caption).slice(0,160)).catch(()=>null);
+   if(part){snapshot.links.push(...part.links);snapshot.notifications.push(...part.notifications);snapshot.postLinks.push(...part.postLinks);}else snapshot.complete=false;
   }
   const resolved=new Map();
   for(const value of new Set([...snapshot.links,...snapshot.notifications.flatMap(n=>n.links)])){
@@ -367,10 +375,11 @@ export class HermesBrowserSession {
  }
  async confirmation({timeout=30000,pollInterval=250,recordEvidence=async()=>{}}={}){
   if(!this.composer?.submissionAttempted||!this.composer.beforePublication)throw new BrowserHumanError('Aucune tentative de publication ne peut être rapprochée.');
-  const {page,beforePublication}=this.composer,deadline=Date.now()+timeout,checked=new Set();
+  const {page,beforePublication}=this.composer,started=Date.now(),deadline=started+timeout,checked=new Set();let lastObservation,refreshed=false;
   do{
    checkPageUrl(page);
    const afterPublication=await this.publicationSignals(page);
+   lastObservation={complete:afterPublication.complete,postLinks:afterPublication.postLinks||[],notifications:(afterPublication.notifications||[]).slice(0,5).map(n=>({text:n.text.slice(0,500),links:n.links.filter(link=>verifiedPermalink(link))}))};
    for(const proof of afterPublication.complete===false?[]:freshPublicationCandidates(beforePublication,afterPublication)){
     if(checked.has(proof.urn))continue;checked.add(proof.urn);
     await recordEvidence({candidate:proof,organizationPaths:this.organizationPaths||[],observedAt:new Date().toISOString()});
@@ -379,8 +388,17 @@ export class HermesBrowserSession {
     if(verified)return proof;
    }
    if(Date.now()>=deadline)break;
+   // The company admin feed may keep stale cards after closing its composer.
+   // Refresh its read-only published-posts view once, only after the submitted
+   // composer has closed. Never re-open the composer or retry its publish click.
+   if(!refreshed&&!checked.size&&this.composer.target.accountId==='organization'&&Date.now()-started>=5000&&!(await this.composer.dialog.isVisible())){
+    refreshed=true;this.composer.confirmationRefreshed=true;
+    await page.goto('https://www.linkedin.com/company/106357560/admin/page-posts/published/',{waitUntil:'domcontentloaded',timeout:Math.min(10000,Math.max(1,deadline-Date.now()))});checkPageUrl(page);
+    continue;
+   }
    await new Promise(resolve=>setTimeout(resolve,pollInterval));
   }while(Date.now()<deadline);
+  await recordEvidence({verified:false,checkedUrns:[...checked],lastObservation,organizationPaths:this.organizationPaths||[],observedAt:new Date().toISOString()});
   throw new BrowserHumanError('La publication a été soumise, mais aucun nouveau permalien avec l’auteur et le texte intégral vérifiés n’a été établi. Vérifier LinkedIn avant toute reprise.');
  }
  async discardOwnDraft(){

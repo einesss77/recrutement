@@ -97,6 +97,7 @@ function fixture(url,variant){
   return documentHTML(body,`document.getElementById('start').onclick=()=>{document.getElementById('personal-composer').innerHTML=${JSON.stringify(composerHTML('person',variant))};${mediaScript(true,variant)}${pdfScript(true)}};`);
  }
  if(u.pathname==='/company/106357560/admin/page-posts/published/'){
+  if(variant.reloadPublication&&!u.searchParams.has('share'))return documentHTML(publicationHTML(variant));
   return documentHTML(composerHTML('organization',variant)+(variant.postsOnlySlug?'<a href="https://www.linkedin.com/company/bandmdigitalconsulting/posts">B&M Digital Consulting</a>':''),mediaScript(false,variant)+pdfScript(false));
  }
  if(u.pathname==='/company/106357560/admin/')return documentHTML('<h1>B&M Digital Consulting</h1><section role="region" aria-label="Section de navigation pour les administrateurs de page organisationnelle">Administrer la page</section>'+ (variant.companySlug?'<a href="https://www.linkedin.com/company/bandmdigitalconsulting/posts">B&M Digital Consulting</a><a href="https://www.linkedin.com/company/unrelated/posts">Autre page</a><a href="https://evil.example/company/bandmdigitalconsulting/posts">Hors LinkedIn</a>':''));
@@ -279,6 +280,38 @@ test('une notification conservant un ancien permalien, même auparavant masqué,
   await session.submit();
   await assert.rejects(session.confirmation({timeout:100,pollInterval:20}),BrowserHumanError);
   assert.equal(await session.composer.frame.locator('body').getAttribute('data-publish-clicks'),'1');
+ });
+});
+
+test('un nouveau post admin sans notification fournit un candidat puis une preuve canonique complète',async()=>{
+ await withSession({postsOnlySlug:true,publicationAccountId:'organization'},async session=>{
+  await session.verify();await session.prepare(target('organization'),post,'text',null);
+  const frame=session.composer.frame;
+  await session.composer.dialog.getByRole('button',{name:'Publier',exact:true}).evaluate((button,{urn,caption})=>{button.onclick=()=>{document.body.dataset.publishClicks=String(Number(document.body.dataset.publishClicks||0)+1);document.getElementById('composer').hidden=true;const article=document.createElement('article');article.setAttribute('data-urn',urn);const text=document.createElement('p');text.textContent=caption;article.append(text);document.body.append(article);};},{urn:publicationProof.urn,caption});
+  await session.submit();
+  assert.deepEqual(await session.confirmation({timeout:1000,pollInterval:20}),publicationProof);
+  assert.equal(await frame.locator('body').getAttribute('data-publish-clicks'),'1');assert.equal(session.openedPages,4);
+ });
+});
+
+test('la vue admin figée est actualisée une seule fois après fermeture, sans second clic Publier',async()=>{
+ await withSession({postsOnlySlug:true,reloadPublication:true,publicationAccountId:'organization'},async session=>{
+  await session.verify();await session.prepare(target('organization'),post,'text',null);
+  let clicks=0;session.composer.page.on('console',message=>{if(message.text()==='fixture-publish')clicks++;});
+  await session.composer.dialog.getByRole('button',{name:'Publier',exact:true}).evaluate(button=>{button.onclick=()=>{console.log('fixture-publish');document.getElementById('composer').hidden=true;};});
+  await session.submit();
+  assert.deepEqual(await session.confirmation({timeout:7500,pollInterval:20}),publicationProof);
+  assert.equal(clicks,1);assert.equal(session.composer.confirmationRefreshed,true);assert.equal(session.openedPages,4);
+ });
+});
+
+test('un ancien URN masqué avant le clic ne devient pas une nouvelle preuve lorsqu’il apparaît',async()=>{
+ await withSession({},async session=>{
+  await session.prepare(target('organization'),post,'text',null);
+  await session.composer.page.evaluate(({urn,caption})=>{const article=document.createElement('article');article.id='old-post';article.hidden=true;article.setAttribute('data-urn',urn);article.textContent=caption;document.body.append(article);},{urn:publicationProof.urn,caption});
+  await session.composer.dialog.getByRole('button',{name:'Publier',exact:true}).evaluate(button=>{button.onclick=()=>{document.getElementById('composer').hidden=true;document.getElementById('old-post').hidden=false;};});
+  await session.submit();await assert.rejects(session.confirmation({timeout:100,pollInterval:20}),BrowserHumanError);
+  assert.equal(session.openedPages,1);
  });
 });
 

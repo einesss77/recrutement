@@ -83,6 +83,13 @@ test('le permalien doit contenir tout le texte et le lien de la destination exac
  assert.equal(verifiedPublicationCard(companyCard,organization,post.caption,['/company/bandmdigitalconsulting']),true);
  assert.equal(verifiedPublicationCard({...companyCard,authorName:'Autre page'},organization,post.caption,['/company/bandmdigitalconsulting']),false);
 });
+
+test('un nouveau post rendu remplace la notification absente, sans réutiliser un ancien URN',()=>{
+ assert.deepEqual(freshPublicationCandidates({links:[]},{notifications:[],postLinks:[proof.permalink]}),[proof]);
+ assert.deepEqual(freshPublicationCandidates({links:[proof.permalink]},{postLinks:[proof.permalink]}),[]);
+ assert.deepEqual(freshPublicationCandidates({postLinks:[proof.permalink]},{postLinks:[proof.permalink]}),[]);
+ assert.deepEqual(freshPublicationCandidates({links:[]},{postLinks:['https://example.com/feed/update/urn:li:share:123456789/']}),[]);
+});
 test('la confirmation réelle renvoie la preuve vérifiée après un seul clic',async()=>{
  const session=new HermesBrowserSession({contexts:()=>[{}]}),counts={clicks:0,verified:[]};
  const page={url:()=>browserIdentity.profileUrl};
